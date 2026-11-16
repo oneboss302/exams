@@ -1,0 +1,1299 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="AZ-104 Azure Administrator study guide, timed practice exam, and flashcards.">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}a.brand{color:inherit;text-decoration:none}</style>
+<title>AZ-104 Final Prep</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: an exam-console shell — sticky tab bar, a reading column for the guide, a two-pane question view with a numbered palette. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --sunk:#eceff4; --ink:#151b27; --muted:#5a6476; --line:#d9dee7;
+  --accent:#2c56c9; --accent-ink:#ffffff; --soft:#e5ecfb;
+  --good:#18805a; --good-soft:#e2f3ec; --bad:#b93a3a; --bad-soft:#f8e6e6; --warn:#9a6a12; --warn-soft:#f8efdc;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:2rem;font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:600}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+code{background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:0 .3em}
+pre{font-family:var(--f-mono);font-size:.85rem;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:10px 12px;overflow-x:auto;margin:0}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:16px;padding-block:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.1rem;display:flex;gap:8px;align-items:baseline}
+.brand .code{font-family:var(--f-mono);font-size:.8rem;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:1px 6px}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tab{background:none;border:1px solid transparent;color:var(--muted);padding:6px 12px;border-radius:6px;font-weight:500}
+.tab[aria-selected="true"]{background:var(--soft);color:var(--ink);border-color:var(--line)}
+.timer{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.95rem;padding:4px 10px;border-radius:6px;background:var(--sunk);border:1px solid var(--line)}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Guide */
+.guide{display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);align-self:start;display:flex;flex-direction:column;gap:2px;font-size:.88rem}
+.toc a{color:var(--muted);text-decoration:none;padding:4px 8px;border-left:2px solid var(--line)}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+.toc .lbl{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 8px 6px}
+.gmain{display:flex;flex-direction:column;gap:44px;min-width:0}
+.gsec{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.gsec > p,.gsec li{max-width:70ch}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.06rem;color:var(--muted);max-width:66ch}
+.hero{display:flex;flex-direction:column;gap:14px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:7px;font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.small{padding:5px 10px;font-size:.88rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.fact{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.fact b{font-family:var(--f-display);font-size:1.35rem;font-weight:600}
+.fact span{font-size:.82rem;color:var(--muted)}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--sunk);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.risk{display:inline-block;font-family:var(--f-mono);font-size:.72rem;padding:1px 7px;border-radius:999px;border:1px solid}
+.risk.hi{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.risk.md{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.risk.lo{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+
+.sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{font-size:1rem}
+.card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.9rem}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.8rem;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--accent);border:1px solid var(--line)}
+.trap{border-left:3px solid var(--warn);padding:6px 12px;background:var(--surface);border-radius:0 6px 6px 0}
+.traps{display:flex;flex-direction:column;gap:8px}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.plan .when{font-family:var(--f-mono);font-size:.78rem;color:var(--accent)}
+
+/* Exam */
+.ex-home{display:flex;flex-direction:column;gap:22px;max-width:780px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.mode{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.mode p{color:var(--muted);font-size:.92rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:4px 10px;font-size:.84rem}
+.chip[aria-pressed="true"]{background:var(--soft);color:var(--ink);border-color:var(--accent)}
+.resume{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+.ex{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:24px;align-items:start}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.qmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.86rem;color:var(--muted)}
+.qnum{font-family:var(--f-mono);color:var(--ink)}
+.dtag{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--sunk);border:1px solid var(--line)}
+.mark{margin-left:auto;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:3px 10px;font-size:.84rem}
+.mark[aria-pressed="true"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.qtext{font-size:1.02rem;display:flex;flex-direction:column;gap:10px}
+.qtext table{font-size:.86rem}
+.hint{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:22px 26px minmax(0,1fr);gap:8px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--surface)}
+.opt:hover{border-color:var(--accent)}
+.opt input{margin:3px 0 0;accent-color:var(--accent)}
+.opt .ltr{font-family:var(--f-mono);color:var(--muted);font-size:.86rem;padding-top:1px}
+.opt.sel{border-color:var(--accent);background:var(--soft)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.locked{cursor:default}
+.explain{border-radius:8px;padding:12px 14px;border:1px solid var(--line);background:var(--sunk);display:flex;flex-direction:column;gap:6px;font-size:.93rem}
+.explain .verdict{font-weight:600}
+.explain .verdict.ok{color:var(--good)} .explain .verdict.no{color:var(--bad)}
+.qnav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qnav .sp{flex:1}
+.case{border:1px solid var(--line);border-radius:8px;background:var(--sunk)}
+.case summary{cursor:pointer;padding:10px 14px;font-weight:600;font-family:var(--f-display)}
+.case .cbody{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+.case ul{margin:0;padding-left:18px}
+
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);display:flex;flex-direction:column;gap:12px}
+.pal{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.pq{font-family:var(--f-mono);font-size:.76rem;padding:5px 0;border-radius:5px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-variant-numeric:tabular-nums}
+.pq.ans{background:var(--soft);color:var(--ink)}
+.pq.mk{border-color:var(--warn);box-shadow:inset 0 -3px 0 var(--warn)}
+.pq.cur{border-color:var(--accent);outline:1px solid var(--accent);color:var(--ink)}
+.pq.ok{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.pq.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:.76rem;color:var(--muted)}
+.confirm{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+
+/* Results */
+.res{display:flex;flex-direction:column;gap:24px}
+.score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.big{font-family:var(--f-display);font-size:3.2rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.verdict-pill{display:inline-block;font-family:var(--f-mono);font-size:.78rem;padding:3px 10px;border-radius:999px;border:1px solid}
+.dbars{display:flex;flex-direction:column;gap:10px}
+.dbar{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) 64px;gap:12px;align-items:center;font-size:.9rem}
+.track{height:10px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden;position:relative}
+.fill{height:100%;background:var(--accent)}
+.fill.low{background:var(--bad)} .fill.mid{background:var(--warn)} .fill.hi{background:var(--good)}
+.track .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.35;left:80%}
+.dbar .pct{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.rlist{display:flex;flex-direction:column;gap:12px}
+.ritem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--line)}
+.ritem.ok{border-left-color:var(--good)} .ritem.bad{border-left-color:var(--bad)}
+.ritem .row{font-size:.88rem;color:var(--muted)}
+.ritem .row b{color:var(--ink);font-weight:600}
+.filter{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* Flashcards */
+.fl{display:flex;flex-direction:column;gap:18px;max-width:760px;margin:0 auto}
+.fl-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.88rem;color:var(--muted)}
+.prog{height:6px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.prog>div{height:100%;background:var(--good)}
+.fc{perspective:1400px;cursor:pointer;outline:none}
+.fc-in{display:grid;transition:transform .45s ease;transform-style:preserve-3d}
+.fc.flipped .fc-in{transform:rotateY(180deg)}
+.fc-face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;min-height:280px;display:flex;flex-direction:column;gap:14px;justify-content:space-between;min-width:0}
+.fc-back{transform:rotateY(180deg);background:var(--soft);border-color:var(--accent)}
+.fc-text{font-family:var(--f-display);font-size:1.5rem;font-weight:600;line-height:1.3;text-wrap:balance}
+.fc-back .fc-text{font-family:var(--f-body);font-size:1.08rem;font-weight:400;line-height:1.6;text-wrap:pretty}
+.fc-q{font-size:.85rem;color:var(--muted)}
+.fc:focus-visible .fc-face{outline:2px solid var(--accent);outline-offset:2px}
+.fc-ctrl{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn.again{border-color:var(--bad);color:var(--bad)}
+.btn.got{border-color:var(--good);color:var(--good)}
+.kbd{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:6px}
+.fl-opts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fl-done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:12px}
+
+@media (max-width:860px){
+  .guide{grid-template-columns:1fr}
+  .toc{position:static;flex-direction:row;flex-wrap:wrap;gap:4px}
+  .toc .lbl{width:100%}
+  .toc a{border-left:0;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .ex{grid-template-columns:1fr}
+  .side{position:static}
+  .grid{grid-template-columns:repeat(10,1fr)}
+  .score{grid-template-columns:1fr}
+  .dbar{grid-template-columns:1fr 56px}
+  .dbar .track{grid-column:1 / -1;grid-row:2}
+}
+@media (max-width:480px){.grid{grid-template-columns:repeat(7,1fr)} h1{font-size:1.6rem} .qcard{padding:16px} .fc-face{padding:20px;min-height:240px} .fc-text{font-size:1.25rem} .kbd{display:none} .tab{padding:6px 9px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="/" title="All exams"><span class="code">AZ-104</span> Final Prep</a>
+    <span class="timer" id="timer" hidden>100:00</span>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-guide" data-view="guide">Study guide</button>
+      <button class="tab" role="tab" id="tab-exam" data-view="exam">Practice exam</button>
+      <button class="tab" role="tab" id="tab-flash" data-view="flash">Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<section id="view-guide">
+<div class="guide">
+  <nav class="toc" aria-label="Guide sections">
+    <div class="lbl">On this page</div>
+    <a href="#g-format">Exam format</a>
+    <a href="#g-map">Your risk map</a>
+    <a href="#g-plan">Tonight &amp; tomorrow</a>
+    <a href="#g-gov">Identity &amp; governance</a>
+    <a href="#g-sto">Storage</a>
+    <a href="#g-cmp">Compute</a>
+    <a href="#g-net">Networking</a>
+    <a href="#g-s2s">S2S VPN from memory</a>
+    <a href="#g-mon">Monitor &amp; backup</a>
+    <a href="#g-num">Numbers to memorize</a>
+    <a href="#g-traps">Classic traps</a>
+  </nav>
+  <div class="gmain">
+    <div class="hero">
+      <div class="eyebrow">Exam: tomorrow</div>
+      <h1>The night-before AZ-104 guide</h1>
+      <p class="lede">You already know VMs and infrastructure, so this guide spends its time on the questions that catch experienced admins: RBAC scope logic, storage rules and limits, backup vault details, and networking edge cases. Take the full practice exam first, then use the sections below on the domains where you scored lowest.</p>
+      <div class="cta-row">
+        <button class="btn primary" data-start="full">Start full practice exam (50 Q, 100 min)</button>
+        <button class="btn" data-goto="exam">Practice by domain</button>
+        <button class="btn" data-flash>Flashcards</button>
+      </div>
+    </div>
+
+    <section class="gsec" id="g-format">
+      <div class="eyebrow">01 · Format</div>
+      <h2>What you're walking into</h2>
+      <div class="facts">
+        <div class="fact"><b>700</b><span>passing score out of 1000 (scaled, not a %)</span></div>
+        <div class="fact"><b>40–60</b><span>questions, typically about 50</span></div>
+        <div class="fact"><b>~100 min</b><span>for questions; plan on ~2 hours total</span></div>
+        <div class="fact"><b>No penalty</b><span>for wrong answers, so answer every question</span></div>
+      </div>
+      <ul>
+        <li><b>Question types:</b> single choice, multi-select ("choose two"), drag-and-drop ordering, hot-area (select values in a dropdown or diagram), and one or two <b>case studies</b> with a long scenario and several questions.</li>
+        <li><b>Yes/No series:</b> the same goal with a different proposed solution each time. <b>You can't go back</b> to these. Judge each solution only on whether it meets the stated goal.</li>
+        <li><b>Case studies are timed as their own section.</b> When you leave one, you can't return. Read the requirements tab first, then the questions, then look things up in the scenario.</li>
+        <li><b>Microsoft Learn is available during the exam</b> (the "open book" feature on role-based exams). It's slow, so use it only to check a specific number or a role name, and only on questions you've flagged.</li>
+        <li><b>Pacing:</b> about 1.5 minutes per question. Flag anything that takes more than 2 minutes and come back to it.</li>
+      </ul>
+    </section>
+
+    <section class="gsec" id="g-map">
+      <div class="eyebrow">02 · Weighting</div>
+      <h2>Your risk map</h2>
+      <p>The domain weights come from the published skills outline. The risk ratings are my estimate based on what you told me: strong on VMs and infrastructure, and you've built S2S tunnels by following documentation.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Domain</th><th>Weight</th><th>Your risk</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>Manage Azure identities &amp; governance</td><td class="num">20–25%</td><td><span class="risk hi">High</span></td><td>RBAC scope logic, locks, Policy effects, and Entra licensing are exam favorites that infrastructure work rarely exercises.</td></tr>
+          <tr><td>Implement &amp; manage storage</td><td class="num">15–20%</td><td><span class="risk hi">High</span></td><td>Questions here test exact rules: which tier or SKU, which redundancy, which SAS type, minimum retention days.</td></tr>
+          <tr><td>Deploy &amp; manage compute</td><td class="num">20–25%</td><td><span class="risk lo">Low–Med</span></td><td>Your VM experience covers most of this. Review App Service tiers and slots, ACI and Container Apps, and ARM/Bicep.</td></tr>
+          <tr><td>Implement &amp; manage virtual networking</td><td class="num">15–20%</td><td><span class="risk md">Medium</span></td><td>Expect NSG rule evaluation, peering transit, private vs service endpoints, DNS zones, and load balancer choice.</td></tr>
+          <tr><td>Monitor &amp; maintain resources</td><td class="num">10–15%</td><td><span class="risk md">Medium</span></td><td>Recovery Services vault vs Backup vault, alert processing rules, data collection rules, and basic KQL.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="lede" style="font-size:.95rem">VPN Gateway isn't listed by name in the current skills outline. Peering with gateway transit and hybrid connectivity questions still come up, so the S2S section below covers what you need without spending the whole night on it.</p>
+    </section>
+
+    <section class="gsec" id="g-plan">
+      <div class="eyebrow">03 · Schedule</div>
+      <h2>Tonight and tomorrow</h2>
+      <div class="plan">
+        <div class="card"><div class="when">Tonight · 0:00–1:45</div><h3>Take the full practice exam</h3><p>Use timed conditions: no Microsoft Learn, no pausing. Don't look anything up during the exam. The results screen shows which domains you missed.</p></div>
+        <div class="card"><div class="when">Tonight · 1:45–2:45</div><h3>Review every miss</h3><p>Read each explanation, then the matching cheat sheet below. Run "Retry missed" once. Stop there.</p></div>
+        <div class="card"><div class="when">Tonight · then stop</div><h3>Sleep</h3><p>Another hour of cramming is worth less than being rested. A tired brain misreads "NOT" and "least privilege" in question stems.</p></div>
+        <div class="card"><div class="when">Morning · 20 min</div><h3>Numbers &amp; traps</h3><p>Read "Numbers to memorize" and "Classic traps" only. Do a 10-question practice round in your weakest domain.</p></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-gov">
+      <div class="eyebrow">04 · Identity &amp; governance · 20–25%</div>
+      <h2>Identity &amp; governance cheat sheet</h2>
+      <div class="sheet">
+        <div class="card"><h3>RBAC scope logic</h3><ul>
+          <li>Scope: Management group → Subscription → Resource group → Resource. Assignments <b>inherit downward</b> and are <b>additive</b>.</li>
+          <li><code>NotActions</code> is <b>not a deny</b>. It only subtracts from that one role, so another role can still grant the same permission.</li>
+          <li>Actual deny assignments are created only by the platform (deployment stacks, managed apps). You can't create one directly.</li>
+          <li>Creating a custom role needs <code>roleDefinitions/write</code> (Owner or User Access Administrator). <code>AssignableScopes</code> controls where the role can be assigned.</li>
+          <li>Management group hierarchy: up to <b>6 levels</b> below the root, not counting the root and subscription levels.</li>
+        </ul></div>
+        <div class="card"><h3>Roles to know cold</h3><ul>
+          <li><b>Owner</b>: full control plus role assignment.</li>
+          <li><b>Contributor</b>: full control, <b>can't assign roles</b>.</li>
+          <li><b>User Access Administrator</b>: assigns roles only. <b>RBAC Administrator</b>: assigns roles, optionally limited by conditions.</li>
+          <li><b>VM Contributor</b>: manages VMs, with no login access and no rights on the VNet or storage the VM connects to.</li>
+          <li><b>Storage Account Contributor</b> can list keys, which effectively gives data access. <b>Storage Blob Data *</b> roles are data plane.</li>
+          <li>An Entra Global Admin can <b>elevate</b> to User Access Administrator at root scope (/), under Properties → "Access management for Azure resources".</li>
+        </ul></div>
+        <div class="card"><h3>Locks</h3><ul>
+          <li><b>CanNotDelete</b> (Delete): resources can be changed but not deleted. <b>ReadOnly</b>: no changes and no deletion.</li>
+          <li>Locks apply to <b>everyone, including Owners</b>. An Owner or User Access Administrator can remove the lock first.</li>
+          <li>Locks are inherited by child resources. When locks conflict, the most restrictive one wins.</li>
+          <li>Locks are control plane only. A ReadOnly lock on a storage account blocks <b>listKeys</b> (a POST), so portal access that uses a key fails, but Entra data-plane access still works.</li>
+        </ul></div>
+        <div class="card"><h3>Azure Policy</h3><ul>
+          <li>Effects: Deny, Audit, Append, <b>Modify</b>, <b>DeployIfNotExists</b>, AuditIfNotExists, Disabled.</li>
+          <li><b>Deny</b> blocks only new creates and updates. Existing resources are flagged <b>non-compliant</b> and keep running.</li>
+          <li>Fixing existing resources needs a <b>remediation task</b> (Modify or DINE effects, using a managed identity).</li>
+          <li>An initiative is a set of policies. Exemptions and exclusions remove scopes from an assignment.</li>
+          <li>Tags are <b>not inherited</b>. Use the "Inherit a tag from the resource group" policy (Modify effect) plus remediation.</li>
+        </ul></div>
+        <div class="card"><h3>Entra ID</h3><ul>
+          <li>Group types: Security or Microsoft 365. Membership: Assigned, <b>Dynamic user</b>, or <b>Dynamic device</b> (device rules work on security groups only).</li>
+          <li>Dynamic groups and group-based licensing need <b>Entra ID P1</b>.</li>
+          <li>External partners: invite as <b>guests (B2B)</b>, one at a time or by bulk CSV. They sign in with their own credentials.</li>
+          <li>SSPR: <b>None / Selected / All</b>. "Selected" scopes it to a group. Admin accounts always have SSPR with a stricter two-method policy.</li>
+          <li>Administrative units scope Entra admin roles to a subset of users or devices.</li>
+        </ul></div>
+        <div class="card"><h3>Cost &amp; moves</h3><ul>
+          <li><b>Budgets only alert</b> (and can trigger action groups). They never stop resources on their own.</li>
+          <li>Moving resources: <b>resource IDs change</b>. Role assignments made directly on the resource <b>don't move</b>. Source and target RGs are locked for writes during the move; the resources keep running.</li>
+          <li>Moving across subscriptions requires the <b>same Entra tenant</b> and the resource provider registered in the target subscription.</li>
+          <li>Advisor gives cost, security, reliability, and performance recommendations. Reservations and Azure Hybrid Benefit reduce cost.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-sto">
+      <div class="eyebrow">05 · Storage · 15–20%</div>
+      <h2>Storage cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Redundancy</th><th>Copies</th><th>Survives</th><th>Read from secondary?</th></tr></thead>
+        <tbody>
+          <tr><td><b>LRS</b></td><td>3 in one datacenter</td><td>Disk / rack failure</td><td>No</td></tr>
+          <tr><td><b>ZRS</b></td><td>3 across availability zones</td><td>Zone failure</td><td>No</td></tr>
+          <tr><td><b>GRS</b></td><td>LRS + LRS in paired region</td><td>Region failure (after failover)</td><td>No (RA-GRS: yes)</td></tr>
+          <tr><td><b>GZRS</b></td><td>ZRS + LRS in paired region</td><td>Zone and region failure</td><td>No (RA-GZRS: yes)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Tiers &amp; lifecycle</h3><ul>
+          <li>Minimum days before early-deletion charges: Hot none, <b>Cool 30</b>, <b>Cold 90</b>, <b>Archive 180</b>.</li>
+          <li>Archive is <b>offline</b>. To read a blob you rehydrate it (change its tier or copy it): up to <b>15 h</b> at standard priority, under 1 h at high priority for blobs under 10 GB.</li>
+          <li>The Archive tier isn't supported on ZRS, GZRS, or RA-GZRS accounts.</li>
+          <li><b>Lifecycle management policy</b> rules filter by prefix or blob index tags and act on days since modification, creation, or last access (last access needs access tracking enabled).</li>
+        </ul></div>
+        <div class="card"><h3>Access</h3><ul>
+          <li>Two account keys. Rotating a key invalidates every SAS signed with it.</li>
+          <li><b>Account SAS</b>: multiple services. <b>Service SAS</b>: one service. <b>User delegation SAS</b>: signed with <b>Entra credentials</b>, Blob/ADLS only, recommended.</li>
+          <li><b>Stored access policy</b>: lets you revoke a service SAS without rotating keys. Up to 5 per container.</li>
+          <li>Data-plane RBAC: Storage Blob Data Reader / Contributor / Owner. Shared Key authorization can be turned off.</li>
+        </ul></div>
+        <div class="card"><h3>Network</h3><ul>
+          <li>The firewall allows selected VNets (needs the <b>Microsoft.Storage service endpoint</b> on the subnet) and public IP ranges (not private IPs).</li>
+          <li>A <b>private endpoint</b> gives the account a private IP in your VNet and is reachable from on-prem over VPN/ER. It needs the <code>privatelink.blob.core.windows.net</code> DNS zone.</li>
+          <li>The "Allow trusted Microsoft services" exception covers services like Azure Backup and Event Grid.</li>
+        </ul></div>
+        <div class="card"><h3>Data protection</h3><ul>
+          <li>Blob soft delete and container soft delete: 1–365 days.</li>
+          <li>Versioning keeps prior versions automatically when a blob is overwritten.</li>
+          <li>Point-in-time restore needs versioning, change feed, and soft delete.</li>
+          <li><b>Object replication</b> needs versioning on <b>both</b> accounts and <b>change feed on the source</b>. Not supported with hierarchical namespace (HNS).</li>
+          <li><b>Immutable storage</b>: a time-based retention policy (WORM, can be locked) or a legal hold (no end date).</li>
+        </ul></div>
+        <div class="card"><h3>Azure Files &amp; File Sync</h3><ul>
+          <li>SMB uses port 445, which many ISPs block. NFS requires premium file shares.</li>
+          <li>Premium file shares (FileStorage accounts) support <b>LRS and ZRS only</b>.</li>
+          <li>Identity sources: on-prem AD DS, Entra Domain Services, or Entra Kerberos (hybrid users). Share-level roles: SMB Share <b>Reader / Contributor / Elevated Contributor</b> (Elevated can change NTFS ACLs).</li>
+          <li>File Sync: Storage Sync Service → sync group → <b>1 cloud endpoint</b> plus multiple server endpoints. Each server registers with only one Sync Service. Cloud tiering frees local disk space.</li>
+        </ul></div>
+        <div class="card"><h3>Tools &amp; encryption</h3><ul>
+          <li><b>AzCopy</b>: <code>azcopy copy</code> / <code>azcopy sync</code>, authenticated with Entra or a SAS. Storage Explorer is the GUI. Data Box is for offline transfers of many TB.</li>
+          <li>Encryption at rest is always on, with Microsoft-managed or <b>customer-managed keys</b> (Key Vault with soft delete and purge protection).</li>
+          <li>Infrastructure (double) encryption can only be enabled <b>when the account is created</b>.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-cmp">
+      <div class="eyebrow">06 · Compute · 20–25%</div>
+      <h2>Compute cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>App Service tier</th><th>Custom domain / TLS</th><th>Scale out</th><th>Slots</th><th>Autoscale</th></tr></thead>
+        <tbody>
+          <tr><td>Free / Shared</td><td>Shared: domain only</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>Basic</td><td>Yes</td><td>Manual, up to 3</td><td>—</td><td>—</td></tr>
+          <tr><td><b>Standard</b></td><td>Yes</td><td>Up to 10</td><td><b>5</b></td><td><b>Yes</b></td></tr>
+          <tr><td>Premium v3</td><td>Yes</td><td>Up to 30</td><td>20</td><td>Yes</td></tr>
+          <tr><td>Isolated (ASE)</td><td>Yes</td><td>Up to 100</td><td>20</td><td>Yes</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>VM availability</h3><ul>
+          <li>SLAs: VMs across <b>zones 99.99%</b>, availability set <b>99.95%</b>, single VM on Premium SSD <b>99.9%</b>.</li>
+          <li>Availability set: up to <b>3 fault domains</b> (rack, power) and <b>20 update domains</b> (default 5). Planned maintenance takes down one UD at a time.</li>
+          <li>You can't add an existing VM to an availability set. You have to recreate it.</li>
+          <li>Resizing a running VM <b>restarts</b> it. If the new size isn't on the current hardware cluster, <b>deallocate first</b>.</li>
+        </ul></div>
+        <div class="card"><h3>Disks &amp; encryption</h3><ul>
+          <li>The temp disk (D: on Windows, /dev/sdb on Linux) is <b>lost on deallocate or redeploy</b>.</li>
+          <li><b>SSE</b> (default; platform- or customer-managed key) encrypts at rest. <b>Encryption at host</b> also covers the temp disk and caches.</li>
+          <li><b>ADE</b> (BitLocker / DM-Crypt) needs a Key Vault in the <b>same region and subscription</b> with "Azure Disk Encryption for volume encryption" enabled.</li>
+          <li>Moving a VM across regions: <b>Azure Resource Mover</b> or ASR.</li>
+        </ul></div>
+        <div class="card"><h3>Scale sets</h3><ul>
+          <li>Orchestration modes: Uniform or Flexible. Autoscale is configured as rules in a profile with <b>Min / Max / Default</b> instance counts.</li>
+          <li><b>Default</b> is used when metrics can't be read. If the current count is below Default, autoscale scales out to Default.</li>
+          <li>Default cooldown is 5 minutes. Scale-in policies: Default, NewestVM, OldestVM.</li>
+          <li>Post-deploy configuration: <b>Custom Script Extension</b>, Run Command, or cloud-init.</li>
+        </ul></div>
+        <div class="card"><h3>ARM &amp; Bicep</h3><ul>
+          <li>Template sections: <code>parameters</code>, <code>variables</code>, <code>resources</code>, <code>outputs</code>. <code>dependsOn</code> sets deployment order.</li>
+          <li>Deployment scopes: <code>az deployment group|sub|mg|tenant create</code>. Creating an RG requires <b>subscription</b> scope.</li>
+          <li>Modes: <b>Incremental</b> (default) leaves other resources alone. <b>Complete</b> deletes RG resources that aren't in the template.</li>
+          <li>Decorators like <code>@allowed</code>, <code>@minLength</code>, and <code>@secure()</code> are checked at validation, before anything deploys.</li>
+        </ul></div>
+        <div class="card"><h3>Containers</h3><ul>
+          <li><b>ACR</b> SKUs: Basic, Standard, <b>Premium</b> (geo-replication, private link). Prefer a managed identity with <b>AcrPull</b> over the admin user.</li>
+          <li><b>ACI</b>: containers in a group share lifecycle, network (localhost), and volumes. <b>Multi-container groups are Linux-only.</b> Restart policies: Always / OnFailure / Never.</li>
+          <li><b>Container Apps</b>: serverless, with revisions, ingress, and KEDA scale rules (HTTP, queue, and others). <b>Scales to zero.</b></li>
+        </ul></div>
+        <div class="card"><h3>App Service details</h3><ul>
+          <li>A web app must be in the <b>same region as its plan</b>. All apps on a plan share its instances and scale together.</li>
+          <li>Settings marked as a <b>deployment slot setting</b> stay with the slot during a swap. Everything else moves with the code.</li>
+          <li>Custom domain: verify with a TXT record (<code>asuid</code>) plus a CNAME or A record. Free managed certificates are available.</li>
+          <li>Backup is available on Basic and higher. VNet integration handles outbound traffic; private endpoints handle inbound.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-net">
+      <div class="eyebrow">07 · Networking · 15–20%</div>
+      <h2>Networking cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th></th><th>Service endpoint</th><th>Private endpoint</th></tr></thead>
+        <tbody>
+          <tr><td>Target IP</td><td>Service keeps its <b>public</b> IP</td><td><b>Private IP in your subnet</b></td></tr>
+          <tr><td>Reachable from on-prem over VPN/ER</td><td>No</td><td><b>Yes</b></td></tr>
+          <tr><td>Scope</td><td>Entire service in the region</td><td>One specific resource</td></tr>
+          <tr><td>DNS changes</td><td>None</td><td><code>privatelink.*</code> private zone</td></tr>
+          <tr><td>Cost</td><td>Free</td><td>Hourly plus data processed</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>VNets &amp; peering</h3><ul>
+          <li>Azure reserves <b>5 IPs per subnet</b> (first 4 plus the last). The smallest subnet is /29.</li>
+          <li>Peering is <b>non-transitive</b>, and peered address spaces <b>can't overlap</b>. Global (cross-region) peering works.</li>
+          <li><b>Gateway transit</b>: on the hub side, "Allow gateway transit". On the spoke side, "Use remote gateways".</li>
+          <li>Spoke-to-spoke traffic: peer the spokes directly, or route through a hub NVA or firewall (UDR plus "allow forwarded traffic").</li>
+        </ul></div>
+        <div class="card"><h3>NSG &amp; ASG</h3><ul>
+          <li>Priority 100–4096. <b>Lower number wins</b>, and the first match stops evaluation.</li>
+          <li>Default inbound rules: AllowVnetInBound, AllowAzureLoadBalancerInBound, <b>DenyAllInBound</b> (65500).</li>
+          <li>Inbound traffic is checked by the <b>subnet NSG, then the NIC NSG</b>. Both must allow it. Outbound is NIC first, then subnet.</li>
+          <li>ASG members must all be NICs in the <b>same VNet</b>. Use "Effective security rules" on the NIC to see the combined result.</li>
+        </ul></div>
+        <div class="card"><h3>Routing</h3><ul>
+          <li>Next hop types: Virtual appliance, Virtual network gateway, Virtual network, Internet, None.</li>
+          <li><b>Longest prefix match</b> wins. On a tie, UDR beats BGP, which beats system routes.</li>
+          <li>Forcing traffic through an NVA: UDR on the <b>source</b> subnet, plus <b>IP forwarding</b> enabled on the NVA's NIC (and in its OS).</li>
+        </ul></div>
+        <div class="card"><h3>DNS</h3><ul>
+          <li>Azure-provided DNS is at <code>168.63.129.16</code>.</li>
+          <li>Private zones are linked to VNets. <b>Auto-registration</b> can be enabled for only one zone per VNet. A VNet can be linked to many zones for resolution only.</li>
+          <li>Public zone: delegate by changing the <b>NS records at the registrar</b>. A CNAME can't sit at the zone apex; use an <b>alias record</b> instead.</li>
+        </ul></div>
+        <div class="card"><h3>Load balancing: pick the right one</h3><ul>
+          <li><b>Load Balancer</b>: layer 4, regional. <b>Application Gateway</b>: layer 7 path/host routing, TLS termination, <b>WAF</b>, needs its own subnet.</li>
+          <li><b>Traffic Manager</b>: global, DNS-based. <b>Front Door</b>: global, layer 7, CDN plus WAF.</li>
+          <li>Standard LB requires a Standard public IP. Zone-redundant. Backend pool must be in <b>one VNet</b>. Closed by default (needs an NSG to allow traffic).</li>
+          <li>LB components: frontend IP, backend pool, <b>health probe</b>, LB rule, inbound NAT rule, outbound rule. Session persistence: None, Client IP, or Client IP and protocol.</li>
+          <li>Basic LB and Basic public IP were <b>retired</b> on Sept 30, 2025.</li>
+        </ul></div>
+        <div class="card"><h3>Bastion &amp; Network Watcher</h3><ul>
+          <li>Bastion needs a subnet named <b>AzureBastionSubnet, /26 or larger</b>. Native client and IP-based connection need the Standard SKU or higher.</li>
+          <li><b>IP flow verify</b>: which NSG rule allows or denies a packet. <b>Next hop</b>: where a packet is routed. <b>Connection troubleshoot</b>: one-off end-to-end test.</li>
+          <li><b>Connection monitor</b>: ongoing reachability and latency checks with alerts. <b>VPN troubleshoot</b>: gateway and connection diagnostics. Flow logs: VNet flow logs.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-s2s">
+      <div class="eyebrow">08 · Hybrid</div>
+      <h2>Site-to-site VPN, built from memory</h2>
+      <p>You've done this by following the docs. These are the steps in order, with the detail on each that tends to show up in exam questions.</p>
+      <ol class="steps">
+        <li><div><b>VNet with a subnet named exactly <code>GatewaySubnet</code></b>, /27 or larger. Don't put VMs or an NSG on it.</div></li>
+        <li><div><b>Public IP</b> (Standard SKU, static) for the gateway.</div></li>
+        <li><div><b>Virtual network gateway</b>: type <b>VPN</b> (not ExpressRoute), VPN type <b>route-based</b> (needed for P2S, VNet-to-VNet, multiple S2S tunnels, and IKEv2). Choose an SKU (VpnGw1–5, AZ variants for zones). It takes <b>30–45 minutes</b> to deploy.</div></li>
+        <li><div><b>Local network gateway</b>: represents <b>on-prem</b>. It holds the on-prem VPN device's <b>public IP (or FQDN)</b> and the <b>on-prem address prefixes</b>. When on-prem adds a subnet, update the prefixes here (or use BGP).</div></li>
+        <li><div><b>Connection</b>: type Site-to-site (IPsec), linking the VNet gateway to the local network gateway, with a <b>shared key (PSK)</b> that must match the on-prem device.</div></li>
+        <li><div><b>Configure the on-prem device</b> (download its configuration script from the connection), then confirm the connection status shows <b>Connected</b>.</div></li>
+      </ol>
+      <div class="sheet">
+        <div class="card"><h3>Variants</h3><ul>
+          <li><b>P2S</b> (point-to-site): individual clients connect, authenticating with a certificate, Entra ID, or RADIUS. Needs a route-based gateway.</li>
+          <li><b>VNet-to-VNet</b>: a gateway on each side. Peering is usually the better choice today.</li>
+          <li><b>ExpressRoute</b>: private circuit through a provider that doesn't cross the internet. A VPN can be used as a backup path.</li>
+          <li>Active-active gateways give two tunnels for high availability.</li>
+        </ul></div>
+        <div class="card"><h3>Troubleshooting</h3><ul>
+          <li>Mismatched PSK → the connection never comes up.</li>
+          <li>Wrong prefixes on the local network gateway → the tunnel is up but some subnets are unreachable.</li>
+          <li>Spokes can't reach on-prem → gateway transit or "Use remote gateways" isn't set on the peering.</li>
+          <li>Diagnose with Network Watcher <b>VPN troubleshoot</b>.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-mon">
+      <div class="eyebrow">09 · Monitor &amp; maintain · 10–15%</div>
+      <h2>Monitoring &amp; backup cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Vault</th><th>Protects</th></tr></thead>
+        <tbody>
+          <tr><td><b>Recovery Services vault</b></td><td>Azure VMs, SQL Server / SAP HANA in VMs, <b>Azure Files</b>, on-prem through the MARS agent or MABS. Also <b>Site Recovery</b>.</td></tr>
+          <tr><td><b>Backup vault</b></td><td><b>Azure Blobs</b>, <b>Azure Disks</b>, Azure Database for PostgreSQL, AKS.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Azure Backup</h3><ul>
+          <li>The vault must be in the <b>same region</b> as the resources it backs up.</li>
+          <li>Set the vault's storage redundancy (LRS/ZRS/GRS) <b>before the first backup</b>. Cross Region Restore requires GRS.</li>
+          <li>VM restore options: create a new VM, restore disks, replace existing, or <b>File Recovery</b> (a script mounts the recovery point so you can copy individual files).</li>
+          <li><b>Soft delete keeps deleted backup data for 14 days.</b> A vault can't be deleted while soft-deleted items remain.</li>
+        </ul></div>
+        <div class="card"><h3>Site Recovery</h3><ul>
+          <li>Replicates VMs to a secondary region. The Recovery Services vault goes in the <b>target</b> region.</li>
+          <li><b>Test failover</b> runs in an isolated VNet without affecting production replication.</li>
+          <li>Sequence: failover → commit → re-protect → fail back.</li>
+        </ul></div>
+        <div class="card"><h3>Alerts</h3><ul>
+          <li>An alert rule has a scope, a condition (metric, log search, or activity log), an <b>action group</b>, and a severity (Sev0–4).</li>
+          <li>Action groups send notifications (email, SMS, push, voice) and run actions (runbook, Function, Logic App, webhook, ITSM).</li>
+          <li><b>Alert processing rules</b> suppress notifications or add action groups on a schedule, for example during maintenance windows.</li>
+        </ul></div>
+        <div class="card"><h3>Data collection</h3><ul>
+          <li><b>Azure Monitor Agent</b> plus a <b>data collection rule (DCR)</b>. The legacy Log Analytics (MMA) agent is retired.</li>
+          <li>Metrics are kept 93 days. The <b>Activity log</b> (who did what at the control plane) is kept <b>90 days</b>. Send it to a workspace to keep it longer.</li>
+          <li>Resource logs need a <b>diagnostic setting</b> to send them to Log Analytics, Storage, or Event Hubs.</li>
+          <li>Insights: VM insights, Storage insights, Network insights.</li>
+        </ul></div>
+        <div class="card"><h3>KQL you should recognize</h3>
+<pre>Event
+| where TimeGenerated &gt; ago(24h)
+| where EventLevelName == "Error"
+| summarize count() by Computer
+| sort by count_ desc
+
+Heartbeat
+| summarize LastSeen = max(TimeGenerated) by Computer
+| where LastSeen &lt; ago(15m)
+
+Perf
+| where CounterName == "% Processor Time"
+| summarize avg(CounterValue) by bin(TimeGenerated, 5m)
+| render timechart</pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-num">
+      <div class="eyebrow">10 · Recall</div>
+      <h2>Numbers to memorize</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Item</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Availability set fault domains / update domains</td><td class="num">max 3 / max 20 (default 5)</td></tr>
+          <tr><td>VM SLA: zones / availability set / single Premium SSD</td><td class="num">99.99 / 99.95 / 99.9%</td></tr>
+          <tr><td>Early deletion: Cool / Cold / Archive</td><td class="num">30 / 90 / 180 days</td></tr>
+          <tr><td>Archive rehydration, standard priority</td><td class="num">up to 15 hours</td></tr>
+          <tr><td>Stored access policies per container</td><td class="num">5</td></tr>
+          <tr><td>Blob / container soft delete range</td><td class="num">1–365 days</td></tr>
+          <tr><td>Backup soft delete retention</td><td class="num">14 days</td></tr>
+          <tr><td>Activity log retention</td><td class="num">90 days</td></tr>
+          <tr><td>Reserved IPs per subnet</td><td class="num">5</td></tr>
+          <tr><td>GatewaySubnet / AzureBastionSubnet minimum</td><td class="num">/27 / /26</td></tr>
+          <tr><td>NSG custom rule priority range</td><td class="num">100–4096</td></tr>
+          <tr><td>Management group depth (excluding root)</td><td class="num">6 levels</td></tr>
+          <tr><td>App Service Standard: instances / slots</td><td class="num">10 / 5</td></tr>
+          <tr><td>Tags per resource</td><td class="num">50</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-traps">
+      <div class="eyebrow">11 · Traps</div>
+      <h2>Classic traps</h2>
+      <div class="traps">
+        <div class="trap"><b>"Least privilege"</b> in the question rules out Owner. Find the narrowest built-in role that still does the job.</div>
+        <div class="trap"><b>"Minimize administrative effort"</b> usually points to a policy, a dynamic group, or a management group assignment, not a script.</div>
+        <div class="trap"><b>NotActions isn't a deny.</b> A second role can still grant the same permission.</div>
+        <div class="trap"><b>Locks stop Owners too.</b> And a ReadOnly lock on a storage account breaks key listing.</div>
+        <div class="trap"><b>Policy Deny doesn't touch existing resources.</b> They're only marked non-compliant.</div>
+        <div class="trap"><b>Peering is non-transitive.</b> Hub-and-spoke doesn't give spoke-to-spoke connectivity for free.</div>
+        <div class="trap"><b>Subnet NSG allows it, but the NIC NSG has only default rules</b> → inbound internet traffic is denied.</div>
+        <div class="trap"><b>The vault must be in the same region as the VM.</b> Blobs and disks go in a <i>Backup</i> vault, not a Recovery Services vault.</div>
+        <div class="trap"><b>Deployment slots and autoscale start at Standard.</b> Basic doesn't have them.</div>
+        <div class="trap"><b>ACI multi-container groups are Linux-only.</b></div>
+        <div class="trap"><b>Budgets never shut anything down</b> unless you attach automation through an action group.</div>
+        <div class="trap"><b>Service endpoints aren't reachable from on-prem.</b> Private endpoints are.</div>
+        <div class="trap"><b>Yes/No series:</b> each proposed solution is judged separately, and you can't go back.</div>
+      </div>
+      <div class="cta-row"><button class="btn primary" data-start="full">Start the full practice exam</button></div>
+    </section>
+  </div>
+</div>
+</section>
+
+<section id="view-exam" hidden></section>
+<section id="view-flash" hidden></section>
+</main>
+
+<script>
+const DOM = {
+  gov:{name:"Identity & governance", short:"Identity"},
+  sto:{name:"Storage", short:"Storage"},
+  cmp:{name:"Compute", short:"Compute"},
+  net:{name:"Networking", short:"Networking"},
+  mon:{name:"Monitor & backup", short:"Monitor"}
+};
+
+const CASE = `<p><b>Fabrikam, Inc.</b> has one Azure subscription (Sub1) linked to the Entra tenant fabrikam.com. Its head office is in Chicago.</p>
+<p><b>Existing environment</b></p>
+<ul>
+<li>VNet-Hub (10.0.0.0/16, East US) has a route-based VPN gateway with a site-to-site connection to the Chicago office (172.16.0.0/16).</li>
+<li>VNet-Spoke1 (10.1.0.0/16) and VNet-Spoke2 (10.2.0.0/16), both in East US, are peered with VNet-Hub. Spoke peerings use the hub's gateway.</li>
+<li>Line-of-business VMs run in both spokes. A resource group RG-Finance holds the finance workloads.</li>
+</ul>
+<p><b>Requirements</b></p>
+<ul>
+<li>VMs in Spoke1 must communicate with VMs in Spoke2.</li>
+<li>All users whose <i>department</i> attribute is Finance must automatically get read access to RG-Finance. Users who leave Finance must lose access automatically.</li>
+<li>Chicago is adding a new on-prem network, 172.17.0.0/16, that must reach Azure over the existing VPN.</li>
+<li>Production VMs must be recoverable in West US if East US has a regional outage.</li>
+<li>Minimize administrative effort and follow least privilege.</li>
+</ul>`;
+
+const Q = [
+// ---------- GOVERNANCE ----------
+{id:"g1",d:"gov",q:`<p>Subscription Sub1 contains resource group RG1. User1 must be able to create, modify, and delete any resource in RG1. User1 must <b>not</b> be able to grant other users access to RG1.</p><p>Following the principle of least privilege, which role should you assign to User1 at the RG1 scope?</p>`,
+ o:["Owner","Contributor","User Access Administrator","Virtual Machine Contributor"],a:[1],
+ x:`Contributor gives full management of every resource type but leaves out <code>Microsoft.Authorization/*/Write</code>, so it can't create role assignments. Owner can assign roles. User Access Administrator can only manage access. Virtual Machine Contributor is limited to VMs.`},
+{id:"g2",d:"gov",m:true,q:`<p>Sub1 contains RG1 and RG2. User2 has these role assignments:</p><div class="tbl-wrap"><table><tr><th>Role</th><th>Scope</th></tr><tr><td>Reader</td><td>Sub1</td></tr><tr><td>Contributor</td><td>RG1</td></tr></table></div><p>Which statements are true?</p>`,
+ o:["User2 can create a VM in RG1.","User2 can view resources in RG2.","User2 can delete a storage account in RG2.","User2 can assign the Reader role on RG1 to another user."],a:[0,1],
+ x:`Role assignments inherit down and add together. Reader at the subscription lets User2 view everything, including RG2. Contributor on RG1 allows create, modify, and delete there. In RG2, User2 has Reader only, so no deletes. Contributor can't assign roles.`},
+{id:"g3",d:"gov",q:`<p>You create a custom role named RoleA:</p><pre>"Actions":    [ "*" ],
+"NotActions": [ "Microsoft.Authorization/*/Write" ]</pre><p>User3 is assigned <b>RoleA</b> and <b>User Access Administrator</b> at the RG1 scope. Can User3 create role assignments in RG1?</p>`,
+ o:["No. NotActions in RoleA blocks the permission.","Yes. NotActions isn't a deny, and User Access Administrator grants the permission.","No. Custom roles take precedence over built-in roles.","Only for assignments that use custom roles."],a:[1],
+ x:`<code>NotActions</code> only removes permissions from the role it's defined in. It doesn't create a deny. Effective permissions are the union of all assigned roles, so User Access Administrator still grants <code>Microsoft.Authorization/roleAssignments/write</code>.`},
+{id:"g4",d:"gov",q:`<p>You must prevent all users, <b>including subscription Owners</b>, from accidentally deleting resources in RG-Prod. Administrators must still be able to change resource settings.</p><p>What should you do?</p>`,
+ o:["Assign an Azure Policy definition with the Deny effect to RG-Prod.","Apply a CanNotDelete (Delete) lock to RG-Prod.","Apply a ReadOnly lock to RG-Prod.","Remove the Owner role from all administrators."],a:[1],
+ x:`Resource locks apply to every user regardless of RBAC role. CanNotDelete allows reads and changes but blocks deletion, and child resources inherit the lock. ReadOnly would also block configuration changes. Policy Deny evaluates create and update requests and isn't the tool for preventing deletion.`},
+{id:"g5",d:"gov",q:`<p>You apply a <b>ReadOnly</b> lock to storage account stor1. A user with the Contributor role on stor1 opens the account in the Azure portal.</p><p>What happens?</p>`,
+ o:["The user can upload blobs by using the account key as usual.","The user can't list the account access keys, so key-based data access from the portal fails.","Existing SAS tokens for stor1 are revoked.","Nothing changes. Locks only affect delete operations."],a:[1],
+ x:`Listing keys is a POST operation (<code>listKeys</code>), and a ReadOnly lock blocks it. Locks apply only to the control plane, so data access through Entra ID RBAC (for example Storage Blob Data Contributor) still works, and existing SAS tokens stay valid.`},
+{id:"g6",d:"gov",q:`<p>You assign the built-in <b>Allowed locations</b> policy (Deny effect) to Sub1, allowing only East US. Sub1 already contains VM1 in West US.</p><p>What happens to VM1?</p>`,
+ o:["VM1 is deleted.","VM1 is stopped (deallocated).","VM1 is reported as non-compliant and keeps running.","The policy assignment fails because non-compliant resources exist."],a:[2],
+ x:`Deny is enforced only on create and update requests. Existing resources are evaluated and reported as non-compliant, and nothing is changed or removed.`},
+{id:"g7",d:"gov",q:`<p>Every resource must have a <b>CostCenter</b> tag whose value matches the tag on its resource group. This applies to existing and future resources.</p><p>What should you do with the least administrative effort?</p>`,
+ o:["Tag each resource group. Resources inherit the tag automatically.","Assign the built-in policy \"Inherit a tag from the resource group\" (Modify effect) and run a remediation task.","Apply a CanNotDelete lock to each resource group.","Create an Azure Automation runbook that copies tags every hour."],a:[1],
+ x:`Tags aren't inherited by default. A policy with the Modify effect adds the tag to new and updated resources, and a remediation task (which uses the assignment's managed identity) fixes existing ones.`},
+{id:"g8",d:"gov",q:`<p>Users whose <i>department</i> attribute is <b>Sales</b> must be added automatically to a group that you'll use for Azure role assignments.</p><p>What should you create, and which license is required?</p>`,
+ o:["A Microsoft 365 group with Assigned membership. Entra ID Free.","A Security group with Dynamic User membership. Entra ID P1.","A Security group with Dynamic Device membership. Entra ID P2.","An administrative unit. Entra ID Free."],a:[1],
+ x:`Membership based on user attributes needs a <b>Dynamic User</b> group, and dynamic membership needs Entra ID P1 (or higher). A security group is the usual choice for RBAC assignments. Device rules evaluate devices, not users.`},
+{id:"g9",d:"gov",q:`<p>Contractors from a partner company must access resources in your subscription by signing in with their <b>own company credentials</b>. You must not manage their passwords.</p><p>What should you do?</p>`,
+ o:["Create cloud-only member accounts for them in your tenant.","Invite them as guest users through Entra B2B collaboration.","Sync their accounts with Entra Connect.","Create a separate Entra tenant for the contractors."],a:[1],
+ x:`B2B guest invitations let external users sign in with their home identity. You can assign them Azure roles like any other user, and their credentials stay under their own organization's control.`},
+{id:"g10",d:"gov",q:`<p>You create a budget of $5,000 for RG-Dev with an alert condition at 100% of actual cost. Nothing else is configured.</p><p>What happens when actual cost reaches $5,000?</p>`,
+ o:["All VMs in RG-Dev are stopped automatically.","New deployments to RG-Dev are blocked.","Alert notifications are sent. Resources keep running.","The subscription is disabled until next month."],a:[2],
+ x:`Budgets only alert. To take action automatically, connect the budget to an action group that runs a runbook, Logic App, or Function. Spending limits that disable a subscription exist only on certain offers, such as free trials.`},
+{id:"g11",d:"gov",q:`<p>You move VM1, its disk, and its NIC from RG1 to RG2 in the same subscription. A role assignment was made directly on VM1.</p><p>Which statement is true?</p>`,
+ o:["VM1 must be deallocated before the move.","The resource IDs of the moved resources change, and the role assignment on VM1 isn't moved.","All tags are removed from the moved resources.","The role assignment moves with VM1 and keeps working."],a:[1],
+ x:`The resource ID includes the resource group name, so it changes. Role assignments made directly on a moved resource aren't carried over and must be recreated. The VM keeps running during the move, and tags move with it.`},
+{id:"g12",d:"gov",q:`<p>You have 40 subscriptions organized into four management groups under the Tenant Root Group. A policy must apply to every current <b>and future</b> subscription.</p><p>Where should you assign it with the least effort?</p>`,
+ o:["To each subscription","To the Tenant Root Group","To each of the four management groups","Through a separate deployment to each subscription"],a:[1],
+ x:`Assignments at a management group are inherited by everything beneath it, including subscriptions added later. The Tenant Root Group covers all of them in a single assignment.`},
+{id:"g13",d:"gov",series:true,q:`<p class="hint">Yes/No series. You can't return to this question on the real exam.</p><p><b>Goal:</b> enable self-service password reset (SSPR) for the members of Group1 only.</p><p><b>Solution:</b> In Password reset → Properties, you set <i>Self service password reset enabled</i> to <b>All</b>.</p><p>Does this meet the goal?</p>`,
+ o:["Yes","No"],a:[1],
+ x:`"All" enables SSPR for every user. To limit it to Group1, set the option to <b>Selected</b> and choose Group1.`},
+
+// ---------- STORAGE ----------
+{id:"s1",d:"sto",q:`<p>Storage account stor1 must stay available if one availability zone in the primary region fails. Your application must also be able to <b>read</b> data from the secondary region if the primary region is unavailable, without waiting for a failover.</p><p>Which redundancy option should you use?</p>`,
+ o:["ZRS","GRS","GZRS","RA-GZRS"],a:[3],
+ x:`GZRS gives zone redundancy in the primary region plus a copy in the secondary region. The <b>RA-</b> prefix adds a readable <code>-secondary</code> endpoint so the app can read without a failover.`},
+{id:"s2",d:"sto",q:`<p>You create a <b>premium file share</b>, which uses a FileStorage account.</p><p>Which redundancy options can you choose?</p>`,
+ o:["LRS and ZRS only","LRS, ZRS, and GRS","GRS and GZRS only","Any redundancy option"],a:[0],
+ x:`Premium FileStorage accounts support only LRS and ZRS. If you need geo-redundancy for Azure Files, use standard file shares on a general-purpose v2 account.`},
+{id:"s3",d:"sto",q:`<p>You give a partner <b>service SAS</b> tokens for the <i>reports</i> container. You must be able to revoke these tokens immediately <b>without</b> affecting other applications that use the storage account keys.</p><p>What should you do?</p>`,
+ o:["Regenerate key1 when you need to revoke access.","Create the SAS tokens from a stored access policy on the container, and delete or change the policy to revoke them.","Use an account SAS with a short expiry.","Enable blob soft delete."],a:[1],
+ x:`A SAS linked to a stored access policy can be revoked by changing or deleting the policy, and the account keys aren't touched. Each container can have up to five policies. Regenerating a key would break every application that uses it.`},
+{id:"s4",d:"sto",q:`<p>Which type of shared access signature is secured with <b>Microsoft Entra credentials</b> instead of a storage account key?</p>`,
+ o:["Account SAS","Service SAS","User delegation SAS","Stored access policy"],a:[2],
+ x:`A user delegation SAS is signed with a user delegation key that you get through Entra ID. It works with Blob storage (including Data Lake Storage Gen2) and is Microsoft's recommended SAS type.`},
+{id:"s5",d:"sto",q:`<p>An application must read a blob that is in the <b>Archive</b> tier.</p><p>What must happen first?</p>`,
+ o:["Nothing. The read succeeds with higher latency.","The blob must be rehydrated to an online tier (Hot, Cool, or Cold), which can take up to 15 hours at standard priority.","Blob versioning must be enabled.","The account must be converted to premium block blob."],a:[1],
+ x:`Archived blobs are offline. Rehydrate one by changing its tier or copying it to an online tier. High priority can finish in under an hour for blobs smaller than 10 GB.`},
+{id:"s6",d:"sto",q:`<p>You move a blob to the <b>Cool</b> tier and delete it 10 days later.</p><p>What is billed?</p>`,
+ o:["No extra charge","An early deletion charge equal to the remaining 20 days","An early deletion charge equal to 80 days","An early deletion charge equal to 170 days"],a:[1],
+ x:`Minimum retention periods are Cool 30 days, Cold 90, and Archive 180. Deleting or moving a blob earlier is charged for the days remaining.`},
+{id:"s7",d:"sto",m:true,pick:2,q:`<p>You need to configure <b>object replication</b> from storA (source) to storB (destination).</p><p>Which <b>two</b> settings are required?</p>`,
+ o:["Change feed enabled on storA","Blob versioning enabled on both storA and storB","Soft delete enabled on storB","Hierarchical namespace enabled on both accounts","Geo-redundant storage on storA"],a:[0,1],
+ x:`Object replication requires blob versioning on both accounts and change feed on the source. Accounts with hierarchical namespace enabled aren't supported.`},
+{id:"s8",d:"sto",q:`<p>Blobs must move to Cool 30 days after they're last modified, to Archive after 90 days, and be deleted after 365 days. This must happen with no custom code.</p><p>What should you configure?</p>`,
+ o:["A lifecycle management policy on the storage account","An Azure Policy assignment with the Modify effect","Object replication to an archive account","An immutable storage retention policy"],a:[0],
+ x:`Lifecycle management rules handle tiering (tierToCool, tierToCold, tierToArchive) and deletion, triggered by days since modification, creation, or last access.`},
+{id:"s9",d:"sto",m:true,pick:2,q:`<p>Storage account stor1 must be reachable only from Subnet1 in VNet1, using <b>service endpoints</b>. All other public network access must be denied.</p><p>Which <b>two</b> actions should you take?</p>`,
+ o:["Enable the Microsoft.Storage service endpoint on Subnet1.","In stor1's Networking settings, choose selected networks and add VNet1/Subnet1.","Deploy a NAT gateway on Subnet1.","Create a private DNS zone named privatelink.blob.core.windows.net.","Associate an NSG that allows port 443 with Subnet1."],a:[0,1],
+ x:`With service endpoints, you enable the endpoint on the subnet and then add a virtual network rule to the storage firewall. The privatelink DNS zone is for private endpoints, which is a different solution.`},
+{id:"s10",d:"sto",q:`<p>Users access an Azure file share using identity-based authentication with AD DS. Group1 must be able to read, write, and delete files, but must <b>not</b> be able to change NTFS permissions.</p><p>Which share-level role should you assign?</p>`,
+ o:["Storage File Data SMB Share Reader","Storage File Data SMB Share Contributor","Storage File Data SMB Share Elevated Contributor","Storage Account Contributor"],a:[1],
+ x:`SMB Share Contributor allows read, write, and delete. Elevated Contributor adds the ability to modify ACLs (NTFS permissions). Storage Account Contributor is a control-plane role.`},
+{id:"s11",d:"sto",q:`<p>In an Azure File Sync <b>sync group</b>, how many endpoints of each type can you have?</p>`,
+ o:["One cloud endpoint and multiple server endpoints","Multiple cloud endpoints and one server endpoint","Exactly one cloud endpoint and one server endpoint","Unlimited cloud and server endpoints"],a:[0],
+ x:`A sync group has exactly one cloud endpoint (an Azure file share) and can have multiple server endpoints on different servers. Each server can be registered with only one Storage Sync Service.`},
+{id:"s12",d:"sto",q:`<p>For compliance, blobs in the <i>audit</i> container must not be modifiable or deletable by anyone, including administrators, for seven years.</p><p>What should you configure?</p>`,
+ o:["Blob soft delete with seven-year retention","A locked time-based retention policy (immutable storage)","A CanNotDelete lock on the storage account","A legal hold on the container"],a:[1],
+ x:`A time-based retention policy provides WORM protection for a set period, and locking it means nobody can shorten it. A legal hold has no end date. Resource locks don't protect data-plane operations, and soft delete allows at most 365 days.`},
+
+// ---------- COMPUTE ----------
+{id:"c1",d:"cmp",q:`<p>You're deploying a stateless web tier on Azure VMs. It must qualify for a <b>99.99%</b> VM connectivity SLA.</p><p>What should you deploy?</p>`,
+ o:["Two VMs in an availability set","Two or more VMs across two or more availability zones","One VM with Premium SSD disks","A VM scale set with one instance"],a:[1],
+ x:`VMs spread across availability zones get 99.99%. An availability set gets 99.95%, and a single VM with Premium SSD gets 99.9%.`},
+{id:"c2",d:"cmp",q:`<p>You deploy 10 VMs into an availability set configured with <b>2 fault domains</b> and <b>5 update domains</b>.</p><p>During planned maintenance, what is the maximum number of VMs that will be unavailable at the same time?</p>`,
+ o:["1","2","5","10"],a:[1],
+ x:`VMs are spread evenly across update domains: 10 ÷ 5 = 2 per UD. Planned maintenance updates one UD at a time, so at most 2 VMs are down together.`},
+{id:"c3",d:"cmp",q:`<p>Using the same availability set (10 VMs, <b>2 fault domains</b>, 5 update domains), what is the maximum number of VMs affected if one server rack loses power?</p>`,
+ o:["1","2","5","10"],a:[2],
+ x:`A fault domain is a rack with shared power and network. 10 VMs across 2 FDs means 5 per FD.`},
+{id:"c4",d:"cmp",q:`<p>You need to resize running VM1 to a size that <b>isn't available</b> on the hardware cluster currently hosting it.</p><p>What must you do?</p>`,
+ o:["Nothing. Resizing happens online without a restart.","Stop (deallocate) VM1 and then resize it.","Redeploy VM1 into a new virtual network.","Delete VM1 and recreate it from a snapshot."],a:[1],
+ x:`Even when the size is available on the current cluster, resizing restarts the VM. If it isn't available, deallocating lets Azure place the VM on hardware that supports the new size.`},
+{id:"c5",d:"cmp",q:`<p>A VM scale set autoscale profile is set to <b>Minimum 2, Maximum 10, Default 4</b>. The scale set currently has <b>2</b> instances, and the autoscale engine can no longer read the metrics.</p><p>How many instances will run?</p>`,
+ o:["2","4","10","It doesn't change. Autoscale is suspended until metrics return."],a:[1],
+ x:`The Default count applies when metrics can't be read. If the current count is below Default, autoscale scales out to Default. If it's above Default, it doesn't scale in.`},
+{id:"c6",d:"cmp",q:`<p>VM1 is in <b>East US</b>. Enabling Azure Disk Encryption (ADE) on VM1 fails. Key vault KV1 is in <b>West US</b> in the same subscription and has "Azure Disk Encryption for volume encryption" enabled.</p><p>What should you do?</p>`,
+ o:["Enable purge protection on KV1.","Create a key vault in East US and use it for ADE.","Assign VM1 the Key Vault Reader role.","Convert VM1's disks to Premium SSD."],a:[1],
+ x:`ADE requires the key vault and the VM to be in the same region and subscription.`},
+{id:"c7",d:"cmp",q:`<p>An ARM template creates a <b>resource group</b> and then deploys a storage account into it.</p><p>Which Azure CLI command should you use to deploy it?</p>`,
+ o:["az deployment group create","az deployment sub create","az group create --template-file","az deployment tenant create"],a:[1],
+ x:`Resource groups are created at subscription scope, so the deployment must target the subscription. Inside the template, a nested deployment (or a Bicep module) deploys into the new group.`},
+{id:"c8",d:"cmp",q:`<p>A Bicep file contains:</p><pre>@allowed([
+  'Standard_LRS'
+  'Standard_GRS'
+])
+param skuName string = 'Standard_LRS'</pre><p>You deploy it with <code>skuName='Premium_LRS'</code>. What happens?</p>`,
+ o:["The account deploys with Premium_LRS.","The account deploys with the default value, Standard_LRS.","Validation fails, and no resources are deployed.","The account deploys and is flagged by Azure Policy."],a:[2],
+ x:`Parameter decorators are checked during validation, before anything is created. Passing a value that isn't in <code>@allowed</code> fails the whole deployment.`},
+{id:"c9",d:"cmp",q:`<p>A web app needs <b>deployment slots</b> and <b>autoscale</b>.</p><p>What is the lowest-cost App Service plan tier that supports both?</p>`,
+ o:["Free","Basic","Standard","Premium v3"],a:[2],
+ x:`Standard is the first tier with deployment slots (5) and autoscale (up to 10 instances). Basic supports only manual scale-out to 3 instances and has no slots.`},
+{id:"c10",d:"cmp",q:`<p>You swap a staging slot into production. App setting <b>DB_CONN</b> must stay with the production slot instead of moving with the code.</p><p>What should you do?</p>`,
+ o:["Mark DB_CONN as a deployment slot setting in both slots.","Store DB_CONN in web.config.","Enable auto swap on the staging slot.","Clone the production slot before the swap."],a:[0],
+ x:`Settings marked as deployment slot settings ("sticky") stay with their slot during a swap. Other settings move with the content.`},
+{id:"c11",d:"cmp",q:`<p>App Service plan ASP1 (Standard S1) is in <b>West Europe</b>. You want to create WebApp2 in <b>East US</b> and run it on ASP1.</p><p>Can you?</p>`,
+ o:["Yes","No. A web app must be in the same region as its App Service plan.","Yes, if ASP1 is scaled up to Premium v3.","Yes, if VNet integration is enabled."],a:[1],
+ x:`An App Service plan is a set of compute instances in one region, and every app on it runs there. WebApp2 needs a plan in East US.`},
+{id:"c12",d:"cmp",q:`<p>Two containers must share a lifecycle and communicate over <b>localhost</b>. One of them is a <b>Windows</b> container.</p><p>Can you deploy them as one Azure Container Instances container group?</p>`,
+ o:["Yes","No. Multi-container groups support only Linux containers.","Yes, but only by deploying with a YAML file.","Yes, but only when deployed into a VNet."],a:[1],
+ x:`ACI container groups with more than one container are supported only for Linux. Windows container groups hold a single container.`},
+{id:"c13",d:"cmp",q:`<p>A containerized API must scale based on <b>Azure Service Bus queue length</b>, scale to <b>zero</b> when idle, and require no cluster management.</p><p>Which service should you use?</p>`,
+ o:["Azure Kubernetes Service","Azure Container Instances","Azure Container Apps","App Service (Basic)"],a:[2],
+ x:`Container Apps is serverless, uses KEDA-based scale rules (including queue length), and can scale to zero. AKS requires you to manage a cluster, and ACI has no built-in autoscaling.`},
+{id:"c14",d:"cmp",q:`<p>An Azure Container Registry must be <b>geo-replicated</b> to three regions.</p><p>Which SKU is required?</p>`,
+ o:["Basic","Standard","Premium","Any SKU"],a:[2],
+ x:`Geo-replication, private endpoints, and the highest throughput are Premium-only features.`},
+{id:"c15",d:"cmp",q:`<p>You must run a PowerShell script on 20 <b>existing</b> Windows VMs to install IIS. You must not sign in to the VMs interactively.</p><p>What should you use?</p>`,
+ o:["The Custom Script Extension","Boot diagnostics","Serial console","Azure Bastion"],a:[0],
+ x:`The Custom Script Extension downloads and runs scripts after deployment, and you can target many VMs or a scale set. Run Command also works for ad-hoc jobs. Bastion and the serial console are interactive.`},
+
+// ---------- NETWORKING ----------
+{id:"n1",d:"net",q:`<p>VNet1 is peered with VNet2. VNet2 is peered with VNet3. There are no gateways, NVAs, or UDRs.</p><p>Can a VM in VNet1 communicate with a VM in VNet3?</p>`,
+ o:["Yes","No. Peering isn't transitive.","Only if all three VNets are in the same region","Only if the peerings are global"],a:[1],
+ x:`Peering connects only the two VNets in each peering. To connect VNet1 and VNet3, peer them directly or route through an NVA or Azure Firewall in VNet2 using UDRs.`},
+{id:"n2",d:"net",q:`<p>You have these VNets:</p><div class="tbl-wrap"><table><tr><th>VNet</th><th>Address space</th></tr><tr><td>VNetA</td><td>10.1.0.0/16</td></tr><tr><td>VNetB</td><td>10.1.128.0/17</td></tr><tr><td>VNetC</td><td>10.2.0.0/16</td></tr><tr><td>VNetD</td><td>192.168.0.0/16</td></tr></table></div><p>Which peering <b>can't</b> be created?</p>`,
+ o:["VNetA ↔ VNetC","VNetA ↔ VNetB","VNetC ↔ VNetD","VNetB ↔ VNetD"],a:[1],
+ x:`10.1.128.0/17 is inside 10.1.0.0/16. Peered VNets can't have overlapping address spaces.`},
+{id:"n3",d:"net",m:true,pick:2,q:`<p>VNet-Hub has a VPN gateway with a site-to-site connection to on-premises. VNet-Spoke is peered with VNet-Hub. VMs in VNet-Spoke must reach on-premises <b>through the hub's gateway</b>.</p><p>Which <b>two</b> settings should you configure?</p>`,
+ o:["On the hub-to-spoke peering: Allow gateway transit","On the spoke-to-hub peering: Use the remote virtual network's gateway","On the spoke-to-hub peering: Allow gateway transit","Deploy a second VPN gateway in VNet-Spoke","On the hub-to-spoke peering only: Allow forwarded traffic"],a:[0,1],
+ x:`Gateway transit is set on both sides of the peering. The VNet that has the gateway allows transit, and the spoke uses the remote gateway. The spoke can't have its own gateway when it uses a remote one.`},
+{id:"n4",d:"net",q:`<p>When you build a site-to-site VPN, what does the <b>local network gateway</b> represent, and what do you configure on it?</p>`,
+ o:["The Azure VPN gateway. Its public IP and the VNet address space.","The on-premises VPN device. Its public IP (or FQDN) and the on-premises address prefixes.","The ExpressRoute circuit. The peering location and bandwidth.","The connection. The shared key and IPsec/IKE policy."],a:[1],
+ x:`The local network gateway is Azure's object for the on-premises side. The shared key belongs to the <i>connection</i>. When an on-prem network is added, update the address prefixes here, or use BGP.`},
+{id:"n5",d:"net",q:`<p>You're deploying a VPN gateway in VNet1. What must the gateway's subnet be named, and what size is recommended?</p>`,
+ o:["VPNSubnet, /29","GatewaySubnet, /27 or larger","AzureGatewaySubnet, /26","Any name, /28"],a:[1],
+ x:`The name must be exactly <code>GatewaySubnet</code>. Microsoft recommends /27 or larger to leave room for more configurations, such as coexisting with ExpressRoute.`},
+{id:"n6",d:"net",m:true,q:`<p>VM1's NIC has no NSG. Subnet1, where VM1 lives, has an NSG with these custom inbound rules (plus the defaults):</p><div class="tbl-wrap"><table><tr><th>Priority</th><th>Port</th><th>Source</th><th>Action</th></tr><tr><td>100</td><td>TCP 3389</td><td>Internet</td><td>Deny</td></tr><tr><td>200</td><td>TCP 3389</td><td>Any</td><td>Allow</td></tr><tr><td>300</td><td>TCP 443</td><td>Any</td><td>Allow</td></tr></table></div><p>Which statements are true?</p>`,
+ o:["RDP from the internet to VM1 is allowed.","RDP from another VM in the same VNet to VM1 is allowed.","HTTPS from the internet to VM1 is allowed.","HTTPS is denied because DenyAllInBound has priority 65500."],a:[1,2],
+ x:`Rules are evaluated from lowest priority number up, and the first match wins. Internet RDP matches rule 100 (Deny). RDP from inside the VNet doesn't match the Internet tag, so it reaches rule 200 (Allow). HTTPS matches rule 300 before the default deny at 65500.`},
+{id:"n7",d:"net",q:`<p>Subnet1's NSG has an inbound rule allowing TCP 443 from the Internet. VM2's NIC has its own NSG containing <b>only the default rules</b>.</p><p>Is HTTPS from the internet to VM2 allowed?</p>`,
+ o:["Yes. The subnet NSG allows it.","No. The NIC NSG's default DenyAllInBound rule blocks it.","Yes. NIC NSGs are evaluated only for outbound traffic.","Only if VM2 is behind a load balancer."],a:[1],
+ x:`For inbound traffic, both NSGs must allow it: the subnet NSG first, then the NIC NSG. The default rules allow only VirtualNetwork and AzureLoadBalancer sources, so internet traffic hits DenyAllInBound.`},
+{id:"n8",d:"net",q:`<p>VM5 is in VNet1 and VM6 is in VNet2. The VNets are peered.</p><p>Can you add both VMs' NICs to application security group ASG-Web?</p>`,
+ o:["Yes","No. All NICs in an ASG must be in the same VNet.","Yes, because the VNets are peered.","Yes, if both VNets are in the same subscription."],a:[1],
+ x:`An ASG can contain NICs from only one VNet, and that VNet is set by the first NIC you add. Peering doesn't change this.`},
+{id:"n9",d:"net",q:`<p>On-premises servers connect to Azure over a site-to-site VPN. They must reach storage account stor2 over a <b>private IP address</b>, and stor2's public endpoint must be disabled.</p><p>What should you implement?</p>`,
+ o:["A service endpoint on the gateway subnet","A private endpoint for stor2, with private DNS resolution","A NAT gateway","A storage firewall IP rule for the on-premises public IP"],a:[1],
+ x:`A private endpoint gives stor2 a private IP in the VNet, which on-prem can reach over the VPN once DNS resolves <code>privatelink.blob.core.windows.net</code>. Service endpoints only work for traffic that starts inside the VNet.`},
+{id:"n10",d:"net",q:`<p>VMs in VNet1 must <b>automatically register</b> DNS records in the private zone contoso.internal. VMs in VNet2 must be able to <b>resolve</b> those records but must not register their own.</p><p>What should you configure?</p>`,
+ o:["Link both VNets to the zone with auto-registration enabled.","Link VNet1 with auto-registration enabled, and link VNet2 without auto-registration.","Create a public DNS zone named contoso.internal.","Set VNet2's DNS server to 168.63.129.16 without linking it to the zone."],a:[1],
+ x:`Resolution comes from the virtual network link, and registration is a setting on that link. A VNet can have auto-registration enabled for only one private zone.`},
+{id:"n11",d:"net",q:`<p>You created a public DNS zone for contoso.com in Azure DNS. The domain is registered with a third-party registrar.</p><p>What must you do so that internet clients resolve records from Azure DNS?</p>`,
+ o:["Create a CNAME record at the registrar that points to Azure DNS.","Update the domain's name server (NS) records at the registrar to the Azure DNS name servers.","Create a private DNS zone with the same name.","Change the SOA record in Azure DNS."],a:[1],
+ x:`Delegating the domain means pointing the parent zone's NS records, which you manage at the registrar, to the four Azure DNS name servers assigned to the zone.`},
+{id:"n12",d:"net",m:true,pick:2,q:`<p>All internet-bound traffic from Subnet-App must pass through a network virtual appliance at <b>10.0.9.4</b>.</p><p>Which <b>two</b> actions should you take?</p>`,
+ o:["Create a route table with route 0.0.0.0/0, next hop type Virtual appliance, address 10.0.9.4, and associate it with Subnet-App.","Enable IP forwarding on the NVA's network interface.","Create a route 0.0.0.0/0 with next hop type Internet.","Associate the route table with the NVA's subnet only.","Peer Subnet-App with the NVA subnet."],a:[0,1],
+ x:`The UDR goes on the <b>source</b> subnet. The NVA's NIC must have IP forwarding enabled, otherwise Azure drops traffic that isn't addressed to the NIC's own IP. The NVA's OS must also forward traffic.`},
+{id:"n13",d:"net",q:`<p>Requests for <code>/images/*</code> must go to one backend pool and <code>/video/*</code> to another. You also need TLS termination and a web application firewall.</p><p>What should you deploy?</p>`,
+ o:["Azure Load Balancer (Standard)","Azure Application Gateway (WAF v2)","Azure Traffic Manager","NAT gateway"],a:[1],
+ x:`Path-based routing, TLS termination, and WAF are layer-7 features of Application Gateway. Load Balancer works at layer 4, and Traffic Manager works at the DNS level.`},
+{id:"n14",d:"net",q:`<p>An app behind Azure Load Balancer keeps session state in memory. Each client's requests must keep going to the <b>same backend VM</b>.</p><p>What should you configure on the load-balancing rule?</p>`,
+ o:["A shorter health probe interval","Session persistence: Client IP","Floating IP (direct server return)","An outbound rule"],a:[1],
+ x:`Session persistence (source IP affinity) based on Client IP, or Client IP and protocol, sends a client's traffic to the same backend.`},
+{id:"n15",d:"net",q:`<p>A public load balancer must distribute traffic to VMs spread across <b>availability zones</b>.</p><p>Which load balancer SKU and public IP SKU should you use?</p>`,
+ o:["Basic LB and Basic public IP","Standard LB and Basic public IP","Standard LB and Standard public IP","Gateway LB and Standard public IP"],a:[2],
+ x:`Zone support requires Standard, and the load balancer and public IP SKUs must match. The Basic SKUs were retired in September 2025.`},
+{id:"n16",d:"net",q:`<p>You're deploying Azure Bastion to VNet1.</p><p>What are the subnet requirements?</p>`,
+ o:["A subnet named AzureBastionSubnet, /26 or larger","A subnet named BastionSubnet, /29","The existing GatewaySubnet","Any subnet name, /27"],a:[0],
+ x:`Bastion needs a dedicated subnet named exactly <code>AzureBastionSubnet</code>, sized /26 or larger.`},
+{id:"n17",d:"net",q:`<p>VM-A can't connect to VM-B on TCP 1433. You suspect an NSG rule is blocking it, and you need to know <b>which rule</b>.</p><p>Which Network Watcher tool should you use?</p>`,
+ o:["Next hop","IP flow verify","Packet capture","Topology"],a:[1],
+ x:`IP flow verify tests a specific 5-tuple against the effective NSG rules and returns the rule that allowed or denied it. Next hop answers routing questions, such as which UDR or appliance the traffic goes to.`},
+
+// ---------- MONITOR ----------
+{id:"m1",d:"mon",q:`<p>Every Saturday from 01:00 to 05:00, during patching, alert notifications for RG-Prod must be suppressed. The alert rules must stay enabled.</p><p>What should you create?</p>`,
+ o:["A schedule that disables each alert rule","An alert processing rule with a suppression action and a recurring schedule","A new action group with no receivers","A diagnostic setting that excludes RG-Prod"],a:[1],
+ x:`Alert processing rules can suppress action groups (or add them) for a scope on a one-time or recurring schedule. The alert rules keep firing, so alerts are still recorded.`},
+{id:"m2",d:"mon",q:`<p>Which KQL query returns the number of <b>Event</b> records per computer over the last 24 hours?</p>`,
+ o:[`<code>Event | count by Computer</code>`,`<code>Event | where TimeGenerated &gt; ago(24h) | summarize count() by Computer</code>`,`<code>SELECT COUNT(*) FROM Event GROUP BY Computer</code>`,`<code>Event | project count() by Computer | where TimeGenerated &gt; 24h</code>`],a:[1],
+ x:`Use <code>where</code> to filter, <code>ago()</code> for relative time, and <code>summarize … by</code> to aggregate. KQL doesn't support SQL syntax, and <code>project</code> selects columns rather than aggregating.`},
+{id:"m3",d:"mon",q:`<p>You must collect Windows <b>Security</b> event logs from 50 VMs into a Log Analytics workspace using the Azure Monitor Agent.</p><p>What should you create?</p>`,
+ o:["A data collection rule (DCR)","A diagnostic setting on each VM","Workspace agent configuration for the Log Analytics (MMA) agent","A storage account with boot diagnostics"],a:[0],
+ x:`The Azure Monitor Agent gets its instructions from data collection rules: what to collect, from which machines, and where to send it. The legacy MMA agent and workspace-based agent configuration are retired.`},
+{id:"m4",d:"mon",q:`<p>A public IP address was deleted three weeks ago. You need to find out who deleted it.</p><p>Where should you look?</p>`,
+ o:["The Activity log","Azure Monitor metrics","VM insights","Resource Health"],a:[0],
+ x:`The Activity log records control-plane operations, including the caller, for 90 days. To keep records longer, send them to a Log Analytics workspace with a diagnostic setting.`},
+{id:"m5",d:"mon",q:`<p>VM1 is in <b>East US</b>. Recovery Services vault Vault1 is in <b>West US</b> and uses GRS.</p><p>Can you back up VM1 to Vault1?</p>`,
+ o:["Yes","No. The vault must be in the same region as the VM.","Yes, because Vault1 uses GRS","Only through Azure Site Recovery"],a:[1],
+ x:`Azure Backup requires the vault to be in the same region as the resources it protects. Cross-region protection comes from GRS with Cross Region Restore, or from Site Recovery.`},
+{id:"m6",d:"mon",m:true,pick:2,q:`<p>Which <b>two</b> workloads are backed up with a <b>Backup vault</b> rather than a Recovery Services vault?</p>`,
+ o:["Azure Blobs","Azure managed disks (Azure Disk Backup)","Azure VMs","Azure Files","SQL Server running in an Azure VM"],a:[0,1],
+ x:`Backup vaults protect newer workloads: Blobs, Disks, PostgreSQL, and AKS. Recovery Services vaults protect VMs, Azure Files, SQL and SAP HANA in VMs, and MARS/MABS.`},
+{id:"m7",d:"mon",q:`<p>Yesterday you stopped backup and chose <i>delete backup data</i> for every item in Vault1. Deleting Vault1 still fails with an error saying the vault contains backup items.</p><p>What's the cause?</p>`,
+ o:["The deleted items are in a soft-deleted state (kept 14 days). You must permanently remove them before deleting the vault.","Vault1 must be moved to another resource group first.","The vault's storage redundancy must be changed to LRS.","You must delete the resource group instead."],a:[0],
+ x:`Soft delete keeps deleted backup data for 14 days. Undelete the items, disable soft delete (unless it's set to always-on), and delete them again, or wait for the soft-delete period to end.`},
+{id:"m8",d:"mon",q:`<p>A user accidentally deleted one file from VM1, which is backed up daily by Azure Backup. You need to recover only that file with the least effort.</p><p>What should you do?</p>`,
+ o:["Restore VM1 as a new VM.","Use File Recovery: run the downloaded script to mount the recovery point, then copy the file.","Restore the disks, then attach them to another VM.","Run a Site Recovery failover."],a:[1],
+ x:`File Recovery mounts the recovery point's disks as local drives using a generated script, so you can copy individual files. The other options restore far more than you need.`},
+{id:"m9",d:"mon",q:`<p>VMs are replicated to West US with Azure Site Recovery. You must validate your disaster recovery plan without affecting production workloads or ongoing replication.</p><p>What should you run?</p>`,
+ o:["A planned failover","A test failover into an isolated virtual network","An unplanned failover","Commit"],a:[1],
+ x:`Test failover creates VMs in a VNet you choose (ideally isolated) and doesn't interrupt replication. Afterward, run "Cleanup test failover."`},
+{id:"m10",d:"mon",q:`<p>You must <b>continuously</b> monitor reachability and latency between an Azure VM and an on-premises server, and raise alerts when checks fail.</p><p>What should you use?</p>`,
+ o:["IP flow verify","Connection monitor","NSG flow logs","Effective routes"],a:[1],
+ x:`Connection monitor runs ongoing tests between endpoints, including on-prem machines that have the agent, and integrates with Azure Monitor alerts. The other tools are one-off diagnostics or flow logging.`},
+
+// ---------- CASE STUDY ----------
+{id:"cs1",d:"net",cs:true,q:`<p><b>Case study: Fabrikam.</b> You need to meet the requirement that VMs in Spoke1 communicate with VMs in Spoke2.</p><p>What should you do with the least administrative effort?</p>`,
+ o:["Nothing. Both spokes are peered with the hub.","Create a peering between VNet-Spoke1 and VNet-Spoke2.","Enable \"Allow gateway transit\" on both spoke peerings.","Create UDRs in each spoke that point to the hub's VPN gateway."],a:[1],
+ x:`Peering isn't transitive, so being peered with the hub doesn't connect the spokes. A direct peering is the simplest fix. An NVA or Azure Firewall in the hub with UDRs also works but takes more effort.`},
+{id:"cs2",d:"gov",cs:true,q:`<p><b>Case study: Fabrikam.</b> You need to meet the Finance access requirement.</p><p>What should you do?</p>`,
+ o:["Create an assigned security group, add the Finance users, and assign Contributor on RG-Finance.","Create a dynamic user security group with the rule (user.department -eq \"Finance\") and assign Reader on RG-Finance.","Assign Reader to each Finance user on RG-Finance.","Create a dynamic device group and assign Reader on Sub1."],a:[1],
+ x:`A dynamic membership rule adds and removes users automatically as their department changes (this needs Entra ID P1). Reader on RG-Finance gives read access at the narrowest scope. Contributor or subscription scope would break least privilege.`},
+{id:"cs3",d:"net",cs:true,q:`<p><b>Case study: Fabrikam.</b> Chicago adds the network 172.17.0.0/16. It must reach Azure over the existing VPN (static routing, no BGP).</p><p>What should you change in Azure?</p>`,
+ o:["The VPN gateway SKU","The address prefixes of the local network gateway","The size of GatewaySubnet","The shared key on the connection"],a:[1],
+ x:`The local network gateway lists the on-prem prefixes that Azure routes into the tunnel. Add 172.17.0.0/16 there. The on-prem device must also include the new network in its configuration.`},
+{id:"cs4",d:"mon",cs:true,q:`<p><b>Case study: Fabrikam.</b> You need to meet the West US recovery requirement for production VMs.</p><p>What should you use?</p>`,
+ o:["Azure Backup to a GRS Recovery Services vault in East US, without Cross Region Restore","Azure Site Recovery with a Recovery Services vault in West US","A Backup vault in West US","Scheduled disk snapshots copied to West US by a runbook"],a:[1],
+ x:`Site Recovery replicates VMs continuously and supports failover to the target region. Its vault should be in the target region, not the source. GRS backup without Cross Region Restore can't restore in West US, and Backup vaults don't protect VMs.`}
+];
+
+/* ---------- state ---------- */
+const KEY="az104-prep-v1", WKEY="az104-missed-v1";
+const FULL_PLAN={gov:11,sto:8,cmp:11,net:10,mon:6};
+const byId=Object.fromEntries(Q.map(q=>[q.id,q]));
+let S=null, tick=null, confirmOpen=false, resultsFilter="missed";
+function load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const isMulti=q=>!!q.m;
+function same(a,b){if(!a||a.length!==b.length)return false;const s=new Set(a);return b.every(x=>s.has(x))}
+const correct=(q,ans)=>same(ans,q.a);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function buildFull(){
+  let ids=[];
+  for(const d in FULL_PLAN){ids.push(...shuffle(Q.filter(q=>q.d===d&&!q.cs)).slice(0,FULL_PLAN[d]).map(q=>q.id))}
+  ids=shuffle(ids);
+  ids.push(...Q.filter(q=>q.cs).map(q=>q.id));
+  return ids;
+}
+function startFull(){S={mode:"full",ids:buildFull(),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:100*60,done:false};persist();go("exam")}
+function startPractice(domains,onlyIds){
+  let pool=onlyIds?onlyIds.map(id=>byId[id]).filter(Boolean):Q.filter(q=>domains.includes(q.d));
+  if(!pool.length)return;
+  S={mode:"practice",ids:shuffle(pool.map(q=>q.id)),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:0,done:false};persist();go("exam")
+}
+function persist(){if(S)save(KEY,S)}
+
+/* ---------- routing ---------- */
+function go(v){if(location.hash!=="#"+v)location.hash=v;else route()}
+function route(){
+  const h=(location.hash||"#guide").slice(1);
+  const v=["exam","flash"].includes(h)?h:"guide";
+  ["guide","exam","flash"].forEach(k=>{document.getElementById("view-"+k).hidden=v!==k;document.getElementById("tab-"+k).setAttribute("aria-selected",v===k)});
+  if(v==="exam")renderExam();else{updateTimer();if(v==="flash")renderFlash()}
+  window.scrollTo(0,0);
+}
+
+/* ---------- timer ---------- */
+function remaining(){return S&&S.mode==="full"&&!S.done?Math.max(0,S.dur-Math.floor((Date.now()-S.start)/1000)):null}
+function updateTimer(){
+  const t=document.getElementById("timer"), r=remaining();
+  if(r===null){t.hidden=true;return}
+  t.hidden=false;
+  t.textContent=String(Math.floor(r/60)).padStart(2,"0")+":"+String(r%60).padStart(2,"0");
+  t.classList.toggle("low",r<600);
+  if(r===0){finish()}
+}
+function ensureTick(){if(!tick)tick=setInterval(updateTimer,1000)}
+
+/* ---------- exam rendering ---------- */
+const root=()=>document.getElementById("view-exam");
+function renderExam(){
+  updateTimer();
+  if(!S){renderHome();return}
+  if(S.done){renderResults();return}
+  renderQuestion();
+}
+
+function renderHome(){
+  const saved=load(KEY);
+  const missed=load(WKEY)||[];
+  const counts=Object.fromEntries(Object.keys(DOM).map(d=>[d,Q.filter(q=>q.d===d).length]));
+  root().innerHTML=`<div class="ex-home">
+    <div class="hero"><div class="eyebrow">Practice exam</div><h1>Choose how to practice</h1>
+    <p class="lede">${Q.length} original questions written to match the style and difficulty of AZ-104. These aren't real exam questions. They test the same skills in the same formats.</p></div>
+    ${saved&&!saved.done?`<div class="resume"><span>You have an unfinished ${saved.mode==="full"?"full exam":"practice session"} (${Object.keys(saved.ans).length}/${saved.ids.length} answered).</span><button class="btn small primary" id="resume">Resume</button><button class="btn small" id="discard">Discard</button></div>`:""}
+    <div class="modes">
+      <div class="mode"><h3>Full practice exam</h3><p>50 questions weighted by domain, ending with a 4-question case study. 100-minute timer, no feedback until you submit. Questions are drawn at random each time.</p><button class="btn primary" id="go-full">Start full exam</button></div>
+      <div class="mode"><h3>Practice by domain</h3><p>Untimed. You see the answer and explanation after each question.</p>
+        <div class="chips" id="dchips">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="true" data-d="${d}">${DOM[d].short} · ${counts[d]}</button>`).join("")}</div>
+        <button class="btn" id="go-prac">Start practice</button></div>
+      ${missed.length?`<div class="mode"><h3>Retry missed</h3><p>${missed.length} question${missed.length>1?"s":""} you got wrong last time, with instant feedback.</p><button class="btn" id="go-missed">Retry missed questions</button></div>`:""}
+    </div>
+  </div>`;
+  const r=root();
+  r.querySelector("#go-full").onclick=startFull;
+  r.querySelectorAll("#dchips .chip").forEach(c=>c.onclick=()=>c.setAttribute("aria-pressed",c.getAttribute("aria-pressed")!=="true"));
+  r.querySelector("#go-prac").onclick=()=>{const ds=[...r.querySelectorAll('#dchips .chip[aria-pressed="true"]')].map(c=>c.dataset.d);startPractice(ds)};
+  const gm=r.querySelector("#go-missed");if(gm)gm.onclick=()=>startPractice(null,missed);
+  const rs=r.querySelector("#resume");if(rs)rs.onclick=()=>{S=saved;renderExam()};
+  const ds=r.querySelector("#discard");if(ds)ds.onclick=()=>{del(KEY);renderHome()};
+}
+
+function hintFor(q){if(q.series)return"Select Yes or No";if(q.pick)return`Select ${q.pick===2?"two":q.pick}`;if(isMulti(q))return"Select all that apply";return"Select one"}
+
+function renderQuestion(){
+  const q=byId[S.ids[S.cur]], n=S.ids.length, ans=S.ans[q.id]||[], checked=S.mode==="practice"&&S.checked[q.id];
+  const multi=isMulti(q);
+  const opts=q.o.map((t,i)=>{
+    let cls="opt"; if(ans.includes(i))cls+=" sel";
+    if(checked){cls+=" locked";if(q.a.includes(i))cls+=" right";else if(ans.includes(i))cls+=" wrong"}
+    return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${checked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
+  const unanswered=S.ids.filter(id=>!(S.ans[id]&&S.ans[id].length)).length;
+  const markedN=S.ids.filter(id=>S.marked[id]).length;
+  const pal=S.ids.map((id,i)=>{let c="pq";const a=S.ans[id];
+    if(S.mode==="practice"&&S.checked[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(a&&a.length)c+=" ans";
+    if(S.marked[id])c+=" mk";if(i===S.cur)c+=" cur";
+    return `<button class="${c}" data-i="${i}" aria-label="Question ${i+1}">${i+1}</button>`}).join("");
+  root().innerHTML=`<div class="ex">
+    <div class="qcard">
+      <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}
+        <button class="mark" id="mark" aria-pressed="${!!S.marked[q.id]}">${S.marked[q.id]?"Marked for review":"Mark for review"}</button></div>
+      ${q.cs?`<details class="case" open><summary>Case study: Fabrikam, Inc.</summary><div class="cbody">${CASE}</div></details>`:""}
+      <div class="qtext">${q.q}</div>
+      <div class="hint">${hintFor(q)}</div>
+      <div class="opts" id="opts">${opts}</div>
+      ${checked?explainHTML(q,ans):""}
+      <div class="qnav">
+        <button class="btn" id="prev" ${S.cur===0?"disabled":""}>Previous</button>
+        <span class="sp"></span>
+        ${S.mode==="practice"&&!checked?`<button class="btn primary" id="check" ${ans.length?"":"disabled"}>Check answer</button>`:""}
+        ${S.cur<n-1?`<button class="btn ${S.mode==="full"||checked?"primary":""}" id="next">Next</button>`:""}
+      </div>
+    </div>
+    <aside class="side">
+      <div class="pal">
+        <div class="hint">${S.mode==="full"?"Full exam":"Practice"} · ${n-unanswered}/${n} answered</div>
+        <div class="grid">${pal}</div>
+        <div class="legend"><span>■ answered</span><span style="color:var(--warn)">▁ marked</span>${S.mode==="practice"?'<span style="color:var(--good)">■ right</span><span style="color:var(--bad)">■ wrong</span>':""}</div>
+        ${confirmOpen?`<div class="confirm"><div><b>${unanswered}</b> unanswered, <b>${markedN}</b> marked for review. Submit now?</div><div class="cta-row"><button class="btn small primary" id="sub-yes">Submit</button><button class="btn small" id="sub-no">Keep working</button></div></div>`
+          :`<button class="btn ${S.cur===n-1?"primary":""}" id="submit">${S.mode==="full"?"Submit exam":"Finish & see results"}</button>`}
+        <button class="btn small" id="quit">Quit to menu</button>
+      </div>
+    </aside>
+  </div>`;
+  const r=root();
+  r.querySelectorAll("#opts input").forEach(inp=>inp.onchange=()=>{
+    const sel=[...r.querySelectorAll("#opts input:checked")].map(x=>+x.value);
+    S.ans[q.id]=sel;persist();
+    r.querySelectorAll("#opts .opt").forEach((l,i)=>l.classList.toggle("sel",sel.includes(i)));
+    const ck=r.querySelector("#check");if(ck)ck.disabled=!sel.length;
+    const b=r.querySelector(`.pq[data-i="${S.cur}"]`);if(b)b.classList.toggle("ans",!!sel.length);
+  });
+  r.querySelector("#mark").onclick=()=>{S.marked[q.id]=!S.marked[q.id];persist();renderQuestion()};
+  r.querySelector("#prev").onclick=()=>{S.cur--;persist();renderQuestion();window.scrollTo(0,0)};
+  const nx=r.querySelector("#next");if(nx)nx.onclick=()=>{S.cur++;persist();renderQuestion();window.scrollTo(0,0)};
+  const ck=r.querySelector("#check");if(ck)ck.onclick=()=>{S.checked[q.id]=true;persist();renderQuestion()};
+  r.querySelectorAll(".pq").forEach(b=>b.onclick=()=>{S.cur=+b.dataset.i;persist();renderQuestion()});
+  const sb=r.querySelector("#submit");if(sb)sb.onclick=()=>{confirmOpen=true;renderQuestion()};
+  const sy=r.querySelector("#sub-yes");if(sy)sy.onclick=()=>{confirmOpen=false;finish()};
+  const sn=r.querySelector("#sub-no");if(sn)sn.onclick=()=>{confirmOpen=false;renderQuestion()};
+  r.querySelector("#quit").onclick=()=>{S=null;confirmOpen=false;updateTimer();renderHome()};
+}
+
+function letters(arr){return (arr&&arr.length)?arr.slice().sort().map(i=>String.fromCharCode(65+i)).join(", "):"No answer"}
+function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="explain"><div class="verdict ${ok?"ok":"no"}">${ok?"Correct":"Incorrect"}. The answer is ${letters(q.a)}.</div><div>${q.x}</div></div>`}
+
+function finish(){
+  if(!S||S.done)return;
+  S.done=true;S.end=Date.now();
+  const missed=S.ids.filter(id=>!correct(byId[id],S.ans[id]||[]));
+  save(WKEY,missed);persist();updateTimer();resultsFilter="missed";
+  renderExam();window.scrollTo(0,0);
+}
+
+function renderResults(){
+  const items=S.ids.map(id=>({q:byId[id],ans:S.ans[id]||[]})).map(o=>({...o,ok:correct(o.q,o.ans)}));
+  const total=items.length, right=items.filter(i=>i.ok).length, pct=Math.round(right/total*100);
+  const mins=Math.round(((S.end||Date.now())-S.start)/60000);
+  const per=Object.keys(DOM).map(d=>{const its=items.filter(i=>i.q.d===d);const r=its.filter(i=>i.ok).length;return{d,n:its.length,r,p:its.length?Math.round(r/its.length*100):null}}).filter(x=>x.n);
+  const band=p=>p>=80?"hi":p>=65?"mid":"low";
+  const verdict=pct>=80?["Ready","var(--good)"]:pct>=70?["Borderline: review weak domains","var(--warn)"]:["Not yet: study the guide sections for your weakest domains","var(--bad)"];
+  const weakest=per.slice().sort((a,b)=>a.p-b.p)[0];
+  const shown=items.filter(i=>resultsFilter==="all"||!i.ok);
+  root().innerHTML=`<div class="res">
+    <div class="hero"><div class="eyebrow">${S.mode==="full"?"Full exam":"Practice"} results</div><h1>${right} of ${total} correct</h1></div>
+    <div class="score">
+      <div><div class="big">${pct}%</div><div class="hint" style="margin-top:6px">${mins} min</div></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span class="verdict-pill" style="color:${verdict[1]};border-color:${verdict[1]}">${verdict[0]}</span>
+        <p style="color:var(--muted);font-size:.92rem">The real exam uses a scaled 700/1000 passing score, and a scaled score isn't a simple percentage. On a practice set like this, aim for <b>80% or higher</b> so you have a margin.${weakest&&weakest.p<80?` Your weakest domain is <b>${DOM[weakest.d].name}</b>. Re-read <a href="#guide" data-sec="g-${weakest.d}">its cheat sheet</a>.`:""} Multi-select questions are scored all-or-nothing here.</p>
+      </div>
+    </div>
+    <div class="card"><h3>By domain</h3><div class="dbars">
+      ${per.map(x=>`<div class="dbar"><span>${DOM[x.d].name} <span class="hint">${x.r}/${x.n}</span></span><div class="track"><div class="fill ${band(x.p)}" style="width:${x.p}%"></div><div class="tick" title="80% target"></div></div><span class="pct">${x.p}%</span></div>`).join("")}
+      <div class="hint">The line on each bar marks the 80% target</div>
+    </div></div>
+    <div class="cta-row">
+      ${right<total?`<button class="btn primary" id="retry">Retry the ${total-right} missed</button>`:""}
+      <button class="btn" id="newfull">New full exam</button>
+      <button class="btn" id="menu">Practice menu</button>
+    </div>
+    <div class="filter"><h2 style="margin-right:auto">Review</h2>
+      <button class="chip" aria-pressed="${resultsFilter==="missed"}" data-f="missed">Missed (${total-right})</button>
+      <button class="chip" aria-pressed="${resultsFilter==="all"}" data-f="all">All (${total})</button></div>
+    <div class="rlist">${shown.length?shown.map(i=>`<div class="ritem ${i.ok?"ok":"bad"}">
+      <div class="qmeta"><span class="qnum">Q${S.ids.indexOf(i.q.id)+1}</span><span class="dtag">${DOM[i.q.d].short}</span>${i.q.cs?'<span class="dtag">Case study</span>':""}<span style="margin-left:auto;font-weight:600;color:${i.ok?"var(--good)":"var(--bad)"}">${i.ok?"Correct":"Incorrect"}</span></div>
+      <div class="qtext" style="font-size:.95rem">${i.q.q}</div>
+      <div class="row">Your answer: <b>${letters(i.ans)}</b> · Correct: <b>${letters(i.q.a)}</b></div>
+      <ol type="A" style="margin:0;padding-left:22px;font-size:.9rem">${i.q.o.map((t,k)=>`<li style="${i.q.a.includes(k)?"color:var(--good);font-weight:600":i.ans.includes(k)?"color:var(--bad)":""}">${t}</li>`).join("")}</ol>
+      <div class="explain">${i.q.x}</div></div>`).join(""):'<p class="lede">No missed questions.</p>'}</div>
+  </div>`;
+  const r=root();
+  const rt=r.querySelector("#retry");if(rt)rt.onclick=()=>startPractice(null,items.filter(i=>!i.ok).map(i=>i.q.id));
+  r.querySelector("#newfull").onclick=startFull;
+  r.querySelector("#menu").onclick=()=>{S=null;renderHome()};
+  r.querySelectorAll(".filter .chip").forEach(c=>c.onclick=()=>{resultsFilter=c.dataset.f;renderResults()});
+  r.querySelectorAll("a[data-sec]").forEach(a=>a.onclick=e=>{e.preventDefault();go("guide");setTimeout(()=>{const el=document.getElementById(a.dataset.sec);if(el)el.scrollIntoView()},30)});
+}
+
+/* ---------- flashcards ---------- */
+const FC=[
+["gov","Manage every resource in a scope, but <b>not</b> assign roles","<b>Contributor.</b> Owner can also assign roles."],
+["gov","Role that only manages access (role assignments)","<b>User Access Administrator.</b> <b>RBAC Administrator</b> also assigns roles and can be limited with conditions."],
+["gov","What can't Virtual Machine Contributor do?","Sign in to the VM, or manage the VNet or storage account the VM connects to."],
+["gov","Does <code>NotActions</code> deny a permission?","<b>No.</b> It only subtracts from that one role. Another assigned role can still grant the permission."],
+["gov","Who can create a custom Azure role?","Anyone with <code>roleDefinitions/write</code>: <b>Owner</b> or <b>User Access Administrator</b>."],
+["gov","Custom role property that controls where it can be assigned","<b>AssignableScopes</b>"],
+["gov","Global Admin needs access to every subscription","<b>Elevate access</b>: Entra ID → Properties → Access management for Azure resources. This grants User Access Administrator at root scope (/)."],
+["gov","Maximum management group depth","<b>6 levels</b> below the root, not counting the root and subscription levels."],
+["gov","CanNotDelete lock vs ReadOnly lock","<b>CanNotDelete</b>: changes allowed, deletion blocked. <b>ReadOnly</b>: no changes and no deletion."],
+["gov","Do resource locks apply to Owners?","<b>Yes</b>, to everyone. An Owner or User Access Administrator has to remove the lock first."],
+["gov","Effect of a ReadOnly lock on a storage account","Blocks <b>listKeys</b> (a POST), so key-based portal access fails. Entra data-plane access still works."],
+["gov","Policy with the Deny effect, applied to existing non-compliant resources","They're only <b>flagged non-compliant</b>. Nothing is stopped or deleted."],
+["gov","Make Azure Policy fix existing resources","Create a <b>remediation task</b>. Works with Modify or DeployIfNotExists effects and uses a managed identity."],
+["gov","A group of policy definitions assigned together","An <b>initiative</b> (policy set)"],
+["gov","Do resources inherit tags from their resource group?","<b>No.</b> Use the policy \"Inherit a tag from the resource group\" (Modify) plus remediation."],
+["gov","Maximum tags per resource","<b>50</b> name/value pairs"],
+["gov","License needed for dynamic groups","<b>Entra ID P1</b> (or P2)"],
+["gov","Which group type supports dynamic <b>device</b> rules?","<b>Security</b> groups only"],
+["gov","Partner users sign in with their own company credentials","Invite them as <b>B2B guest</b> users, individually or by bulk CSV."],
+["gov","SSPR enablement options","<b>None / Selected / All</b>. Selected scopes SSPR to a group."],
+["gov","Limit an Entra admin role to a subset of users","<b>Administrative unit</b>"],
+["gov","What happens when a budget threshold is hit?","An <b>alert only</b>. To automate a response, attach an <b>action group</b> (runbook, Logic App, Function)."],
+["gov","Moving a resource to another RG: what changes?","The <b>resource ID</b> changes. Role assignments on the resource itself <b>don't move</b>."],
+["gov","Requirement for moving resources across subscriptions","Both subscriptions must be in the <b>same Entra tenant</b>, with the resource provider registered in the target."],
+
+["sto","Survive a zone failure <i>and</i> read from the secondary region without failover","<b>RA-GZRS</b>"],
+["sto","How many copies does GRS keep?","<b>6</b>: 3 (LRS) in the primary region and 3 (LRS) in the paired region."],
+["sto","Redundancy options for premium file shares (FileStorage)","<b>LRS and ZRS only</b>"],
+["sto","Redundancy options that don't support the Archive tier","<b>ZRS, GZRS, RA-GZRS</b>"],
+["sto","Early deletion minimums: Cool / Cold / Archive","<b>30 / 90 / 180 days</b>"],
+["sto","Archive rehydration time","Up to <b>15 hours</b> at standard priority. Under 1 hour at high priority for blobs under 10 GB."],
+["sto","How do you read an archived blob?","<b>Rehydrate</b> it: change its tier to Hot, Cool, or Cold, or copy it to an online tier."],
+["sto","Revoke a service SAS without rotating account keys","Create it from a <b>stored access policy</b>, then change or delete the policy. Maximum 5 policies per container."],
+["sto","SAS signed with Entra credentials","<b>User delegation SAS</b>, for Blob and ADLS Gen2."],
+["sto","Account SAS vs service SAS","<b>Account</b>: one or more services, and service-level operations. <b>Service</b>: one service (blob, file, queue, or table)."],
+["sto","What happens to SAS tokens when you regenerate key1?","Every SAS <b>signed with key1</b> stops working."],
+["sto","Object replication requirements","<b>Versioning</b> on both accounts and <b>change feed</b> on the source. No hierarchical namespace."],
+["sto","Point-in-time restore for blobs requires","<b>Versioning</b>, <b>change feed</b>, and <b>blob soft delete</b>"],
+["sto","Blob or container soft delete retention range","<b>1–365 days</b>"],
+["sto","WORM retention for a fixed period vs indefinitely","<b>Time-based retention policy</b> (can be locked) vs <b>legal hold</b> (no end date)."],
+["sto","Automatically tier and delete blobs by age","A <b>lifecycle management policy</b>, based on days since modification, creation, or last access."],
+["sto","Allow storage access from one subnet using service endpoints","Enable the <b>Microsoft.Storage</b> service endpoint on the subnet, then add a <b>VNet rule</b> to the storage firewall."],
+["sto","Private DNS zone for a blob private endpoint","<code>privatelink.blob.core.windows.net</code>"],
+["sto","Azure Files SMB port","<b>TCP 445</b>, which many ISPs block."],
+["sto","NFS file shares require","<b>Premium</b> file shares (FileStorage account)"],
+["sto","SMB share roles: Reader / Contributor / Elevated","Read only / read, write, delete / everything Contributor can do, plus <b>modify NTFS ACLs</b>"],
+["sto","Endpoints in an Azure File Sync sync group","<b>1 cloud endpoint</b> and many server endpoints"],
+["sto","How many Storage Sync Services can one server register with?","<b>One</b>"],
+["sto","When can infrastructure (double) encryption be enabled?","Only <b>when the account is created</b>"],
+["sto","Key Vault requirements for customer-managed storage keys","<b>Soft delete</b> and <b>purge protection</b> enabled"],
+["sto","AzCopy: copy vs sync","<code>azcopy copy</code> transfers files. <code>azcopy sync</code> makes the destination match the source. Authenticate with Entra or a SAS."],
+
+["cmp","VM SLAs: zones / availability set / single VM","<b>99.99% / 99.95% / 99.9%</b> (single VM on Premium SSD)"],
+["cmp","Availability set maximum fault domains / update domains","<b>3 FDs / 20 UDs</b> (default 5 UDs)"],
+["cmp","10 VMs across 5 UDs: maximum down during planned maintenance","<b>2</b>. One UD is updated at a time."],
+["cmp","Can you add an existing VM to an availability set?","<b>No.</b> You have to recreate the VM in the set."],
+["cmp","Resize a running VM","It <b>restarts</b>. If the size isn't on the current cluster, <b>deallocate</b> first."],
+["cmp","When is the temp disk's data lost?","On <b>deallocate</b>, <b>redeploy</b>, or a host move. Never store data there."],
+["cmp","Key Vault requirement for Azure Disk Encryption","<b>Same region and subscription</b> as the VM, with \"Azure Disk Encryption for volume encryption\" enabled."],
+["cmp","What does encryption at host add?","Encryption of the <b>temp disk</b> and <b>disk caches</b>"],
+["cmp","Move a VM to another region","<b>Azure Resource Mover</b> (or Site Recovery)"],
+["cmp","VMSS autoscale Default instance count","Used when <b>metrics can't be read</b>. Scales out to Default if the current count is lower."],
+["cmp","Default autoscale cooldown","<b>5 minutes</b>"],
+["cmp","Template that creates a resource group: deployment scope","<b>Subscription</b>: <code>az deployment sub create</code>"],
+["cmp","ARM Complete mode","<b>Deletes</b> resources in the RG that aren't in the template. Incremental (the default) leaves them alone."],
+["cmp","Invalid value for a parameter with <code>@allowed</code>","<b>Validation fails</b> and nothing is deployed."],
+["cmp","Run a script on existing VMs without signing in","<b>Custom Script Extension</b> or <b>Run Command</b>"],
+["cmp","Cheapest App Service tier with slots and autoscale","<b>Standard</b>: 10 instances, 5 slots"],
+["cmp","App Service Basic tier","Custom domain and TLS, <b>manual</b> scale-out to 3. No slots, no autoscale."],
+["cmp","App Service Premium v3 limits","<b>30</b> instances, <b>20</b> slots"],
+["cmp","Keep an app setting with its slot during a swap","Mark it as a <b>deployment slot setting</b> (sticky)."],
+["cmp","Can a web app run on a plan in another region?","<b>No.</b> The app and its plan must be in the same region."],
+["cmp","Verify a custom domain for App Service","<b>TXT</b> record (<code>asuid.</code>) plus a <b>CNAME</b> or <b>A</b> record"],
+["cmp","ACR SKU for geo-replication and private link","<b>Premium</b>"],
+["cmp","Recommended way to pull from ACR","A <b>managed identity</b> with the <b>AcrPull</b> role, not the admin user."],
+["cmp","ACI multi-container groups support","<b>Linux only</b>"],
+["cmp","ACI restart policies","<b>Always</b> (default), <b>OnFailure</b>, <b>Never</b>"],
+["cmp","Serverless containers, event-driven scaling, scale to zero","<b>Azure Container Apps</b> (KEDA scale rules)"],
+
+["net","IPs reserved by Azure in each subnet","<b>5</b>: the first 4 and the last"],
+["net","Smallest allowed subnet","<b>/29</b>"],
+["net","Is VNet peering transitive?","<b>No.</b> Peer directly, or route through a hub NVA or firewall with UDRs."],
+["net","Spoke uses the hub's VPN gateway: peering settings","Hub side: <b>Allow gateway transit</b>. Spoke side: <b>Use remote gateways</b>."],
+["net","Can VNets with overlapping address spaces be peered?","<b>No</b>"],
+["net","VPN gateway subnet: name and size","<code>GatewaySubnet</code>, <b>/27 or larger</b>"],
+["net","Bastion subnet: name and size","<code>AzureBastionSubnet</code>, <b>/26 or larger</b>"],
+["net","Azure Firewall subnet: name and size","<code>AzureFirewallSubnet</code>, <b>/26</b>"],
+["net","NSG custom rule priority range, and which number wins","<b>100–4096</b>. The <b>lower</b> number wins, and the first match stops evaluation."],
+["net","Default inbound NSG rules","AllowVnetInBound, AllowAzureLoadBalancerInBound, <b>DenyAllInBound</b> (65500)"],
+["net","Order NSGs are evaluated for inbound and outbound traffic","Inbound: <b>subnet → NIC</b>. Outbound: <b>NIC → subnet</b>. Both must allow."],
+["net","Application security group restriction","All member NICs must be in the <b>same VNet</b>."],
+["net","How is the route chosen?","<b>Longest prefix match</b>. On a tie: UDR, then BGP, then system routes."],
+["net","Send traffic through an NVA: two requirements","A <b>UDR</b> on the source subnet (next hop Virtual appliance) and <b>IP forwarding</b> on the NVA's NIC."],
+["net","Reachable from on-prem over VPN: service endpoint or private endpoint?","<b>Private endpoint</b>. Service endpoints only work for traffic from inside the VNet."],
+["net","Azure-provided DNS IP","<code>168.63.129.16</code>"],
+["net","Private DNS zone auto-registration limit","A VNet can auto-register in <b>one</b> private zone. Links for resolution only are unlimited."],
+["net","Delegate a public domain to Azure DNS","Update the <b>NS records at the registrar</b>."],
+["net","CNAME at the zone apex?","<b>Not allowed.</b> Use an <b>alias record</b>."],
+["net","Path-based routing, TLS termination, WAF","<b>Application Gateway</b> (layer 7, regional)"],
+["net","Global DNS-based routing vs global layer 7 with CDN","<b>Traffic Manager</b> vs <b>Front Door</b>"],
+["net","Standard Load Balancer facts","Needs a Standard public IP. Zone-redundant. Backend pool in one VNet. <b>Closed by default</b>, so an NSG must allow traffic."],
+["net","Keep a client on the same backend VM","<b>Session persistence</b>: Client IP (or Client IP and protocol)"],
+["net","Find which NSG rule blocks a flow","Network Watcher <b>IP flow verify</b>"],
+["net","Find where traffic is routed (which UDR or appliance)","Network Watcher <b>Next hop</b>"],
+["net","Continuous reachability and latency monitoring with alerts","<b>Connection monitor</b>"],
+["net","What the local network gateway holds","The on-prem <b>public IP (or FQDN)</b> and the <b>on-prem address prefixes</b>"],
+["net","Where the S2S shared key (PSK) is configured","On the <b>connection</b> resource"],
+["net","Route-based vs policy-based VPN","Use <b>route-based</b>: required for P2S, VNet-to-VNet, multiple S2S tunnels, and IKEv2."],
+
+["mon","Workloads that use a Recovery Services vault","Azure <b>VMs</b>, <b>Azure Files</b>, SQL and SAP HANA in VMs, MARS/MABS, and <b>Site Recovery</b>"],
+["mon","Workloads that use a Backup vault","Azure <b>Blobs</b>, Azure <b>Disks</b>, PostgreSQL, AKS"],
+["mon","Backup vault region rule","The vault must be in the <b>same region</b> as the resources it protects."],
+["mon","Backup soft delete retention","<b>14 days</b>"],
+["mon","When must you set a vault's storage redundancy?","<b>Before the first backup</b>"],
+["mon","Restore a VM backup in the paired region","<b>Cross Region Restore</b>, which needs a GRS vault."],
+["mon","Restore one file from a VM backup","<b>File Recovery</b>: a script mounts the recovery point."],
+["mon","Where to put the vault for Site Recovery","In the <b>target</b> (DR) region"],
+["mon","Test DR without affecting production","<b>Test failover</b> into an isolated VNet, then clean it up."],
+["mon","Site Recovery failover sequence","Failover → <b>commit</b> → <b>re-protect</b> → fail back"],
+["mon","Suppress alert notifications during a maintenance window","<b>Alert processing rule</b> with a schedule"],
+["mon","What an action group contains","<b>Notifications</b> (email, SMS, push, voice) and <b>actions</b> (runbook, Function, Logic App, webhook, ITSM)"],
+["mon","Alert severity range","<b>Sev0</b> (critical) to <b>Sev4</b> (verbose)"],
+["mon","Collect VM logs with the Azure Monitor Agent","Create a <b>data collection rule (DCR)</b>."],
+["mon","Activity log retention","<b>90 days</b>. Use a diagnostic setting to send it to Log Analytics for longer."],
+["mon","Platform metrics retention","<b>93 days</b>"],
+["mon","Route resource logs to Log Analytics","Create a <b>diagnostic setting</b>."],
+["mon","Who deleted a resource?","Check the <b>Activity log</b>."],
+["mon","KQL: count records per computer in the last hour","<code>T | where TimeGenerated &gt; ago(1h) | summarize count() by Computer</code>"]
+];
+const FKEY="az104-flash-known-v1";
+const F={doms:new Set(Object.keys(DOM)),known:new Set(load(FKEY)||[]),queue:null,flipped:false,includeKnown:false};
+function buildQueue(){F.queue=shuffle(FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0])&&(F.includeKnown||!F.known.has(i))));F.flipped=false}
+function saveKnown(){save(FKEY,[...F.known])}
+function renderFlash(){
+  if(!F.queue)buildQueue();
+  const el=document.getElementById("view-flash");
+  const inDoms=FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0]));
+  const knownN=inDoms.filter(i=>F.known.has(i)).length;
+  const pct=inDoms.length?Math.round(knownN/inDoms.length*100):0;
+  const idx=F.queue[0], c=idx===undefined?null:FC[idx];
+  el.innerHTML=`<div class="fl">
+    <div class="hero"><div class="eyebrow">Flashcards · ${FC.length} cards</div><h1>Flashcards</h1>
+    <p class="lede">Flip a card, then choose <b>Got it</b> to take it out of the deck or <b>Again</b> to see it again in a few cards. Cards you mark as known are saved in this browser.</p></div>
+    <div class="fl-opts" id="fdoms">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="${F.doms.has(d)}" data-d="${d}">${DOM[d].short} · ${FC.filter(x=>x[0]===d).length}</button>`).join("")}</div>
+    <div class="fl-opts">
+      <button class="chip" id="fknown" aria-pressed="${F.includeKnown}">Include known cards</button>
+      <button class="btn small" id="fshuffle">Shuffle &amp; restart</button>
+      <button class="btn small" id="freset">Reset progress</button>
+    </div>
+    <div class="fl-top"><span>${F.queue.length} left this round</span><span>${knownN} of ${inDoms.length} known · ${pct}%</span></div>
+    <div class="prog"><div style="width:${pct}%"></div></div>
+    ${c?`<div class="fc ${F.flipped?"flipped":""}" id="fc" tabindex="0" role="button" aria-label="Flip card">
+      <div class="fc-in">
+        <div class="fc-face fc-front"><span class="dtag" style="align-self:flex-start">${DOM[c[0]].short}</span><div class="fc-text">${c[1]}</div><span class="hint">Click or press Space to flip</span></div>
+        <div class="fc-face fc-back"><div class="fc-q">${c[1]}</div><div class="fc-text">${c[2]}</div><span class="hint">${DOM[c[0]].name}</span></div>
+      </div></div>
+    <div class="fc-ctrl">
+      <button class="btn again" id="fagain">Again<span class="kbd">←</span></button>
+      <button class="btn" id="fflip">Flip<span class="kbd">Space</span></button>
+      <button class="btn got" id="fgot">Got it<span class="kbd">→</span></button>
+    </div>`
+    :`<div class="fl-done"><h2>${inDoms.length?"Round complete":"No domains selected"}</h2><p class="lede">${inDoms.length?`You know ${knownN} of ${inDoms.length} cards in the selected domains.`:"Turn on at least one domain above."}</p>
+      <div class="cta-row">${inDoms.length?`<button class="btn primary" id="fall">Review all cards again</button>`:""}<button class="btn" id="fexam">Go to practice exam</button></div></div>`}
+  </div>`;
+  el.querySelectorAll("#fdoms .chip").forEach(b=>b.onclick=()=>{const d=b.dataset.d;F.doms.has(d)?F.doms.delete(d):F.doms.add(d);buildQueue();renderFlash()});
+  el.querySelector("#fknown").onclick=()=>{F.includeKnown=!F.includeKnown;buildQueue();renderFlash()};
+  el.querySelector("#fshuffle").onclick=()=>{buildQueue();renderFlash()};
+  el.querySelector("#freset").onclick=()=>{F.known.clear();saveKnown();buildQueue();renderFlash()};
+  const card=el.querySelector("#fc");if(card)card.onclick=flipCard;
+  const a=el.querySelector("#fagain");if(a)a.onclick=again;
+  const g=el.querySelector("#fgot");if(g)g.onclick=gotIt;
+  const fl=el.querySelector("#fflip");if(fl)fl.onclick=flipCard;
+  const fa=el.querySelector("#fall");if(fa)fa.onclick=()=>{F.includeKnown=true;buildQueue();renderFlash()};
+  const fe=el.querySelector("#fexam");if(fe)fe.onclick=()=>go("exam");
+}
+function flipCard(){F.flipped=!F.flipped;const c=document.getElementById("fc");if(c)c.classList.toggle("flipped",F.flipped)}
+function again(){if(!F.queue.length)return;const x=F.queue.shift();F.queue.splice(Math.min(3,F.queue.length),0,x);F.flipped=false;renderFlash();focusCard()}
+function gotIt(){if(!F.queue.length)return;F.known.add(F.queue.shift());saveKnown();F.flipped=false;renderFlash();focusCard()}
+function focusCard(){const c=document.getElementById("fc");if(c)c.focus({preventScroll:true})}
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("view-flash").hidden)return;
+  if(e.target.closest&&e.target.closest("input,textarea,select"))return;
+  if(e.key===" "||e.key==="Enter"){if(e.target.tagName==="BUTTON"&&e.target.id!=="fc")return;e.preventDefault();flipCard()}
+  else if(e.key==="ArrowRight"){e.preventDefault();gotIt()}
+  else if(e.key==="ArrowLeft"){e.preventDefault();again()}
+});
+
+/* ---------- wiring ---------- */
+document.querySelectorAll("[data-flash]").forEach(b=>b.onclick=()=>go("flash"));
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>go(t.dataset.view));
+document.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>{startFull()});
+document.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>{S=null;go("exam")});
+document.querySelectorAll(".toc a").forEach(a=>a.onclick=e=>{e.preventDefault();const el=document.querySelector(a.getAttribute("href"));if(el)el.scrollIntoView({behavior:"smooth"})});
+window.addEventListener("hashchange",route);
+const saved=load(KEY); if(saved&&!saved.done&&saved.mode==="full"){S=saved}
+ensureTick(); route();
+</script>
+
+</body>
+</html>
