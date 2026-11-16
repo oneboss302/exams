@@ -156,6 +156,11 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .legend{display:flex;flex-wrap:wrap;gap:8px;font-size:.76rem;color:var(--muted)}
 .confirm{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
 
+.runscore{display:flex;flex-direction:column;gap:6px;padding-top:2px}
+.rs-num{font-family:var(--f-display);font-size:1.4rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.rs-num span{font-size:.95rem;color:var(--muted);font-weight:500;margin-left:6px}
+.dtag.run{color:var(--ink);font-variant-numeric:tabular-nums}
+
 /* Results */
 .res{display:flex;flex-direction:column;gap:24px}
 .score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
@@ -960,13 +965,17 @@ function renderQuestion(){
     return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${checked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
   const unanswered=S.ids.filter(id=>!(S.ans[id]&&S.ans[id].length)).length;
   const markedN=S.ids.filter(id=>S.marked[id]).length;
+  const chk=S.mode==="practice"?S.ids.filter(id=>S.checked[id]):[];
+  const rightN=chk.filter(id=>correct(byId[id],S.ans[id]||[])).length;
+  const rpct=chk.length?Math.round(rightN/chk.length*100):0;
+  const rband=rpct>=80?"hi":rpct>=65?"mid":"low";
   const pal=S.ids.map((id,i)=>{let c="pq";const a=S.ans[id];
     if(S.mode==="practice"&&S.checked[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(a&&a.length)c+=" ans";
     if(S.marked[id])c+=" mk";if(i===S.cur)c+=" cur";
     return `<button class="${c}" data-i="${i}" aria-label="Question ${i+1}">${i+1}</button>`}).join("");
   root().innerHTML=`<div class="ex">
     <div class="qcard">
-      <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}
+      <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}${S.mode==="practice"?`<span class="dtag run" title="Correct out of answers checked so far">Score ${rightN}/${chk.length}${chk.length?` · ${rpct}%`:""}</span>`:""}
         <button class="mark" id="mark" aria-pressed="${!!S.marked[q.id]}">${S.marked[q.id]?"Marked for review":"Mark for review"}</button></div>
       ${q.cs?`<details class="case" open><summary>Case study: ${CASE_NAME}</summary><div class="cbody">${CASE}</div></details>`:""}
       <div class="qtext">${q.q}</div>
@@ -983,6 +992,7 @@ function renderQuestion(){
     <aside class="side">
       <div class="pal">
         <div class="hint">${S.mode==="full"?"Full exam":"Practice"} · ${n-unanswered}/${n} answered</div>
+        ${S.mode==="practice"?`<div class="runscore"><div class="hint">Running score</div><div class="rs-num">${rightN}/${chk.length}<span>${chk.length?rpct+"%":"no answers checked yet"}</span></div><div class="track"><div class="fill ${chk.length?rband:""}" style="width:${rpct}%"></div><div class="tick" title="80% target"></div></div></div>`:""}
         <div class="grid">${pal}</div>
         <div class="legend"><span>■ answered</span><span style="color:var(--warn)">▁ marked</span>${S.mode==="practice"?'<span style="color:var(--good)">■ right</span><span style="color:var(--bad)">■ wrong</span>':""}</div>
         ${confirmOpen?`<div class="confirm"><div><b>${unanswered}</b> unanswered, <b>${markedN}</b> marked for review. Submit now?</div><div class="cta-row"><button class="btn small primary" id="sub-yes">Submit</button><button class="btn small" id="sub-no">Keep working</button></div></div>`
