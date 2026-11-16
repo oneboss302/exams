@@ -1,0 +1,1306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="AZ-305 Azure Solutions Architect study guide, timed practice exam, and flashcards.">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}a.brand{color:inherit;text-decoration:none}</style>
+<title>AZ-305 Design Prep</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: an exam-console shell — sticky tab bar, a reading column for the guide, a two-pane question view with a numbered palette. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --sunk:#eceff4; --ink:#151b27; --muted:#5a6476; --line:#d9dee7;
+  --accent:#2c56c9; --accent-ink:#ffffff; --soft:#e5ecfb;
+  --good:#18805a; --good-soft:#e2f3ec; --bad:#b93a3a; --bad-soft:#f8e6e6; --warn:#9a6a12; --warn-soft:#f8efdc;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:2rem;font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:600}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+code{background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:0 .3em}
+pre{font-family:var(--f-mono);font-size:.85rem;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:10px 12px;overflow-x:auto;margin:0}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:16px;padding-block:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.1rem;display:flex;gap:8px;align-items:baseline}
+.brand .code{font-family:var(--f-mono);font-size:.8rem;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:1px 6px}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tab{background:none;border:1px solid transparent;color:var(--muted);padding:6px 12px;border-radius:6px;font-weight:500}
+.tab[aria-selected="true"]{background:var(--soft);color:var(--ink);border-color:var(--line)}
+.timer{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.95rem;padding:4px 10px;border-radius:6px;background:var(--sunk);border:1px solid var(--line)}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Guide */
+.guide{display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);align-self:start;display:flex;flex-direction:column;gap:2px;font-size:.88rem}
+.toc a{color:var(--muted);text-decoration:none;padding:4px 8px;border-left:2px solid var(--line)}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+.toc .lbl{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 8px 6px}
+.gmain{display:flex;flex-direction:column;gap:44px;min-width:0}
+.gsec{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.gsec > p,.gsec li{max-width:70ch}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.06rem;color:var(--muted);max-width:66ch}
+.hero{display:flex;flex-direction:column;gap:14px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:7px;font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.small{padding:5px 10px;font-size:.88rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.fact{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.fact b{font-family:var(--f-display);font-size:1.35rem;font-weight:600}
+.fact span{font-size:.82rem;color:var(--muted)}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--sunk);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.risk{display:inline-block;font-family:var(--f-mono);font-size:.72rem;padding:1px 7px;border-radius:999px;border:1px solid}
+.risk.hi{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.risk.md{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.risk.lo{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+
+.sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{font-size:1rem}
+.card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.9rem}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.8rem;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--accent);border:1px solid var(--line)}
+.trap{border-left:3px solid var(--warn);padding:6px 12px;background:var(--surface);border-radius:0 6px 6px 0}
+.traps{display:flex;flex-direction:column;gap:8px}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.plan .when{font-family:var(--f-mono);font-size:.78rem;color:var(--accent)}
+
+/* Exam */
+.ex-home{display:flex;flex-direction:column;gap:22px;max-width:780px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.mode{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.mode p{color:var(--muted);font-size:.92rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:4px 10px;font-size:.84rem}
+.chip[aria-pressed="true"]{background:var(--soft);color:var(--ink);border-color:var(--accent)}
+.resume{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+.ex{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:24px;align-items:start}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.qmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.86rem;color:var(--muted)}
+.qnum{font-family:var(--f-mono);color:var(--ink)}
+.dtag{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--sunk);border:1px solid var(--line)}
+.mark{margin-left:auto;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:3px 10px;font-size:.84rem}
+.mark[aria-pressed="true"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.qtext{font-size:1.02rem;display:flex;flex-direction:column;gap:10px}
+.qtext table{font-size:.86rem}
+.hint{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:22px 26px minmax(0,1fr);gap:8px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--surface)}
+.opt:hover{border-color:var(--accent)}
+.opt input{margin:3px 0 0;accent-color:var(--accent)}
+.opt .ltr{font-family:var(--f-mono);color:var(--muted);font-size:.86rem;padding-top:1px}
+.opt.sel{border-color:var(--accent);background:var(--soft)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.locked{cursor:default}
+.explain{border-radius:8px;padding:12px 14px;border:1px solid var(--line);background:var(--sunk);display:flex;flex-direction:column;gap:6px;font-size:.93rem}
+.explain .verdict{font-weight:600}
+.explain .verdict.ok{color:var(--good)} .explain .verdict.no{color:var(--bad)}
+.qnav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qnav .sp{flex:1}
+.case{border:1px solid var(--line);border-radius:8px;background:var(--sunk)}
+.case summary{cursor:pointer;padding:10px 14px;font-weight:600;font-family:var(--f-display)}
+.case .cbody{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+.case ul{margin:0;padding-left:18px}
+
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);display:flex;flex-direction:column;gap:12px}
+.pal{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.pq{font-family:var(--f-mono);font-size:.76rem;padding:5px 0;border-radius:5px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-variant-numeric:tabular-nums}
+.pq.ans{background:var(--soft);color:var(--ink)}
+.pq.mk{border-color:var(--warn);box-shadow:inset 0 -3px 0 var(--warn)}
+.pq.cur{border-color:var(--accent);outline:1px solid var(--accent);color:var(--ink)}
+.pq.ok{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.pq.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:.76rem;color:var(--muted)}
+.confirm{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+
+/* Results */
+.res{display:flex;flex-direction:column;gap:24px}
+.score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.big{font-family:var(--f-display);font-size:3.2rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.verdict-pill{display:inline-block;font-family:var(--f-mono);font-size:.78rem;padding:3px 10px;border-radius:999px;border:1px solid}
+.dbars{display:flex;flex-direction:column;gap:10px}
+.dbar{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) 64px;gap:12px;align-items:center;font-size:.9rem}
+.track{height:10px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden;position:relative}
+.fill{height:100%;background:var(--accent)}
+.fill.low{background:var(--bad)} .fill.mid{background:var(--warn)} .fill.hi{background:var(--good)}
+.track .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.35;left:80%}
+.dbar .pct{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.rlist{display:flex;flex-direction:column;gap:12px}
+.ritem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--line)}
+.ritem.ok{border-left-color:var(--good)} .ritem.bad{border-left-color:var(--bad)}
+.ritem .row{font-size:.88rem;color:var(--muted)}
+.ritem .row b{color:var(--ink);font-weight:600}
+.filter{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* Flashcards */
+.fl{display:flex;flex-direction:column;gap:18px;max-width:760px;margin:0 auto}
+.fl-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.88rem;color:var(--muted)}
+.prog{height:6px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.prog>div{height:100%;background:var(--good)}
+.fc{perspective:1400px;cursor:pointer;outline:none}
+.fc-in{display:grid;transition:transform .45s ease;transform-style:preserve-3d}
+.fc.flipped .fc-in{transform:rotateY(180deg)}
+.fc-face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;min-height:280px;display:flex;flex-direction:column;gap:14px;justify-content:space-between;min-width:0}
+.fc-back{transform:rotateY(180deg);background:var(--soft);border-color:var(--accent)}
+.fc-text{font-family:var(--f-display);font-size:1.5rem;font-weight:600;line-height:1.3;text-wrap:balance}
+.fc-back .fc-text{font-family:var(--f-body);font-size:1.08rem;font-weight:400;line-height:1.6;text-wrap:pretty}
+.fc-q{font-size:.85rem;color:var(--muted)}
+.fc:focus-visible .fc-face{outline:2px solid var(--accent);outline-offset:2px}
+.fc-ctrl{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn.again{border-color:var(--bad);color:var(--bad)}
+.btn.got{border-color:var(--good);color:var(--good)}
+.kbd{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:6px}
+.fl-opts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fl-done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:12px}
+
+@media (max-width:860px){
+  .guide{grid-template-columns:1fr}
+  .toc{position:static;flex-direction:row;flex-wrap:wrap;gap:4px}
+  .toc .lbl{width:100%}
+  .toc a{border-left:0;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .ex{grid-template-columns:1fr}
+  .side{position:static}
+  .grid{grid-template-columns:repeat(10,1fr)}
+  .score{grid-template-columns:1fr}
+  .dbar{grid-template-columns:1fr 56px}
+  .dbar .track{grid-column:1 / -1;grid-row:2}
+}
+@media (max-width:480px){.grid{grid-template-columns:repeat(7,1fr)} h1{font-size:1.6rem} .qcard{padding:16px} .fc-face{padding:20px;min-height:240px} .fc-text{font-size:1.25rem} .kbd{display:none} .tab{padding:6px 9px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="/" title="All exams"><span class="code">AZ-305</span> Design Prep</a>
+    <span class="timer" id="timer" hidden>100:00</span>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-guide" data-view="guide">Study guide</button>
+      <button class="tab" role="tab" id="tab-exam" data-view="exam">Practice exam</button>
+      <button class="tab" role="tab" id="tab-flash" data-view="flash">Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<section id="view-guide">
+<div class="guide">
+  <nav class="toc" aria-label="Guide sections">
+    <div class="lbl">On this page</div>
+    <a href="#g-format">Exam format</a>
+    <a href="#g-map">Domain map</a>
+    <a href="#g-plan">Study plan</a>
+    <a href="#g-idn">Identity, governance &amp; monitoring</a>
+    <a href="#g-data">Data storage</a>
+    <a href="#g-bc">Business continuity</a>
+    <a href="#g-inf">Infrastructure</a>
+    <a href="#g-pick">Service pickers</a>
+    <a href="#g-num">Numbers to memorize</a>
+    <a href="#g-traps">Classic traps</a>
+  </nav>
+  <div class="gmain">
+    <div class="hero">
+      <div class="eyebrow">Azure Solutions Architect Expert</div>
+      <h1>The AZ-305 design guide</h1>
+      <p class="lede">AZ-104 asked how to configure a service. AZ-305 asks which service to choose. Most questions give you a set of requirements and four plausible designs, and only one meets every requirement at the lowest cost or effort. This guide is built around those choices: what each service is for, where it stops being the right answer, and the requirement words that point to it.</p>
+      <div class="cta-row">
+        <button class="btn primary" data-start="full">Start full practice exam (50 Q, 100 min)</button>
+        <button class="btn" data-goto="exam">Practice by domain</button>
+        <button class="btn" data-flash>Flashcards</button>
+      </div>
+    </div>
+
+    <section class="gsec" id="g-format">
+      <div class="eyebrow">01 · Format</div>
+      <h2>What you're walking into</h2>
+      <div class="facts">
+        <div class="fact"><b>700</b><span>passing score out of 1000 (scaled, not a %)</span></div>
+        <div class="fact"><b>40–60</b><span>questions, typically about 50</span></div>
+        <div class="fact"><b>~100 min</b><span>for questions; plan on ~2 hours total</span></div>
+        <div class="fact"><b>AZ-104</b><span>Administrator Associate is required to earn the Expert certification</span></div>
+      </div>
+      <ul>
+        <li><b>Question types:</b> single choice, multi-select ("choose two"), hot-area (pick a value in each dropdown), drag-and-drop, Yes/No series, and at least one case study.</li>
+        <li><b>The case study is heavier than on AZ-104.</b> Expect a long scenario with several tabs (overview, existing environment, requirements, technical constraints). Read the requirements first. Most wrong answers break a single requirement buried in one bullet.</li>
+        <li><b>Yes/No series:</b> the same goal with a different proposed solution each time. You can't go back. Judge each solution on its own.</li>
+        <li><b>Microsoft Learn is available during the exam</b> (open book). It's slow, so use it only to check a specific limit or tier feature.</li>
+        <li><b>No hands-on labs.</b> Everything is design. You won't be asked for CLI syntax, but you will be asked which SKU or tier a feature needs.</li>
+      </ul>
+    </section>
+
+    <section class="gsec" id="g-map">
+      <div class="eyebrow">02 · Weighting</div>
+      <h2>Domain map</h2>
+      <p>Weights are from the published skills outline (updated April 2026). The "after AZ-104" column is an estimate of how much new material each domain holds for someone who just passed the administrator exam.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Domain</th><th>Weight</th><th>After AZ-104</th><th>What's new</th></tr></thead>
+        <tbody>
+          <tr><td>Design identity, governance &amp; monitoring</td><td class="num">25–30%</td><td><span class="risk md">Medium</span></td><td>Entra Connect sign-in methods, PIM and Conditional Access licensing, Key Vault tiers, Log Analytics workspace design, where to route logs.</td></tr>
+          <tr><td>Design data storage</td><td class="num">20–25%</td><td><span class="risk hi">High</span></td><td>Almost all new: SQL Database vs Managed Instance vs SQL on VM, service tiers, Cosmos DB APIs and consistency, data integration services.</td></tr>
+          <tr><td>Design business continuity</td><td class="num">15–20%</td><td><span class="risk md">Medium</span></td><td>RPO/RTO matching, SQL geo-replication vs failover groups, composite SLAs, Cosmos DB multi-region.</td></tr>
+          <tr><td>Design infrastructure</td><td class="num">30–35%</td><td><span class="risk hi">High</span></td><td>Compute and messaging pickers, global load balancing, ExpressRoute and Virtual WAN, API Management, migration tooling.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-plan">
+      <div class="eyebrow">03 · Schedule</div>
+      <h2>A two-week study plan</h2>
+      <div class="plan">
+        <div class="card"><div class="when">Day 1</div><h3>Baseline</h3><p>Take the full practice exam cold, under timed conditions. Don't study first. The domain bars on the results page tell you where to spend the next two weeks.</p></div>
+        <div class="card"><div class="when">Days 2–5</div><h3>Data and infrastructure</h3><p>These are 50–60% of the exam and the most new material. Read the cheat sheets and the service pickers, then practice those two domains until you score 80%.</p></div>
+        <div class="card"><div class="when">Days 6–9</div><h3>Identity and continuity</h3><p>Same loop for the other two domains. Drill flashcards for 15 minutes a day across all domains.</p></div>
+        <div class="card"><div class="when">Days 10–13</div><h3>Full exams</h3><p>A full timed exam every other day, then review every miss. Use "Retry missed" between exams.</p></div>
+        <div class="card"><div class="when">Day 14</div><h3>Light review</h3><p>Numbers to memorize and classic traps only. Stop early and sleep.</p></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-idn">
+      <div class="eyebrow">04 · Identity, governance &amp; monitoring · 25–30%</div>
+      <h2>Identity, governance &amp; monitoring cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Hybrid sign-in</th><th>Pick it when</th><th>Watch out</th></tr></thead>
+        <tbody>
+          <tr><td><b>Password hash sync (PHS)</b></td><td>Default choice. Sign-in must keep working if on-prem is down. You want <b>leaked credential detection</b>.</td><td>On-prem account policies (logon hours, lockout) aren't checked at sign-in.</td></tr>
+          <tr><td><b>Pass-through auth (PTA)</b></td><td>Passwords must <b>not</b> leave on-prem in any form, or on-prem policies such as logon hours and disabled accounts must apply immediately.</td><td>Needs agents on-prem. If they're all down, cloud sign-in fails (unless PHS is also on as a backup).</td></tr>
+          <tr><td><b>Federation (AD FS)</b></td><td>On-prem smart-card sign-in or a third-party MFA server that Entra can't do natively.</td><td>Most infrastructure and effort. Rarely right unless a requirement forces it.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Entra ID features &amp; licenses</h3><ul>
+          <li><b>Conditional Access</b>: P1. Require MFA, compliant device, or location based on conditions.</li>
+          <li><b>Privileged Identity Management (PIM)</b>: P2. Just-in-time, time-bound role activation with approval and justification. Works for Entra roles <b>and</b> Azure RBAC roles.</li>
+          <li><b>Identity Protection</b> (user and sign-in risk policies): P2.</li>
+          <li><b>Access reviews</b> and <b>entitlement management</b> (access packages): P2 or Entra ID Governance.</li>
+          <li><b>Entra Connect Sync</b> vs <b>Cloud Sync</b>: Cloud Sync uses lightweight agents and suits multiple disconnected forests. Connect Sync supports more advanced scenarios such as device writeback.</li>
+        </ul></div>
+        <div class="card"><h3>External identities</h3><ul>
+          <li><b>B2B collaboration</b>: partners sign in with their own work identity as guests in your tenant.</li>
+          <li><b>Entra External ID</b> (external tenant): customer-facing apps with self-service sign-up, social identity providers, and custom branding. It replaces Azure AD B2C for new customers.</li>
+          <li><b>Cross-tenant access settings</b> control inbound and outbound B2B trust, such as trusting the partner's MFA.</li>
+        </ul></div>
+        <div class="card"><h3>App identity &amp; secrets</h3><ul>
+          <li><b>Managed identity</b> wherever the Azure resource supports it. No secrets to store or rotate.</li>
+          <li><b>System-assigned</b>: lifecycle tied to one resource. <b>User-assigned</b>: separate resource, shareable across many resources, can be created before them.</li>
+          <li><b>Key Vault Standard</b>: software keys. <b>Premium</b>: HSM-protected keys. <b>Managed HSM</b>: single-tenant, FIPS 140-3 Level 3 validated, you control the security domain.</li>
+          <li>Use the <b>Azure RBAC</b> permission model for Key Vault (the access policy model is legacy). Turn on soft delete (7–90 days) and <b>purge protection</b> for customer-managed keys.</li>
+          <li>Store app settings in <b>App Configuration</b>, with Key Vault references for secrets.</li>
+        </ul></div>
+        <div class="card"><h3>Governance</h3><ul>
+          <li><b>Management groups</b> → subscriptions → resource groups. Assign policy and RBAC as high as possible so new subscriptions inherit it.</li>
+          <li><b>Azure landing zones</b> (Cloud Adoption Framework): a standard management group hierarchy with platform (identity, management, connectivity) and application landing zones.</li>
+          <li><b>Azure Policy</b> for guardrails, <b>initiatives</b> to group policies. Use <b>DeployIfNotExists</b> to auto-deploy diagnostics or agents.</li>
+          <li>Azure Blueprints is retired. Use <b>template specs</b> plus <b>deployment stacks</b> (which can deny changes to the resources they manage) and policy.</li>
+          <li>Separate environments by <b>subscription</b> for billing, quota, and blast-radius isolation. Use resource groups for lifecycle grouping.</li>
+          <li><b>Defender for Cloud</b>: secure score and CSPM recommendations, plus workload protections (Defender for Servers, SQL, Storage, Containers).</li>
+        </ul></div>
+        <div class="card"><h3>Logging design</h3><ul>
+          <li><b>Log Analytics</b>: query and alert with KQL. <b>Storage account</b>: cheapest long-term archive. <b>Event Hubs</b>: stream to a third-party SIEM or other tool.</li>
+          <li>Prefer <b>one workspace per region or per tenant</b> unless data residency, separate billing, or access isolation forces more. Use resource-context RBAC or table-level RBAC to limit what people see.</li>
+          <li>Analytics retention: 30 days included (90 with Sentinel), interactive up to <b>2 years</b>, total (with long-term retention) up to <b>12 years</b>.</li>
+          <li><b>Basic</b> and <b>Auxiliary</b> table plans cut ingestion cost for high-volume, rarely queried logs.</li>
+          <li><b>Microsoft Sentinel</b> (SIEM/SOAR) runs on top of a Log Analytics workspace.</li>
+        </ul></div>
+        <div class="card"><h3>Monitoring tools</h3><ul>
+          <li><b>Application Insights</b> (workspace-based): app performance, dependencies, failures, distributed tracing.</li>
+          <li><b>Network Watcher</b>: connection monitor, IP flow verify, next hop, VNet flow logs (NSG flow logs are retired).</li>
+          <li><b>Azure Monitor Agent</b> plus <b>data collection rules</b> for VM logs and performance data.</li>
+          <li><b>Azure Resource Graph</b> queries inventory across subscriptions. <b>Workbooks</b> build dashboards from logs and metrics.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-data">
+      <div class="eyebrow">05 · Data storage · 20–25%</div>
+      <h2>Data storage cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Relational option</th><th>Pick it when</th><th>Gives up</th></tr></thead>
+        <tbody>
+          <tr><td><b>Azure SQL Database</b></td><td>New cloud apps, single databases, SaaS with many databases (elastic pools). Least admin effort.</td><td>No SQL Agent, no cross-database queries, no CLR, no Service Broker, no instance-level features.</td></tr>
+          <tr><td><b>Azure SQL Managed Instance</b></td><td>Lift-and-shift with <b>minimal changes</b>: SQL Agent jobs, cross-database queries, CLR, Service Broker, Database Mail, linked servers. Deployed into your VNet.</td><td>Some OS-level access, SSRS/SSIS/SSAS (use Power BI, Data Factory SSIS runtime, Analysis Services).</td></tr>
+          <tr><td><b>SQL Server on Azure VMs</b></td><td>You need OS access, a SQL version Microsoft doesn't run as PaaS, SSRS/SSAS on the same server, or third-party agents.</td><td>You patch, back up, and run HA yourself (with automation helpers).</td></tr>
+          <tr><td><b>Azure Database for PostgreSQL / MySQL</b> (flexible server)</td><td>Open-source engines as PaaS. Zone-redundant HA and read replicas available.</td><td>N/A</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>SQL tiers &amp; purchasing</h3><ul>
+          <li><b>DTU</b> (bundled) vs <b>vCore</b> (choose compute and storage separately). <b>Azure Hybrid Benefit</b> and reserved capacity need <b>vCore</b>.</li>
+          <li><b>General Purpose</b>: remote storage, budget-friendly. <b>Business Critical</b>: local SSD, lowest latency, In-Memory OLTP, a free <b>readable secondary</b>, built-in zone redundancy option.</li>
+          <li><b>Hyperscale</b>: up to <b>128 TB</b>, near-instant backups, fast restore, up to 4 HA replicas and named replicas for read scale-out.</li>
+          <li><b>Serverless</b> compute: auto-scales and <b>auto-pauses</b> (General Purpose), billed per second. Good for intermittent, unpredictable use.</li>
+          <li><b>Elastic pool</b>: many databases with varying, non-overlapping peaks share resources. Classic multi-tenant SaaS pattern.</li>
+        </ul></div>
+        <div class="card"><h3>SQL security</h3><ul>
+          <li><b>TDE</b>: encryption at rest, on by default. Customer-managed key from Key Vault if required.</li>
+          <li><b>Always Encrypted</b>: encrypted in the client driver, so <b>DBAs and Microsoft can't see plaintext</b>. Secure enclaves allow richer queries.</li>
+          <li><b>Dynamic data masking</b>: hides values in query results for non-privileged users. Not encryption.</li>
+          <li><b>Row-level security</b>: filters rows per user, for example per tenant or per sales region.</li>
+          <li><b>Ledger</b>: tamper-evident tables. <b>Auditing</b> to Log Analytics, Storage, or Event Hubs. <b>Microsoft Entra-only authentication</b> disables SQL logins.</li>
+        </ul></div>
+        <div class="card"><h3>Cosmos DB</h3><ul>
+          <li>APIs: <b>NoSQL</b> (native, newest features), <b>MongoDB</b>, <b>Apache Cassandra</b>, <b>Apache Gremlin</b> (graph), <b>Table</b>. Pick the API that matches existing code to avoid rewrites.</li>
+          <li>Consistency, strongest to weakest: <b>Strong → Bounded staleness → Session (default) → Consistent prefix → Eventual</b>. Stronger means higher latency and lower availability across regions.</li>
+          <li>Strong consistency isn't available with multi-region writes.</li>
+          <li><b>Partition key</b>: high cardinality, spreads requests evenly, and appears in most query filters. Logical partition max 20 GB.</li>
+          <li>Throughput: <b>provisioned</b> (steady), <b>autoscale</b> (scales between 10% and 100% of max RU/s), <b>serverless</b> (spiky, low average, single region).</li>
+          <li>Global distribution: add regions with a click. <b>Multi-region writes</b> give 99.999% availability SLA.</li>
+        </ul></div>
+        <div class="card"><h3>Storage accounts</h3><ul>
+          <li><b>Standard general-purpose v2</b>: default for blobs, files, queues, tables.</li>
+          <li><b>Premium block blob</b>: low-latency, high-transaction blobs. <b>Premium file shares</b>: NFS or low-latency SMB. <b>Premium page blobs</b>: unmanaged disks.</li>
+          <li><b>Data Lake Storage</b> = general-purpose v2 with <b>hierarchical namespace</b>: directory operations and POSIX ACLs for analytics.</li>
+          <li><b>Azure NetApp Files</b>: enterprise NFS/SMB with very high throughput and low latency (SAP HANA, HPC, large file workloads).</li>
+          <li>Immutability: <b>time-based retention</b> (WORM, lockable for compliance) or <b>legal hold</b>. Can be set at container or version level.</li>
+        </ul></div>
+        <div class="card"><h3>Data integration</h3><ul>
+          <li><b>Azure Data Factory</b>: ETL/ELT orchestration with 90+ connectors. A <b>self-hosted integration runtime</b> reaches on-prem sources. Runs existing <b>SSIS</b> packages with the Azure-SSIS IR.</li>
+          <li><b>Azure Databricks</b>: Spark-based data engineering and ML. <b>Synapse Analytics</b>: data warehouse and Spark. <b>Microsoft Fabric</b>: unified SaaS analytics on OneLake.</li>
+          <li><b>Stream Analytics</b>: SQL-like real-time queries over Event Hubs or IoT Hub streams.</li>
+          <li><b>Data Box</b>: offline bulk transfer when the network is too slow for the data volume.</li>
+        </ul></div>
+        <div class="card"><h3>Data shape → service</h3><ul>
+          <li>Relational with transactions and joins → SQL family.</li>
+          <li>Semi-structured JSON, global scale, single-digit ms latency → Cosmos DB.</li>
+          <li>Simple key-attribute, cheapest → Table storage. Need global distribution or guaranteed latency → Cosmos DB for Table.</li>
+          <li>Files, images, video, backups → Blob. Shared SMB/NFS file system → Azure Files or NetApp Files.</li>
+          <li>Graph relationships → Cosmos DB for Gremlin. Time-series telemetry analytics → Azure Data Explorer.</li>
+          <li>Session state or caching → <b>Azure Managed Redis</b> (successor to Azure Cache for Redis).</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-bc">
+      <div class="eyebrow">06 · Business continuity · 15–20%</div>
+      <h2>Business continuity cheat sheet</h2>
+      <p><b>RPO</b> is how much data you can lose (time since the last good copy). <b>RTO</b> is how long you can be down. Every continuity question gives you one or both. Pick the cheapest option that meets them.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Azure SQL DR option</th><th>Scope</th><th>Failover</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><b>Geo-restore</b></td><td>Database</td><td>Manual restore</td><td>Uses geo-replicated backups. Cheapest. RPO about 1 hour, RTO hours.</td></tr>
+          <tr><td><b>Active geo-replication</b></td><td>Single database</td><td>Manual</td><td>Up to <b>4 readable secondaries</b> in any region. Connection string changes on failover. SQL Database only.</td></tr>
+          <tr><td><b>Failover groups</b></td><td>Group of databases</td><td>Automatic or manual</td><td><b>Listener endpoints</b> that don't change after failover. One secondary region. Works for SQL Database <b>and Managed Instance</b>.</td></tr>
+          <tr><td><b>Zone redundancy</b></td><td>Database</td><td>Automatic</td><td>Protects against a zone failure only, not a region failure.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Backup design</h3><ul>
+          <li><b>Azure Backup</b> for VMs, Files, Blobs, Disks, SQL/SAP HANA in VMs, AKS, PostgreSQL. Restores from points in time.</li>
+          <li><b>Enhanced policy</b> for VMs: multiple backups per day (every 4 hours or more often), required for Trusted Launch VMs.</li>
+          <li><b>Cross Region Restore</b> needs a GRS vault. Set redundancy before the first backup.</li>
+          <li>Ransomware protection: <b>immutable vaults</b>, soft delete, and <b>multi-user authorization</b> with a Resource Guard in a separate tenant or subscription.</li>
+          <li>Azure SQL automated backups: <b>PITR 1–35 days</b> (default 7). <b>Long-term retention</b> up to <b>10 years</b>.</li>
+        </ul></div>
+        <div class="card"><h3>Site Recovery</h3><ul>
+          <li>Continuous replication of VMs (Azure-to-Azure, VMware, Hyper-V, physical) to a secondary region. RPO in seconds to minutes. RTO is the time to fail over and boot.</li>
+          <li><b>Recovery plans</b> group VMs into boot order and run scripts or runbooks during failover.</li>
+          <li>Run <b>test failovers</b> into an isolated VNet regularly. They don't affect production.</li>
+          <li>Backup ≠ DR. Backup protects against deletion and corruption. Site Recovery protects against a site outage. Many designs need both.</li>
+        </ul></div>
+        <div class="card"><h3>Compute HA</h3><ul>
+          <li><b>Availability zones</b> (99.99%) beat availability sets (99.95%). Use zone-redundant services where available.</li>
+          <li><b>VM Scale Sets (Flexible)</b> spread instances across zones and fault domains and autoscale.</li>
+          <li>App Service and Functions (Premium) can be zone redundant with 2+ instances.</li>
+          <li>Multi-region active-active or active-passive needs a <b>global</b> load balancer: Front Door, Traffic Manager, or cross-region Load Balancer.</li>
+        </ul></div>
+        <div class="card"><h3>Storage &amp; Cosmos DB continuity</h3><ul>
+          <li>Storage: <b>GZRS / RA-GZRS</b> for zone and region failure. <b>Customer-managed account failover</b> promotes the secondary region. RA- variants let apps read from the secondary without failing over.</li>
+          <li><b>Object replication</b> copies blobs asynchronously to another account, which can be in another region.</li>
+          <li>Cosmos DB: add a region and enable <b>service-managed failover</b>. Multi-region writes for active-active.</li>
+          <li>Cosmos DB <b>continuous backup</b>: point-in-time restore within 7 or 30 days. Periodic backup is the default alternative.</li>
+        </ul></div>
+        <div class="card"><h3>Composite SLA</h3><ul>
+          <li>Services in series: <b>multiply</b> their SLAs. App Service 99.95% × SQL Database 99.99% ≈ <b>99.94%</b>.</li>
+          <li>Redundant paths in parallel: 1 − (1 − A)(1 − B). Two independent regions at 99.94% each ≈ 99.9999%, before the global router's own SLA.</li>
+          <li>Adding a dependency always lowers the composite SLA. Adding redundancy raises it.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-inf">
+      <div class="eyebrow">07 · Infrastructure · 30–35%</div>
+      <h2>Infrastructure cheat sheet</h2>
+      <div class="sheet">
+        <div class="card"><h3>Compute</h3><ul>
+          <li><b>VMs / Scale Sets</b>: full OS control, lift-and-shift, licensed software that needs a server.</li>
+          <li><b>App Service</b>: web apps and APIs, deployment slots (Standard+), autoscale. <b>App Service Environment v3</b>: single-tenant, fully isolated in your VNet, very high scale.</li>
+          <li><b>Functions</b>: event-driven code. <b>Consumption</b> (5-min default timeout, 10 max). <b>Flex Consumption</b> (VNet integration, always-ready instances). <b>Premium</b> (no cold start, VNet, longer runs). <b>Durable Functions</b> for stateful orchestration.</li>
+          <li><b>Container Apps</b>: serverless containers and microservices, scale to zero, KEDA event scaling, Dapr. No Kubernetes to manage.</li>
+          <li><b>AKS</b>: full Kubernetes API, custom operators, node pools, service mesh.</li>
+          <li><b>Container Instances</b>: single containers or short jobs, fastest to start, no orchestration.</li>
+          <li><b>Azure Batch</b>: large-scale parallel and HPC jobs with job scheduling.</li>
+          <li><b>Azure Virtual Desktop</b>: hosted Windows desktops and apps. <b>Azure VMware Solution</b>: run vSphere workloads on dedicated Azure hosts without converting them.</li>
+        </ul></div>
+        <div class="card"><h3>Messaging &amp; events</h3><ul>
+          <li><b>Service Bus</b>: enterprise messaging. <b>FIFO with sessions</b>, transactions, duplicate detection, dead-lettering, topics for pub/sub. Messages to 256 KB (Standard) or 100 MB (Premium).</li>
+          <li><b>Storage queues</b>: simple, cheap, very large queue (TBs), 64 KB messages, server-side logs of every transaction.</li>
+          <li><b>Event Grid</b>: reactive push of discrete events ("a blob was created") to handlers. Pay per event.</li>
+          <li><b>Event Hubs</b>: high-throughput streaming and telemetry (millions of events per second), partitions, <b>Capture</b> to storage, <b>Kafka</b> endpoint.</li>
+          <li>Message = the sender expects work done. Event = a notification that something happened.</li>
+        </ul></div>
+        <div class="card"><h3>Integration &amp; APIs</h3><ul>
+          <li><b>API Management</b>: a single gateway for many backends. Policies for throttling, caching, transforms, JWT validation, versioning, and a developer portal.</li>
+          <li>APIM <b>Premium</b> for multi-region gateways, availability zones, and full VNet injection. <b>Developer</b> tier has no SLA. <b>Consumption</b> tier is serverless.</li>
+          <li><b>Logic Apps</b>: low-code workflows with hundreds of connectors (SaaS, on-prem through the data gateway). Standard plan runs single-tenant with VNet integration.</li>
+        </ul></div>
+        <div class="card"><h3>Hybrid connectivity</h3><ul>
+          <li><b>Site-to-site VPN</b>: encrypted over the internet. Quick and cheap, up to about 10 Gbps aggregate on the largest SKUs.</li>
+          <li><b>ExpressRoute</b>: private circuit through a provider, predictable latency, SLA. Not encrypted by default (add MACsec on Direct or IPsec over it).</li>
+          <li><b>Private peering</b> reaches VNets. <b>Microsoft peering</b> reaches Microsoft 365 and Azure public endpoints.</li>
+          <li><b>Global Reach</b>: connects two on-prem sites through their ExpressRoute circuits over Microsoft's backbone. <b>FastPath</b>: bypasses the gateway for the data path. <b>ExpressRoute Direct</b>: 10 or 100 Gbps ports straight into Microsoft.</li>
+          <li>Use a <b>VPN as a failover path</b> for ExpressRoute, or two circuits in different peering locations for maximum resiliency.</li>
+          <li><b>Virtual WAN</b>: Microsoft-managed hubs with any-to-any transit between branches (VPN, SD-WAN), users (P2S), ExpressRoute, and VNets. Pick it for many branches or regions.</li>
+        </ul></div>
+        <div class="card"><h3>Network security</h3><ul>
+          <li><b>Private endpoint</b>: a PaaS service gets a private IP in your VNet. Reachable from peered VNets and on-prem. Needs private DNS zones.</li>
+          <li>On-prem clients resolving private endpoint names → <b>Azure DNS Private Resolver</b> inbound endpoint plus conditional forwarders on-prem.</li>
+          <li><b>Azure Firewall</b>: central L3–L7 filtering in the hub with FQDN rules and threat intelligence. <b>Premium</b> adds TLS inspection, IDPS, and URL filtering.</li>
+          <li><b>WAF</b> on Application Gateway (regional) or Front Door (global) for OWASP protection.</li>
+          <li><b>DDoS Network Protection</b> covers a VNet's public IPs with cost protection and rapid response. <b>DDoS IP Protection</b> is per public IP.</li>
+          <li><b>Azure Bastion</b> for RDP/SSH without public IPs on VMs.</li>
+        </ul></div>
+        <div class="card"><h3>Migration</h3><ul>
+          <li>Cloud Adoption Framework phases: Strategy → Plan → Ready → Adopt (migrate or innovate) → Govern, Secure, Manage.</li>
+          <li><b>Azure Migrate</b>: discovery, dependency analysis, assessment (right-sizing and cost), and server migration (agentless for VMware).</li>
+          <li><b>Database Migration Service</b>: online migrations (minimal downtime) or offline migrations to SQL Database, Managed Instance, or SQL on VMs.</li>
+          <li>The "R"s: <b>rehost</b> (lift and shift), <b>refactor</b> (small changes to use PaaS), <b>rearchitect</b>, <b>rebuild</b>, <b>replace</b> (SaaS).</li>
+          <li>Well-Architected Framework pillars: Reliability, Security, Cost Optimization, Operational Excellence, Performance Efficiency.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-pick">
+      <div class="eyebrow">08 · Decisions</div>
+      <h2>Service pickers</h2>
+      <p>Most AZ-305 questions come down to one of these choices. Learn the deciding requirement in each row.</p>
+      <h3>Load balancing</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Service</th><th>Scope</th><th>Layer</th><th>Deciding requirement</th></tr></thead>
+        <tbody>
+          <tr><td><b>Front Door</b></td><td>Global</td><td>7 (HTTP/S)</td><td>Global web app, edge caching, WAF, instant failover, path routing</td></tr>
+          <tr><td><b>Traffic Manager</b></td><td>Global</td><td>DNS</td><td>Global routing for <b>non-HTTP</b> traffic, or endpoints outside Azure. Failover is limited by DNS TTL.</td></tr>
+          <tr><td><b>Application Gateway</b></td><td>Regional</td><td>7</td><td>Path or host routing, TLS offload, WAF, inside a VNet</td></tr>
+          <tr><td><b>Load Balancer</b></td><td>Regional</td><td>4</td><td>Any TCP/UDP, very low latency, internal or public</td></tr>
+          <tr><td><b>Cross-region Load Balancer</b></td><td>Global</td><td>4</td><td>Global anycast IP in front of regional Standard Load Balancers, TCP/UDP</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Messaging</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Requirement words</th><th>Answer</th></tr></thead>
+        <tbody>
+          <tr><td>Ordered (FIFO), transactions, duplicate detection, dead-letter, pub/sub to multiple subscribers</td><td><b>Service Bus</b> (sessions, topics)</td></tr>
+          <tr><td>Simple queue, lowest cost, more than 80 GB of messages, audit log of every operation</td><td><b>Storage queue</b></td></tr>
+          <tr><td>React to a state change (blob created, resource deleted), push, fan-out to handlers</td><td><b>Event Grid</b></td></tr>
+          <tr><td>Telemetry, clickstream, millions of events per second, replay, Kafka clients</td><td><b>Event Hubs</b></td></tr>
+        </tbody>
+      </table></div>
+      <h3>Compute</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Requirement words</th><th>Answer</th></tr></thead>
+        <tbody>
+          <tr><td>Full OS control, custom drivers, legacy app that can't change</td><td><b>VMs</b> (Scale Sets to scale)</td></tr>
+          <tr><td>Web app or API, minimize management, deployment slots</td><td><b>App Service</b></td></tr>
+          <tr><td>Web app isolated on dedicated hardware in your VNet, no shared front ends</td><td><b>App Service Environment v3</b></td></tr>
+          <tr><td>Runs on a trigger, short, pay per execution</td><td><b>Functions</b> (Consumption or Flex)</td></tr>
+          <tr><td>Containerized microservices, scale to zero, no cluster management</td><td><b>Container Apps</b></td></tr>
+          <tr><td>Need the Kubernetes API, custom controllers, full cluster control</td><td><b>AKS</b></td></tr>
+          <tr><td>Thousands of parallel compute tasks, HPC, rendering</td><td><b>Azure Batch</b></td></tr>
+          <tr><td>VMware workloads, no re-platforming, keep vSphere tools</td><td><b>Azure VMware Solution</b></td></tr>
+        </tbody>
+      </table></div>
+      <h3>Managed disks</h3>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Disk</th><th>Use</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td><b>Ultra Disk</b></td><td>Top-tier IOPS and throughput, sub-millisecond latency (SAP HANA, top-tier SQL)</td><td>Data disks only. Adjust performance without detaching.</td></tr>
+          <tr><td><b>Premium SSD v2</b></td><td>Sub-ms latency, performance set independently of size, cheaper than Ultra</td><td>Data disks only.</td></tr>
+          <tr><td><b>Premium SSD</b></td><td>Production and performance-sensitive workloads</td><td>Can be the OS disk. Single-VM 99.9% SLA.</td></tr>
+          <tr><td><b>Standard SSD / HDD</b></td><td>Web servers, dev/test / backups and infrequent access</td><td>N/A</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-num">
+      <div class="eyebrow">09 · Recall</div>
+      <h2>Numbers to memorize</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Item</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>VM SLA: zones / availability set / single Premium SSD</td><td class="num">99.99 / 99.95 / 99.9%</td></tr>
+          <tr><td>Cosmos DB availability: single region / multi-region writes</td><td class="num">99.99 / 99.999%</td></tr>
+          <tr><td>Cosmos DB consistency levels</td><td class="num">5 (Session is default)</td></tr>
+          <tr><td>Cosmos DB logical partition / item size max</td><td class="num">20 GB / 2 MB</td></tr>
+          <tr><td>Azure SQL point-in-time restore</td><td class="num">1–35 days (default 7)</td></tr>
+          <tr><td>Azure SQL long-term retention</td><td class="num">up to 10 years</td></tr>
+          <tr><td>Active geo-replication readable secondaries</td><td class="num">up to 4</td></tr>
+          <tr><td>Hyperscale max database size</td><td class="num">128 TB</td></tr>
+          <tr><td>Service Bus max message: Standard / Premium</td><td class="num">256 KB / 100 MB</td></tr>
+          <tr><td>Storage queue max message</td><td class="num">64 KB</td></tr>
+          <tr><td>Functions Consumption timeout: default / max</td><td class="num">5 / 10 min</td></tr>
+          <tr><td>Log Analytics interactive / total retention</td><td class="num">2 years / 12 years</td></tr>
+          <tr><td>Key Vault soft-delete retention</td><td class="num">7–90 days</td></tr>
+          <tr><td>Activity log retention</td><td class="num">90 days</td></tr>
+          <tr><td>Management group depth (excluding root)</td><td class="num">6 levels</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-traps">
+      <div class="eyebrow">10 · Traps</div>
+      <h2>Classic traps</h2>
+      <div class="traps">
+        <div class="trap"><b>"Minimize cost"</b> and <b>"minimize administrative effort"</b> are tie-breakers. Several answers usually work. Pick the cheapest or most managed one that meets <i>every</i> requirement.</div>
+        <div class="trap"><b>SQL Agent, cross-database queries, CLR, or Service Broker</b> rule out Azure SQL Database. Managed Instance is the minimal-change PaaS target.</div>
+        <div class="trap"><b>Managed Instance doesn't support active geo-replication.</b> Use a failover group.</div>
+        <div class="trap"><b>"Connection string must not change after failover"</b> means failover group listeners, not active geo-replication.</div>
+        <div class="trap"><b>Zone redundancy doesn't survive a region outage.</b> Read whether the requirement says zone or region.</div>
+        <div class="trap"><b>Traffic Manager is DNS.</b> It never sees the traffic, so it can't do WAF, TLS offload, or path routing.</div>
+        <div class="trap"><b>Strong consistency rules out multi-region writes</b> in Cosmos DB.</div>
+        <div class="trap"><b>Leaked credential detection needs password hash sync</b>, even if you also use PTA or federation.</div>
+        <div class="trap"><b>PIM and Identity Protection need P2.</b> Conditional Access alone needs P1.</div>
+        <div class="trap"><b>Dynamic data masking isn't encryption.</b> To hide data from DBAs, use Always Encrypted.</div>
+        <div class="trap"><b>Backup isn't disaster recovery.</b> A one-hour RTO for a region failure needs Site Recovery or an active secondary, not a restore from backup.</div>
+        <div class="trap"><b>ExpressRoute isn't encrypted by default</b>, and its private peering doesn't reach Microsoft 365.</div>
+        <div class="trap"><b>Ultra Disk and Premium SSD v2 can't be OS disks.</b></div>
+        <div class="trap"><b>Azure Blueprints and Azure AD B2C (for new customers) are retired.</b> If either appears, prefer deployment stacks / template specs, or Entra External ID.</div>
+      </div>
+      <div class="cta-row"><button class="btn primary" data-start="full">Start the full practice exam</button></div>
+    </section>
+  </div>
+</div>
+</section>
+
+<section id="view-exam" hidden></section>
+<section id="view-flash" hidden></section>
+</main>
+
+<script>
+const DOM = {
+  idn:{name:"Identity, governance & monitoring", short:"Identity"},
+  data:{name:"Data storage", short:"Data"},
+  bc:{name:"Business continuity", short:"Continuity"},
+  inf:{name:"Infrastructure", short:"Infrastructure"}
+};
+const CASE_NAME = "Tailwind Traders";
+
+const CASE = `<p><b>Tailwind Traders</b> is a retailer with its head office and only datacenter in Seattle. It has stores across North America and Europe.</p>
+<p><b>Existing environment</b></p>
+<ul>
+<li>An on-prem AD DS forest, tailwindtraders.com, synchronized to Microsoft Entra ID. All users have Entra ID P1 licenses.</li>
+<li>The datacenter runs VMware vSphere. The order database runs on SQL Server 2019 and uses <b>SQL Agent jobs</b> and <b>cross-database queries</b> between the Orders and Inventory databases.</li>
+<li>A public order website runs on IIS VMs in Seattle. Store systems send orders to an on-prem message queue.</li>
+</ul>
+<p><b>Requirements</b></p>
+<ul>
+<li>Move the order databases to a PaaS service with <b>minimal code changes</b>.</li>
+<li>Users must sign in to cloud apps with their on-prem credentials, and sign-in must keep working <b>if the Seattle datacenter is offline</b>.</li>
+<li>The order website will run in two Azure regions. Customers worldwide must be sent to the nearest healthy region, and the site must be protected against common web exploits such as SQL injection.</li>
+<li>Store orders must be processed <b>in the order they were placed</b> for each store, and no order may be processed twice.</li>
+<li>Administrators must request the Owner role on production subscriptions when needed. Activation must require approval and expire after 4 hours.</li>
+<li>Minimize cost and administrative effort wherever possible.</li>
+</ul>`;
+
+const Q = [
+// ---------- IDENTITY, GOVERNANCE & MONITORING ----------
+{id:"i1",d:"idn",q:`<p>Your company synchronizes on-prem AD DS to Microsoft Entra ID. Users must be able to sign in to Microsoft 365 even when the on-prem datacenter is unavailable. The security team also wants to be alerted when user credentials appear in leaked credential lists.</p><p>Which sign-in method should you recommend?</p>`,
+ o:["Pass-through authentication","Password hash synchronization","Federation with AD FS","Pass-through authentication with Seamless SSO"],a:[1],
+ x:`Password hash sync stores a hash of the password hash in Entra ID, so cloud sign-in doesn't depend on on-prem servers. It's also required for <b>leaked credential detection</b> in Identity Protection. PTA and AD FS both depend on on-prem infrastructure being up.`},
+{id:"i2",d:"idn",q:`<p>A bank's policy says password hashes must never be stored outside its datacenter in any form. On-prem logon hour restrictions must also be enforced when users sign in to cloud apps. You want the least on-prem infrastructure possible.</p><p>What should you recommend?</p>`,
+ o:["Federation with AD FS","Password hash synchronization","Pass-through authentication","Entra Cloud Sync with password hash sync"],a:[2],
+ x:`PTA validates the password against on-prem AD through lightweight agents, so hashes stay on-prem and on-prem account policies such as logon hours apply. AD FS meets the same requirements but needs far more infrastructure (farm servers and WAP proxies).`},
+{id:"i3",d:"idn",q:`<p>Administrators must have no standing access to the Owner role on production subscriptions. They must request it, a manager must approve, and the assignment must expire after 4 hours. All users have Entra ID P1 licenses.</p><p>What should you recommend?</p>`,
+ o:["Azure Policy with a Deny effect on role assignments","Conditional Access policies with the existing P1 licenses","Custom RBAC roles with an expiration date","Privileged Identity Management, after upgrading the administrators to Entra ID P2"],a:[3],
+ x:`PIM provides eligible (not active) assignments with time-bound activation, approval, and justification. It works for Azure resource roles and Entra roles, and it requires <b>Entra ID P2</b> (or Entra ID Governance) for the users who use it. Conditional Access can't grant or remove roles.`},
+{id:"i4",d:"idn",q:`<p>You need to block sign-ins that Microsoft rates as high risk and force a secure password change when a user's account is likely compromised.</p><p>Which feature and license should you recommend?</p>`,
+ o:["Identity Protection risk-based policies, Entra ID P2","Access reviews, Entra ID P1","Security defaults, Entra ID Free","Conditional Access named locations, Entra ID P1"],a:[0],
+ x:`Sign-in risk and user risk come from <b>Identity Protection</b>, and using risk as a Conditional Access condition requires <b>P2</b>. Named locations only consider IP ranges and countries. Security defaults can't target risk levels.`},
+{id:"i5",d:"idn",q:`<p>You're designing a customer-facing shopping app. Customers must be able to sign up on their own, sign in with Google or a local account, and see your brand on the sign-in pages. Customer accounts must be kept separate from employee accounts.</p><p>What should you recommend?</p>`,
+ o:["Create cloud-only member accounts in the workforce tenant","Invite customers as B2B guests in the workforce tenant","Microsoft Entra External ID in an external tenant","Microsoft Entra Domain Services"],a:[2],
+ x:`Entra External ID with an external tenant is built for consumer and customer identity: self-service sign-up, social providers, and branding, isolated from the workforce directory. It replaces Azure AD B2C for new customers. B2B guests are for partners collaborating with your organization.`},
+{id:"i6",d:"idn",q:`<p>Twenty Azure Functions apps must read secrets from the same Key Vault. You want to avoid storing credentials in code and minimize the number of identities you manage and assign permissions to. New apps will be added regularly.</p><p>What should you use?</p>`,
+ o:["The Key Vault access key","A service principal with a client secret stored in app settings","A system-assigned managed identity on each app","One user-assigned managed identity attached to all the apps"],a:[3],
+ x:`A user-assigned managed identity is a standalone resource that can be attached to many apps, so you grant Key Vault access once. System-assigned identities would need 20+ separate role assignments. Key Vault has no access key, and secrets in app settings are what you're trying to avoid.`},
+{id:"i7",d:"idn",q:`<p>A payment app needs encryption keys stored in a <b>single-tenant</b> HSM that's validated to <b>FIPS 140-3 Level 3</b>. Your company must have full control of the HSM's security domain.</p><p>What should you recommend?</p>`,
+ o:["Azure Key Vault Managed HSM","Key Vault Standard","Key Vault Premium","Azure App Configuration"],a:[0],
+ x:`Managed HSM is a fully managed, single-tenant HSM pool where the customer owns the security domain. Key Vault Premium uses HSM-protected keys in a <b>multi-tenant</b> service. Standard uses software-protected keys.`},
+{id:"i8",d:"idn",q:`<p>Your organization has 4 management groups and 60 subscriptions, and creates new subscriptions every month. Every subscription must automatically send its activity log to a central Log Analytics workspace.</p><p>What should you recommend?</p>`,
+ o:["A Log Analytics workspace in each subscription","An Azure Policy with the DeployIfNotExists effect, assigned at the root management group, with remediation","A diagnostic setting created manually in each subscription","An Azure Automation runbook that runs nightly across all subscriptions"],a:[1],
+ x:`DeployIfNotExists deploys the diagnostic setting when it's missing, and assignment at a high management group covers future subscriptions automatically. A remediation task fixes existing ones. Runbooks and manual setup add effort and leave gaps.`},
+{id:"i9",d:"idn",q:`<p>You must deploy a standard set of networking resources to every new application subscription and <b>prevent application teams from modifying or deleting</b> those resources, even if they're Owners of the subscription.</p><p>What should you recommend?</p>`,
+ o:["An Azure Policy initiative with the Audit effect","Deployment stacks with deny settings (denyWriteAndDelete)","A CanNotDelete lock that application teams can remove","Azure Blueprints with resource locking"],a:[1],
+ x:`Deployment stacks manage a set of resources as one unit and can apply deny settings that block changes and deletion, including by Owners, except for excluded principals. Azure Blueprints is retired. Audit only reports. A lock that the teams can remove doesn't meet the requirement.`},
+{id:"i10",d:"idn",m:true,pick:2,q:`<p>You're designing Azure Monitor logging. Requirements:</p><ul><li>Security analysts query recent logs with KQL.</li><li>Logs must be kept for 7 years at the lowest cost.</li><li>A third-party SIEM must receive logs in near real time.</li></ul><p>Which <b>two</b> destinations should diagnostic settings send logs to, in addition to Log Analytics? (Each correct answer is part of the solution.)</p>`,
+ o:["Azure Data Explorer","A second Log Analytics workspace","An Azure Storage account","Event Hubs"],a:[2,3],
+ x:`Event Hubs is the integration point for streaming to third-party SIEMs. A storage account (with Cool, Cold, or Archive tiering) is the cheapest place to keep 7 years of logs. Log Analytics long-term retention is also possible but costs more than archive-tier storage.`},
+{id:"i11",d:"idn",q:`<p>You operate in one Entra tenant with resources in East US and West Europe. EU data must stay in Europe. Each application team should see only logs from the resources they have access to.</p><p>What workspace design should you recommend with the least administrative effort?</p>`,
+ o:["One workspace per resource group","One workspace per application team","A single workspace in East US for everything","One workspace in each region (East US and West Europe) using resource-context access"],a:[3],
+ x:`Data residency forces at least one workspace in Europe. Beyond that, fewer workspaces are simpler to manage. Resource-context access means users only see logs for resources they have RBAC rights on, so you don't need a workspace per team.`},
+{id:"i12",d:"idn",q:`<p>Developers need to see request rates, response times, failure rates, and the dependencies that a web app calls, including end-to-end transaction tracing across microservices.</p><p>What should you recommend?</p>`,
+ o:["Application Insights","Network Watcher connection monitor","Azure Resource Graph","VM insights"],a:[0],
+ x:`Application Insights is the APM feature of Azure Monitor: request telemetry, dependency tracking, exceptions, and distributed tracing with an application map. VM insights covers OS-level performance, and Network Watcher covers network paths.`},
+{id:"i13",d:"idn",q:`<p>You need to list every VM across 120 subscriptions that has a public IP address, and you need the results in seconds.</p><p>What should you use?</p>`,
+ o:["Azure Advisor","Cost Management exports","Azure Resource Graph","Log Analytics with the AzureActivity table"],a:[2],
+ x:`Azure Resource Graph queries resource properties across subscriptions at scale with KQL. The activity log only has control-plane events, not current state.`},
+{id:"i14",d:"idn",series:true,q:`<p class="hint">Yes/No series. You can't return to this question on the real exam.</p><p><b>Goal:</b> require MFA for all users when they access the Azure portal from outside the corporate network. Users have Entra ID P1.</p><p><b>Solution:</b> Create a Conditional Access policy that targets the Microsoft Azure Management app, excludes a named location for the corporate IP ranges, and requires MFA.</p><p>Does this meet the goal?</p>`,
+ o:["Yes","No"],a:[0],
+ x:`Conditional Access requires P1. Targeting the Azure management app, excluding trusted locations, and requiring MFA meets the goal.`},
+{id:"i15",d:"idn",series:true,q:`<p class="hint">Yes/No series. You can't return to this question on the real exam.</p><p><b>Goal:</b> require MFA for all users when they access the Azure portal from outside the corporate network. Users have Entra ID P1.</p><p><b>Solution:</b> Turn on security defaults.</p><p>Does this meet the goal?</p>`,
+ o:["Yes","No"],a:[1],
+ x:`Security defaults apply the same baseline to everyone and can't use location conditions or exclusions. They require MFA registration and challenge users based on Microsoft's logic, not on whether they're outside the corporate network.`},
+{id:"i16",d:"idn",q:`<p>Group owners must review membership of groups that grant access to finance apps every quarter. Users who aren't confirmed must be removed automatically.</p><p>What should you recommend?</p>`,
+ o:["Dynamic membership rules","Access reviews","Entitlement management connected organizations","PIM for Groups"],a:[1],
+ x:`Access reviews run on a recurring schedule, ask reviewers (such as group owners) to confirm access, and can automatically remove access that isn't approved. They require Entra ID P2 or Entra ID Governance.`},
+{id:"i17",d:"idn",q:`<p>You're planning the subscription layout for a new enterprise landing zone. Production and non-production workloads need separate billing, separate quotas, and a security boundary so an issue in dev can't affect production.</p><p>What should you use as the boundary between production and non-production?</p>`,
+ o:["Separate subscriptions under different management groups","Tags with an environment value","Separate VNets in one subscription","Separate resource groups in one subscription"],a:[0],
+ x:`Subscriptions are the unit of billing, quota, and administrative isolation. Grouping them under separate management groups lets you apply different policy and RBAC to production and non-production.`},
+{id:"i18",d:"idn",q:`<p>Your security team wants a single score that measures your multi-cloud security posture, prioritized hardening recommendations, and threat protection for servers and SQL databases.</p><p>What should you recommend?</p>`,
+ o:["Azure Policy compliance dashboard","Azure Advisor","Microsoft Sentinel","Microsoft Defender for Cloud"],a:[3],
+ x:`Defender for Cloud provides cloud security posture management (secure score and recommendations across Azure, AWS, and GCP) and workload protection plans such as Defender for Servers and Defender for SQL. Sentinel is a SIEM that collects and correlates alerts.`},
+
+// ---------- DATA STORAGE ----------
+{id:"d1",d:"data",q:`<p>You're migrating a SQL Server 2017 database to Azure. The app uses <b>SQL Agent jobs</b>, <b>cross-database queries</b>, and <b>CLR assemblies</b>. You want a PaaS service with minimal code changes.</p><p>What should you recommend?</p>`,
+ o:["Azure SQL Database elastic pool","SQL Server on an Azure VM","Azure SQL Managed Instance","Azure SQL Database single database"],a:[2],
+ x:`Managed Instance has near-100% compatibility with the SQL Server engine, including SQL Agent, cross-database queries, and CLR, while still being PaaS. SQL Database lacks these instance features. A VM works but isn't PaaS.`},
+{id:"d2",d:"data",q:`<p>A SaaS vendor has 300 customer databases in Azure SQL Database. Each is small, and their usage peaks happen at different times of day. Most of the time, each database is idle.</p><p>What should you recommend to minimize cost?</p>`,
+ o:["An elastic pool","A single Hyperscale database with all customers","Provision each database at its own peak size","Azure SQL Managed Instance with Business Critical"],a:[0],
+ x:`Elastic pools share a pool of resources among many databases with varying, non-overlapping usage, which is the classic multi-tenant SaaS pattern. Sizing each database for its own peak wastes capacity most of the day.`},
+{id:"d3",d:"data",q:`<p>A dev/test database in Azure SQL Database is used for a few hours on some weekdays and sits idle the rest of the time. You want to pay as little as possible for compute when it's idle.</p><p>What should you recommend?</p>`,
+ o:["vCore Business Critical provisioned","DTU Basic tier","vCore General Purpose serverless with auto-pause","Hyperscale with named replicas"],a:[2],
+ x:`Serverless General Purpose automatically scales compute and <b>auto-pauses</b> after an idle period, so you pay only for storage while it's paused. Compute is billed per second when it's active.`},
+{id:"d4",d:"data",q:`<p>An OLTP database is expected to grow to <b>60 TB</b>. You need fast backups and restores regardless of size, and the ability to add read-only replicas for reporting.</p><p>Which Azure SQL Database service tier should you recommend?</p>`,
+ o:["Basic","Business Critical","General Purpose","Hyperscale"],a:[3],
+ x:`Hyperscale supports databases up to 128 TB, uses snapshot-based backups so backup and restore time doesn't depend on size, and supports HA and named replicas for read scale-out. General Purpose and Business Critical top out at 4 TB.`},
+{id:"d5",d:"data",q:`<p>A trading app on Azure SQL Database needs the lowest possible storage latency, In-Memory OLTP, and a built-in readable secondary for reporting at no extra charge.</p><p>Which service tier should you recommend?</p>`,
+ o:["Standard (DTU)","Business Critical","General Purpose","Hyperscale"],a:[1],
+ x:`Business Critical uses local SSD storage and an Always On availability group of replicas. One secondary can be used for read-only workloads at no extra cost (read scale-out), and it supports In-Memory OLTP.`},
+{id:"d6",d:"data",q:`<p>You plan to bring existing SQL Server licenses with Software Assurance to Azure SQL Database to reduce cost.</p><p>Which purchasing model is required?</p>`,
+ o:["vCore","Serverless DTU","Either model","DTU"],a:[0],
+ x:`Azure Hybrid Benefit applies only to the vCore purchasing model (and to SQL Managed Instance and SQL VMs). The DTU model bundles license cost into its price.`},
+{id:"d7",d:"data",q:`<p>A healthcare app stores Social Security numbers in Azure SQL Database. Database administrators and Microsoft operators must <b>never</b> be able to see the plaintext values, but the app must still read and write them.</p><p>What should you use?</p>`,
+ o:["Row-level security","Transparent data encryption with a customer-managed key","Always Encrypted","Dynamic data masking"],a:[2],
+ x:`Always Encrypted encrypts data in the client driver, and the keys never reach the database engine, so DBAs can't see plaintext. TDE protects data at rest but decrypts it for anyone who can query. Masking only hides values in results for non-privileged users.`},
+{id:"d8",d:"data",q:`<p>Call center staff must see only the last four digits of credit card numbers in query results. Managers must see the full number. You can't change the application code.</p><p>What should you use?</p>`,
+ o:["Column-level encryption in the app","Always Encrypted","Transparent data encryption","Dynamic data masking"],a:[3],
+ x:`Dynamic data masking applies a mask (for example, a partial mask showing the last four digits) to query results for users without UNMASK permission. It needs no app changes. It's obfuscation, not encryption.`},
+{id:"d9",d:"data",q:`<p>A multi-tenant app stores all tenants in one Azure SQL database with a TenantId column. Each tenant's users must only ever see their own rows, enforced in the database.</p><p>What should you use?</p>`,
+ o:["Dynamic data masking","Row-level security","Separate schemas per tenant","Always Encrypted"],a:[1],
+ x:`Row-level security uses a predicate function to filter rows based on the user or session context (such as the tenant ID), enforced by the engine on every query.`},
+{id:"d10",d:"data",q:`<p>A globally distributed app uses Cosmos DB for NoSQL. Users must always read their own writes, but it's acceptable for other users to see changes slightly later. You want the lowest latency and highest availability that still meets this.</p><p>Which consistency level should you choose?</p>`,
+ o:["Bounded staleness","Eventual","Strong","Session"],a:[3],
+ x:`Session consistency guarantees read-your-own-writes and monotonic reads within a session. It's the default and gives low latency. Strong and bounded staleness cost latency and availability. Eventual doesn't guarantee that a user sees their own writes.`},
+{id:"d11",d:"data",q:`<p>An existing app uses the <b>MongoDB</b> driver and query language. You're moving it to a fully managed, globally distributed Azure database without rewriting the data access code.</p><p>What should you recommend?</p>`,
+ o:["Azure Cosmos DB for NoSQL","Azure Cosmos DB for MongoDB","Azure Table storage","Azure SQL Database with JSON columns"],a:[1],
+ x:`Cosmos DB for MongoDB implements the MongoDB wire protocol, so existing drivers and queries keep working. The NoSQL API would require rewriting data access code.`},
+{id:"d12",d:"data",q:`<p>You're designing a Cosmos DB container for an IoT app with 2 million devices. Each device writes a reading every 10 seconds, and most queries retrieve readings for one device.</p><p>Which partition key should you choose?</p>`,
+ o:["/deviceId","/sensorType (12 values)","/region (5 values)","/readingDate"],a:[0],
+ x:`deviceId has high cardinality, spreads writes evenly, and matches the most common query filter, so queries stay in one partition. Low-cardinality keys create hot partitions. Date creates a hot partition for all current writes.`},
+{id:"d13",d:"data",q:`<p>A new Cosmos DB workload has occasional bursts of traffic, low average use, and runs in one region. You want to avoid paying for unused provisioned throughput.</p><p>Which throughput option should you choose?</p>`,
+ o:["Autoscale throughput","Provisioned (manual) throughput","Serverless","Dedicated gateway"],a:[2],
+ x:`Serverless bills per request unit consumed, which suits spiky or low-average, single-region workloads. Autoscale still bills at least 10% of the maximum RU/s every hour. Manual provisioned throughput bills for the full amount.`},
+{id:"d14",d:"data",q:`<p>Your data science team runs Spark-based analytics over files in Azure Storage. They need directory-level operations (rename and delete of folders) to be atomic and POSIX-style ACLs on folders.</p><p>What should you recommend?</p>`,
+ o:["Azure NetApp Files","A Standard general-purpose v2 account with flat namespace","A Premium file share","A Standard general-purpose v2 account with hierarchical namespace enabled (Data Lake Storage)"],a:[3],
+ x:`Data Lake Storage is general-purpose v2 storage with the hierarchical namespace turned on. It gives true directories with atomic operations and POSIX ACLs, which analytics engines rely on.`},
+{id:"d15",d:"data",q:`<p>Nightly, you must copy data from on-prem Oracle and SQL Server databases into Azure Data Lake Storage, transform it, and load it into a data warehouse. Existing SSIS packages must keep running.</p><p>What should you recommend?</p>`,
+ o:["Azure Stream Analytics","AzCopy scheduled on an on-prem server","Azure Data Factory with a self-hosted integration runtime and an Azure-SSIS integration runtime","Azure Event Grid"],a:[2],
+ x:`Data Factory orchestrates ETL. A self-hosted integration runtime reaches on-prem data sources, and an Azure-SSIS integration runtime runs existing SSIS packages. Stream Analytics is for real-time streams.`},
+{id:"d16",d:"data",q:`<p>Financial records in Blob storage must be kept for 7 years and must not be modified or deleted by anyone, including administrators, during that time. Auditors require that the retention period can't be shortened.</p><p>What should you configure?</p>`,
+ o:["A locked time-based retention (immutability) policy","Blob soft delete with 7-year retention","A ReadOnly resource lock on the storage account","A lifecycle management policy that moves blobs to Archive"],a:[0],
+ x:`A time-based retention policy makes blobs WORM (write once, read many). Once it's locked, the retention period can be extended but not shortened, which meets SEC 17a-4(f)-style requirements. A resource lock only covers the control plane, and soft delete can be bypassed.`},
+{id:"d17",d:"data",q:`<p>Your app needs to store simple key-attribute entities (about 5 TB). Access is from one region and predictable. The goal is the <b>lowest cost</b>.</p><p>What should you recommend?</p>`,
+ o:["Azure Cosmos DB for Table","Azure Table storage","Azure SQL Database Hyperscale","Azure Managed Redis"],a:[1],
+ x:`Table storage is the cheapest key-attribute store. Cosmos DB for Table adds global distribution, guaranteed single-digit-ms latency, and automatic secondary indexing, which aren't needed here and cost more.`},
+{id:"d18",d:"data",q:`<p>A SAP HANA deployment on Azure VMs needs shared NFS storage with very high throughput and sub-millisecond latency, with snapshots.</p><p>What should you recommend?</p>`,
+ o:["Azure NetApp Files","Blob storage with NFS 3.0","Standard HDD managed disks","Azure Files Standard"],a:[0],
+ x:`Azure NetApp Files is an enterprise file service built for high-performance NFS and SMB workloads such as SAP HANA, with snapshots and low latency. Azure Files Standard and Blob NFS don't offer that performance level.`},
+
+// ---------- BUSINESS CONTINUITY ----------
+{id:"b1",d:"bc",q:`<p>You have an Azure SQL Managed Instance in East US. It must fail over automatically to West US in a regional outage, and applications must not need connection string changes after failover.</p><p>What should you configure?</p>`,
+ o:["Active geo-replication","A failover group","Geo-restore from geo-redundant backups","Zone-redundant configuration"],a:[1],
+ x:`Failover groups support Managed Instance, can fail over automatically, and provide read-write and read-only listener endpoints that stay the same after failover. Managed Instance doesn't support active geo-replication, and zone redundancy doesn't survive a region failure.`},
+{id:"b2",d:"bc",q:`<p>A reporting team in Asia needs low-latency read-only access to an Azure SQL database that's hosted in West Europe. You also want up to three additional readable copies in other regions.</p><p>What should you configure?</p>`,
+ o:["Elastic query","A failover group","Read scale-out on Business Critical","Active geo-replication"],a:[3],
+ x:`Active geo-replication supports up to four readable secondaries in any regions, per database. A failover group has only one secondary region. Read scale-out only uses a replica in the same region.`},
+{id:"b3",d:"bc",q:`<p>A non-critical Azure SQL database can tolerate an RPO of 1 hour and an RTO of 12 hours if its region fails. You want the lowest cost.</p><p>What should you recommend?</p>`,
+ o:["Failover group","Business Critical with zone redundancy","Geo-restore using geo-redundant backup storage","Active geo-replication"],a:[2],
+ x:`Geo-restore restores from geo-replicated automated backups and costs nothing extra beyond geo-redundant backup storage. Its RPO and RTO fit these requirements. Geo-replication and failover groups add the cost of a secondary database.`},
+{id:"b4",d:"bc",q:`<p>A web app runs on App Service (SLA 99.95%) and uses Azure SQL Database (SLA 99.99%). Both are required for the app to work.</p><p>What is the approximate composite SLA?</p>`,
+ o:["99.99%","99.95%","99.94%","99.97%"],a:[2],
+ x:`Dependent services in series multiply: 0.9995 × 0.9999 ≈ 0.9994, or 99.94%. The composite is always lower than the weakest single SLA.`},
+{id:"b5",d:"bc",q:`<p>Production VMs in East US must be recoverable in Central US within 2 hours of a regional outage, with no more than 15 minutes of data loss. Restoring individual files after accidental deletion is handled separately.</p><p>What should you recommend for the regional requirement?</p>`,
+ o:["Daily managed disk snapshots copied to Central US","Azure Backup with Cross Region Restore","Azure Site Recovery","Availability zones in East US"],a:[2],
+ x:`Site Recovery replicates continuously, with RPO measured in seconds to minutes, and lets you fail over in minutes using recovery plans. Backup with Cross Region Restore has an RPO of up to 24 hours (or hours with enhanced policy) and a longer restore time. Zones don't protect against a region outage.`},
+{id:"b6",d:"bc",q:`<p>A single-region web app on VMs must survive the failure of one datacenter within the region with an SLA of 99.99%.</p><p>What should you recommend?</p>`,
+ o:["VMs spread across two or more availability zones behind a Standard Load Balancer","A paired region with Site Recovery","An availability set with two VMs","One VM with Premium SSD disks"],a:[0],
+ x:`Deploying two or more VMs across availability zones gives a 99.99% SLA and protects against a datacenter (zone) failure. Availability sets give 99.95% and only protect against rack and update failures.`},
+{id:"b7",d:"bc",q:`<p>A storage account holds images for a global website. If the primary region fails, the app must still be able to <b>read</b> images immediately without waiting for a failover. It must also survive a zone failure in the primary region.</p><p>Which redundancy should you choose?</p>`,
+ o:["GZRS","ZRS","GRS","RA-GZRS"],a:[3],
+ x:`GZRS replicates across zones in the primary region and to the secondary region. The RA- (read-access) variant lets apps read from the secondary endpoint at any time, without a failover.`},
+{id:"b8",d:"bc",q:`<p>You must protect Azure VM backups against ransomware. Even an administrator whose account is compromised must not be able to disable soft delete or delete backup data without approval from a separate security team.</p><p>What should you configure? (Choose the best answer.)</p>`,
+ o:["A second Recovery Services vault in another region","Multi-user authorization with a Resource Guard owned by the security team, plus an immutable vault","A CanNotDelete lock on the vault","GRS storage redundancy on the vault"],a:[1],
+ x:`Multi-user authorization requires approval through a Resource Guard (in a separate subscription or tenant) for critical operations such as disabling soft delete. An immutable vault prevents operations that would delete recovery points early. Locks can be removed by an admin with enough rights.`},
+{id:"b9",d:"bc",q:`<p>Developers accidentally delete documents in Cosmos DB about once a month. You need to restore a container to any point in the last 7 days, without opening a support ticket.</p><p>What should you configure?</p>`,
+ o:["Periodic backup mode with 8-hour intervals","A change feed processor that copies to Blob storage","Continuous backup mode (7-day tier)","Multi-region writes"],a:[2],
+ x:`Continuous backup mode supports self-service point-in-time restore within 7 or 30 days. Periodic mode restores require a support request. Multi-region writes replicate deletions too.`},
+{id:"b10",d:"bc",q:`<p>A Cosmos DB account must remain writable in every region even if one region fails, with the highest possible availability SLA.</p><p>What should you configure?</p>`,
+ o:["Multi-region writes","Periodic backup with geo-redundant storage","Single write region with service-managed failover","Strong consistency in three regions"],a:[0],
+ x:`Multi-region writes let every region accept writes, which gives a 99.999% read and write availability SLA. With a single write region, writes stop until failover completes.`},
+{id:"b11",d:"bc",q:`<p>A web tier runs in two regions, active-active, behind Front Door. Each region's stack has a composite SLA of 99.9%. Assume the regions fail independently and ignore Front Door's own SLA.</p><p>What's the approximate availability of the two-region design?</p>`,
+ o:["99.8%","99.9%","99.99%","99.9999%"],a:[3],
+ x:`For parallel redundancy, availability = 1 − (1 − 0.999)². That's 1 − 0.000001 = 0.999999, or 99.9999%. In practice, the global router's own SLA caps the result.`},
+{id:"b12",d:"bc",series:true,q:`<p class="hint">Yes/No series. You can't return to this question on the real exam.</p><p><b>Goal:</b> an Azure SQL database in East US must fail over to West US automatically, and apps must keep the same connection string.</p><p><b>Solution:</b> Configure active geo-replication to a secondary in West US.</p><p>Does this meet the goal?</p>`,
+ o:["Yes","No"],a:[1],
+ x:`Active geo-replication doesn't provide automatic failover or a stable listener. The secondary has its own server name, so connection strings change. A failover group meets the goal.`},
+{id:"b13",d:"bc",series:true,q:`<p class="hint">Yes/No series. You can't return to this question on the real exam.</p><p><b>Goal:</b> an Azure SQL database in East US must fail over to West US automatically, and apps must keep the same connection string.</p><p><b>Solution:</b> Add the database to a failover group with a secondary server in West US and an automatic failover policy, and point apps at the read-write listener.</p><p>Does this meet the goal?</p>`,
+ o:["Yes","No"],a:[0],
+ x:`Failover group listeners (&lt;group&gt;.database.windows.net) redirect to the current primary after failover, and an automatic policy fails over without manual action.`},
+
+// ---------- INFRASTRUCTURE ----------
+{id:"f1",d:"inf",q:`<p>A global e-commerce site runs in App Service in three regions. You need to route users to the closest healthy region, cache static content at the edge, protect against SQL injection, and fail over in seconds.</p><p>What should you recommend?</p>`,
+ o:["Application Gateway with WAF in each region","Azure Front Door Premium with WAF","Traffic Manager with performance routing","Cross-region Load Balancer"],a:[1],
+ x:`Front Door is a global layer 7 entry point with anycast, edge caching, health probes, WAF, and fast failover that isn't limited by DNS TTL. Traffic Manager is DNS-only with no WAF or caching. Application Gateway is regional.`},
+{id:"f2",d:"inf",q:`<p>A multiplayer game server uses a custom <b>UDP</b> protocol and runs in two Azure regions and one on-prem datacenter. Players must be sent to the closest healthy endpoint.</p><p>What should you recommend?</p>`,
+ o:["Application Gateway","API Management","Azure Front Door","Traffic Manager with performance routing"],a:[3],
+ x:`Traffic Manager works at the DNS level, so it supports any protocol and endpoints outside Azure. Front Door and Application Gateway only handle HTTP/HTTPS. (Cross-region Load Balancer supports UDP but only fronts Azure regional load balancers, not on-prem.)`},
+{id:"f3",d:"inf",q:`<p>Within one region, you need to route <code>/images/*</code> to one pool of VMs and <code>/api/*</code> to another, terminate TLS, and apply a web application firewall. The entry point must be inside your VNet.</p><p>What should you recommend?</p>`,
+ o:["Traffic Manager","Application Gateway with WAF","Standard Load Balancer","Azure Front Door"],a:[1],
+ x:`Application Gateway is a regional layer 7 load balancer deployed into a VNet subnet, with path-based routing, TLS termination, and WAF. Load Balancer is layer 4 and can't inspect URL paths.`},
+{id:"f4",d:"inf",q:`<p>Orders from stores must be processed strictly in order <b>per store</b>, with no duplicates. Failed messages must be kept for inspection, and several services must each receive a copy of every order.</p><p>What should you recommend?</p>`,
+ o:["Service Bus topics with sessions and duplicate detection","Event Grid","Azure Storage queues","Event Hubs"],a:[0],
+ x:`Service Bus sessions give FIFO ordering per session ID (the store), duplicate detection removes resent messages, dead-letter queues hold failures, and topics with subscriptions give each service its own copy.`},
+{id:"f5",d:"inf",q:`<p>Ten thousand connected vehicles send telemetry every second. You need to ingest millions of events per second, keep them for replay for 7 days, and let existing <b>Apache Kafka</b> consumers read them.</p><p>What should you recommend?</p>`,
+ o:["Storage queues","Service Bus Premium","Event Grid","Event Hubs"],a:[3],
+ x:`Event Hubs is built for high-throughput streaming, with partitions, configurable retention for replay, and a Kafka-compatible endpoint. Service Bus is for transactional business messages, and Event Grid is for discrete reactive events.`},
+{id:"f6",d:"inf",q:`<p>Whenever a new image is uploaded to a Blob container, a function must create a thumbnail within seconds. The solution must avoid polling.</p><p>What should you use to trigger the function?</p>`,
+ o:["Event Hubs","Service Bus queue","Event Grid (Blob created events)","A timer trigger that checks every minute"],a:[2],
+ x:`Event Grid pushes BlobCreated events to subscribers, such as a Function, in near real time with no polling. It's the reactive event-routing service.`},
+{id:"f7",d:"inf",q:`<p>A simple background job queue receives about 200 GB of messages during month-end processing. Messages are under 64 KB. Ordering and transactions don't matter, and you need an audit log of every queue operation. You want the lowest cost.</p><p>What should you use?</p>`,
+ o:["Service Bus Standard queue","Azure Storage queue","Event Grid namespace","Event Hubs Premium"],a:[1],
+ x:`Storage queues are the cheapest option, hold very large backlogs (well beyond Service Bus's 80 GB limit), support messages up to 64 KB, and log every transaction through storage analytics logging.`},
+{id:"f8",d:"inf",q:`<p>A team wants to run containerized microservices that scale on HTTP traffic and queue length, can scale to zero, and use Dapr for service-to-service calls. They don't want to manage Kubernetes clusters or upgrades.</p><p>What should you recommend?</p>`,
+ o:["Azure Kubernetes Service","App Service for Containers","Azure Container Instances","Azure Container Apps"],a:[3],
+ x:`Container Apps is serverless containers built on Kubernetes, with KEDA-based event scaling (including scale to zero) and built-in Dapr, but you don't manage the cluster. AKS gives the full Kubernetes API but you manage node pools and upgrades.`},
+{id:"f9",d:"inf",q:`<p>A platform team needs custom Kubernetes operators, a service mesh, GPU node pools, and direct access to the Kubernetes API.</p><p>What should you recommend?</p>`,
+ o:["Azure Container Apps","Azure Batch","Azure Kubernetes Service","Azure Container Instances"],a:[2],
+ x:`Only AKS exposes the full Kubernetes API, so you can run custom operators and controllers, and it supports multiple node pools, including GPU pools.`},
+{id:"f10",d:"inf",q:`<p>A function processes orders when they arrive. It must have <b>no cold start</b>, connect to resources in a VNet, and occasionally run for up to 30 minutes.</p><p>Which hosting plan should you recommend?</p>`,
+ o:["Premium (Elastic Premium)","Free App Service plan","Container Instances","Consumption"],a:[0],
+ x:`The Premium plan keeps pre-warmed instances (no cold start), supports VNet integration, and allows longer executions (default 30 minutes, can be unbounded). Consumption has a 10-minute maximum and cold starts.`},
+{id:"f11",d:"inf",q:`<p>A workflow must call three APIs in sequence, wait up to 5 days for a human approval event, and then continue. You want to write the workflow in C# code.</p><p>What should you use?</p>`,
+ o:["Azure Batch","Event Grid","A single Consumption-plan function with Thread.Sleep","Durable Functions"],a:[3],
+ x:`Durable Functions orchestrations are stateful, checkpoint their progress, and can wait for external events for days without consuming compute. A regular function would time out.`},
+{id:"f12",d:"inf",q:`<p>A government web app must run on <b>dedicated, single-tenant</b> infrastructure with no public front end. It must be reachable only from your VNet and handle very high scale.</p><p>What should you recommend?</p>`,
+ o:["App Service Environment v3 (internal)","Azure Container Instances","Azure Functions Consumption","App Service Premium v3 with a private endpoint"],a:[0],
+ x:`App Service Environment v3 runs App Service in your VNet on dedicated, single-tenant infrastructure. An internal ASE has no public endpoint. Premium v3 with a private endpoint is private but still runs on shared multi-tenant front ends.`},
+{id:"f13",d:"inf",q:`<p>A rendering company needs to run 50,000 independent frames in parallel across hundreds of VMs, with job scheduling and automatic pool scaling, and pay only while jobs run.</p><p>What should you recommend?</p>`,
+ o:["App Service","Azure Batch","Virtual Machine Scale Sets with a custom scheduler","Azure Functions"],a:[1],
+ x:`Azure Batch handles large-scale parallel and HPC jobs: it manages pools of VMs, schedules tasks, and scales pools automatically. Building the same on Scale Sets needs your own scheduler.`},
+{id:"f14",d:"inf",q:`<p>You must migrate 400 VMware VMs to Azure within 3 months. The VMs must keep running on vSphere, and the team wants to keep using vCenter and existing VMware tools with no changes to the VMs.</p><p>What should you recommend?</p>`,
+ o:["Azure Migrate server migration to Azure VMs","Azure Site Recovery","Azure VMware Solution","Azure Stack HCI"],a:[2],
+ x:`Azure VMware Solution runs vSphere on dedicated Azure hosts, so VMs move with HCX without conversion and the team keeps vCenter. Azure Migrate converts VMs into native Azure VMs.`},
+{id:"f15",d:"inf",m:true,pick:2,q:`<p>You're planning a migration of 300 on-prem servers. Before migration, you need to <b>discover servers</b>, <b>map their dependencies</b>, and get <b>right-sized Azure VM recommendations with cost estimates</b>.</p><p>Which <b>two</b> actions should you include?</p>`,
+ o:["Deploy Azure Site Recovery to each server","Use Azure Advisor","Deploy the Azure Migrate appliance on-prem","Run an Azure Migrate assessment"],a:[2,3],
+ x:`The Azure Migrate appliance discovers servers and performs agentless dependency analysis. An assessment uses the collected performance data to recommend VM sizes and estimate cost. Advisor only covers resources already in Azure.`},
+{id:"f16",d:"inf",q:`<p>A 2 TB SQL Server database must move to Azure SQL Managed Instance with less than 15 minutes of downtime.</p><p>What should you recommend?</p>`,
+ o:["Azure Data Box","Export a BACPAC and import it","Back up to a URL and restore once","Azure Database Migration Service in online mode"],a:[3],
+ x:`An online migration with Database Migration Service keeps the target in sync with the source until cutover, so downtime is only the cutover itself. BACPAC and one-time backup/restore mean downtime for the whole transfer.`},
+{id:"f17",d:"inf",q:`<p>You need to move 500 TB of archive data from an on-prem datacenter to Blob storage. The site has a 100 Mbps internet link that's already heavily used.</p><p>What should you recommend?</p>`,
+ o:["Azure File Sync","Site-to-site VPN","Azure Data Box Heavy (or multiple Data Box devices)","AzCopy over the internet"],a:[2],
+ x:`At 100 Mbps, 500 TB would take over a year. Data Box devices ship the data offline. Data Box Heavy holds about 1 PB per device.`},
+{id:"f18",d:"inf",q:`<p>The company has 80 branch offices with SD-WAN devices, two ExpressRoute circuits, remote users who connect with point-to-site VPN, and VNets in four regions. All sites must reach each other (any-to-any) with the least management effort.</p><p>What should you recommend?</p>`,
+ o:["Azure Virtual WAN Standard with a hub in each region","ExpressRoute Global Reach only","Site-to-site VPN from each branch to every VNet","Hub-spoke with self-managed VNet peering and NVAs in each region"],a:[0],
+ x:`Virtual WAN Standard provides Microsoft-managed hubs with built-in any-to-any transit among branches (VPN and SD-WAN partners), ExpressRoute, P2S users, and VNets across regions. A self-managed hub-spoke at this scale is much more work.`},
+{id:"f19",d:"inf",q:`<p>Your Seattle and London offices each have their own ExpressRoute circuit to Azure. They now need to exchange traffic privately with each other over Microsoft's backbone.</p><p>What should you enable?</p>`,
+ o:["ExpressRoute FastPath","ExpressRoute Global Reach","VNet peering","Microsoft peering"],a:[1],
+ x:`Global Reach links two ExpressRoute circuits so on-prem sites can talk to each other through Microsoft's network. FastPath only speeds traffic into VNets by bypassing the gateway.`},
+{id:"f20",d:"inf",q:`<p>You have an ExpressRoute circuit with private peering. Users on-prem also need private connectivity to <b>Microsoft 365</b> and Azure public PaaS endpoints over the circuit, and Microsoft has approved the use case.</p><p>What should you configure?</p>`,
+ o:["Microsoft peering","A second circuit with private peering","Additional VNets on private peering","FastPath"],a:[0],
+ x:`Microsoft peering carries traffic to Microsoft public services (Microsoft 365 with authorization, and Azure public endpoints). Private peering only reaches private IPs in your VNets.`},
+{id:"f21",d:"inf",q:`<p>On-prem servers must reach an Azure SQL Database through its private endpoint over the existing ExpressRoute connection. On-prem DNS servers must resolve <code>sql1.database.windows.net</code> to the private IP.</p><p>What should you add in Azure?</p>`,
+ o:["A Standard Load Balancer in front of the private endpoint","A public DNS zone for database.windows.net","An Azure DNS Private Resolver inbound endpoint, with conditional forwarders on-prem","A service endpoint for Microsoft.Sql"],a:[2],
+ x:`The privatelink zone is a private DNS zone that's only resolvable from Azure. The Private Resolver inbound endpoint gives on-prem DNS servers an IP in the VNet to forward queries to. Service endpoints aren't reachable from on-prem.`},
+{id:"f22",d:"inf",q:`<p>All outbound internet traffic from spoke VNets must be inspected centrally, including <b>TLS inspection</b> and <b>intrusion detection and prevention (IDPS)</b>. You want a managed Azure service.</p><p>What should you recommend?</p>`,
+ o:["Azure Firewall Standard","Azure Firewall Premium in the hub","Application Gateway WAF","NSGs on each subnet"],a:[1],
+ x:`Azure Firewall Premium adds TLS inspection, IDPS, and URL filtering to the Standard features. Put it in the hub and use UDRs to send spoke traffic through it. NSGs filter only by IP and port.`},
+{id:"f23",d:"inf",q:`<p>You expose 25 internal APIs to partners. You need a single endpoint, per-partner rate limits, API keys, JWT validation, a developer portal, and gateways in two regions with full VNet injection.</p><p>Which service and tier should you recommend?</p>`,
+ o:["Application Gateway Standard v2","API Management Developer","Azure Front Door Standard","API Management Premium"],a:[3],
+ x:`API Management provides subscriptions (keys), rate-limit and JWT policies, and a developer portal. <b>Premium</b> (classic) supports multi-region gateway deployment and full VNet injection. Developer has no SLA and runs in one region.`},
+{id:"f24",d:"inf",q:`<p>A SQL Server VM needs a data disk with sub-millisecond latency, 150,000 IOPS, and the ability to change performance without detaching the disk. You also want an OS disk.</p><p>Which statement is correct?</p>`,
+ o:["Use Ultra Disk for both the OS and data disks","Use Standard SSD for data and Ultra Disk for the OS","Use Premium SSD v2 for the OS and Ultra Disk for data","Use Ultra Disk for data and Premium SSD for the OS disk"],a:[3],
+ x:`Ultra Disk and Premium SSD v2 can only be data disks. Ultra delivers very high IOPS with sub-ms latency and lets you adjust performance online. Use Premium SSD for the OS disk.`},
+
+// ---------- CASE STUDY ----------
+{id:"cs1",d:"data",cs:true,q:`<p><b>Case study: Tailwind Traders.</b> Which service should you recommend for the order databases?</p>`,
+ o:["Azure SQL Managed Instance","Azure Cosmos DB for NoSQL","Azure SQL Database single databases","SQL Server on Azure VMs"],a:[0],
+ x:`The databases use SQL Agent jobs and cross-database queries, which Azure SQL Database doesn't support. Managed Instance supports both and is PaaS, meeting the minimal-change and minimal-effort requirements. SQL on VMs isn't PaaS.`},
+{id:"cs2",d:"idn",cs:true,q:`<p><b>Case study: Tailwind Traders.</b> Which hybrid sign-in method meets the identity requirement?</p>`,
+ o:["Pass-through authentication","Password hash synchronization","Entra Domain Services","Federation with AD FS"],a:[1],
+ x:`Sign-in must keep working when the Seattle datacenter is offline. PTA and AD FS both depend on on-prem servers in Seattle. PHS doesn't.`},
+{id:"cs3",d:"inf",cs:true,q:`<p><b>Case study: Tailwind Traders.</b> What should you place in front of the two regional deployments of the order website?</p>`,
+ o:["Cross-region Load Balancer","An Application Gateway with WAF in each region only","Azure Front Door with a WAF policy","Traffic Manager with priority routing"],a:[2],
+ x:`Front Door routes users to the nearest healthy region and its WAF protects against SQL injection and other OWASP exploits. Traffic Manager has no WAF. Regional Application Gateways can't route between regions on their own.`},
+{id:"cs4",d:"inf",cs:true,q:`<p><b>Case study: Tailwind Traders.</b> Which service should replace the on-prem message queue for store orders?</p>`,
+ o:["Event Hubs with one partition per store","Azure Storage queues","Event Grid","Service Bus with sessions (session ID = store) and duplicate detection"],a:[3],
+ x:`Service Bus sessions give FIFO per store, and duplicate detection ensures an order isn't processed twice. Storage queues don't guarantee order. Event Hubs is built for streaming telemetry, not transactional processing with duplicate detection.`},
+{id:"cs5",d:"idn",cs:true,q:`<p><b>Case study: Tailwind Traders.</b> What must you do to meet the administrator access requirement?</p>`,
+ o:["Create a custom role that expires after 4 hours","Assign Owner permanently and review it quarterly with access reviews","Upgrade administrators to Entra ID P2 and configure PIM eligible assignments for Owner with approval and a 4-hour maximum","Create a Conditional Access policy that requires MFA for the Azure portal"],a:[2],
+ x:`Just-in-time, approved, time-limited role activation is PIM. Tailwind only has P1, and PIM needs P2 (or Entra ID Governance) for the administrators who use it.`}
+];
+
+/* ---------- state ---------- */
+const KEY="az305-prep-v1", WKEY="az305-missed-v1";
+const FULL_PLAN={idn:12,data:10,bc:8,inf:15};
+const byId=Object.fromEntries(Q.map(q=>[q.id,q]));
+let S=null, tick=null, confirmOpen=false, resultsFilter="missed";
+function load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const isMulti=q=>!!q.m;
+function same(a,b){if(!a||a.length!==b.length)return false;const s=new Set(a);return b.every(x=>s.has(x))}
+const correct=(q,ans)=>same(ans,q.a);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function buildFull(){
+  let ids=[];
+  for(const d in FULL_PLAN){ids.push(...shuffle(Q.filter(q=>q.d===d&&!q.cs)).slice(0,FULL_PLAN[d]).map(q=>q.id))}
+  ids=shuffle(ids);
+  ids.push(...Q.filter(q=>q.cs).map(q=>q.id));
+  return ids;
+}
+function startFull(){S={mode:"full",ids:buildFull(),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:100*60,done:false};persist();go("exam")}
+function startPractice(domains,onlyIds){
+  let pool=onlyIds?onlyIds.map(id=>byId[id]).filter(Boolean):Q.filter(q=>domains.includes(q.d));
+  if(!pool.length)return;
+  S={mode:"practice",ids:shuffle(pool.map(q=>q.id)),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:0,done:false};persist();go("exam")
+}
+function persist(){if(S)save(KEY,S)}
+
+/* ---------- routing ---------- */
+function go(v){if(location.hash!=="#"+v)location.hash=v;else route()}
+function route(){
+  const h=(location.hash||"#guide").slice(1);
+  const v=["exam","flash"].includes(h)?h:"guide";
+  ["guide","exam","flash"].forEach(k=>{document.getElementById("view-"+k).hidden=v!==k;document.getElementById("tab-"+k).setAttribute("aria-selected",v===k)});
+  if(v==="exam")renderExam();else{updateTimer();if(v==="flash")renderFlash()}
+  window.scrollTo(0,0);
+}
+
+/* ---------- timer ---------- */
+function remaining(){return S&&S.mode==="full"&&!S.done?Math.max(0,S.dur-Math.floor((Date.now()-S.start)/1000)):null}
+function updateTimer(){
+  const t=document.getElementById("timer"), r=remaining();
+  if(r===null){t.hidden=true;return}
+  t.hidden=false;
+  t.textContent=String(Math.floor(r/60)).padStart(2,"0")+":"+String(r%60).padStart(2,"0");
+  t.classList.toggle("low",r<600);
+  if(r===0){finish()}
+}
+function ensureTick(){if(!tick)tick=setInterval(updateTimer,1000)}
+
+/* ---------- exam rendering ---------- */
+const root=()=>document.getElementById("view-exam");
+function renderExam(){
+  updateTimer();
+  if(!S){renderHome();return}
+  if(S.done){renderResults();return}
+  renderQuestion();
+}
+
+function renderHome(){
+  const saved=load(KEY);
+  const missed=load(WKEY)||[];
+  const counts=Object.fromEntries(Object.keys(DOM).map(d=>[d,Q.filter(q=>q.d===d).length]));
+  root().innerHTML=`<div class="ex-home">
+    <div class="hero"><div class="eyebrow">Practice exam</div><h1>Choose how to practice</h1>
+    <p class="lede">${Q.length} original questions written to match the style and difficulty of AZ-305. These aren't real exam questions. They test the same skills in the same formats.</p></div>
+    ${saved&&!saved.done?`<div class="resume"><span>You have an unfinished ${saved.mode==="full"?"full exam":"practice session"} (${Object.keys(saved.ans).length}/${saved.ids.length} answered).</span><button class="btn small primary" id="resume">Resume</button><button class="btn small" id="discard">Discard</button></div>`:""}
+    <div class="modes">
+      <div class="mode"><h3>Full practice exam</h3><p>50 questions weighted by domain, ending with a 5-question case study. 100-minute timer, no feedback until you submit. Questions are drawn at random each time.</p><button class="btn primary" id="go-full">Start full exam</button></div>
+      <div class="mode"><h3>Practice by domain</h3><p>Untimed. You see the answer and explanation after each question.</p>
+        <div class="chips" id="dchips">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="true" data-d="${d}">${DOM[d].short} · ${counts[d]}</button>`).join("")}</div>
+        <button class="btn" id="go-prac">Start practice</button></div>
+      ${missed.length?`<div class="mode"><h3>Retry missed</h3><p>${missed.length} question${missed.length>1?"s":""} you got wrong last time, with instant feedback.</p><button class="btn" id="go-missed">Retry missed questions</button></div>`:""}
+    </div>
+  </div>`;
+  const r=root();
+  r.querySelector("#go-full").onclick=startFull;
+  r.querySelectorAll("#dchips .chip").forEach(c=>c.onclick=()=>c.setAttribute("aria-pressed",c.getAttribute("aria-pressed")!=="true"));
+  r.querySelector("#go-prac").onclick=()=>{const ds=[...r.querySelectorAll('#dchips .chip[aria-pressed="true"]')].map(c=>c.dataset.d);startPractice(ds)};
+  const gm=r.querySelector("#go-missed");if(gm)gm.onclick=()=>startPractice(null,missed);
+  const rs=r.querySelector("#resume");if(rs)rs.onclick=()=>{S=saved;renderExam()};
+  const ds=r.querySelector("#discard");if(ds)ds.onclick=()=>{del(KEY);renderHome()};
+}
+
+function hintFor(q){if(q.series)return"Select Yes or No";if(q.pick)return`Select ${q.pick===2?"two":q.pick}`;if(isMulti(q))return"Select all that apply";return"Select one"}
+
+function renderQuestion(){
+  const q=byId[S.ids[S.cur]], n=S.ids.length, ans=S.ans[q.id]||[], checked=S.mode==="practice"&&S.checked[q.id];
+  const multi=isMulti(q);
+  const opts=q.o.map((t,i)=>{
+    let cls="opt"; if(ans.includes(i))cls+=" sel";
+    if(checked){cls+=" locked";if(q.a.includes(i))cls+=" right";else if(ans.includes(i))cls+=" wrong"}
+    return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${checked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
+  const unanswered=S.ids.filter(id=>!(S.ans[id]&&S.ans[id].length)).length;
+  const markedN=S.ids.filter(id=>S.marked[id]).length;
+  const pal=S.ids.map((id,i)=>{let c="pq";const a=S.ans[id];
+    if(S.mode==="practice"&&S.checked[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(a&&a.length)c+=" ans";
+    if(S.marked[id])c+=" mk";if(i===S.cur)c+=" cur";
+    return `<button class="${c}" data-i="${i}" aria-label="Question ${i+1}">${i+1}</button>`}).join("");
+  root().innerHTML=`<div class="ex">
+    <div class="qcard">
+      <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}
+        <button class="mark" id="mark" aria-pressed="${!!S.marked[q.id]}">${S.marked[q.id]?"Marked for review":"Mark for review"}</button></div>
+      ${q.cs?`<details class="case" open><summary>Case study: ${CASE_NAME}</summary><div class="cbody">${CASE}</div></details>`:""}
+      <div class="qtext">${q.q}</div>
+      <div class="hint">${hintFor(q)}</div>
+      <div class="opts" id="opts">${opts}</div>
+      ${checked?explainHTML(q,ans):""}
+      <div class="qnav">
+        <button class="btn" id="prev" ${S.cur===0?"disabled":""}>Previous</button>
+        <span class="sp"></span>
+        ${S.mode==="practice"&&!checked?`<button class="btn primary" id="check" ${ans.length?"":"disabled"}>Check answer</button>`:""}
+        ${S.cur<n-1?`<button class="btn ${S.mode==="full"||checked?"primary":""}" id="next">Next</button>`:""}
+      </div>
+    </div>
+    <aside class="side">
+      <div class="pal">
+        <div class="hint">${S.mode==="full"?"Full exam":"Practice"} · ${n-unanswered}/${n} answered</div>
+        <div class="grid">${pal}</div>
+        <div class="legend"><span>■ answered</span><span style="color:var(--warn)">▁ marked</span>${S.mode==="practice"?'<span style="color:var(--good)">■ right</span><span style="color:var(--bad)">■ wrong</span>':""}</div>
+        ${confirmOpen?`<div class="confirm"><div><b>${unanswered}</b> unanswered, <b>${markedN}</b> marked for review. Submit now?</div><div class="cta-row"><button class="btn small primary" id="sub-yes">Submit</button><button class="btn small" id="sub-no">Keep working</button></div></div>`
+          :`<button class="btn ${S.cur===n-1?"primary":""}" id="submit">${S.mode==="full"?"Submit exam":"Finish & see results"}</button>`}
+        <button class="btn small" id="quit">Quit to menu</button>
+      </div>
+    </aside>
+  </div>`;
+  const r=root();
+  r.querySelectorAll("#opts input").forEach(inp=>inp.onchange=()=>{
+    const sel=[...r.querySelectorAll("#opts input:checked")].map(x=>+x.value);
+    S.ans[q.id]=sel;persist();
+    r.querySelectorAll("#opts .opt").forEach((l,i)=>l.classList.toggle("sel",sel.includes(i)));
+    const ck=r.querySelector("#check");if(ck)ck.disabled=!sel.length;
+    const b=r.querySelector(`.pq[data-i="${S.cur}"]`);if(b)b.classList.toggle("ans",!!sel.length);
+  });
+  r.querySelector("#mark").onclick=()=>{S.marked[q.id]=!S.marked[q.id];persist();renderQuestion()};
+  r.querySelector("#prev").onclick=()=>{S.cur--;persist();renderQuestion();window.scrollTo(0,0)};
+  const nx=r.querySelector("#next");if(nx)nx.onclick=()=>{S.cur++;persist();renderQuestion();window.scrollTo(0,0)};
+  const ck=r.querySelector("#check");if(ck)ck.onclick=()=>{S.checked[q.id]=true;persist();renderQuestion()};
+  r.querySelectorAll(".pq").forEach(b=>b.onclick=()=>{S.cur=+b.dataset.i;persist();renderQuestion()});
+  const sb=r.querySelector("#submit");if(sb)sb.onclick=()=>{confirmOpen=true;renderQuestion()};
+  const sy=r.querySelector("#sub-yes");if(sy)sy.onclick=()=>{confirmOpen=false;finish()};
+  const sn=r.querySelector("#sub-no");if(sn)sn.onclick=()=>{confirmOpen=false;renderQuestion()};
+  r.querySelector("#quit").onclick=()=>{S=null;confirmOpen=false;updateTimer();renderHome()};
+}
+
+function letters(arr){return (arr&&arr.length)?arr.slice().sort().map(i=>String.fromCharCode(65+i)).join(", "):"No answer"}
+function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="explain"><div class="verdict ${ok?"ok":"no"}">${ok?"Correct":"Incorrect"}. The answer is ${letters(q.a)}.</div><div>${q.x}</div></div>`}
+
+function finish(){
+  if(!S||S.done)return;
+  S.done=true;S.end=Date.now();
+  const missed=S.ids.filter(id=>!correct(byId[id],S.ans[id]||[]));
+  save(WKEY,missed);persist();updateTimer();resultsFilter="missed";
+  renderExam();window.scrollTo(0,0);
+}
+
+function renderResults(){
+  const items=S.ids.map(id=>({q:byId[id],ans:S.ans[id]||[]})).map(o=>({...o,ok:correct(o.q,o.ans)}));
+  const total=items.length, right=items.filter(i=>i.ok).length, pct=Math.round(right/total*100);
+  const mins=Math.round(((S.end||Date.now())-S.start)/60000);
+  const per=Object.keys(DOM).map(d=>{const its=items.filter(i=>i.q.d===d);const r=its.filter(i=>i.ok).length;return{d,n:its.length,r,p:its.length?Math.round(r/its.length*100):null}}).filter(x=>x.n);
+  const band=p=>p>=80?"hi":p>=65?"mid":"low";
+  const verdict=pct>=80?["Ready","var(--good)"]:pct>=70?["Borderline: review weak domains","var(--warn)"]:["Not yet: study the guide sections for your weakest domains","var(--bad)"];
+  const weakest=per.slice().sort((a,b)=>a.p-b.p)[0];
+  const shown=items.filter(i=>resultsFilter==="all"||!i.ok);
+  root().innerHTML=`<div class="res">
+    <div class="hero"><div class="eyebrow">${S.mode==="full"?"Full exam":"Practice"} results</div><h1>${right} of ${total} correct</h1></div>
+    <div class="score">
+      <div><div class="big">${pct}%</div><div class="hint" style="margin-top:6px">${mins} min</div></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span class="verdict-pill" style="color:${verdict[1]};border-color:${verdict[1]}">${verdict[0]}</span>
+        <p style="color:var(--muted);font-size:.92rem">The real exam uses a scaled 700/1000 passing score, and a scaled score isn't a simple percentage. On a practice set like this, aim for <b>80% or higher</b> so you have a margin.${weakest&&weakest.p<80?` Your weakest domain is <b>${DOM[weakest.d].name}</b>. Re-read <a href="#guide" data-sec="g-${weakest.d}">its cheat sheet</a>.`:""} Multi-select questions are scored all-or-nothing here.</p>
+      </div>
+    </div>
+    <div class="card"><h3>By domain</h3><div class="dbars">
+      ${per.map(x=>`<div class="dbar"><span>${DOM[x.d].name} <span class="hint">${x.r}/${x.n}</span></span><div class="track"><div class="fill ${band(x.p)}" style="width:${x.p}%"></div><div class="tick" title="80% target"></div></div><span class="pct">${x.p}%</span></div>`).join("")}
+      <div class="hint">The line on each bar marks the 80% target</div>
+    </div></div>
+    <div class="cta-row">
+      ${right<total?`<button class="btn primary" id="retry">Retry the ${total-right} missed</button>`:""}
+      <button class="btn" id="newfull">New full exam</button>
+      <button class="btn" id="menu">Practice menu</button>
+    </div>
+    <div class="filter"><h2 style="margin-right:auto">Review</h2>
+      <button class="chip" aria-pressed="${resultsFilter==="missed"}" data-f="missed">Missed (${total-right})</button>
+      <button class="chip" aria-pressed="${resultsFilter==="all"}" data-f="all">All (${total})</button></div>
+    <div class="rlist">${shown.length?shown.map(i=>`<div class="ritem ${i.ok?"ok":"bad"}">
+      <div class="qmeta"><span class="qnum">Q${S.ids.indexOf(i.q.id)+1}</span><span class="dtag">${DOM[i.q.d].short}</span>${i.q.cs?'<span class="dtag">Case study</span>':""}<span style="margin-left:auto;font-weight:600;color:${i.ok?"var(--good)":"var(--bad)"}">${i.ok?"Correct":"Incorrect"}</span></div>
+      <div class="qtext" style="font-size:.95rem">${i.q.q}</div>
+      <div class="row">Your answer: <b>${letters(i.ans)}</b> · Correct: <b>${letters(i.q.a)}</b></div>
+      <ol type="A" style="margin:0;padding-left:22px;font-size:.9rem">${i.q.o.map((t,k)=>`<li style="${i.q.a.includes(k)?"color:var(--good);font-weight:600":i.ans.includes(k)?"color:var(--bad)":""}">${t}</li>`).join("")}</ol>
+      <div class="explain">${i.q.x}</div></div>`).join(""):'<p class="lede">No missed questions.</p>'}</div>
+  </div>`;
+  const r=root();
+  const rt=r.querySelector("#retry");if(rt)rt.onclick=()=>startPractice(null,items.filter(i=>!i.ok).map(i=>i.q.id));
+  r.querySelector("#newfull").onclick=startFull;
+  r.querySelector("#menu").onclick=()=>{S=null;renderHome()};
+  r.querySelectorAll(".filter .chip").forEach(c=>c.onclick=()=>{resultsFilter=c.dataset.f;renderResults()});
+  r.querySelectorAll("a[data-sec]").forEach(a=>a.onclick=e=>{e.preventDefault();go("guide");setTimeout(()=>{const el=document.getElementById(a.dataset.sec);if(el)el.scrollIntoView()},30)});
+}
+
+/* ---------- flashcards ---------- */
+const FC=[
+["idn","Hybrid sign-in that keeps working when on-prem is down","<b>Password hash sync (PHS)</b>"],
+["idn","Feature that requires password hash sync even if you use PTA or federation","<b>Leaked credential detection</b> in Identity Protection"],
+["idn","Hybrid sign-in that keeps passwords on-prem and enforces logon hours, with the least infrastructure","<b>Pass-through authentication (PTA)</b>"],
+["idn","When is federation (AD FS) the right answer?","On-prem <b>smart-card</b> sign-in or a <b>third-party MFA</b> server Entra can't replace. Otherwise it's the most effort."],
+["idn","Entra Connect Sync vs Entra Cloud Sync","<b>Cloud Sync</b>: lightweight agents, multiple disconnected forests. <b>Connect Sync</b>: full-featured (device writeback, complex rules)."],
+["idn","License for Conditional Access","<b>Entra ID P1</b>"],
+["idn","License for Privileged Identity Management","<b>Entra ID P2</b> (or Entra ID Governance)"],
+["idn","License for Identity Protection risk policies","<b>Entra ID P2</b>"],
+["idn","Just-in-time, approved, time-limited role activation","<b>Privileged Identity Management (PIM)</b>. Works for Entra roles and Azure RBAC roles."],
+["idn","Recurring confirmation of group or app access with automatic removal","<b>Access reviews</b> (P2 or Entra ID Governance)"],
+["idn","Bundles of groups, apps, and sites that users request with approval and expiry","<b>Entitlement management</b> access packages"],
+["idn","Partners sign in with their own work accounts","<b>B2B collaboration</b> (guest users)"],
+["idn","Customer-facing app with self-service sign-up and social sign-in","<b>Entra External ID</b> (external tenant). Replaces Azure AD B2C for new customers."],
+["idn","Trust a partner tenant's MFA so guests aren't prompted twice","<b>Cross-tenant access settings</b> (inbound trust)"],
+["idn","System-assigned vs user-assigned managed identity","<b>System</b>: tied to one resource's lifecycle. <b>User</b>: standalone, shared across many resources."],
+["idn","Key Vault Standard vs Premium","<b>Standard</b>: software-protected keys. <b>Premium</b>: HSM-protected keys (multi-tenant HSMs)."],
+["idn","Single-tenant FIPS 140-3 Level 3 HSM with customer-owned security domain","<b>Key Vault Managed HSM</b>"],
+["idn","Recommended Key Vault permission model","<b>Azure RBAC</b> (access policies are legacy)"],
+["idn","Key Vault settings required for customer-managed keys","<b>Soft delete</b> and <b>purge protection</b>"],
+["idn","Central store for app settings and feature flags","<b>Azure App Configuration</b>, with Key Vault references for secrets"],
+["idn","Where to assign policy so new subscriptions inherit it","The highest suitable <b>management group</b>"],
+["idn","Policy effect that deploys a missing resource (e.g., diagnostic setting)","<b>DeployIfNotExists</b>, plus a remediation task for existing resources"],
+["idn","Replacement for Azure Blueprints","<b>Template specs</b> + <b>deployment stacks</b> + Azure Policy"],
+["idn","Block Owners from changing a set of deployed resources","<b>Deployment stack deny settings</b> (denyWriteAndDelete)"],
+["idn","Boundary for billing, quota, and blast radius","<b>Subscription</b>"],
+["idn","Secure score and multi-cloud CSPM","<b>Microsoft Defender for Cloud</b>"],
+["idn","Cloud-native SIEM and SOAR","<b>Microsoft Sentinel</b> (runs on a Log Analytics workspace)"],
+["idn","Log destination for querying with KQL","<b>Log Analytics workspace</b>"],
+["idn","Log destination for cheapest long-term archive","<b>Storage account</b> (Cool/Cold/Archive tier)"],
+["idn","Log destination for a third-party SIEM","<b>Event Hubs</b>"],
+["idn","Reasons to create more than one Log Analytics workspace","<b>Data residency</b>, separate billing, or hard access isolation. Otherwise prefer fewer."],
+["idn","Let teams see only logs for resources they can access","<b>Resource-context access</b> (or table-level RBAC)"],
+["idn","Log Analytics interactive retention max / total max","<b>2 years</b> / <b>12 years</b>"],
+["idn","Cheaper table plans for high-volume, rarely queried logs","<b>Basic</b> and <b>Auxiliary</b> logs"],
+["idn","App performance, dependencies, distributed tracing","<b>Application Insights</b>"],
+["idn","Query resource inventory across many subscriptions fast","<b>Azure Resource Graph</b>"],
+["idn","Replacement for NSG flow logs","<b>VNet flow logs</b> (Network Watcher)"],
+["data","SQL features that rule out Azure SQL Database","SQL Agent, cross-database queries, CLR, Service Broker, Database Mail, linked servers"],
+["data","Minimal-change PaaS target for SQL Server","<b>Azure SQL Managed Instance</b>"],
+["data","When SQL Server on an Azure VM is the answer","Need <b>OS access</b>, SSRS/SSAS on the same box, third-party agents, or an unsupported version"],
+["data","Many small databases with different peak times","<b>Elastic pool</b>"],
+["data","Intermittent database, pay nothing for compute when idle","<b>Serverless</b> (General Purpose) with <b>auto-pause</b>"],
+["data","Azure SQL Database tier for up to 128 TB and size-independent backups","<b>Hyperscale</b>"],
+["data","SQL tier with local SSD, In-Memory OLTP, and a free readable secondary","<b>Business Critical</b>"],
+["data","Purchasing model required for Azure Hybrid Benefit","<b>vCore</b>"],
+["data","Hide data from DBAs while the app can still use it","<b>Always Encrypted</b>"],
+["data","Show only the last 4 digits to some users, no app change","<b>Dynamic data masking</b> (not encryption)"],
+["data","Each tenant sees only its own rows","<b>Row-level security</b>"],
+["data","Encryption at rest for Azure SQL, on by default","<b>Transparent data encryption (TDE)</b>"],
+["data","Tamper-evident tables in Azure SQL","<b>Ledger</b>"],
+["data","Cosmos DB consistency levels, strongest to weakest","Strong → Bounded staleness → <b>Session</b> (default) → Consistent prefix → Eventual"],
+["data","Cosmos DB level that guarantees read-your-own-writes","<b>Session</b>"],
+["data","Cosmos DB consistency incompatible with multi-region writes","<b>Strong</b>"],
+["data","Good Cosmos DB partition key","High cardinality, even request spread, used in most query filters"],
+["data","Cosmos DB logical partition max size","<b>20 GB</b>"],
+["data","Cosmos DB throughput for spiky, low-average, single-region use","<b>Serverless</b>"],
+["data","Cosmos DB autoscale minimum","Scales between <b>10%</b> and 100% of the max RU/s"],
+["data","Existing MongoDB app, no code changes","<b>Cosmos DB for MongoDB</b>"],
+["data","Graph data in Cosmos DB","<b>Cosmos DB for Apache Gremlin</b>"],
+["data","Cheapest key-attribute store","<b>Azure Table storage</b>"],
+["data","Table data needing global distribution and latency SLA","<b>Cosmos DB for Table</b>"],
+["data","Analytics storage with folders and POSIX ACLs","<b>Data Lake Storage</b> (GPv2 + hierarchical namespace)"],
+["data","Low-latency, high-transaction blob workload","<b>Premium block blob</b> account"],
+["data","High-performance NFS for SAP HANA or HPC","<b>Azure NetApp Files</b>"],
+["data","Blobs nobody can modify or delete for N years","Locked <b>time-based retention</b> (immutability) policy"],
+["data","Indefinite immutability until an investigation ends","<b>Legal hold</b>"],
+["data","ETL from on-prem sources on a schedule","<b>Azure Data Factory</b> with a <b>self-hosted integration runtime</b>"],
+["data","Run existing SSIS packages in Azure","<b>Azure-SSIS integration runtime</b> in Data Factory"],
+["data","Real-time SQL-like queries over event streams","<b>Azure Stream Analytics</b>"],
+["data","Time-series and log analytics at scale with KQL","<b>Azure Data Explorer</b>"],
+["data","Cache and session state","<b>Azure Managed Redis</b> (successor to Azure Cache for Redis)"],
+["bc","RPO vs RTO","<b>RPO</b>: how much data you can lose. <b>RTO</b>: how long you can be down."],
+["bc","Azure SQL DR with stable connection string and automatic failover","<b>Failover group</b> (listener endpoints)"],
+["bc","Up to 4 readable secondaries for one Azure SQL database","<b>Active geo-replication</b>"],
+["bc","Geo-DR for SQL Managed Instance","<b>Failover group</b> (no active geo-replication on MI)"],
+["bc","Cheapest Azure SQL region recovery","<b>Geo-restore</b> from geo-redundant backups (RPO ~1 h, RTO hours)"],
+["bc","Azure SQL point-in-time restore range","<b>1–35 days</b> (default 7)"],
+["bc","Azure SQL long-term backup retention max","<b>10 years</b>"],
+["bc","Does zone redundancy protect against a region outage?","<b>No.</b> Only against a zone (datacenter) failure."],
+["bc","Composite SLA of dependent services","<b>Multiply</b> them: 99.95% × 99.99% ≈ 99.94%"],
+["bc","Availability of two redundant paths","1 − (1 − A)(1 − B)"],
+["bc","VM SLA: zones / sets / single VM Premium SSD","<b>99.99%</b> / <b>99.95%</b> / <b>99.9%</b>"],
+["bc","Replicate VMs to another region with RPO in minutes","<b>Azure Site Recovery</b>"],
+["bc","Boot order and scripts during Site Recovery failover","<b>Recovery plans</b>"],
+["bc","Backup vs disaster recovery","Backup: deletion and corruption. DR (Site Recovery): site or region outage."],
+["bc","VM backup more than once a day; required for Trusted Launch","<b>Enhanced backup policy</b>"],
+["bc","Restore Azure VM backups in the paired region","<b>Cross Region Restore</b> (needs GRS vault)"],
+["bc","Require a second team to approve disabling backup protection","<b>Multi-user authorization</b> with a <b>Resource Guard</b>"],
+["bc","Prevent early deletion of recovery points","<b>Immutable vault</b>"],
+["bc","Read from secondary region without failover","<b>RA-GRS</b> or <b>RA-GZRS</b>"],
+["bc","Survive zone and region failure in storage","<b>GZRS</b> (RA-GZRS for secondary reads)"],
+["bc","Cosmos DB self-service point-in-time restore","<b>Continuous backup</b> (7 or 30 days)"],
+["bc","Cosmos DB 99.999% availability","<b>Multi-region writes</b>"],
+["inf","Global HTTP entry with WAF, edge caching, fast failover","<b>Azure Front Door</b>"],
+["inf","Global routing for non-HTTP or non-Azure endpoints","<b>Traffic Manager</b> (DNS-based)"],
+["inf","Regional L7 with path routing, TLS offload, WAF, in a VNet","<b>Application Gateway</b>"],
+["inf","Regional L4 TCP/UDP load balancing","<b>Azure Load Balancer</b>"],
+["inf","Global anycast L4 in front of regional load balancers","<b>Cross-region Load Balancer</b>"],
+["inf","FIFO, transactions, duplicate detection, dead-lettering","<b>Service Bus</b> (sessions for FIFO)"],
+["inf","Pub/sub where each subscriber gets every message","<b>Service Bus topics</b> and subscriptions"],
+["inf","Service Bus max message: Standard / Premium","<b>256 KB</b> / <b>100 MB</b>"],
+["inf","Cheapest queue, huge backlog, 64 KB messages","<b>Azure Storage queue</b>"],
+["inf","React to discrete events like BlobCreated, push model","<b>Event Grid</b>"],
+["inf","Millions of events/sec, replay, Kafka endpoint","<b>Event Hubs</b>"],
+["inf","Write Event Hubs data to storage automatically","<b>Event Hubs Capture</b>"],
+["inf","Serverless containers, scale to zero, Dapr, no cluster to manage","<b>Azure Container Apps</b>"],
+["inf","Need the Kubernetes API and custom operators","<b>Azure Kubernetes Service (AKS)</b>"],
+["inf","Run a single container quickly with no orchestration","<b>Azure Container Instances</b>"],
+["inf","Functions plan with no cold start and VNet integration","<b>Premium</b> (or Flex Consumption with always-ready instances)"],
+["inf","Functions Consumption timeout default / max","<b>5</b> / <b>10</b> minutes"],
+["inf","Stateful, long-running orchestration in code","<b>Durable Functions</b>"],
+["inf","Single-tenant, isolated App Service in your VNet","<b>App Service Environment v3</b>"],
+["inf","Large-scale parallel or HPC jobs","<b>Azure Batch</b>"],
+["inf","Move VMware VMs without conversion, keep vCenter","<b>Azure VMware Solution</b>"],
+["inf","Hosted Windows desktops and apps","<b>Azure Virtual Desktop</b>"],
+["inf","Low-code workflows with hundreds of connectors","<b>Logic Apps</b>"],
+["inf","Single API gateway with rate limits, keys, developer portal","<b>API Management</b>"],
+["inf","APIM tier for multi-region and full VNet injection","<b>Premium</b>"],
+["inf","APIM tier with no SLA","<b>Developer</b>"],
+["inf","ExpressRoute peering to reach VNets","<b>Private peering</b>"],
+["inf","ExpressRoute peering to reach Microsoft 365 / public endpoints","<b>Microsoft peering</b>"],
+["inf","Connect two on-prem sites through their ExpressRoute circuits","<b>ExpressRoute Global Reach</b>"],
+["inf","Bypass the ExpressRoute gateway for data traffic","<b>FastPath</b>"],
+["inf","10 or 100 Gbps direct port into Microsoft","<b>ExpressRoute Direct</b>"],
+["inf","Is ExpressRoute encrypted by default?","<b>No.</b> Use MACsec (Direct) or IPsec over it."],
+["inf","Many branches, any-to-any transit, managed hubs","<b>Azure Virtual WAN</b> (Standard)"],
+["inf","On-prem DNS resolving Azure private endpoint names","<b>Azure DNS Private Resolver</b> inbound endpoint + conditional forwarders"],
+["inf","Central firewall with TLS inspection and IDPS","<b>Azure Firewall Premium</b>"],
+["inf","DDoS protection for all public IPs in a VNet with cost protection","<b>DDoS Network Protection</b>"],
+["inf","RDP/SSH without public IPs on VMs","<b>Azure Bastion</b>"],
+["inf","Disks that can't be OS disks","<b>Ultra Disk</b> and <b>Premium SSD v2</b>"],
+["inf","Discover, map dependencies, and size servers before migration","<b>Azure Migrate</b> appliance + assessment"],
+["inf","Database migration with minimal downtime","<b>Database Migration Service</b> (online mode)"],
+["inf","Move hundreds of TB with a slow link","<b>Azure Data Box</b> (Heavy for ~1 PB)"],
+["inf","Cloud Adoption Framework phases","Strategy → Plan → Ready → Adopt → Govern / Secure / Manage"],
+["inf","Well-Architected Framework pillars","Reliability, Security, Cost Optimization, Operational Excellence, Performance Efficiency"],
+["inf","Migration strategies (the R's)","<b>Rehost</b>, <b>refactor</b>, <b>rearchitect</b>, <b>rebuild</b>, <b>replace</b>"]
+];
+
+const FKEY="az305-flash-known-v1";
+const F={doms:new Set(Object.keys(DOM)),known:new Set(load(FKEY)||[]),queue:null,flipped:false,includeKnown:false};
+function buildQueue(){F.queue=shuffle(FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0])&&(F.includeKnown||!F.known.has(i))));F.flipped=false}
+function saveKnown(){save(FKEY,[...F.known])}
+function renderFlash(){
+  if(!F.queue)buildQueue();
+  const el=document.getElementById("view-flash");
+  const inDoms=FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0]));
+  const knownN=inDoms.filter(i=>F.known.has(i)).length;
+  const pct=inDoms.length?Math.round(knownN/inDoms.length*100):0;
+  const idx=F.queue[0], c=idx===undefined?null:FC[idx];
+  el.innerHTML=`<div class="fl">
+    <div class="hero"><div class="eyebrow">Flashcards · ${FC.length} cards</div><h1>Flashcards</h1>
+    <p class="lede">Flip a card, then choose <b>Got it</b> to take it out of the deck or <b>Again</b> to see it again in a few cards. Cards you mark as known are saved in this browser.</p></div>
+    <div class="fl-opts" id="fdoms">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="${F.doms.has(d)}" data-d="${d}">${DOM[d].short} · ${FC.filter(x=>x[0]===d).length}</button>`).join("")}</div>
+    <div class="fl-opts">
+      <button class="chip" id="fknown" aria-pressed="${F.includeKnown}">Include known cards</button>
+      <button class="btn small" id="fshuffle">Shuffle &amp; restart</button>
+      <button class="btn small" id="freset">Reset progress</button>
+    </div>
+    <div class="fl-top"><span>${F.queue.length} left this round</span><span>${knownN} of ${inDoms.length} known · ${pct}%</span></div>
+    <div class="prog"><div style="width:${pct}%"></div></div>
+    ${c?`<div class="fc ${F.flipped?"flipped":""}" id="fc" tabindex="0" role="button" aria-label="Flip card">
+      <div class="fc-in">
+        <div class="fc-face fc-front"><span class="dtag" style="align-self:flex-start">${DOM[c[0]].short}</span><div class="fc-text">${c[1]}</div><span class="hint">Click or press Space to flip</span></div>
+        <div class="fc-face fc-back"><div class="fc-q">${c[1]}</div><div class="fc-text">${c[2]}</div><span class="hint">${DOM[c[0]].name}</span></div>
+      </div></div>
+    <div class="fc-ctrl">
+      <button class="btn again" id="fagain">Again<span class="kbd">←</span></button>
+      <button class="btn" id="fflip">Flip<span class="kbd">Space</span></button>
+      <button class="btn got" id="fgot">Got it<span class="kbd">→</span></button>
+    </div>`
+    :`<div class="fl-done"><h2>${inDoms.length?"Round complete":"No domains selected"}</h2><p class="lede">${inDoms.length?`You know ${knownN} of ${inDoms.length} cards in the selected domains.`:"Turn on at least one domain above."}</p>
+      <div class="cta-row">${inDoms.length?`<button class="btn primary" id="fall">Review all cards again</button>`:""}<button class="btn" id="fexam">Go to practice exam</button></div></div>`}
+  </div>`;
+  el.querySelectorAll("#fdoms .chip").forEach(b=>b.onclick=()=>{const d=b.dataset.d;F.doms.has(d)?F.doms.delete(d):F.doms.add(d);buildQueue();renderFlash()});
+  el.querySelector("#fknown").onclick=()=>{F.includeKnown=!F.includeKnown;buildQueue();renderFlash()};
+  el.querySelector("#fshuffle").onclick=()=>{buildQueue();renderFlash()};
+  el.querySelector("#freset").onclick=()=>{F.known.clear();saveKnown();buildQueue();renderFlash()};
+  const card=el.querySelector("#fc");if(card)card.onclick=flipCard;
+  const a=el.querySelector("#fagain");if(a)a.onclick=again;
+  const g=el.querySelector("#fgot");if(g)g.onclick=gotIt;
+  const fl=el.querySelector("#fflip");if(fl)fl.onclick=flipCard;
+  const fa=el.querySelector("#fall");if(fa)fa.onclick=()=>{F.includeKnown=true;buildQueue();renderFlash()};
+  const fe=el.querySelector("#fexam");if(fe)fe.onclick=()=>go("exam");
+}
+function flipCard(){F.flipped=!F.flipped;const c=document.getElementById("fc");if(c)c.classList.toggle("flipped",F.flipped)}
+function again(){if(!F.queue.length)return;const x=F.queue.shift();F.queue.splice(Math.min(3,F.queue.length),0,x);F.flipped=false;renderFlash();focusCard()}
+function gotIt(){if(!F.queue.length)return;F.known.add(F.queue.shift());saveKnown();F.flipped=false;renderFlash();focusCard()}
+function focusCard(){const c=document.getElementById("fc");if(c)c.focus({preventScroll:true})}
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("view-flash").hidden)return;
+  if(e.target.closest&&e.target.closest("input,textarea,select"))return;
+  if(e.key===" "||e.key==="Enter"){if(e.target.tagName==="BUTTON"&&e.target.id!=="fc")return;e.preventDefault();flipCard()}
+  else if(e.key==="ArrowRight"){e.preventDefault();gotIt()}
+  else if(e.key==="ArrowLeft"){e.preventDefault();again()}
+});
+
+/* ---------- wiring ---------- */
+document.querySelectorAll("[data-flash]").forEach(b=>b.onclick=()=>go("flash"));
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>go(t.dataset.view));
+document.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>{startFull()});
+document.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>{S=null;go("exam")});
+document.querySelectorAll(".toc a").forEach(a=>a.onclick=e=>{e.preventDefault();const el=document.querySelector(a.getAttribute("href"));if(el)el.scrollIntoView({behavior:"smooth"})});
+window.addEventListener("hashchange",route);
+const saved=load(KEY); if(saved&&!saved.done&&saved.mode==="full"){S=saved}
+ensureTick(); route();
+</script>
+
+</body>
+</html>

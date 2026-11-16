@@ -9,6 +9,7 @@ There's no build step. Every page is plain HTML, CSS, and JavaScript.
 ```
 index.html        Landing page listing every exam
 az-104/index.html AZ-104 study guide, practice exam, and flashcards
+az-305/index.html AZ-305 study guide, practice exam, and flashcards
 CNAME             Custom domain for GitHub Pages
 .nojekyll         Tells GitHub Pages to serve files as-is
 ```
