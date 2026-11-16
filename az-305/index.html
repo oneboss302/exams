@@ -161,6 +161,13 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .rs-num span{font-size:.95rem;color:var(--muted);font-weight:500;margin-left:6px}
 .dtag.run{color:var(--ink);font-variant-numeric:tabular-nums}
 
+.verdict-banner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;border-radius:8px;border:2px solid;font-family:var(--f-display)}
+.verdict-banner.ok{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+.verdict-banner.no{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.vb-icon{font-size:1.4rem;font-weight:700;line-height:1}
+.vb-word{font-size:1.25rem;font-weight:700;letter-spacing:.06em}
+.vb-ans{font-family:var(--f-body);font-size:.95rem;color:var(--ink);margin-left:auto}
+
 /* Results */
 .res{display:flex;flex-direction:column;gap:24px}
 .score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
@@ -1038,7 +1045,7 @@ function renderQuestion(){
   r.querySelector("#mark").onclick=()=>{S.marked[q.id]=!S.marked[q.id];persist();renderQuestion()};
   r.querySelector("#prev").onclick=()=>{S.cur--;persist();renderQuestion();window.scrollTo(0,0)};
   const nx=r.querySelector("#next");if(nx)nx.onclick=()=>{S.cur++;persist();renderQuestion();window.scrollTo(0,0)};
-  const ck=r.querySelector("#check");if(ck)ck.onclick=()=>{S.checked[q.id]=true;persist();renderQuestion()};
+  const ck=r.querySelector("#check");if(ck)ck.onclick=()=>{S.checked[q.id]=true;persist();renderQuestion();const vb=document.querySelector(".verdict-banner");if(vb){const b=vb.getBoundingClientRect();if(b.top<0||b.bottom>window.innerHeight)vb.scrollIntoView({block:"center",behavior:"smooth"})}};
   r.querySelectorAll(".pq").forEach(b=>b.onclick=()=>{S.cur=+b.dataset.i;persist();renderQuestion()});
   const sb=r.querySelector("#submit");if(sb)sb.onclick=()=>{confirmOpen=true;renderQuestion()};
   const sy=r.querySelector("#sub-yes");if(sy)sy.onclick=()=>{confirmOpen=false;finish()};
@@ -1047,7 +1054,7 @@ function renderQuestion(){
 }
 
 function letters(arr){return (arr&&arr.length)?arr.slice().sort().map(i=>String.fromCharCode(65+i)).join(", "):"No answer"}
-function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="explain"><div class="verdict ${ok?"ok":"no"}">${ok?"Correct":"Incorrect"}. The answer is ${letters(q.a)}.</div><div>${q.x}</div></div>`}
+function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="verdict-banner ${ok?"ok":"no"}" role="status"><span class="vb-icon" aria-hidden="true">${ok?"✓":"✗"}</span><span class="vb-word">${ok?"CORRECT":"INCORRECT"}</span>${ok?"":`<span class="vb-ans">Correct answer: <b>${letters(q.a)}</b> · You chose: ${letters(ans)}</span>`}</div><div class="explain"><div class="verdict ${ok?"ok":"no"}">Explanation</div><div>${q.x}</div></div>`}
 
 function finish(){
   if(!S||S.done)return;
