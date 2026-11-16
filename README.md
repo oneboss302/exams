@@ -12,6 +12,7 @@ az-104/index.html AZ-104 study guide, practice exam, and flashcards
 az-305/index.html AZ-305 study guide, practice exam, and flashcards
 az-802/index.html AZ-802 study guide, practice exam, and flashcards
 md-102/index.html MD-102 study guide, practice exam, and flashcards
+server-plus/index.html Server+ study guide, practice exam, and flashcards
 CNAME             Custom domain for GitHub Pages
 .nojekyll         Tells GitHub Pages to serve files as-is
 ```

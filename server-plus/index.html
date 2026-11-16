@@ -1,0 +1,1216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Server+ CompTIA Server+ SK0-005 study guide, timed practice exam, and flashcards.">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}a.brand{color:inherit;text-decoration:none}</style>
+<title>Server+ Prep</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: an exam-console shell — sticky tab bar, a reading column for the guide, a two-pane question view with a numbered palette. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --sunk:#eceff4; --ink:#151b27; --muted:#5a6476; --line:#d9dee7;
+  --accent:#2c56c9; --accent-ink:#ffffff; --soft:#e5ecfb;
+  --good:#18805a; --good-soft:#e2f3ec; --bad:#b93a3a; --bad-soft:#f8e6e6; --warn:#9a6a12; --warn-soft:#f8efdc;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:2rem;font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:600}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+code{background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:0 .3em}
+pre{font-family:var(--f-mono);font-size:.85rem;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:10px 12px;overflow-x:auto;margin:0}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:16px;padding-block:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.1rem;display:flex;gap:8px;align-items:baseline}
+.brand .code{font-family:var(--f-mono);font-size:.8rem;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:1px 6px}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tab{background:none;border:1px solid transparent;color:var(--muted);padding:6px 12px;border-radius:6px;font-weight:500}
+.tab[aria-selected="true"]{background:var(--soft);color:var(--ink);border-color:var(--line)}
+.timer{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.95rem;padding:4px 10px;border-radius:6px;background:var(--sunk);border:1px solid var(--line)}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Guide */
+.guide{display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);align-self:start;display:flex;flex-direction:column;gap:2px;font-size:.88rem}
+.toc a{color:var(--muted);text-decoration:none;padding:4px 8px;border-left:2px solid var(--line)}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+.toc .lbl{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 8px 6px}
+.gmain{display:flex;flex-direction:column;gap:44px;min-width:0}
+.gsec{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.gsec > p,.gsec li{max-width:70ch}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.06rem;color:var(--muted);max-width:66ch}
+.hero{display:flex;flex-direction:column;gap:14px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:7px;font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.small{padding:5px 10px;font-size:.88rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.fact{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.fact b{font-family:var(--f-display);font-size:1.35rem;font-weight:600}
+.fact span{font-size:.82rem;color:var(--muted)}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--sunk);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.risk{display:inline-block;font-family:var(--f-mono);font-size:.72rem;padding:1px 7px;border-radius:999px;border:1px solid}
+.risk.hi{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.risk.md{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.risk.lo{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+
+.sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{font-size:1rem}
+.card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.9rem}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.8rem;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--accent);border:1px solid var(--line)}
+.trap{border-left:3px solid var(--warn);padding:6px 12px;background:var(--surface);border-radius:0 6px 6px 0}
+.traps{display:flex;flex-direction:column;gap:8px}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.plan .when{font-family:var(--f-mono);font-size:.78rem;color:var(--accent)}
+
+/* Exam */
+.ex-home{display:flex;flex-direction:column;gap:22px;max-width:780px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.mode{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.mode p{color:var(--muted);font-size:.92rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:4px 10px;font-size:.84rem}
+.chip[aria-pressed="true"]{background:var(--soft);color:var(--ink);border-color:var(--accent)}
+.resume{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+.ex{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:24px;align-items:start}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.qmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.86rem;color:var(--muted)}
+.qnum{font-family:var(--f-mono);color:var(--ink)}
+.dtag{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--sunk);border:1px solid var(--line)}
+.mark{margin-left:auto;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:3px 10px;font-size:.84rem}
+.mark[aria-pressed="true"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.qtext{font-size:1.02rem;display:flex;flex-direction:column;gap:10px}
+.qtext table{font-size:.86rem}
+.hint{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:22px 26px minmax(0,1fr);gap:8px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--surface)}
+.opt:hover{border-color:var(--accent)}
+.opt input{margin:3px 0 0;accent-color:var(--accent)}
+.opt .ltr{font-family:var(--f-mono);color:var(--muted);font-size:.86rem;padding-top:1px}
+.opt.sel{border-color:var(--accent);background:var(--soft)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.locked{cursor:default}
+.explain{border-radius:8px;padding:12px 14px;border:1px solid var(--line);background:var(--sunk);display:flex;flex-direction:column;gap:6px;font-size:.93rem}
+.explain .verdict{font-weight:600}
+.explain .verdict.ok{color:var(--good)} .explain .verdict.no{color:var(--bad)}
+.qnav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qnav .sp{flex:1}
+.case{border:1px solid var(--line);border-radius:8px;background:var(--sunk)}
+.case summary{cursor:pointer;padding:10px 14px;font-weight:600;font-family:var(--f-display)}
+.case .cbody{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+.case ul{margin:0;padding-left:18px}
+
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);display:flex;flex-direction:column;gap:12px}
+.pal{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.pq{font-family:var(--f-mono);font-size:.76rem;padding:5px 0;border-radius:5px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-variant-numeric:tabular-nums}
+.pq.ans{background:var(--soft);color:var(--ink)}
+.pq.mk{border-color:var(--warn);box-shadow:inset 0 -3px 0 var(--warn)}
+.pq.cur{border-color:var(--accent);outline:1px solid var(--accent);color:var(--ink)}
+.pq.ok{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.pq.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:.76rem;color:var(--muted)}
+.confirm{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+
+/* Results */
+.res{display:flex;flex-direction:column;gap:24px}
+.score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.big{font-family:var(--f-display);font-size:3.2rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.verdict-pill{display:inline-block;font-family:var(--f-mono);font-size:.78rem;padding:3px 10px;border-radius:999px;border:1px solid}
+.dbars{display:flex;flex-direction:column;gap:10px}
+.dbar{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) 64px;gap:12px;align-items:center;font-size:.9rem}
+.track{height:10px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden;position:relative}
+.fill{height:100%;background:var(--accent)}
+.fill.low{background:var(--bad)} .fill.mid{background:var(--warn)} .fill.hi{background:var(--good)}
+.track .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.35;left:80%}
+.dbar .pct{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.rlist{display:flex;flex-direction:column;gap:12px}
+.ritem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--line)}
+.ritem.ok{border-left-color:var(--good)} .ritem.bad{border-left-color:var(--bad)}
+.ritem .row{font-size:.88rem;color:var(--muted)}
+.ritem .row b{color:var(--ink);font-weight:600}
+.filter{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* Flashcards */
+.fl{display:flex;flex-direction:column;gap:18px;max-width:760px;margin:0 auto}
+.fl-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.88rem;color:var(--muted)}
+.prog{height:6px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.prog>div{height:100%;background:var(--good)}
+.fc{perspective:1400px;cursor:pointer;outline:none}
+.fc-in{display:grid;transition:transform .45s ease;transform-style:preserve-3d}
+.fc.flipped .fc-in{transform:rotateY(180deg)}
+.fc-face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;min-height:280px;display:flex;flex-direction:column;gap:14px;justify-content:space-between;min-width:0}
+.fc-back{transform:rotateY(180deg);background:var(--soft);border-color:var(--accent)}
+.fc-text{font-family:var(--f-display);font-size:1.5rem;font-weight:600;line-height:1.3;text-wrap:balance}
+.fc-back .fc-text{font-family:var(--f-body);font-size:1.08rem;font-weight:400;line-height:1.6;text-wrap:pretty}
+.fc-q{font-size:.85rem;color:var(--muted)}
+.fc:focus-visible .fc-face{outline:2px solid var(--accent);outline-offset:2px}
+.fc-ctrl{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn.again{border-color:var(--bad);color:var(--bad)}
+.btn.got{border-color:var(--good);color:var(--good)}
+.kbd{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:6px}
+.fl-opts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fl-done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:12px}
+
+@media (max-width:860px){
+  .guide{grid-template-columns:1fr}
+  .toc{position:static;flex-direction:row;flex-wrap:wrap;gap:4px}
+  .toc .lbl{width:100%}
+  .toc a{border-left:0;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .ex{grid-template-columns:1fr}
+  .side{position:static}
+  .grid{grid-template-columns:repeat(10,1fr)}
+  .score{grid-template-columns:1fr}
+  .dbar{grid-template-columns:1fr 56px}
+  .dbar .track{grid-column:1 / -1;grid-row:2}
+}
+@media (max-width:480px){.grid{grid-template-columns:repeat(7,1fr)} h1{font-size:1.6rem} .qcard{padding:16px} .fc-face{padding:20px;min-height:240px} .fc-text{font-size:1.25rem} .kbd{display:none} .tab{padding:6px 9px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="/" title="All exams"><span class="code">Server+</span> Prep</a>
+    <span class="timer" id="timer" hidden>100:00</span>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-guide" data-view="guide">Study guide</button>
+      <button class="tab" role="tab" id="tab-exam" data-view="exam">Practice exam</button>
+      <button class="tab" role="tab" id="tab-flash" data-view="flash">Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<section id="view-guide">
+<div class="guide">
+  <nav class="toc" aria-label="Guide sections">
+    <div class="lbl">On this page</div>
+    <a href="#g-format">Exam format</a>
+    <a href="#g-map">Domain map</a>
+    <a href="#g-plan">Study plan</a>
+    <a href="#g-hw">Hardware</a>
+    <a href="#g-adm">Administration</a>
+    <a href="#g-sec">Security &amp; DR</a>
+    <a href="#g-ts">Troubleshooting</a>
+    <a href="#g-ports">Ports</a>
+    <a href="#g-num">Numbers to memorize</a>
+    <a href="#g-traps">Classic traps</a>
+  </nav>
+  <div class="gmain">
+    <div class="hero">
+      <div class="eyebrow">CompTIA Server+</div>
+      <h1>The Server+ SK0-005 guide</h1>
+      <p class="lede">Server+ is vendor-neutral and practical: racking and powering servers, RAID and storage, OS installs and virtualization, backups and disaster recovery, and a lot of troubleshooting. Questions are short scenarios where you pick the most likely cause or the next step. Know the RAID math, the backup types, the port numbers, and CompTIA's troubleshooting order.</p>
+      <div class="cta-row">
+        <button class="btn primary" data-start="full">Start full practice exam (60 Q, 60 min)</button>
+        <button class="btn" data-goto="exam">Practice by domain</button>
+        <button class="btn" data-flash>Flashcards</button>
+      </div>
+    </div>
+
+    <section class="gsec" id="g-format">
+      <div class="eyebrow">01 · Format</div>
+      <h2>What you're walking into</h2>
+      <div class="facts">
+        <div class="fact"><b>750</b><span>passing score on a 100–900 scale</span></div>
+        <div class="fact"><b>≤ 90</b><span>questions, multiple choice and performance-based</span></div>
+        <div class="fact"><b>90 min</b><span>exam time</span></div>
+        <div class="fact"><b>SK0-005</b><span>current exam version</span></div>
+      </div>
+      <ul>
+        <li><b>Performance-based questions (PBQs)</b> come first: drag-and-drop or simulated tasks such as picking the right RAID level, matching ports, or ordering troubleshooting steps. They take longer. You can flag them and come back.</li>
+        <li><b>Multiple choice</b> is single or multiple answer. Read for words like <b>BEST</b>, <b>FIRST</b>, and <b>MOST likely</b>.</li>
+        <li>CompTIA recommends A+ and about 2 years of server experience. There's no hard prerequisite.</li>
+        <li>This practice exam is 60 questions in 60 minutes, with a 5-question scenario set at the end. That's slightly faster than the real pace, which builds a margin.</li>
+      </ul>
+    </section>
+
+    <section class="gsec" id="g-map">
+      <div class="eyebrow">02 · Weighting</div>
+      <h2>Domain map</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Domain</th><th>Weight</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>1.0 Server hardware installation and management</td><td class="num">18%</td><td>Racks, power, cabling, RAID, storage types, memory, out-of-band management.</td></tr>
+          <tr><td>2.0 Server administration</td><td class="num">30%</td><td>OS installs, partitions and file systems, networking, roles, virtualization, clustering, licensing, scripting, asset management.</td></tr>
+          <tr><td>3.0 Security and disaster recovery</td><td class="num">24%</td><td>Physical and data security, hardening, media disposal, backups, DR sites, RPO/RTO.</td></tr>
+          <tr><td>4.0 Troubleshooting</td><td class="num">28%</td><td>Methodology plus hardware, storage, OS, network, and security problems.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-plan">
+      <div class="eyebrow">03 · Schedule</div>
+      <h2>A two-week study plan</h2>
+      <div class="plan">
+        <div class="card"><div class="when">Day 1</div><h3>Baseline</h3><p>Take the full practice exam, timed. Note your weakest domains.</p></div>
+        <div class="card"><div class="when">Days 2–5</div><h3>Administration &amp; troubleshooting</h3><p>Together these are 58% of the exam. Memorize the troubleshooting steps and port table early.</p></div>
+        <div class="card"><div class="when">Days 6–9</div><h3>Security, DR &amp; hardware</h3><p>Backup types, RAID math, DR sites, media disposal. Practice each domain to 80%.</p></div>
+        <div class="card"><div class="when">Days 10–13</div><h3>Full exams</h3><p>Full timed exams every other day. Flashcards daily, especially ports and RAID.</p></div>
+        <div class="card"><div class="when">Day 14</div><h3>Light review</h3><p>Numbers, ports, and traps. Then rest.</p></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-hw">
+      <div class="eyebrow">04 · Hardware · 18%</div>
+      <h2>Hardware cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>RAID</th><th>Min disks</th><th>Survives</th><th>Usable capacity (n disks of size s)</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><b>0</b></td><td class="num">2</td><td>Nothing</td><td>n × s</td><td>Striping. Fast, no redundancy.</td></tr>
+          <tr><td><b>1</b></td><td class="num">2</td><td>1 disk</td><td>s</td><td>Mirroring. Good for OS volumes.</td></tr>
+          <tr><td><b>5</b></td><td class="num">3</td><td>1 disk</td><td>(n − 1) × s</td><td>Distributed parity. Write penalty. Long, risky rebuilds on big disks.</td></tr>
+          <tr><td><b>6</b></td><td class="num">4</td><td>2 disks</td><td>(n − 2) × s</td><td>Dual parity. Safer for large arrays.</td></tr>
+          <tr><td><b>10</b></td><td class="num">4</td><td>1 per mirror pair</td><td>(n ÷ 2) × s</td><td>Stripe of mirrors. Best write performance with redundancy (databases).</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Racks &amp; form factors</h3><ul>
+          <li><b>1U = 1.75 inches</b>. A standard full rack is <b>42U</b>. Put the heaviest gear (UPS, storage) at the <b>bottom</b>.</li>
+          <li><b>Tower</b> (small offices), <b>rack</b> (datacenters), <b>blade</b> (a chassis shares power, cooling, and networking among many blades).</li>
+          <li><b>Hot aisle / cold aisle</b>: server intakes face the cold aisle, exhausts face the hot aisle. Use blanking panels in empty U spaces.</li>
+          <li>Out-of-band management: <b>iDRAC</b> (Dell), <b>iLO</b> (HPE), <b>IPMI</b>/<b>BMC</b>. Power on, console, and hardware logs even when the OS is down. <b>IP KVM</b> does the same for console access.</li>
+        </ul></div>
+        <div class="card"><h3>Power</h3><ul>
+          <li><b>Redundant, hot-swappable PSUs</b> connected to <b>different PDUs on different circuits</b>.</li>
+          <li><b>UPS types</b>: <b>standby</b> (offline, cheapest, short switch time), <b>line-interactive</b> (regulates voltage), <b>online / double-conversion</b> (always on battery inverter, zero transfer time, best for servers).</li>
+          <li>Size a UPS in <b>VA/watts</b> for the load plus headroom. A <b>generator</b> covers long outages, and the UPS bridges the gap until it starts.</li>
+          <li>Calculate amperage: watts ÷ volts = amps. Don't exceed about 80% of a circuit's rating.</li>
+        </ul></div>
+        <div class="card"><h3>Cabling &amp; network hardware</h3><ul>
+          <li>Copper: <b>Cat 5e</b> 1 Gbps at 100 m. <b>Cat 6</b> 10 Gbps up to 55 m. <b>Cat 6a</b> 10 Gbps at 100 m.</li>
+          <li>Fiber: <b>single-mode</b> (long distance, laser) vs <b>multimode</b> (short distance, cheaper). Connectors: <b>LC</b> (small, common in servers), SC, ST.</li>
+          <li>Transceivers: <b>SFP</b> (1G), <b>SFP+</b> (10G), <b>SFP28</b> (25G), <b>QSFP</b> (40/100G). <b>Twinax DAC</b> cables for short in-rack runs.</li>
+          <li>Label both ends of every cable and keep a cabling diagram.</li>
+        </ul></div>
+        <div class="card"><h3>Storage</h3><ul>
+          <li>Interfaces: <b>SATA</b> (cheap, single port), <b>SAS</b> (enterprise, dual-ported, higher RPM), <b>NVMe</b> (SSD over PCIe, lowest latency).</li>
+          <li>HDD speeds: 7.2k, 10k, 15k RPM. SSDs have no moving parts but finite write endurance.</li>
+          <li><b>DAS</b>: directly attached. <b>NAS</b>: file-level over the network (SMB/NFS). <b>SAN</b>: block-level over <b>iSCSI</b>, <b>Fibre Channel</b>, or <b>FCoE</b>.</li>
+          <li>SAN security: <b>zoning</b> on the FC switch and <b>LUN masking</b> on the array control which hosts see which LUNs. HBAs connect servers to FC.</li>
+          <li><b>Hot spare</b>: an idle disk that automatically replaces a failed one. RAID controller cache needs a <b>battery or flash backup</b> to protect write-back cache on power loss.</li>
+        </ul></div>
+        <div class="card"><h3>CPU, memory &amp; firmware</h3><ul>
+          <li><b>ECC</b> memory detects and corrects single-bit errors. Servers use <b>registered (RDIMM)</b> or <b>load-reduced (LRDIMM)</b> modules. Don't mix types.</li>
+          <li>Populate DIMMs across channels per the board manual for best performance.</li>
+          <li>Update <b>firmware</b> (BIOS/UEFI, BMC, RAID controller, NIC, drive) in the vendor's order, after a backup, during a maintenance window.</li>
+          <li><b>UEFI</b> supports Secure Boot and GPT boot disks over 2 TB. Legacy BIOS uses MBR.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-adm">
+      <div class="eyebrow">05 · Administration · 30%</div>
+      <h2>Administration cheat sheet</h2>
+      <div class="sheet">
+        <div class="card"><h3>OS installation</h3><ul>
+          <li>Methods: media, <b>PXE network boot</b> (needs DHCP options and a deployment server), <b>image-based</b>, <b>unattended answer files</b>, or a VM template.</li>
+          <li><b>MBR</b>: up to 2 TB, 4 primary partitions. <b>GPT</b>: very large disks, 128 partitions in Windows, needs UEFI to boot.</li>
+          <li>File systems: <b>NTFS</b>, <b>ReFS</b> (Windows), <b>ext4</b>, <b>XFS</b> (Linux), <b>ZFS</b> (integrity and snapshots), <b>VMFS</b> (VMware datastores).</li>
+          <li>Server Core / minimal installs reduce attack surface and patching.</li>
+        </ul></div>
+        <div class="card"><h3>Networking</h3><ul>
+          <li><b>NIC teaming</b>: active-active (load balancing, often <b>LACP / 802.3ad</b> with switch support) or active-passive (failover).</li>
+          <li><b>VLANs</b> separate traffic. A trunk port carries several tagged VLANs (802.1Q).</li>
+          <li>Servers usually get <b>static IPs</b> or DHCP reservations. A <b>169.254.x.x</b> address means DHCP failed.</li>
+          <li>Private ranges: <b>10.0.0.0/8</b>, <b>172.16.0.0/12</b>, <b>192.168.0.0/16</b>.</li>
+        </ul></div>
+        <div class="card"><h3>Virtualization</h3><ul>
+          <li><b>Type 1</b> (bare metal: ESXi, Hyper-V, KVM) for servers. <b>Type 2</b> (hosted on an OS: VirtualBox, Workstation) for desktops and labs.</li>
+          <li>Overcommitting CPU and memory raises density but risks contention. Watch host metrics.</li>
+          <li><b>Snapshots</b> are short-term rollback points, not backups. They grow and slow I/O.</li>
+          <li><b>Templates</b> and <b>clones</b> speed deployment. <b>P2V</b> converts physical servers, <b>V2V</b> moves between hypervisors.</li>
+          <li>Virtual switches: external, internal, private. VM NICs can tag VLANs.</li>
+        </ul></div>
+        <div class="card"><h3>Availability</h3><ul>
+          <li><b>Clustering</b>: <b>active-active</b> (all nodes serve) or <b>active-passive</b> (standby takes over). Nodes use a <b>heartbeat</b>, and a <b>quorum/witness</b> prevents split-brain.</li>
+          <li><b>Load balancing</b>: round robin, least connections, weighted. Health checks remove failed nodes.</li>
+          <li><b>Fault tolerance</b> = no interruption (RAID, redundant PSUs). <b>High availability</b> = minimal downtime (failover).</li>
+        </ul></div>
+        <div class="card"><h3>Licensing &amp; lifecycle</h3><ul>
+          <li>Models: <b>per core</b>, <b>per socket</b>, <b>per instance</b>, <b>per user</b> or <b>per device (CALs)</b>, <b>concurrent user</b>, <b>site</b>, <b>subscription</b>. Virtualization can change license counts.</li>
+          <li><b>Asset management</b>: asset tags, inventory database, serial numbers, warranty and support dates.</li>
+          <li>Lifecycle: procure → deploy → maintain → <b>decommission</b> (wipe or destroy data, update inventory, recycle per policy).</li>
+          <li><b>Documentation</b>: network diagrams, rack diagrams, performance <b>baselines</b>, runbooks, change logs, SLAs.</li>
+        </ul></div>
+        <div class="card"><h3>Scripting &amp; monitoring</h3><ul>
+          <li>Script types: <b>Bash</b> (.sh), <b>PowerShell</b> (.ps1), batch (.bat/.cmd), Python, VBScript. Know variables, loops, conditionals, and comments.</li>
+          <li>Use scripts for repeatable tasks: user creation, log rotation, backups, scheduled with <b>cron</b> or <b>Task Scheduler</b>.</li>
+          <li>Monitoring: <b>SNMP</b> (traps 162), <b>syslog</b> (514), event logs, thresholds and alerts, uptime checks. Compare to a baseline.</li>
+          <li>Patch management: test, schedule in a maintenance window, back up first, keep a rollback plan.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-sec">
+      <div class="eyebrow">06 · Security &amp; disaster recovery · 24%</div>
+      <h2>Security &amp; DR cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Backup type</th><th>Backs up</th><th>Archive bit</th><th>Restore needs</th></tr></thead>
+        <tbody>
+          <tr><td><b>Full</b></td><td>Everything</td><td>Cleared</td><td>That one backup</td></tr>
+          <tr><td><b>Incremental</b></td><td>Changes since the <b>last backup of any type</b></td><td>Cleared</td><td>Last full + <b>every</b> incremental since. Fastest backup, slowest restore.</td></tr>
+          <tr><td><b>Differential</b></td><td>Changes since the <b>last full</b></td><td>Not cleared</td><td>Last full + <b>latest</b> differential. Grows each day.</td></tr>
+          <tr><td><b>Synthetic full</b></td><td>Built from a full plus incrementals on the backup server</td><td>N/A</td><td>One backup, without a full read of the source</td></tr>
+          <tr><td><b>Snapshot</b></td><td>Point-in-time state</td><td>N/A</td><td>Usually on the same storage, so not a real backup alone</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Backup practice</h3><ul>
+          <li><b>3-2-1 rule</b>: 3 copies, on 2 types of media, 1 offsite (or immutable/offline).</li>
+          <li><b>GFS rotation</b>: daily (son), weekly (father), monthly (grandfather) sets.</li>
+          <li><b>Test restores</b> regularly. An untested backup isn't a backup.</li>
+          <li>Media: <b>tape (LTO)</b> for cheap long-term and offline copies, disk for fast restores, cloud for offsite.</li>
+        </ul></div>
+        <div class="card"><h3>DR sites &amp; metrics</h3><ul>
+          <li><b>Hot site</b>: running hardware and current data, failover in minutes. Most expensive.</li>
+          <li><b>Warm site</b>: hardware and connectivity, data restored from backups. Hours to days.</li>
+          <li><b>Cold site</b>: space, power, and cooling only. Weeks. Cheapest.</li>
+          <li><b>RPO</b>: maximum acceptable data loss (time). <b>RTO</b>: maximum acceptable downtime.</li>
+          <li><b>MTBF</b>: average time between failures. <b>MTTR</b>: average time to repair.</li>
+          <li>Replication: <b>synchronous</b> (no data loss, short distance) vs <b>asynchronous</b> (long distance, some data loss).</li>
+        </ul></div>
+        <div class="card"><h3>Physical &amp; environmental</h3><ul>
+          <li>Layers: fences, guards, badges, <b>access control vestibule (mantrap)</b>, <b>biometrics</b>, locked racks and cages, cameras, <b>bollards</b>.</li>
+          <li>Fire suppression for server rooms: <b>clean agent</b> (FM-200, Novec, inert gas). Avoid water sprinklers, or use <b>pre-action</b> dry pipe if required.</li>
+          <li>Temperature roughly 18–27 °C (64–81 °F). Control <b>humidity</b>: too low causes ESD, too high causes condensation.</li>
+        </ul></div>
+        <div class="card"><h3>Hardening</h3><ul>
+          <li>Disable unused <b>services, ports, and accounts</b>. Change default passwords. Remove unneeded software.</li>
+          <li>Host firewall, antivirus/EDR, patching, <b>least privilege</b>, separate admin accounts, <b>MFA</b>.</li>
+          <li>BIOS/UEFI password, Secure Boot, disable boot from USB, lock the chassis (intrusion detection).</li>
+          <li>Service accounts: unique, least privilege, non-interactive, rotated passwords.</li>
+          <li>Encrypt data at rest (BitLocker, LUKS, self-encrypting drives) and in transit (TLS, SSH, IPsec).</li>
+        </ul></div>
+        <div class="card"><h3>Media disposal</h3><ul>
+          <li><b>Overwriting/wiping</b>: reuse the drive. <b>Crypto-erase</b>: destroy the encryption key (fast, works on SSDs).</li>
+          <li><b>Degaussing</b>: destroys data on <b>magnetic</b> media (HDD, tape). <b>Doesn't work on SSDs.</b></li>
+          <li><b>Physical destruction</b>: shredding, crushing, incineration. Get a <b>certificate of destruction</b> from third parties.</li>
+          <li>Follow data retention policies before disposal. Legal holds override them.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-ts">
+      <div class="eyebrow">07 · Troubleshooting · 28%</div>
+      <h2>Troubleshooting cheat sheet</h2>
+      <ol class="steps">
+        <li><div><b>Identify the problem and determine its scope.</b> Question users, find recent changes, check logs, duplicate it, and back up before making changes.</div></li>
+        <li><div><b>Establish a theory of probable cause.</b> Question the obvious first.</div></li>
+        <li><div><b>Test the theory.</b> If it's wrong, form a new theory or escalate.</div></li>
+        <li><div><b>Establish a plan of action</b> and notify affected users (change management).</div></li>
+        <li><div><b>Implement the solution or escalate.</b></div></li>
+        <li><div><b>Verify full system functionality</b> and implement preventive measures.</div></li>
+        <li><div><b>Perform a root cause analysis.</b></div></li>
+        <li><div><b>Document</b> findings, actions, and outcomes.</div></li>
+      </ol>
+      <div class="sheet">
+        <div class="card"><h3>Hardware symptoms</h3><ul>
+          <li>Beep codes or POST errors at boot → check the code against the vendor's list (often memory or CPU).</li>
+          <li>Random reboots or shutdowns → overheating (dust, failed fan), failing PSU.</li>
+          <li>Clock resets after power loss → <b>CMOS battery</b>.</li>
+          <li>Corrected memory errors in logs → a DIMM is failing. Replace it before it becomes uncorrectable.</li>
+          <li>Predictive failure / <b>SMART</b> warnings → replace the drive proactively.</li>
+          <li>Amber lights on the chassis → check the BMC (iDRAC/iLO) hardware log.</li>
+        </ul></div>
+        <div class="card"><h3>Storage symptoms</h3><ul>
+          <li><b>Degraded array</b>: one disk failed. Replace it and let the rebuild finish. Performance drops during rebuild.</li>
+          <li>Server can't see a new LUN → <b>zoning</b>, <b>LUN masking</b>, or the initiator not rescanned.</li>
+          <li>Disk full → logs, temp files, or snapshots growing. Check with <code>df -h</code> / <code>du</code> or disk management.</li>
+          <li>File system corruption → <code>chkdsk</code> (Windows) or <code>fsck</code> (Linux, on an unmounted volume).</li>
+          <li>High disk latency → wrong RAID level for the workload, failing disk, or cache disabled (dead cache battery).</li>
+        </ul></div>
+        <div class="card"><h3>OS &amp; software symptoms</h3><ul>
+          <li>Service won't start → dependency stopped, or the <b>service account password expired</b> or changed.</li>
+          <li>Memory use grows until a crash → <b>memory leak</b>. Restart and patch the app.</li>
+          <li>App broke after an update → roll back the patch, then test in staging.</li>
+          <li>Linux: <code>systemctl status</code>, <code>journalctl</code>, <code>/var/log</code>, <code>top</code>. Windows: Event Viewer, Task Manager, Resource Monitor, <code>services.msc</code>.</li>
+          <li>Permissions: <b>share + NTFS</b> combine, and the <b>most restrictive</b> wins. On Linux, check owner, group, mode bits, and SELinux context.</li>
+        </ul></div>
+        <div class="card"><h3>Network symptoms</h3><ul>
+          <li><b>169.254.x.x</b> → DHCP unreachable.</li>
+          <li>Ping by IP works but not by name → <b>DNS</b>.</li>
+          <li>Can reach local subnet but not others → <b>default gateway</b> or routing.</li>
+          <li>Intermittent connectivity → <b>duplicate IP</b>, speed/duplex mismatch, bad cable.</li>
+          <li>Port closed → host firewall or network ACL. Test with <code>Test-NetConnection -Port</code>, <code>telnet</code>, <code>nc</code>, or <code>nmap</code>.</li>
+          <li>Tools: <code>ping</code>, <code>tracert</code>/<code>traceroute</code>, <code>nslookup</code>/<code>dig</code>, <code>ipconfig</code>/<code>ip addr</code>, <code>netstat</code>/<code>ss</code>, <code>arp</code>, <code>route</code>, Wireshark/<code>tcpdump</code>.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-ports">
+      <div class="eyebrow">08 · Recall</div>
+      <h2>Ports to know</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Port</th><th>Service</th><th>Port</th><th>Service</th></tr></thead>
+        <tbody>
+          <tr><td class="num">20/21</td><td>FTP</td><td class="num">161/162</td><td>SNMP / SNMP traps (UDP)</td></tr>
+          <tr><td class="num">22</td><td>SSH, SFTP, SCP</td><td class="num">389</td><td>LDAP</td></tr>
+          <tr><td class="num">23</td><td>Telnet</td><td class="num">443</td><td>HTTPS</td></tr>
+          <tr><td class="num">25</td><td>SMTP</td><td class="num">445</td><td>SMB</td></tr>
+          <tr><td class="num">53</td><td>DNS</td><td class="num">514</td><td>Syslog (UDP)</td></tr>
+          <tr><td class="num">67/68</td><td>DHCP (UDP)</td><td class="num">636</td><td>LDAPS</td></tr>
+          <tr><td class="num">69</td><td>TFTP (UDP)</td><td class="num">1433</td><td>Microsoft SQL Server</td></tr>
+          <tr><td class="num">80</td><td>HTTP</td><td class="num">3306</td><td>MySQL</td></tr>
+          <tr><td class="num">88</td><td>Kerberos</td><td class="num">3389</td><td>RDP</td></tr>
+          <tr><td class="num">123</td><td>NTP (UDP)</td><td class="num">623</td><td>IPMI (UDP)</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-num">
+      <div class="eyebrow">09 · Recall</div>
+      <h2>Numbers to memorize</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Item</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>1 rack unit (U)</td><td class="num">1.75 in (44.45 mm)</td></tr>
+          <tr><td>Standard full rack</td><td class="num">42U</td></tr>
+          <tr><td>RAID 5 / 6 / 10 minimum disks</td><td class="num">3 / 4 / 4</td></tr>
+          <tr><td>Cat 6 at 10 Gbps / Cat 6a at 10 Gbps</td><td class="num">55 m / 100 m</td></tr>
+          <tr><td>MBR maximum disk size / primary partitions</td><td class="num">2 TB / 4</td></tr>
+          <tr><td>APIPA range</td><td class="num">169.254.0.0/16</td></tr>
+          <tr><td>Circuit load guideline</td><td class="num">≤ 80% of rating</td></tr>
+          <tr><td>Recommended inlet temperature (ASHRAE)</td><td class="num">18–27 °C</td></tr>
+          <tr><td>3-2-1 backup</td><td class="num">3 copies, 2 media, 1 offsite</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-traps">
+      <div class="eyebrow">10 · Traps</div>
+      <h2>Classic traps</h2>
+      <div class="traps">
+        <div class="trap"><b>RAID isn't a backup.</b> It doesn't protect against deletion, corruption, or ransomware.</div>
+        <div class="trap"><b>Incremental = fastest backup, slowest restore.</b> Differential = slower backups, restore needs only the full plus the latest differential.</div>
+        <div class="trap"><b>Degaussing doesn't erase SSDs.</b> Use crypto-erase, a secure erase command, or physical destruction.</div>
+        <div class="trap"><b>Snapshots aren't backups.</b> They live on the same storage.</div>
+        <div class="trap"><b>"What should you do FIRST?"</b> usually means gather information or back up, not replace hardware.</div>
+        <div class="trap"><b>Ping by IP works, by name fails → DNS.</b> 169.254 → DHCP.</div>
+        <div class="trap"><b>Online/double-conversion UPS</b> is the answer when the question says "no transfer time".</div>
+        <div class="trap"><b>Hot site = fastest recovery, highest cost.</b> Cold site = cheapest, slowest.</div>
+        <div class="trap"><b>Share and NTFS permissions together → most restrictive wins.</b></div>
+        <div class="trap"><b>Service fails after a password change</b> → update the service account's stored password.</div>
+        <div class="trap"><b>Heaviest equipment goes at the bottom of the rack.</b></div>
+      </div>
+      <div class="cta-row"><button class="btn primary" data-start="full">Start the full practice exam</button></div>
+    </section>
+  </div>
+</div>
+</section>
+
+<section id="view-exam" hidden></section>
+<section id="view-flash" hidden></section>
+</main>
+
+<script>
+const DOM = {
+  hw:{name:"Server hardware", short:"Hardware"},
+  adm:{name:"Server administration", short:"Admin"},
+  sec:{name:"Security & disaster recovery", short:"Security & DR"},
+  ts:{name:"Troubleshooting", short:"Troubleshoot"}
+};
+const CASE_NAME = "Northwind clinic server room";
+
+const CASE = `<p><b>Northwind Clinic</b> runs its own small server room for a medical records system.</p>
+<p><b>Current state</b></p>
+<ul>
+<li>One rack holds a database server (DB1), a file server (FS1), a hypervisor host (HV1), a UPS, and a network switch.</li>
+<li>DB1 has four 2 TB SAS drives. The database needs strong write performance and must survive a drive failure.</li>
+<li>Full backups run every Sunday. Backups go to a NAS in the same rack.</li>
+<li>The records system must be restorable with no more than 4 hours of data loss, and be back online within 24 hours after a disaster.</li>
+<li>Old drives from retired servers sit in a cabinet. Some are HDDs and some are SSDs.</li>
+</ul>
+<p><b>Recent events</b></p>
+<ul>
+<li>This morning, FS1 got an address of 169.254.12.40 after a reboot.</li>
+<li>Staff report that HV1's clock is wrong every time it's powered off and on.</li>
+</ul>`;
+
+const Q = [
+// ---------- HARDWARE ----------
+{id:"h1",d:"hw",q:`<p>A database server needs redundancy against a single drive failure and the best possible write performance. It has four identical drives.</p><p>Which RAID level should you use?</p>`,
+ o:["RAID 5","RAID 0","RAID 10","RAID 6"],a:[2],
+ x:`RAID 10 (a stripe of mirrors) has no parity calculation, so it writes faster than RAID 5 or 6, and it survives a drive failure. RAID 0 has no redundancy.`},
+{id:"h2",d:"hw",q:`<p>You build a RAID 5 array from five 4 TB drives.</p><p>What's the usable capacity?</p>`,
+ o:["20 TB","8 TB","12 TB","16 TB"],a:[3],
+ x:`RAID 5 uses one drive's worth of capacity for parity: (5 − 1) × 4 TB = 16 TB.`},
+{id:"h3",d:"hw",q:`<p>You build a RAID 6 array from six 8 TB drives.</p><p>What's the usable capacity, and how many drive failures can it survive?</p>`,
+ o:["24 TB, 3 failures","32 TB, 2 failures","40 TB, 1 failure","48 TB, 0 failures"],a:[1],
+ x:`RAID 6 reserves two drives' worth for dual parity: (6 − 2) × 8 TB = 32 TB, and it survives any two drive failures.`},
+{id:"h4",d:"hw",q:`<p>You want a failed drive in a RAID 5 array to be replaced and rebuilt automatically, without waiting for a technician.</p><p>What should you configure?</p>`,
+ o:["A hot spare","RAID 0","A second controller","A JBOD volume"],a:[0],
+ x:`A hot spare sits idle in the array. When a drive fails, the controller starts rebuilding onto the spare automatically.`},
+{id:"h5",d:"hw",q:`<p>A rack is being populated with a UPS, a storage shelf, three 1U servers, and a patch panel.</p><p>Where should the UPS go?</p>`,
+ o:["Outside the rack","At the top of the rack","At the bottom of the rack","In the middle of the rack"],a:[2],
+ x:`The heaviest equipment, such as UPSs and storage shelves, goes at the bottom to keep the rack stable and make it safer to install.`},
+{id:"h6",d:"hw",q:`<p>Critical servers need protection from power problems with <b>zero transfer time</b> to battery and clean power at all times.</p><p>Which UPS type should you buy?</p>`,
+ o:["Line-interactive","Online (double-conversion)","Standby (offline)","A surge protector"],a:[1],
+ x:`An online double-conversion UPS always powers the load through its inverter, so there's no transfer time and output is always clean. Standby and line-interactive units switch to battery when they detect a problem.`},
+{id:"h7",d:"hw",q:`<p>A server has two hot-swappable power supplies. You want the server to stay up if one power circuit fails.</p><p>How should you connect them?</p>`,
+ o:["Each PSU to a different PDU on a different circuit","One PSU to the UPS and leave the other unplugged","Both PSUs to a power strip","Both PSUs to the same PDU"],a:[0],
+ x:`Redundant PSUs only help if they're fed from independent power paths. Connect each to a different PDU on a separate circuit (ideally separate UPSs).`},
+{id:"h8",d:"hw",q:`<p>You need to power on a remote server, view its console during boot, and read its hardware logs even when the OS has crashed.</p><p>What should you use?</p>`,
+ o:["RDP","SNMP","SSH","The server's out-of-band management controller (for example, iDRAC or iLO)"],a:[3],
+ x:`Baseboard management controllers (iDRAC, iLO, IPMI) run independently of the OS and provide remote power control, a virtual console, and hardware event logs.`},
+{id:"h9",d:"hw",q:`<p>You need to connect two servers in the same rack at 10 Gbps over a 3-meter run at the lowest cost.</p><p>What should you use?</p>`,
+ o:["Cat 5e","Twinax direct-attach copper (DAC) with SFP+ ends","Multimode fiber with SC connectors","Single-mode fiber with LC transceivers"],a:[1],
+ x:`Twinax DAC cables are cheap, low-latency, and ideal for short 10G runs inside a rack. Fiber and transceivers cost more. Cat 5e isn't rated for 10 Gbps.`},
+{id:"h10",d:"hw",q:`<p>A server room run between two buildings is 2 km long and must carry 10 Gbps.</p><p>Which cabling should you choose?</p>`,
+ o:["Cat 6a","Multimode fiber","Twinax","Single-mode fiber"],a:[3],
+ x:`Single-mode fiber supports long distances (kilometers). Copper is limited to 100 m, and multimode fiber is meant for shorter runs (hundreds of meters at 10G).`},
+{id:"h11",d:"hw",q:`<p>Several departments must share files over the network using SMB and NFS. You don't need block-level access.</p><p>What type of storage is the best fit?</p>`,
+ o:["NAS","SAN","JBOD","DAS"],a:[0],
+ x:`NAS provides file-level access over the network using protocols such as SMB and NFS. A SAN provides block-level storage that servers format themselves.`},
+{id:"h12",d:"hw",q:`<p>A new host is zoned on the Fibre Channel switch but still can't see the LUN on the storage array.</p><p>What should you check next?</p>`,
+ o:["The UPS runtime","The host's NIC teaming","LUN masking on the array","The host's DNS settings"],a:[2],
+ x:`FC access needs both zoning (switch) and LUN masking (array) to allow the host's WWN. Then rescan storage on the host.`},
+{id:"h13",d:"hw",q:`<p>Server memory must automatically detect and correct single-bit errors.</p><p>What type of memory should you install?</p>`,
+ o:["Any memory with heat spreaders","ECC registered (RDIMM)","Laptop SO-DIMMs","Non-ECC unbuffered"],a:[1],
+ x:`ECC memory detects and corrects single-bit errors. Servers typically use registered (RDIMM) or load-reduced (LRDIMM) ECC modules.`},
+
+// ---------- ADMINISTRATION ----------
+{id:"a1",d:"adm",q:`<p>You need to install an OS on 40 identical new servers over the network, without inserting media into each one.</p><p>What should the servers boot from?</p>`,
+ o:["PXE","A recovery partition","USB","DVD"],a:[0],
+ x:`PXE (Preboot Execution Environment) boots from the network using DHCP and a deployment server, so you can install images on many servers at once.`},
+{id:"a2",d:"adm",q:`<p>A new server will boot from a 4 TB RAID volume.</p><p>Which partition style and firmware mode should you use?</p>`,
+ o:["MBR with UEFI","MBR with legacy BIOS","GPT with UEFI","Dynamic disk with BIOS"],a:[2],
+ x:`MBR supports disks only up to 2 TB. Booting from a GPT disk requires UEFI firmware.`},
+{id:"a3",d:"adm",q:`<p>A server needs two NICs that both carry traffic for more bandwidth and continue working if one link fails. The switch supports it.</p><p>What should you configure?</p>`,
+ o:["Two separate default gateways","A VLAN trunk","Active-passive teaming","Active-active teaming using LACP (802.3ad)"],a:[3],
+ x:`Active-active teaming with LACP aggregates both links for bandwidth and failover. The switch ports must be configured as a matching LACP group.`},
+{id:"a4",d:"adm",q:`<p>Which hypervisor type runs directly on server hardware and is used for production virtualization?</p>`,
+ o:["Type 2","Emulator","Container runtime","Type 1"],a:[3],
+ x:`Type 1 (bare-metal) hypervisors such as ESXi, Hyper-V, and KVM run directly on the hardware. Type 2 hypervisors run as apps on top of a desktop OS.`},
+{id:"a5",d:"adm",q:`<p>Before applying a risky update to a VM, you want a quick way to roll back within the next hour if it fails.</p><p>What should you use?</p>`,
+ o:["P2V conversion","A VM snapshot, deleted after the update is verified","A template","A full tape backup"],a:[1],
+ x:`Snapshots are designed for short-term rollback points. Delete them afterward, because they grow and slow disk I/O, and they aren't real backups.`},
+{id:"a6",d:"adm",q:`<p>You must migrate an old physical application server to the new virtualization cluster without reinstalling the app.</p><p>What should you perform?</p>`,
+ o:["P2V","Clone","V2V","Bare-metal restore to new hardware"],a:[0],
+ x:`Physical-to-virtual (P2V) conversion copies the physical server's OS, apps, and data into a VM.`},
+{id:"a7",d:"adm",q:`<p>Two servers run the same database in a cluster. Only one serves clients at a time, and the other takes over if it fails.</p><p>What kind of cluster is this?</p>`,
+ o:["Active-active","Grid","Active-passive","Load-balanced web farm"],a:[2],
+ x:`In active-passive clusters, one node serves while the standby monitors it through a heartbeat and takes over on failure.`},
+{id:"a8",d:"adm",q:`<p>A two-node cluster lost its network link between nodes. Both nodes tried to take ownership of the shared disk.</p><p>What should be added to prevent this split-brain condition?</p>`,
+ o:["A quorum witness","DNS round robin","More RAM","A second UPS"],a:[0],
+ x:`A witness (disk, file share, or cloud) gives the cluster a tie-breaking vote, so only the side with quorum keeps running.`},
+{id:"a9",d:"adm",q:`<p>A software vendor charges based on the number of physical CPU cores in the server, regardless of users.</p><p>Which licensing model is this?</p>`,
+ o:["Per user","Concurrent user","Per core","Site license"],a:[2],
+ x:`Per-core licensing counts the physical cores licensed for the server. Virtualization and core count changes can affect the cost.`},
+{id:"a10",d:"adm",q:`<p>An application license allows 25 people to use it at the same time, regardless of how many people have it installed.</p><p>Which licensing model is this?</p>`,
+ o:["Per device","Concurrent user","Subscription","Per socket"],a:[1],
+ x:`Concurrent licensing limits the number of simultaneous users, not total users or installations.`},
+{id:"a11",d:"adm",q:`<p>A script must run every night at 02:00 on a Linux server to rotate application logs.</p><p>What should you use to schedule it?</p>`,
+ o:["chmod","systemctl enable","Task Scheduler","cron"],a:[3],
+ x:`cron schedules recurring jobs on Linux (for example, <code>0 2 * * * /opt/scripts/rotate.sh</code>). Task Scheduler is the Windows equivalent.`},
+{id:"a12",d:"adm",q:`<p>Which file extension indicates a PowerShell script?</p>`,
+ o:[".py",".bat",".sh",".ps1"],a:[3],
+ x:`.ps1 is PowerShell. .sh is a shell script, .bat is a Windows batch file, and .py is Python.`},
+{id:"a13",d:"adm",q:`<p>Users say a file server is "slow." You need to tell whether today's CPU and disk use are unusual.</p><p>What should you compare current metrics with?</p>`,
+ o:["The rack diagram","The license agreement","The performance baseline","The asset inventory"],a:[2],
+ x:`A baseline records normal performance. Comparing current metrics to it shows whether something has changed.`},
+{id:"a14",d:"adm",q:`<p>A server is being retired. Which step should happen <b>before</b> the hardware leaves the building?</p>`,
+ o:["Sanitize or destroy the drives according to policy and update the asset inventory","Extend the warranty","Install the latest firmware","Rebuild the RAID array"],a:[0],
+ x:`Decommissioning includes data sanitization (or destruction), removing the server from monitoring and DNS, and updating inventory records before disposal or resale.`},
+{id:"a15",d:"adm",q:`<p>You need to receive alerts from network devices and servers when a monitored condition changes, using a standard protocol.</p><p>Which protocol and port should the monitoring server listen on for traps?</p>`,
+ o:["Syslog, TCP 443","SNMP, UDP 162","SMTP, TCP 25","LDAP, TCP 389"],a:[1],
+ x:`SNMP agents send traps to the manager on UDP 162. Polling (get requests) uses UDP 161.`},
+{id:"a16",d:"adm",q:`<p>Many web servers sit behind a device that must send each new request to the server with the fewest active sessions.</p><p>Which method should the load balancer use?</p>`,
+ o:["DNS failover","Round robin","Least connections","Static weighting"],a:[2],
+ x:`Least connections sends new requests to the server currently handling the fewest connections, which helps when sessions have different lengths.`},
+{id:"a17",d:"adm",q:`<p>Which Linux file system is commonly used for large, high-performance volumes and is the default on several enterprise distributions?</p>`,
+ o:["FAT32","XFS","NTFS","VMFS"],a:[1],
+ x:`XFS is a high-performance journaling file system and the default on RHEL. ext4 is another common choice. NTFS is Windows, and VMFS is VMware's datastore format.`},
+{id:"a18",d:"adm",q:`<p>You want new VMs deployed with the same hardened OS configuration every time, with the least effort.</p><p>What should you create?</p>`,
+ o:["A VM template","A P2V image","A snapshot of each VM","An ISO file"],a:[0],
+ x:`A template is a master VM image used to deploy new VMs with consistent configuration.`},
+{id:"a19",d:"adm",q:`<p>Which private IPv4 range is a valid internal address block?</p>`,
+ o:["169.254.0.0/16","100.64.0.0/10 for LAN hosts","172.32.0.0/12","172.16.0.0/12"],a:[3],
+ x:`RFC 1918 private ranges are 10.0.0.0/8, 172.16.0.0/12 (172.16–172.31), and 192.168.0.0/16. 169.254.0.0/16 is APIPA (link-local).`},
+{id:"a20",d:"adm",q:`<p>A patch must be installed on production servers. What should you do before installing it?</p>`,
+ o:["Install it on all servers at once to save time","Disable the firewall","Delete old logs","Test it in a staging environment, back up the servers, and schedule a maintenance window"],a:[3],
+ x:`Patch management follows change management: test first, have a backup and rollback plan, and install during an approved window.`},
+
+// ---------- SECURITY & DR ----------
+{id:"s1",d:"sec",q:`<p>Full backups run Sunday and <b>incremental</b> backups run Monday through Saturday. The server fails Friday afternoon.</p><p>Which backups do you need to restore?</p>`,
+ o:["Thursday's incremental only","Sunday's full and every incremental from Monday through Thursday","Sunday's full only","Sunday's full and Thursday's incremental"],a:[1],
+ x:`Each incremental contains only changes since the previous backup, so you need the last full plus every incremental since it, in order.`},
+{id:"s2",d:"sec",q:`<p>Full backups run Sunday and <b>differential</b> backups run Monday through Saturday. The server fails Friday afternoon.</p><p>Which backups do you need to restore?</p>`,
+ o:["Sunday's full and every differential","Thursday's differential only","Sunday's full and Thursday's differential","Sunday's full only"],a:[2],
+ x:`A differential contains all changes since the last full backup, so you need only the full plus the most recent differential.`},
+{id:"s3",d:"sec",q:`<p>Which backup type clears the archive bit and backs up only files changed since the last backup of any kind?</p>`,
+ o:["Incremental","Copy","Full","Differential"],a:[0],
+ x:`Incremental backups capture changes since the last backup and clear the archive bit. Differentials don't clear it, so each one grows until the next full.`},
+{id:"s4",d:"sec",q:`<p>Which approach best follows the 3-2-1 backup rule?</p>`,
+ o:["Three copies on the same NAS","A daily snapshot on the production array","Two copies on the server's RAID volume","Production data, a backup on a local NAS, and a copy in cloud storage"],a:[3],
+ x:`3-2-1 means three copies of data, on two different media types, with one copy offsite. The local NAS plus cloud copy meet it.`},
+{id:"s5",d:"sec",q:`<p>A company needs a disaster recovery site that can take over within minutes, with current data. Cost is a secondary concern.</p><p>What should it use?</p>`,
+ o:["Hot site","Reciprocal agreement","Warm site","Cold site"],a:[0],
+ x:`A hot site has running hardware and up-to-date (replicated) data, so failover takes minutes. It's the most expensive option.`},
+{id:"s6",d:"sec",q:`<p>A business says it can lose at most 15 minutes of data in a disaster.</p><p>Which metric does this define?</p>`,
+ o:["MTTR","RTO","RPO","MTBF"],a:[2],
+ x:`Recovery point objective (RPO) is the maximum acceptable data loss, measured in time. RTO is the maximum acceptable downtime.`},
+{id:"s7",d:"sec",q:`<p>You need to dispose of 50 old SSDs that held patient data. A vendor offers degaussing.</p><p>Why isn't degaussing appropriate?</p>`,
+ o:["Degaussing is too expensive","Degaussing only works on magnetic media, not SSDs","SSDs are already encrypted","Degaussing only works on tape"],a:[1],
+ x:`Degaussing disrupts magnetic fields, so it doesn't erase flash storage. For SSDs, use crypto-erase or secure erase, or physical destruction such as shredding.`},
+{id:"s8",d:"sec",q:`<p>A third-party company shreds your retired drives. What should you get from them for compliance records?</p>`,
+ o:["An MOU","An SLA","A certificate of destruction","A purchase order"],a:[2],
+ x:`A certificate of destruction documents what was destroyed, when, and how, which auditors require for regulated data.`},
+{id:"s9",d:"sec",q:`<p>Which physical control stops tailgating by letting only one person through at a time, with two interlocking doors?</p>`,
+ o:["Access control vestibule (mantrap)","Bollards","Security camera","Cable lock"],a:[0],
+ x:`An access control vestibule has two doors that can't both be open, so each person must authenticate separately.`},
+{id:"s10",d:"sec",q:`<p>A new server room needs fire suppression that won't damage electronics.</p><p>What should you choose?</p>`,
+ o:["Dry chemical extinguishers only","Wet pipe water sprinklers","Foam","A clean agent system (for example, FM-200 or inert gas)"],a:[3],
+ x:`Clean agent systems suppress fire without leaving residue or water damage, which makes them the standard for server rooms.`},
+{id:"s11",d:"sec",q:`<p>The server room's humidity is very low. Which risk increases?</p>`,
+ o:["Corrosion","Electrostatic discharge","Condensation","Mold"],a:[1],
+ x:`Low humidity increases static buildup and ESD risk. High humidity causes condensation and corrosion.`},
+{id:"s12",d:"sec",q:`<p>Which action is part of hardening a new web server?</p>`,
+ o:["Disable unused services and close unused ports","Use the vendor's default admin password","Turn off the host firewall","Enable Telnet for remote management"],a:[0],
+ x:`Hardening reduces attack surface: remove or disable unneeded services, close ports, change defaults, patch, and enable host firewalls.`},
+{id:"s13",d:"sec",q:`<p>Data on server drives must be protected if a drive is stolen from the datacenter.</p><p>What should you implement?</p>`,
+ o:["TLS","A VLAN","Encryption at rest (for example, self-encrypting drives, BitLocker, or LUKS)","RAID 1"],a:[2],
+ x:`Encryption at rest makes data unreadable without the key. TLS protects data in transit.`},
+{id:"s14",d:"sec",q:`<p>Replication between two datacenters 800 km apart must not slow down application writes. Some data loss is acceptable.</p><p>Which replication type should you use?</p>`,
+ o:["Synchronous","Asynchronous","Snapshot only","Mirrored RAID"],a:[1],
+ x:`Asynchronous replication acknowledges writes locally and sends them to the remote site afterward, so latency doesn't slow the app. The trade-off is possible data loss.`},
+{id:"s15",d:"sec",q:`<p>An administrator needs to install software occasionally but does daily work like email on the same server console.</p><p>What's the best practice?</p>`,
+ o:["Use the admin account for everything","Share the admin account with the team","Disable UAC","Use a standard account for daily work and a separate admin account only when needed"],a:[3],
+ x:`Separate admin accounts enforce least privilege and reduce the damage if a daily-use account is compromised.`},
+{id:"s16",d:"sec",q:`<p>Backups were never tested. During an outage, the restore fails because the backup files are corrupt.</p><p>What practice would have prevented this?</p>`,
+ o:["More frequent full backups","Regular test restores","GFS rotation","RAID 6"],a:[1],
+ x:`Only a test restore proves a backup is usable. Schedule periodic restore tests and verify the data.`},
+{id:"s17",d:"sec",q:`<p>Which DR site has power, cooling, and space, but no installed equipment or data?</p>`,
+ o:["Cold site","Warm site","Mobile site","Hot site"],a:[0],
+ x:`A cold site is the cheapest option and has only the facility. You must bring in hardware and restore data, which can take weeks.`},
+
+// ---------- TROUBLESHOOTING ----------
+{id:"t1",d:"ts",q:`<p>A user reports that an application server is down. According to CompTIA's troubleshooting methodology, what should you do <b>first</b>?</p>`,
+ o:["Establish a plan of action","Replace the server's power supply","Identify the problem and determine the scope, including any recent changes","Document the findings"],a:[2],
+ x:`Step 1 is to identify the problem: gather information, question users, find recent changes, and determine how many systems are affected.`},
+{id:"t2",d:"ts",q:`<p>You fixed a failed database service by restarting it. According to the methodology, what should you do before documenting?</p>`,
+ o:["Close the ticket","Reboot the server again","Notify the vendor","Verify full system functionality and implement preventive measures, then perform a root cause analysis"],a:[3],
+ x:`After implementing a fix, verify everything works, prevent recurrence, and find the root cause. Documenting is the final step.`},
+{id:"t3",d:"ts",q:`<p>A server gets the address 169.254.33.10 after rebooting.</p><p>What's the most likely cause?</p>`,
+ o:["The server couldn't reach a DHCP server","There's a duplicate IP address","DNS is misconfigured","The default gateway is wrong"],a:[0],
+ x:`169.254.x.x is an APIPA (link-local) address that Windows assigns when DHCP doesn't respond. Check the NIC, cable, switch port, VLAN, and DHCP server.`},
+{id:"t4",d:"ts",q:`<p>A server can ping 10.0.5.20 but fails to connect to <code>app01.corp.local</code>, which resolves to that address.</p><p>What should you check?</p>`,
+ o:["The RAID controller","The UPS","The default gateway","DNS settings and records"],a:[3],
+ x:`Connectivity by IP works, so the network path is fine. Name resolution is failing. Check DNS server settings and records with <code>nslookup</code> or <code>dig</code>.`},
+{id:"t5",d:"ts",q:`<p>A server can reach hosts on its own subnet but nothing on other subnets.</p><p>What's the most likely cause?</p>`,
+ o:["Full disk","Incorrect default gateway","Wrong DNS suffix","Expired certificate"],a:[1],
+ x:`Traffic to other subnets goes through the default gateway. A wrong or unreachable gateway breaks all off-subnet communication.`},
+{id:"t6",d:"ts",q:`<p>Two servers intermittently lose connectivity, and the event log shows an IP address conflict.</p><p>What's the cause?</p>`,
+ o:["VLAN trunking","DNS failure","Duplicate IP address","Expired DHCP scope"],a:[2],
+ x:`Two devices with the same IP fight over ARP entries, causing intermittent connectivity. Fix the static assignment or use DHCP reservations.`},
+{id:"t7",d:"ts",q:`<p>A server's date and time reset to the factory default every time it's unplugged.</p><p>What should you replace?</p>`,
+ o:["The PSU","The NIC","The RAID battery","The CMOS battery"],a:[3],
+ x:`The CMOS battery keeps the real-time clock and BIOS settings while the server has no power.`},
+{id:"t8",d:"ts",q:`<p>A server reboots randomly. The BMC log shows high CPU temperatures before each reboot.</p><p>What should you check first?</p>`,
+ o:["The DNS configuration","Fans, airflow, and dust buildup","The backup schedule","The OS license"],a:[1],
+ x:`Overheating causes thermal shutdowns. Check for failed fans, blocked airflow, missing blanking panels, and dust.`},
+{id:"t9",d:"ts",q:`<p>A RAID 5 array shows as <b>degraded</b>, and one drive has a fault light.</p><p>What should you do?</p>`,
+ o:["Replace all drives at once","Delete and recreate the array","Replace the failed drive and let the array rebuild, after confirming backups","Run chkdsk on the volume"],a:[2],
+ x:`A degraded RAID 5 array has lost its redundancy. Confirm backups, then replace the failed drive (hot-swap if supported) and monitor the rebuild. A second failure before the rebuild finishes would lose data.`},
+{id:"t10",d:"ts",q:`<p>A drive reports SMART predictive failure warnings but still works.</p><p>What's the best action?</p>`,
+ o:["Replace it proactively during a maintenance window","Move it to another server","Reformat it","Ignore it until it fails"],a:[0],
+ x:`SMART warnings predict failure. Replacing the drive before it fails avoids running degraded.`},
+{id:"t11",d:"ts",q:`<p>Database write performance dropped sharply after a power outage. The RAID controller now shows write-through mode.</p><p>What's the most likely cause?</p>`,
+ o:["The NIC is in half duplex","The controller's cache battery or flash backup failed, so write-back cache was disabled","A drive failed","DNS is slow"],a:[1],
+ x:`Controllers disable write-back caching when the cache backup (battery or flash) isn't healthy, to protect data. Write-through is much slower. Replace the cache battery or module.`},
+{id:"t12",d:"ts",q:`<p>A Windows service fails to start with a logon failure error right after the company's 90-day password rotation.</p><p>What's the most likely cause?</p>`,
+ o:["The disk is full","A dependency is missing","The service account's password changed, but the service still has the old one","The service is disabled"],a:[2],
+ x:`Services that run as a domain account store its password. When the password changes, update it in the service's Log On settings, or use a managed service account.`},
+{id:"t13",d:"ts",q:`<p>A server's memory use climbs steadily over several days until an application crashes. Restarting the application fixes it temporarily.</p><p>What's the likely problem?</p>`,
+ o:["Failed DIMM","Incorrect DNS","Overheating","Memory leak in the application"],a:[3],
+ x:`Steadily growing memory use that resets with a restart points to a memory leak. Patch the app or schedule restarts until it's fixed.`},
+{id:"t14",d:"ts",q:`<p>A user has Full Control in NTFS permissions on a folder but can only read files when accessing it through a network share.</p><p>Why?</p>`,
+ o:["The share permission is Read, and the most restrictive of share and NTFS applies","The folder is encrypted","The user needs to sign out","NTFS always overrides share permissions"],a:[0],
+ x:`Over the network, the effective permission is the more restrictive of the share and NTFS permissions. Change the share permission (often to Full Control for Authenticated Users) and manage access with NTFS.`},
+{id:"t15",d:"ts",q:`<p>A Linux server reports "No space left on device," but you're not sure which directory is using the space.</p><p>Which commands help?</p>`,
+ o:["df -h to see which file system is full, then du to find large directories","ping and traceroute","chmod and chown","top and kill"],a:[0],
+ x:`<code>df -h</code> shows usage per mounted file system. <code>du -sh *</code> shows directory sizes so you can find what's consuming space (often logs).`},
+{id:"t16",d:"ts",q:`<p>A web server is running, but clients can't connect to it on port 443. The service is listening locally.</p><p>What should you check next?</p>`,
+ o:["The CMOS battery","The host firewall and any network ACLs for TCP 443","The DHCP scope","The RAID level"],a:[1],
+ x:`If the service is listening but remote clients can't connect, a firewall or ACL is likely blocking the port. Test with <code>Test-NetConnection -Port 443</code>, <code>nc</code>, or <code>nmap</code>.`},
+{id:"t17",d:"ts",q:`<p>Which command shows the path packets take to a remote host and where they stop?</p>`,
+ o:["nslookup","ipconfig","tracert / traceroute","arp"],a:[2],
+ x:`traceroute (tracert on Windows) lists each hop to the destination, which helps find where traffic is dropped.`},
+{id:"t18",d:"ts",q:`<p>A file system on a Linux data volume is reporting errors after an unclean shutdown.</p><p>What should you do?</p>`,
+ o:["Run defrag","Run chkdsk on Linux","Format the volume","Unmount the volume and run fsck"],a:[3],
+ x:`fsck checks and repairs Linux file systems. Run it on an unmounted volume (or from rescue mode for the root file system).`},
+{id:"t19",d:"ts",q:`<p>A server link negotiates at 100 Mbps half duplex, and users see many collisions and slow transfers.</p><p>What's the most likely cause?</p>`,
+ o:["Speed/duplex mismatch or a bad cable","DNS misconfiguration","Full disk","Expired certificate"],a:[0],
+ x:`A duplex mismatch (or a damaged cable forcing a lower speed) causes collisions and poor throughput. Set both sides consistently (usually auto) and test the cable.`},
+{id:"t20",d:"ts",q:`<p>After a firmware update, a server shows a POST error and a series of beep codes.</p><p>What should you do?</p>`,
+ o:["Replace the motherboard immediately","Look up the beep code in the vendor's documentation","Change the IP address","Reinstall the OS"],a:[1],
+ x:`Beep codes and POST messages are vendor-specific and point to the failing component (often memory or firmware). Check the documentation before replacing parts.`},
+
+// ---------- SCENARIO ----------
+{id:"cs1",d:"hw",cs:true,q:`<p><b>Scenario: Northwind Clinic.</b> Which RAID level should DB1 use?</p>`,
+ o:["RAID 0","RAID 5","RAID 10","RAID 1 on two drives and leave two unused"],a:[2],
+ x:`With four drives, RAID 10 gives the best write performance with redundancy. RAID 5 has a write penalty, and RAID 0 has no redundancy.`},
+{id:"cs2",d:"sec",cs:true,q:`<p><b>Scenario: Northwind Clinic.</b> What should change about the backups to meet the data loss requirement and survive a disaster in the server room?</p>`,
+ o:["Keep weekly full backups but add a second NAS in the same rack","Take a VM snapshot every Sunday","Use RAID 6 on DB1 instead","Back up at least every 4 hours (for example, incrementals or log backups) and keep a copy offsite or in the cloud"],a:[3],
+ x:`A weekly full gives up to 7 days of loss, so backups must run at least every 4 hours to meet the RPO. A copy in the same rack would be lost in a fire, so one must be offsite (3-2-1).`},
+{id:"cs3",d:"ts",cs:true,q:`<p><b>Scenario: Northwind Clinic.</b> What's the most likely reason for FS1's 169.254.12.40 address?</p>`,
+ o:["The UPS failed","DNS is down","FS1 couldn't reach a DHCP server","FS1 has a duplicate IP"],a:[2],
+ x:`169.254.x.x is APIPA, which means DHCP didn't respond. For a file server, a static IP or DHCP reservation is also a good idea.`},
+{id:"cs4",d:"ts",cs:true,q:`<p><b>Scenario: Northwind Clinic.</b> What should you replace on HV1?</p>`,
+ o:["The PSU","The RAID cache battery","The NIC","The CMOS battery"],a:[3],
+ x:`A clock that resets after power loss points to a dead CMOS battery.`},
+{id:"cs5",d:"sec",cs:true,q:`<p><b>Scenario: Northwind Clinic.</b> How should the retired drives be sanitized?</p>`,
+ o:["Degauss all drives","Degauss or shred the HDDs, and crypto-erase or shred the SSDs, then get a certificate of destruction","Format all drives twice","Delete the partitions on all drives"],a:[1],
+ x:`Degaussing works only on magnetic HDDs. SSDs need crypto-erase, secure erase, or physical destruction. Patient data requires documented destruction.`}
+];
+
+/* ---------- state ---------- */
+const KEY="serverplus-prep-v1", WKEY="serverplus-missed-v1";
+const FULL_PLAN={hw:10,adm:16,sec:13,ts:16};
+const byId=Object.fromEntries(Q.map(q=>[q.id,q]));
+let S=null, tick=null, confirmOpen=false, resultsFilter="missed";
+function load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const isMulti=q=>!!q.m;
+function same(a,b){if(!a||a.length!==b.length)return false;const s=new Set(a);return b.every(x=>s.has(x))}
+const correct=(q,ans)=>same(ans,q.a);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function buildFull(){
+  let ids=[];
+  for(const d in FULL_PLAN){ids.push(...shuffle(Q.filter(q=>q.d===d&&!q.cs)).slice(0,FULL_PLAN[d]).map(q=>q.id))}
+  ids=shuffle(ids);
+  ids.push(...Q.filter(q=>q.cs).map(q=>q.id));
+  return ids;
+}
+function startFull(){S={mode:"full",ids:buildFull(),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:60*60,done:false};persist();go("exam")}
+function startPractice(domains,onlyIds){
+  let pool=onlyIds?onlyIds.map(id=>byId[id]).filter(Boolean):Q.filter(q=>domains.includes(q.d));
+  if(!pool.length)return;
+  S={mode:"practice",ids:shuffle(pool.map(q=>q.id)),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:0,done:false};persist();go("exam")
+}
+function persist(){if(S)save(KEY,S)}
+
+/* ---------- routing ---------- */
+function go(v){if(location.hash!=="#"+v)location.hash=v;else route()}
+function route(){
+  const h=(location.hash||"#guide").slice(1);
+  const v=["exam","flash"].includes(h)?h:"guide";
+  ["guide","exam","flash"].forEach(k=>{document.getElementById("view-"+k).hidden=v!==k;document.getElementById("tab-"+k).setAttribute("aria-selected",v===k)});
+  if(v==="exam")renderExam();else{updateTimer();if(v==="flash")renderFlash()}
+  window.scrollTo(0,0);
+}
+
+/* ---------- timer ---------- */
+function remaining(){return S&&S.mode==="full"&&!S.done?Math.max(0,S.dur-Math.floor((Date.now()-S.start)/1000)):null}
+function updateTimer(){
+  const t=document.getElementById("timer"), r=remaining();
+  if(r===null){t.hidden=true;return}
+  t.hidden=false;
+  t.textContent=String(Math.floor(r/60)).padStart(2,"0")+":"+String(r%60).padStart(2,"0");
+  t.classList.toggle("low",r<600);
+  if(r===0){finish()}
+}
+function ensureTick(){if(!tick)tick=setInterval(updateTimer,1000)}
+
+/* ---------- exam rendering ---------- */
+const root=()=>document.getElementById("view-exam");
+function renderExam(){
+  updateTimer();
+  if(!S){renderHome();return}
+  if(S.done){renderResults();return}
+  renderQuestion();
+}
+
+function renderHome(){
+  const saved=load(KEY);
+  const missed=load(WKEY)||[];
+  const counts=Object.fromEntries(Object.keys(DOM).map(d=>[d,Q.filter(q=>q.d===d).length]));
+  root().innerHTML=`<div class="ex-home">
+    <div class="hero"><div class="eyebrow">Practice exam</div><h1>Choose how to practice</h1>
+    <p class="lede">${Q.length} original questions written to match the style and difficulty of Server+. These aren't real exam questions. They test the same skills in the same formats.</p></div>
+    ${saved&&!saved.done?`<div class="resume"><span>You have an unfinished ${saved.mode==="full"?"full exam":"practice session"} (${Object.keys(saved.ans).length}/${saved.ids.length} answered).</span><button class="btn small primary" id="resume">Resume</button><button class="btn small" id="discard">Discard</button></div>`:""}
+    <div class="modes">
+      <div class="mode"><h3>Full practice exam</h3><p>60 questions weighted by domain, ending with a 5-question case study. 60-minute timer, no feedback until you submit. Questions are drawn at random each time.</p><button class="btn primary" id="go-full">Start full exam</button></div>
+      <div class="mode"><h3>Practice by domain</h3><p>Untimed. You see the answer and explanation after each question.</p>
+        <div class="chips" id="dchips">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="true" data-d="${d}">${DOM[d].short} · ${counts[d]}</button>`).join("")}</div>
+        <button class="btn" id="go-prac">Start practice</button></div>
+      ${missed.length?`<div class="mode"><h3>Retry missed</h3><p>${missed.length} question${missed.length>1?"s":""} you got wrong last time, with instant feedback.</p><button class="btn" id="go-missed">Retry missed questions</button></div>`:""}
+    </div>
+  </div>`;
+  const r=root();
+  r.querySelector("#go-full").onclick=startFull;
+  r.querySelectorAll("#dchips .chip").forEach(c=>c.onclick=()=>c.setAttribute("aria-pressed",c.getAttribute("aria-pressed")!=="true"));
+  r.querySelector("#go-prac").onclick=()=>{const ds=[...r.querySelectorAll('#dchips .chip[aria-pressed="true"]')].map(c=>c.dataset.d);startPractice(ds)};
+  const gm=r.querySelector("#go-missed");if(gm)gm.onclick=()=>startPractice(null,missed);
+  const rs=r.querySelector("#resume");if(rs)rs.onclick=()=>{S=saved;renderExam()};
+  const ds=r.querySelector("#discard");if(ds)ds.onclick=()=>{del(KEY);renderHome()};
+}
+
+function hintFor(q){if(q.series)return"Select Yes or No";if(q.pick)return`Select ${q.pick===2?"two":q.pick}`;if(isMulti(q))return"Select all that apply";return"Select one"}
+
+function renderQuestion(){
+  const q=byId[S.ids[S.cur]], n=S.ids.length, ans=S.ans[q.id]||[], checked=S.mode==="practice"&&S.checked[q.id];
+  const multi=isMulti(q);
+  const opts=q.o.map((t,i)=>{
+    let cls="opt"; if(ans.includes(i))cls+=" sel";
+    if(checked){cls+=" locked";if(q.a.includes(i))cls+=" right";else if(ans.includes(i))cls+=" wrong"}
+    return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${checked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
+  const unanswered=S.ids.filter(id=>!(S.ans[id]&&S.ans[id].length)).length;
+  const markedN=S.ids.filter(id=>S.marked[id]).length;
+  const pal=S.ids.map((id,i)=>{let c="pq";const a=S.ans[id];
+    if(S.mode==="practice"&&S.checked[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(a&&a.length)c+=" ans";
+    if(S.marked[id])c+=" mk";if(i===S.cur)c+=" cur";
+    return `<button class="${c}" data-i="${i}" aria-label="Question ${i+1}">${i+1}</button>`}).join("");
+  root().innerHTML=`<div class="ex">
+    <div class="qcard">
+      <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}
+        <button class="mark" id="mark" aria-pressed="${!!S.marked[q.id]}">${S.marked[q.id]?"Marked for review":"Mark for review"}</button></div>
+      ${q.cs?`<details class="case" open><summary>Case study: ${CASE_NAME}</summary><div class="cbody">${CASE}</div></details>`:""}
+      <div class="qtext">${q.q}</div>
+      <div class="hint">${hintFor(q)}</div>
+      <div class="opts" id="opts">${opts}</div>
+      ${checked?explainHTML(q,ans):""}
+      <div class="qnav">
+        <button class="btn" id="prev" ${S.cur===0?"disabled":""}>Previous</button>
+        <span class="sp"></span>
+        ${S.mode==="practice"&&!checked?`<button class="btn primary" id="check" ${ans.length?"":"disabled"}>Check answer</button>`:""}
+        ${S.cur<n-1?`<button class="btn ${S.mode==="full"||checked?"primary":""}" id="next">Next</button>`:""}
+      </div>
+    </div>
+    <aside class="side">
+      <div class="pal">
+        <div class="hint">${S.mode==="full"?"Full exam":"Practice"} · ${n-unanswered}/${n} answered</div>
+        <div class="grid">${pal}</div>
+        <div class="legend"><span>■ answered</span><span style="color:var(--warn)">▁ marked</span>${S.mode==="practice"?'<span style="color:var(--good)">■ right</span><span style="color:var(--bad)">■ wrong</span>':""}</div>
+        ${confirmOpen?`<div class="confirm"><div><b>${unanswered}</b> unanswered, <b>${markedN}</b> marked for review. Submit now?</div><div class="cta-row"><button class="btn small primary" id="sub-yes">Submit</button><button class="btn small" id="sub-no">Keep working</button></div></div>`
+          :`<button class="btn ${S.cur===n-1?"primary":""}" id="submit">${S.mode==="full"?"Submit exam":"Finish & see results"}</button>`}
+        <button class="btn small" id="quit">Quit to menu</button>
+      </div>
+    </aside>
+  </div>`;
+  const r=root();
+  r.querySelectorAll("#opts input").forEach(inp=>inp.onchange=()=>{
+    const sel=[...r.querySelectorAll("#opts input:checked")].map(x=>+x.value);
+    S.ans[q.id]=sel;persist();
+    r.querySelectorAll("#opts .opt").forEach((l,i)=>l.classList.toggle("sel",sel.includes(i)));
+    const ck=r.querySelector("#check");if(ck)ck.disabled=!sel.length;
+    const b=r.querySelector(`.pq[data-i="${S.cur}"]`);if(b)b.classList.toggle("ans",!!sel.length);
+  });
+  r.querySelector("#mark").onclick=()=>{S.marked[q.id]=!S.marked[q.id];persist();renderQuestion()};
+  r.querySelector("#prev").onclick=()=>{S.cur--;persist();renderQuestion();window.scrollTo(0,0)};
+  const nx=r.querySelector("#next");if(nx)nx.onclick=()=>{S.cur++;persist();renderQuestion();window.scrollTo(0,0)};
+  const ck=r.querySelector("#check");if(ck)ck.onclick=()=>{S.checked[q.id]=true;persist();renderQuestion()};
+  r.querySelectorAll(".pq").forEach(b=>b.onclick=()=>{S.cur=+b.dataset.i;persist();renderQuestion()});
+  const sb=r.querySelector("#submit");if(sb)sb.onclick=()=>{confirmOpen=true;renderQuestion()};
+  const sy=r.querySelector("#sub-yes");if(sy)sy.onclick=()=>{confirmOpen=false;finish()};
+  const sn=r.querySelector("#sub-no");if(sn)sn.onclick=()=>{confirmOpen=false;renderQuestion()};
+  r.querySelector("#quit").onclick=()=>{S=null;confirmOpen=false;updateTimer();renderHome()};
+}
+
+function letters(arr){return (arr&&arr.length)?arr.slice().sort().map(i=>String.fromCharCode(65+i)).join(", "):"No answer"}
+function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="explain"><div class="verdict ${ok?"ok":"no"}">${ok?"Correct":"Incorrect"}. The answer is ${letters(q.a)}.</div><div>${q.x}</div></div>`}
+
+function finish(){
+  if(!S||S.done)return;
+  S.done=true;S.end=Date.now();
+  const missed=S.ids.filter(id=>!correct(byId[id],S.ans[id]||[]));
+  save(WKEY,missed);persist();updateTimer();resultsFilter="missed";
+  renderExam();window.scrollTo(0,0);
+}
+
+function renderResults(){
+  const items=S.ids.map(id=>({q:byId[id],ans:S.ans[id]||[]})).map(o=>({...o,ok:correct(o.q,o.ans)}));
+  const total=items.length, right=items.filter(i=>i.ok).length, pct=Math.round(right/total*100);
+  const mins=Math.round(((S.end||Date.now())-S.start)/60000);
+  const per=Object.keys(DOM).map(d=>{const its=items.filter(i=>i.q.d===d);const r=its.filter(i=>i.ok).length;return{d,n:its.length,r,p:its.length?Math.round(r/its.length*100):null}}).filter(x=>x.n);
+  const band=p=>p>=80?"hi":p>=65?"mid":"low";
+  const verdict=pct>=80?["Ready","var(--good)"]:pct>=70?["Borderline: review weak domains","var(--warn)"]:["Not yet: study the guide sections for your weakest domains","var(--bad)"];
+  const weakest=per.slice().sort((a,b)=>a.p-b.p)[0];
+  const shown=items.filter(i=>resultsFilter==="all"||!i.ok);
+  root().innerHTML=`<div class="res">
+    <div class="hero"><div class="eyebrow">${S.mode==="full"?"Full exam":"Practice"} results</div><h1>${right} of ${total} correct</h1></div>
+    <div class="score">
+      <div><div class="big">${pct}%</div><div class="hint" style="margin-top:6px">${mins} min</div></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span class="verdict-pill" style="color:${verdict[1]};border-color:${verdict[1]}">${verdict[0]}</span>
+        <p style="color:var(--muted);font-size:.92rem">The real exam uses a scaled 750 (on a 100–900 scale) passing score, and a scaled score isn't a simple percentage. On a practice set like this, aim for <b>80% or higher</b> so you have a margin.${weakest&&weakest.p<80?` Your weakest domain is <b>${DOM[weakest.d].name}</b>. Re-read <a href="#guide" data-sec="g-${weakest.d}">its cheat sheet</a>.`:""} Multi-select questions are scored all-or-nothing here.</p>
+      </div>
+    </div>
+    <div class="card"><h3>By domain</h3><div class="dbars">
+      ${per.map(x=>`<div class="dbar"><span>${DOM[x.d].name} <span class="hint">${x.r}/${x.n}</span></span><div class="track"><div class="fill ${band(x.p)}" style="width:${x.p}%"></div><div class="tick" title="80% target"></div></div><span class="pct">${x.p}%</span></div>`).join("")}
+      <div class="hint">The line on each bar marks the 80% target</div>
+    </div></div>
+    <div class="cta-row">
+      ${right<total?`<button class="btn primary" id="retry">Retry the ${total-right} missed</button>`:""}
+      <button class="btn" id="newfull">New full exam</button>
+      <button class="btn" id="menu">Practice menu</button>
+    </div>
+    <div class="filter"><h2 style="margin-right:auto">Review</h2>
+      <button class="chip" aria-pressed="${resultsFilter==="missed"}" data-f="missed">Missed (${total-right})</button>
+      <button class="chip" aria-pressed="${resultsFilter==="all"}" data-f="all">All (${total})</button></div>
+    <div class="rlist">${shown.length?shown.map(i=>`<div class="ritem ${i.ok?"ok":"bad"}">
+      <div class="qmeta"><span class="qnum">Q${S.ids.indexOf(i.q.id)+1}</span><span class="dtag">${DOM[i.q.d].short}</span>${i.q.cs?'<span class="dtag">Case study</span>':""}<span style="margin-left:auto;font-weight:600;color:${i.ok?"var(--good)":"var(--bad)"}">${i.ok?"Correct":"Incorrect"}</span></div>
+      <div class="qtext" style="font-size:.95rem">${i.q.q}</div>
+      <div class="row">Your answer: <b>${letters(i.ans)}</b> · Correct: <b>${letters(i.q.a)}</b></div>
+      <ol type="A" style="margin:0;padding-left:22px;font-size:.9rem">${i.q.o.map((t,k)=>`<li style="${i.q.a.includes(k)?"color:var(--good);font-weight:600":i.ans.includes(k)?"color:var(--bad)":""}">${t}</li>`).join("")}</ol>
+      <div class="explain">${i.q.x}</div></div>`).join(""):'<p class="lede">No missed questions.</p>'}</div>
+  </div>`;
+  const r=root();
+  const rt=r.querySelector("#retry");if(rt)rt.onclick=()=>startPractice(null,items.filter(i=>!i.ok).map(i=>i.q.id));
+  r.querySelector("#newfull").onclick=startFull;
+  r.querySelector("#menu").onclick=()=>{S=null;renderHome()};
+  r.querySelectorAll(".filter .chip").forEach(c=>c.onclick=()=>{resultsFilter=c.dataset.f;renderResults()});
+  r.querySelectorAll("a[data-sec]").forEach(a=>a.onclick=e=>{e.preventDefault();go("guide");setTimeout(()=>{const el=document.getElementById(a.dataset.sec);if(el)el.scrollIntoView()},30)});
+}
+
+/* ---------- flashcards ---------- */
+const FC=[
+["hw","RAID 0","Striping, <b>min 2</b> disks, <b>no redundancy</b>, n × size"],
+["hw","RAID 1","Mirroring, <b>min 2</b>, survives 1 disk"],
+["hw","RAID 5","Distributed parity, <b>min 3</b>, survives 1, (n − 1) × size"],
+["hw","RAID 6","Dual parity, <b>min 4</b>, survives 2, (n − 2) × size"],
+["hw","RAID 10","Stripe of mirrors, <b>min 4</b>, (n ÷ 2) × size, best write performance with redundancy"],
+["hw","Usable capacity: RAID 5, five 4 TB disks","<b>16 TB</b>"],
+["hw","Usable capacity: RAID 10, eight 2 TB disks","<b>8 TB</b>"],
+["hw","Idle disk that replaces a failed one automatically","<b>Hot spare</b>"],
+["hw","Disks presented individually with no RAID","<b>JBOD</b>"],
+["hw","Protects RAID controller write-back cache on power loss","<b>Battery-backed or flash-backed cache</b>"],
+["hw","1 rack unit","<b>1.75 inches</b>"],
+["hw","Standard full-height rack","<b>42U</b>"],
+["hw","Where heavy equipment goes in a rack","<b>Bottom</b>"],
+["hw","Chassis that shares power and cooling among servers","<b>Blade enclosure</b>"],
+["hw","Server intakes should face","The <b>cold aisle</b>"],
+["hw","Fill empty rack spaces to keep airflow correct","<b>Blanking panels</b>"],
+["hw","UPS with zero transfer time","<b>Online / double-conversion</b>"],
+["hw","UPS that also regulates voltage without going to battery","<b>Line-interactive</b>"],
+["hw","Cheapest UPS type","<b>Standby (offline)</b>"],
+["hw","Amps from watts and volts","<b>Amps = watts ÷ volts</b>"],
+["hw","Redundant PSU best practice","Each PSU on a <b>different PDU and circuit</b>"],
+["hw","Remote power and console when the OS is down","<b>Out-of-band management</b>: iDRAC, iLO, IPMI/BMC"],
+["hw","Cat 6 max distance at 10 Gbps","<b>55 m</b>"],
+["hw","Cat 6a max distance at 10 Gbps","<b>100 m</b>"],
+["hw","Fiber for kilometers","<b>Single-mode</b>"],
+["hw","Fiber for short runs, cheaper optics","<b>Multimode</b>"],
+["hw","Small fiber connector common in servers","<b>LC</b>"],
+["hw","SFP / SFP+ / SFP28 / QSFP speeds","<b>1G</b> / <b>10G</b> / <b>25G</b> / <b>40–100G</b>"],
+["hw","Cheap short in-rack 10G cable","<b>Twinax DAC</b>"],
+["hw","Enterprise dual-ported drive interface","<b>SAS</b>"],
+["hw","SSD interface over PCIe","<b>NVMe</b>"],
+["hw","File-level network storage (SMB/NFS)","<b>NAS</b>"],
+["hw","Block-level network storage","<b>SAN</b> (iSCSI, Fibre Channel, FCoE)"],
+["hw","FC switch access control","<b>Zoning</b>"],
+["hw","Array-side access control for LUNs","<b>LUN masking</b>"],
+["hw","Card that connects a server to Fibre Channel","<b>HBA</b>"],
+["hw","Memory that corrects single-bit errors","<b>ECC</b>"],
+["hw","Server DIMM types","<b>RDIMM</b> (registered) and <b>LRDIMM</b> (load-reduced)"],
+["adm","Boot from the network to install an OS","<b>PXE</b>"],
+["adm","MBR limits","<b>2 TB</b> disks, <b>4</b> primary partitions"],
+["adm","Partition style for large boot disks","<b>GPT</b> with <b>UEFI</b>"],
+["adm","Windows server file systems","<b>NTFS</b>, <b>ReFS</b>"],
+["adm","Linux server file systems","<b>ext4</b>, <b>XFS</b>"],
+["adm","VMware datastore file system","<b>VMFS</b>"],
+["adm","Link aggregation standard","<b>LACP / 802.3ad</b>"],
+["adm","VLAN tagging standard","<b>802.1Q</b>"],
+["adm","APIPA range","<b>169.254.0.0/16</b>"],
+["adm","RFC 1918 private ranges","<b>10/8</b>, <b>172.16/12</b>, <b>192.168/16</b>"],
+["adm","Bare-metal hypervisor","<b>Type 1</b> (ESXi, Hyper-V, KVM)"],
+["adm","Hypervisor that runs on a desktop OS","<b>Type 2</b>"],
+["adm","Short-term VM rollback point","<b>Snapshot</b> (not a backup)"],
+["adm","Physical server to VM","<b>P2V</b>"],
+["adm","Master image for new VMs","<b>Template</b>"],
+["adm","Cluster where all nodes serve traffic","<b>Active-active</b>"],
+["adm","Cluster with a standby node","<b>Active-passive</b>"],
+["adm","Prevents split-brain in a cluster","<b>Quorum / witness</b>"],
+["adm","Signal nodes use to check each other","<b>Heartbeat</b>"],
+["adm","Load balancing to the server with fewest sessions","<b>Least connections</b>"],
+["adm","Fault tolerance vs high availability","<b>FT</b>: no interruption. <b>HA</b>: minimal downtime via failover."],
+["adm","License based on physical cores","<b>Per core</b>"],
+["adm","License limited to simultaneous users","<b>Concurrent user</b>"],
+["adm","Licenses for users or devices accessing a server","<b>CALs</b>"],
+["adm","Linux job scheduler","<b>cron</b>"],
+["adm","Script extensions: Bash / PowerShell / batch","<b>.sh</b> / <b>.ps1</b> / <b>.bat</b>"],
+["adm","Normal performance reference point","<b>Baseline</b>"],
+["adm","Server lifecycle","Procure → deploy → maintain → <b>decommission</b>"],
+["adm","SNMP polling / trap ports","<b>UDP 161</b> / <b>UDP 162</b>"],
+["adm","Syslog port","<b>UDP 514</b>"],
+["adm","Patch process","<b>Test</b>, <b>back up</b>, maintenance window, rollback plan"],
+["sec","Full backup","Everything. Clears archive bit."],
+["sec","Incremental backup","Changes since the <b>last backup of any type</b>. Clears archive bit. Slowest restore."],
+["sec","Differential backup","Changes since the <b>last full</b>. Doesn't clear archive bit."],
+["sec","Restore with incrementals","Last full + <b>every</b> incremental since"],
+["sec","Restore with differentials","Last full + <b>latest</b> differential"],
+["sec","Full backup built on the backup server from existing backups","<b>Synthetic full</b>"],
+["sec","3-2-1 rule","<b>3</b> copies, <b>2</b> media types, <b>1</b> offsite"],
+["sec","Grandfather-father-son","<b>GFS</b> rotation: monthly, weekly, daily"],
+["sec","Only way to prove a backup works","<b>Test restore</b>"],
+["sec","Cheap offline long-term backup media","<b>Tape (LTO)</b>"],
+["sec","DR site ready in minutes","<b>Hot site</b>"],
+["sec","DR site with hardware, data restored from backup","<b>Warm site</b>"],
+["sec","DR site with only space and power","<b>Cold site</b>"],
+["sec","Maximum acceptable data loss","<b>RPO</b>"],
+["sec","Maximum acceptable downtime","<b>RTO</b>"],
+["sec","Average time between failures","<b>MTBF</b>"],
+["sec","Average time to repair","<b>MTTR</b>"],
+["sec","Replication with no data loss, short distance","<b>Synchronous</b>"],
+["sec","Replication over long distance, some loss possible","<b>Asynchronous</b>"],
+["sec","Two-door entry that stops tailgating","<b>Access control vestibule (mantrap)</b>"],
+["sec","Posts that stop vehicles","<b>Bollards</b>"],
+["sec","Server room fire suppression","<b>Clean agent</b> (FM-200, Novec, inert gas)"],
+["sec","Risk from low humidity / high humidity","<b>ESD</b> / <b>condensation</b>"],
+["sec","Erase magnetic media","<b>Degaussing</b> (not for SSDs)"],
+["sec","Fast SSD sanitization","<b>Crypto-erase</b> (destroy the key) or secure erase"],
+["sec","Proof of third-party destruction","<b>Certificate of destruction</b>"],
+["sec","Protect stolen drives' data","<b>Encryption at rest</b>"],
+["sec","Protect data on the network","<b>Encryption in transit</b> (TLS, SSH, IPsec)"],
+["sec","Hardening basics","Disable unused services and ports, change defaults, patch, host firewall, least privilege"],
+["ts","Troubleshooting step 1","<b>Identify the problem</b> and determine scope"],
+["ts","Troubleshooting step 2","<b>Establish a theory</b> of probable cause (question the obvious)"],
+["ts","Troubleshooting step 3","<b>Test the theory</b>"],
+["ts","Troubleshooting step 4","<b>Establish a plan of action</b> and notify"],
+["ts","Troubleshooting step 5","<b>Implement or escalate</b>"],
+["ts","Troubleshooting steps 6–8","<b>Verify</b> + prevent, <b>root cause analysis</b>, <b>document</b>"],
+["ts","169.254.x.x address","<b>DHCP</b> didn't respond"],
+["ts","Ping by IP works, by name fails","<b>DNS</b>"],
+["ts","Local subnet works, remote doesn't","<b>Default gateway</b> / routing"],
+["ts","Intermittent connectivity and IP conflict errors","<b>Duplicate IP</b>"],
+["ts","Collisions and slow link","<b>Speed/duplex mismatch</b> or bad cable"],
+["ts","Clock resets after unplugging","<b>CMOS battery</b>"],
+["ts","Random reboots with high temps","<b>Overheating</b>: fans, dust, airflow"],
+["ts","Predicts drive failure","<b>SMART</b>"],
+["ts","RAID array lost one disk","<b>Degraded</b>: replace and rebuild"],
+["ts","Write-back cache disabled after outage","Failed <b>cache battery</b> / flash module"],
+["ts","Service fails after password rotation","<b>Service account</b> password not updated"],
+["ts","Memory use grows until crash","<b>Memory leak</b>"],
+["ts","Share + NTFS permissions","<b>Most restrictive</b> wins"],
+["ts","Linux disk usage by file system / directory","<code>df -h</code> / <code>du -sh</code>"],
+["ts","Repair a Linux / Windows file system","<code>fsck</code> / <code>chkdsk</code>"],
+["ts","Linux service status and logs","<code>systemctl status</code>, <code>journalctl</code>, <code>/var/log</code>"],
+["ts","Path to a host hop by hop","<code>tracert</code> / <code>traceroute</code>"],
+["ts","Query DNS","<code>nslookup</code> / <code>dig</code>"],
+["ts","Show listening ports and connections","<code>netstat</code> / <code>ss</code>"],
+["ts","Test a TCP port","<code>Test-NetConnection -Port</code>, <code>nc</code>, <code>telnet</code>"],
+["ts","Scan for open ports","<code>nmap</code>"],
+["ts","Capture packets","<b>Wireshark</b> / <code>tcpdump</code>"]
+];
+
+const FKEY="serverplus-flash-known-v1";
+const F={doms:new Set(Object.keys(DOM)),known:new Set(load(FKEY)||[]),queue:null,flipped:false,includeKnown:false};
+function buildQueue(){F.queue=shuffle(FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0])&&(F.includeKnown||!F.known.has(i))));F.flipped=false}
+function saveKnown(){save(FKEY,[...F.known])}
+function renderFlash(){
+  if(!F.queue)buildQueue();
+  const el=document.getElementById("view-flash");
+  const inDoms=FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0]));
+  const knownN=inDoms.filter(i=>F.known.has(i)).length;
+  const pct=inDoms.length?Math.round(knownN/inDoms.length*100):0;
+  const idx=F.queue[0], c=idx===undefined?null:FC[idx];
+  el.innerHTML=`<div class="fl">
+    <div class="hero"><div class="eyebrow">Flashcards · ${FC.length} cards</div><h1>Flashcards</h1>
+    <p class="lede">Flip a card, then choose <b>Got it</b> to take it out of the deck or <b>Again</b> to see it again in a few cards. Cards you mark as known are saved in this browser.</p></div>
+    <div class="fl-opts" id="fdoms">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="${F.doms.has(d)}" data-d="${d}">${DOM[d].short} · ${FC.filter(x=>x[0]===d).length}</button>`).join("")}</div>
+    <div class="fl-opts">
+      <button class="chip" id="fknown" aria-pressed="${F.includeKnown}">Include known cards</button>
+      <button class="btn small" id="fshuffle">Shuffle &amp; restart</button>
+      <button class="btn small" id="freset">Reset progress</button>
+    </div>
+    <div class="fl-top"><span>${F.queue.length} left this round</span><span>${knownN} of ${inDoms.length} known · ${pct}%</span></div>
+    <div class="prog"><div style="width:${pct}%"></div></div>
+    ${c?`<div class="fc ${F.flipped?"flipped":""}" id="fc" tabindex="0" role="button" aria-label="Flip card">
+      <div class="fc-in">
+        <div class="fc-face fc-front"><span class="dtag" style="align-self:flex-start">${DOM[c[0]].short}</span><div class="fc-text">${c[1]}</div><span class="hint">Click or press Space to flip</span></div>
+        <div class="fc-face fc-back"><div class="fc-q">${c[1]}</div><div class="fc-text">${c[2]}</div><span class="hint">${DOM[c[0]].name}</span></div>
+      </div></div>
+    <div class="fc-ctrl">
+      <button class="btn again" id="fagain">Again<span class="kbd">←</span></button>
+      <button class="btn" id="fflip">Flip<span class="kbd">Space</span></button>
+      <button class="btn got" id="fgot">Got it<span class="kbd">→</span></button>
+    </div>`
+    :`<div class="fl-done"><h2>${inDoms.length?"Round complete":"No domains selected"}</h2><p class="lede">${inDoms.length?`You know ${knownN} of ${inDoms.length} cards in the selected domains.`:"Turn on at least one domain above."}</p>
+      <div class="cta-row">${inDoms.length?`<button class="btn primary" id="fall">Review all cards again</button>`:""}<button class="btn" id="fexam">Go to practice exam</button></div></div>`}
+  </div>`;
+  el.querySelectorAll("#fdoms .chip").forEach(b=>b.onclick=()=>{const d=b.dataset.d;F.doms.has(d)?F.doms.delete(d):F.doms.add(d);buildQueue();renderFlash()});
+  el.querySelector("#fknown").onclick=()=>{F.includeKnown=!F.includeKnown;buildQueue();renderFlash()};
+  el.querySelector("#fshuffle").onclick=()=>{buildQueue();renderFlash()};
+  el.querySelector("#freset").onclick=()=>{F.known.clear();saveKnown();buildQueue();renderFlash()};
+  const card=el.querySelector("#fc");if(card)card.onclick=flipCard;
+  const a=el.querySelector("#fagain");if(a)a.onclick=again;
+  const g=el.querySelector("#fgot");if(g)g.onclick=gotIt;
+  const fl=el.querySelector("#fflip");if(fl)fl.onclick=flipCard;
+  const fa=el.querySelector("#fall");if(fa)fa.onclick=()=>{F.includeKnown=true;buildQueue();renderFlash()};
+  const fe=el.querySelector("#fexam");if(fe)fe.onclick=()=>go("exam");
+}
+function flipCard(){F.flipped=!F.flipped;const c=document.getElementById("fc");if(c)c.classList.toggle("flipped",F.flipped)}
+function again(){if(!F.queue.length)return;const x=F.queue.shift();F.queue.splice(Math.min(3,F.queue.length),0,x);F.flipped=false;renderFlash();focusCard()}
+function gotIt(){if(!F.queue.length)return;F.known.add(F.queue.shift());saveKnown();F.flipped=false;renderFlash();focusCard()}
+function focusCard(){const c=document.getElementById("fc");if(c)c.focus({preventScroll:true})}
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("view-flash").hidden)return;
+  if(e.target.closest&&e.target.closest("input,textarea,select"))return;
+  if(e.key===" "||e.key==="Enter"){if(e.target.tagName==="BUTTON"&&e.target.id!=="fc")return;e.preventDefault();flipCard()}
+  else if(e.key==="ArrowRight"){e.preventDefault();gotIt()}
+  else if(e.key==="ArrowLeft"){e.preventDefault();again()}
+});
+
+/* ---------- wiring ---------- */
+document.querySelectorAll("[data-flash]").forEach(b=>b.onclick=()=>go("flash"));
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>go(t.dataset.view));
+document.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>{startFull()});
+document.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>{S=null;go("exam")});
+document.querySelectorAll(".toc a").forEach(a=>a.onclick=e=>{e.preventDefault();const el=document.querySelector(a.getAttribute("href"));if(el)el.scrollIntoView({behavior:"smooth"})});
+window.addEventListener("hashchange",route);
+const saved=load(KEY); if(saved&&!saved.done&&saved.mode==="full"){S=saved}
+ensureTick(); route();
+</script>
+
+</body>
+</html>
