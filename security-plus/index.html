@@ -167,6 +167,8 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .vb-icon{font-size:1.4rem;font-weight:700;line-height:1}
 .vb-word{font-size:1.25rem;font-weight:700;letter-spacing:.06em}
 .vb-ans{font-family:var(--f-body);font-size:.95rem;color:var(--ink);margin-left:auto}
+.vb-note{font-family:var(--f-body);font-size:.9rem;color:var(--muted);margin-left:auto}
+.fbtog{display:flex;gap:8px;align-items:center;font-size:.88rem;margin:4px 0 10px;cursor:pointer}
 
 /* Results */
 .res{display:flex;flex-direction:column;gap:24px}
@@ -888,6 +890,8 @@ function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random
 const isMulti=q=>!!q.m;
 function same(a,b){if(!a||a.length!==b.length)return false;const s=new Set(a);return b.every(x=>s.has(x))}
 const correct=(q,ans)=>same(ans,q.a);
+const fbOn=()=>S&&(S.mode==="practice"||!!S.fb);
+const complete=(q,sel)=>sel.length>0&&(q.pick?sel.length>=q.pick:!isMulti(q));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 
 function buildFull(){
@@ -897,13 +901,14 @@ function buildFull(){
   ids.push(...Q.filter(q=>q.cs).map(q=>q.id));
   return ids;
 }
-function startFull(){S={mode:"full",ids:buildFull(),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:60*60,done:false};persist();go("exam")}
+function startFull(){S={mode:"full",ids:buildFull(),ans:{},marked:{},lock:{},reveal:{},fb:load(FBKEY)!==false,cur:0,start:Date.now(),dur:60*60,done:false};persist();go("exam")}
 function startPractice(domains,onlyIds){
   let pool=onlyIds?onlyIds.map(id=>byId[id]).filter(Boolean):Q.filter(q=>domains.includes(q.d));
   if(!pool.length)return;
-  S={mode:"practice",ids:shuffle(pool.map(q=>q.id)),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:0,done:false};persist();go("exam")
+  S={mode:"practice",ids:shuffle(pool.map(q=>q.id)),ans:{},marked:{},lock:{},reveal:{},cur:0,start:Date.now(),dur:0,done:false};persist();go("exam")
 }
 function persist(){if(S)save(KEY,S)}
+const FBKEY="exam-instant-feedback";
 
 /* ---------- routing ---------- */
 function go(v){if(location.hash!=="#"+v)location.hash=v;else route()}
@@ -933,6 +938,7 @@ function renderExam(){
   updateTimer();
   if(!S){renderHome();return}
   if(S.done){renderResults();return}
+  if(!S.lock){S.lock={...(S.checked||{})};S.reveal={...(S.checked||{})}}
   renderQuestion();
 }
 
@@ -945,8 +951,8 @@ function renderHome(){
     <p class="lede">${Q.length} original questions written to match the style and difficulty of Security+. These aren't real exam questions. They test the same skills in the same formats.</p></div>
     ${saved&&!saved.done?`<div class="resume"><span>You have an unfinished ${saved.mode==="full"?"full exam":"practice session"} (${Object.keys(saved.ans).length}/${saved.ids.length} answered).</span><button class="btn small primary" id="resume">Resume</button><button class="btn small" id="discard">Discard</button></div>`:""}
     <div class="modes">
-      <div class="mode"><h3>Full practice exam</h3><p>60 questions weighted by domain, ending with a 5-question case study. 60-minute timer, no feedback until you submit. Questions are drawn at random each time.</p><button class="btn primary" id="go-full">Start full exam</button></div>
-      <div class="mode"><h3>Practice by domain</h3><p>Untimed. You see the answer and explanation after each question.</p>
+      <div class="mode"><h3>Full practice exam</h3><p>60 questions weighted by domain, ending with a 5-question case study. 60-minute timer, shows Correct or Incorrect after each answer (switch off below for real exam conditions). Questions are drawn at random each time.</p><label class="fbtog"><input type="checkbox" id="fbtog" ${load(FBKEY)!==false?"checked":""}> Instant Correct / Incorrect</label><button class="btn primary" id="go-full">Start full exam</button></div>
+      <div class="mode"><h3>Practice by domain</h3><p>Untimed. Instant Correct or Incorrect after each answer. Reveal the answer and explanation only when you want it.</p>
         <div class="chips" id="dchips">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="true" data-d="${d}">${DOM[d].short} · ${counts[d]}</button>`).join("")}</div>
         <button class="btn" id="go-prac">Start practice</button></div>
       ${missed.length?`<div class="mode"><h3>Retry missed</h3><p>${missed.length} question${missed.length>1?"s":""} you got wrong last time, with instant feedback.</p><button class="btn" id="go-missed">Retry missed questions</button></div>`:""}
@@ -954,6 +960,7 @@ function renderHome(){
   </div>`;
   const r=root();
   r.querySelector("#go-full").onclick=startFull;
+  r.querySelector("#fbtog").onchange=e=>save(FBKEY,e.target.checked);
   r.querySelectorAll("#dchips .chip").forEach(c=>c.onclick=()=>c.setAttribute("aria-pressed",c.getAttribute("aria-pressed")!=="true"));
   r.querySelector("#go-prac").onclick=()=>{const ds=[...r.querySelectorAll('#dchips .chip[aria-pressed="true"]')].map(c=>c.dataset.d);startPractice(ds)};
   const gm=r.querySelector("#go-missed");if(gm)gm.onclick=()=>startPractice(null,missed);
@@ -964,44 +971,45 @@ function renderHome(){
 function hintFor(q){if(q.series)return"Select Yes or No";if(q.pick)return`Select ${q.pick===2?"two":q.pick}`;if(isMulti(q))return"Select all that apply";return"Select one"}
 
 function renderQuestion(){
-  const q=byId[S.ids[S.cur]], n=S.ids.length, ans=S.ans[q.id]||[], checked=S.mode==="practice"&&S.checked[q.id];
+  const q=byId[S.ids[S.cur]], n=S.ids.length, ans=S.ans[q.id]||[], locked=fbOn()&&!!S.lock[q.id], revealed=S.mode==="practice"&&!!S.reveal[q.id];
   const multi=isMulti(q);
   const opts=q.o.map((t,i)=>{
     let cls="opt"; if(ans.includes(i))cls+=" sel";
-    if(checked){cls+=" locked";if(q.a.includes(i))cls+=" right";else if(ans.includes(i))cls+=" wrong"}
-    return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${checked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
+    if(locked){cls+=" locked";if(revealed){if(q.a.includes(i))cls+=" right";else if(ans.includes(i))cls+=" wrong"}else if(ans.includes(i))cls+=correct(q,ans)?" right":" wrong"}
+    return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${locked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
   const unanswered=S.ids.filter(id=>!(S.ans[id]&&S.ans[id].length)).length;
   const markedN=S.ids.filter(id=>S.marked[id]).length;
-  const chk=S.mode==="practice"?S.ids.filter(id=>S.checked[id]):[];
+  const chk=fbOn()?S.ids.filter(id=>S.lock[id]):[];
   const rightN=chk.filter(id=>correct(byId[id],S.ans[id]||[])).length;
   const rpct=chk.length?Math.round(rightN/chk.length*100):0;
   const rband=rpct>=80?"hi":rpct>=65?"mid":"low";
   const pal=S.ids.map((id,i)=>{let c="pq";const a=S.ans[id];
-    if(S.mode==="practice"&&S.checked[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(a&&a.length)c+=" ans";
+    if(fbOn()&&S.lock[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(a&&a.length)c+=" ans";
     if(S.marked[id])c+=" mk";if(i===S.cur)c+=" cur";
     return `<button class="${c}" data-i="${i}" aria-label="Question ${i+1}">${i+1}</button>`}).join("");
   root().innerHTML=`<div class="ex">
     <div class="qcard">
-      <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}${S.mode==="practice"?`<span class="dtag run" title="Correct out of answers checked so far">Score ${rightN}/${chk.length}${chk.length?` · ${rpct}%`:""}</span>`:""}
+      <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}${fbOn()?`<span class="dtag run" title="Correct out of answers checked so far">Score ${rightN}/${chk.length}${chk.length?` · ${rpct}%`:""}</span>`:""}
         <button class="mark" id="mark" aria-pressed="${!!S.marked[q.id]}">${S.marked[q.id]?"Marked for review":"Mark for review"}</button></div>
       ${q.cs?`<details class="case" open><summary>Case study: ${CASE_NAME}</summary><div class="cbody">${CASE}</div></details>`:""}
       <div class="qtext">${q.q}</div>
       <div class="hint">${hintFor(q)}</div>
       <div class="opts" id="opts">${opts}</div>
-      ${checked?explainHTML(q,ans):""}
+      ${revealed?explainHTML(q,ans):locked?verdictHTML(q,ans):""}
       <div class="qnav">
         <button class="btn" id="prev" ${S.cur===0?"disabled":""}>Previous</button>
         <span class="sp"></span>
-        ${S.mode==="practice"&&!checked?`<button class="btn primary" id="check" ${ans.length?"":"disabled"}>Check answer</button>`:""}
-        ${S.cur<n-1?`<button class="btn ${S.mode==="full"||checked?"primary":""}" id="next">Next</button>`:""}
+        ${fbOn()&&!locked&&isMulti(q)&&!q.pick?`<button class="btn primary" id="check" ${ans.length?"":"disabled"}>Check answer</button>`:""}
+        ${locked&&S.mode==="practice"&&!revealed?`<button class="btn" id="reveal">Show answer &amp; explanation</button>`:""}
+        ${S.cur<n-1?`<button class="btn ${S.mode==="full"||locked?"primary":""}" id="next">Next</button>`:""}
       </div>
     </div>
     <aside class="side">
       <div class="pal">
         <div class="hint">${S.mode==="full"?"Full exam":"Practice"} · ${n-unanswered}/${n} answered</div>
-        ${S.mode==="practice"?`<div class="runscore"><div class="hint">Running score</div><div class="rs-num">${rightN}/${chk.length}<span>${chk.length?rpct+"%":"no answers checked yet"}</span></div><div class="track"><div class="fill ${chk.length?rband:""}" style="width:${rpct}%"></div><div class="tick" title="80% target"></div></div></div>`:""}
+        ${fbOn()?`<div class="runscore"><div class="hint">Running score</div><div class="rs-num">${rightN}/${chk.length}<span>${chk.length?rpct+"%":"no answers checked yet"}</span></div><div class="track"><div class="fill ${chk.length?rband:""}" style="width:${rpct}%"></div><div class="tick" title="80% target"></div></div></div>`:""}
         <div class="grid">${pal}</div>
-        <div class="legend"><span>■ answered</span><span style="color:var(--warn)">▁ marked</span>${S.mode==="practice"?'<span style="color:var(--good)">■ right</span><span style="color:var(--bad)">■ wrong</span>':""}</div>
+        <div class="legend"><span>■ answered</span><span style="color:var(--warn)">▁ marked</span>${fbOn()?'<span style="color:var(--good)">■ right</span><span style="color:var(--bad)">■ wrong</span>':""}</div>
         ${confirmOpen?`<div class="confirm"><div><b>${unanswered}</b> unanswered, <b>${markedN}</b> marked for review. Submit now?</div><div class="cta-row"><button class="btn small primary" id="sub-yes">Submit</button><button class="btn small" id="sub-no">Keep working</button></div></div>`
           :`<button class="btn ${S.cur===n-1?"primary":""}" id="submit">${S.mode==="full"?"Submit exam":"Finish & see results"}</button>`}
         <button class="btn small" id="quit">Quit to menu</button>
@@ -1015,11 +1023,15 @@ function renderQuestion(){
     r.querySelectorAll("#opts .opt").forEach((l,i)=>l.classList.toggle("sel",sel.includes(i)));
     const ck=r.querySelector("#check");if(ck)ck.disabled=!sel.length;
     const b=r.querySelector(`.pq[data-i="${S.cur}"]`);if(b)b.classList.toggle("ans",!!sel.length);
+    if(fbOn()&&complete(q,sel))lockIn();
   });
+  const showBanner=()=>{const vb=document.querySelector(".verdict-banner");if(vb){const b=vb.getBoundingClientRect();if(b.top<0||b.bottom>window.innerHeight)vb.scrollIntoView({block:"center",behavior:"smooth"})}};
+  function lockIn(){S.lock[q.id]=true;persist();renderQuestion();showBanner()}
   r.querySelector("#mark").onclick=()=>{S.marked[q.id]=!S.marked[q.id];persist();renderQuestion()};
   r.querySelector("#prev").onclick=()=>{S.cur--;persist();renderQuestion();window.scrollTo(0,0)};
   const nx=r.querySelector("#next");if(nx)nx.onclick=()=>{S.cur++;persist();renderQuestion();window.scrollTo(0,0)};
-  const ck=r.querySelector("#check");if(ck)ck.onclick=()=>{S.checked[q.id]=true;persist();renderQuestion();const vb=document.querySelector(".verdict-banner");if(vb){const b=vb.getBoundingClientRect();if(b.top<0||b.bottom>window.innerHeight)vb.scrollIntoView({block:"center",behavior:"smooth"})}};
+  const ck=r.querySelector("#check");if(ck)ck.onclick=lockIn;
+  const rv=r.querySelector("#reveal");if(rv)rv.onclick=()=>{S.reveal[q.id]=true;persist();renderQuestion();showBanner()};
   r.querySelectorAll(".pq").forEach(b=>b.onclick=()=>{S.cur=+b.dataset.i;persist();renderQuestion()});
   const sb=r.querySelector("#submit");if(sb)sb.onclick=()=>{confirmOpen=true;renderQuestion()};
   const sy=r.querySelector("#sub-yes");if(sy)sy.onclick=()=>{confirmOpen=false;finish()};
@@ -1028,6 +1040,7 @@ function renderQuestion(){
 }
 
 function letters(arr){return (arr&&arr.length)?arr.slice().sort().map(i=>String.fromCharCode(65+i)).join(", "):"No answer"}
+function verdictHTML(q,ans){const ok=correct(q,ans);return `<div class="verdict-banner ${ok?"ok":"no"}" role="status"><span class="vb-icon" aria-hidden="true">${ok?"✓":"✗"}</span><span class="vb-word">${ok?"CORRECT":"INCORRECT"}</span>${S.mode==="full"?'<span class="vb-note">Explanations appear in your results</span>':""}</div>`}
 function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="verdict-banner ${ok?"ok":"no"}" role="status"><span class="vb-icon" aria-hidden="true">${ok?"✓":"✗"}</span><span class="vb-word">${ok?"CORRECT":"INCORRECT"}</span>${ok?"":`<span class="vb-ans">Correct answer: <b>${letters(q.a)}</b> · You chose: ${letters(ans)}</span>`}</div><div class="explain"><div class="verdict ${ok?"ok":"no"}">Explanation</div><div>${q.x}</div></div>`}
 
 function finish(){
