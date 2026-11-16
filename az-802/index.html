@@ -1,0 +1,1436 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="AZ-802 Administering Windows Server study guide, timed practice exam, and flashcards.">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}a.brand{color:inherit;text-decoration:none}</style>
+<title>AZ-802 Server Prep</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: an exam-console shell — sticky tab bar, a reading column for the guide, a two-pane question view with a numbered palette. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --sunk:#eceff4; --ink:#151b27; --muted:#5a6476; --line:#d9dee7;
+  --accent:#2c56c9; --accent-ink:#ffffff; --soft:#e5ecfb;
+  --good:#18805a; --good-soft:#e2f3ec; --bad:#b93a3a; --bad-soft:#f8e6e6; --warn:#9a6a12; --warn-soft:#f8efdc;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:2rem;font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:600}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+code{background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:0 .3em}
+pre{font-family:var(--f-mono);font-size:.85rem;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:10px 12px;overflow-x:auto;margin:0}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:16px;padding-block:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.1rem;display:flex;gap:8px;align-items:baseline}
+.brand .code{font-family:var(--f-mono);font-size:.8rem;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:1px 6px}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tab{background:none;border:1px solid transparent;color:var(--muted);padding:6px 12px;border-radius:6px;font-weight:500}
+.tab[aria-selected="true"]{background:var(--soft);color:var(--ink);border-color:var(--line)}
+.timer{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.95rem;padding:4px 10px;border-radius:6px;background:var(--sunk);border:1px solid var(--line)}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Guide */
+.guide{display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);align-self:start;display:flex;flex-direction:column;gap:2px;font-size:.88rem}
+.toc a{color:var(--muted);text-decoration:none;padding:4px 8px;border-left:2px solid var(--line)}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+.toc .lbl{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 8px 6px}
+.gmain{display:flex;flex-direction:column;gap:44px;min-width:0}
+.gsec{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.gsec > p,.gsec li{max-width:70ch}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.06rem;color:var(--muted);max-width:66ch}
+.hero{display:flex;flex-direction:column;gap:14px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:7px;font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.small{padding:5px 10px;font-size:.88rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.fact{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.fact b{font-family:var(--f-display);font-size:1.35rem;font-weight:600}
+.fact span{font-size:.82rem;color:var(--muted)}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--sunk);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.risk{display:inline-block;font-family:var(--f-mono);font-size:.72rem;padding:1px 7px;border-radius:999px;border:1px solid}
+.risk.hi{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.risk.md{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.risk.lo{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+
+.sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{font-size:1rem}
+.card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.9rem}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.8rem;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--accent);border:1px solid var(--line)}
+.trap{border-left:3px solid var(--warn);padding:6px 12px;background:var(--surface);border-radius:0 6px 6px 0}
+.traps{display:flex;flex-direction:column;gap:8px}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.plan .when{font-family:var(--f-mono);font-size:.78rem;color:var(--accent)}
+
+/* Exam */
+.ex-home{display:flex;flex-direction:column;gap:22px;max-width:780px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.mode{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.mode p{color:var(--muted);font-size:.92rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:4px 10px;font-size:.84rem}
+.chip[aria-pressed="true"]{background:var(--soft);color:var(--ink);border-color:var(--accent)}
+.resume{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+.ex{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:24px;align-items:start}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.qmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.86rem;color:var(--muted)}
+.qnum{font-family:var(--f-mono);color:var(--ink)}
+.dtag{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--sunk);border:1px solid var(--line)}
+.mark{margin-left:auto;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:3px 10px;font-size:.84rem}
+.mark[aria-pressed="true"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.qtext{font-size:1.02rem;display:flex;flex-direction:column;gap:10px}
+.qtext table{font-size:.86rem}
+.hint{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:22px 26px minmax(0,1fr);gap:8px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--surface)}
+.opt:hover{border-color:var(--accent)}
+.opt input{margin:3px 0 0;accent-color:var(--accent)}
+.opt .ltr{font-family:var(--f-mono);color:var(--muted);font-size:.86rem;padding-top:1px}
+.opt.sel{border-color:var(--accent);background:var(--soft)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.locked{cursor:default}
+.explain{border-radius:8px;padding:12px 14px;border:1px solid var(--line);background:var(--sunk);display:flex;flex-direction:column;gap:6px;font-size:.93rem}
+.explain .verdict{font-weight:600}
+.explain .verdict.ok{color:var(--good)} .explain .verdict.no{color:var(--bad)}
+.qnav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qnav .sp{flex:1}
+.case{border:1px solid var(--line);border-radius:8px;background:var(--sunk)}
+.case summary{cursor:pointer;padding:10px 14px;font-weight:600;font-family:var(--f-display)}
+.case .cbody{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+.case ul{margin:0;padding-left:18px}
+
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);display:flex;flex-direction:column;gap:12px}
+.pal{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.pq{font-family:var(--f-mono);font-size:.76rem;padding:5px 0;border-radius:5px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-variant-numeric:tabular-nums}
+.pq.ans{background:var(--soft);color:var(--ink)}
+.pq.mk{border-color:var(--warn);box-shadow:inset 0 -3px 0 var(--warn)}
+.pq.cur{border-color:var(--accent);outline:1px solid var(--accent);color:var(--ink)}
+.pq.ok{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.pq.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:.76rem;color:var(--muted)}
+.confirm{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+
+/* Results */
+.res{display:flex;flex-direction:column;gap:24px}
+.score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.big{font-family:var(--f-display);font-size:3.2rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.verdict-pill{display:inline-block;font-family:var(--f-mono);font-size:.78rem;padding:3px 10px;border-radius:999px;border:1px solid}
+.dbars{display:flex;flex-direction:column;gap:10px}
+.dbar{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) 64px;gap:12px;align-items:center;font-size:.9rem}
+.track{height:10px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden;position:relative}
+.fill{height:100%;background:var(--accent)}
+.fill.low{background:var(--bad)} .fill.mid{background:var(--warn)} .fill.hi{background:var(--good)}
+.track .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.35;left:80%}
+.dbar .pct{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.rlist{display:flex;flex-direction:column;gap:12px}
+.ritem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--line)}
+.ritem.ok{border-left-color:var(--good)} .ritem.bad{border-left-color:var(--bad)}
+.ritem .row{font-size:.88rem;color:var(--muted)}
+.ritem .row b{color:var(--ink);font-weight:600}
+.filter{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* Flashcards */
+.fl{display:flex;flex-direction:column;gap:18px;max-width:760px;margin:0 auto}
+.fl-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.88rem;color:var(--muted)}
+.prog{height:6px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.prog>div{height:100%;background:var(--good)}
+.fc{perspective:1400px;cursor:pointer;outline:none}
+.fc-in{display:grid;transition:transform .45s ease;transform-style:preserve-3d}
+.fc.flipped .fc-in{transform:rotateY(180deg)}
+.fc-face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;min-height:280px;display:flex;flex-direction:column;gap:14px;justify-content:space-between;min-width:0}
+.fc-back{transform:rotateY(180deg);background:var(--soft);border-color:var(--accent)}
+.fc-text{font-family:var(--f-display);font-size:1.5rem;font-weight:600;line-height:1.3;text-wrap:balance}
+.fc-back .fc-text{font-family:var(--f-body);font-size:1.08rem;font-weight:400;line-height:1.6;text-wrap:pretty}
+.fc-q{font-size:.85rem;color:var(--muted)}
+.fc:focus-visible .fc-face{outline:2px solid var(--accent);outline-offset:2px}
+.fc-ctrl{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn.again{border-color:var(--bad);color:var(--bad)}
+.btn.got{border-color:var(--good);color:var(--good)}
+.kbd{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:6px}
+.fl-opts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fl-done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:12px}
+
+@media (max-width:860px){
+  .guide{grid-template-columns:1fr}
+  .toc{position:static;flex-direction:row;flex-wrap:wrap;gap:4px}
+  .toc .lbl{width:100%}
+  .toc a{border-left:0;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .ex{grid-template-columns:1fr}
+  .side{position:static}
+  .grid{grid-template-columns:repeat(10,1fr)}
+  .score{grid-template-columns:1fr}
+  .dbar{grid-template-columns:1fr 56px}
+  .dbar .track{grid-column:1 / -1;grid-row:2}
+}
+@media (max-width:480px){.grid{grid-template-columns:repeat(7,1fr)} h1{font-size:1.6rem} .qcard{padding:16px} .fc-face{padding:20px;min-height:240px} .fc-text{font-size:1.25rem} .kbd{display:none} .tab{padding:6px 9px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="/" title="All exams"><span class="code">AZ-802</span> Server Prep</a>
+    <span class="timer" id="timer" hidden>100:00</span>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-guide" data-view="guide">Study guide</button>
+      <button class="tab" role="tab" id="tab-exam" data-view="exam">Practice exam</button>
+      <button class="tab" role="tab" id="tab-flash" data-view="flash">Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<section id="view-guide">
+<div class="guide">
+  <nav class="toc" aria-label="Guide sections">
+    <div class="lbl">On this page</div>
+    <a href="#g-format">Exam format</a>
+    <a href="#g-map">Domain map</a>
+    <a href="#g-plan">Study plan</a>
+    <a href="#g-ad">AD DS</a>
+    <a href="#g-hyb">Hybrid management</a>
+    <a href="#g-vm">Virtual machines</a>
+    <a href="#g-net">DNS &amp; DHCP</a>
+    <a href="#g-sto">Storage &amp; file services</a>
+    <a href="#g-sec">Security</a>
+    <a href="#g-mon">Monitor &amp; troubleshoot</a>
+    <a href="#g-cmd">Commands to recognize</a>
+    <a href="#g-num">Numbers to memorize</a>
+    <a href="#g-traps">Classic traps</a>
+  </nav>
+  <div class="gmain">
+    <div class="hero">
+      <div class="eyebrow">Windows Server Administrator Associate</div>
+      <h1>The AZ-802 Windows Server guide</h1>
+      <p class="lede">AZ-802 replaced AZ-800 and AZ-801 on September 30, 2026. It's one exam covering the whole Windows Server job, on-prem and hybrid: Active Directory, Hyper-V, DNS and DHCP, file services and storage, hardening, and troubleshooting, plus the Azure services that manage servers anywhere (Arc, Update Manager, Azure Files). Expect detailed "which feature, which setting" questions more than design questions.</p>
+      <div class="cta-row">
+        <button class="btn primary" data-start="full">Start full practice exam (50 Q, 100 min)</button>
+        <button class="btn" data-goto="exam">Practice by domain</button>
+        <button class="btn" data-flash>Flashcards</button>
+      </div>
+    </div>
+
+    <section class="gsec" id="g-format">
+      <div class="eyebrow">01 · Format</div>
+      <h2>What you're walking into</h2>
+      <div class="facts">
+        <div class="fact"><b>700</b><span>passing score out of 1000 (scaled, not a %)</span></div>
+        <div class="fact"><b>40–60</b><span>questions, typically about 50</span></div>
+        <div class="fact"><b>~100 min</b><span>for questions; plan on ~2 hours total</span></div>
+        <div class="fact"><b>1 exam</b><span>earns Windows Server Administrator Associate</span></div>
+      </div>
+      <ul>
+        <li><b>Question types:</b> single choice, multi-select, drag-and-drop ordering (for example, the steps to restore a deleted object), hot-area (pick the PowerShell cmdlet or parameter), Yes/No series, and case studies.</li>
+        <li><b>Command recognition matters.</b> You won't type commands, but you'll often pick the right cmdlet or tool from a list. The "Commands to recognize" section below covers the common ones.</li>
+        <li><b>Yes/No series:</b> each proposed solution is judged on its own, and you can't go back.</li>
+        <li><b>Microsoft Learn is available during the exam</b> (open book). Use it only to check a specific limit or parameter.</li>
+        <li>Most questions cover features that are generally available. Windows Server 2025 features (dMSA, OSConfig, SMB over QUIC in Standard and Datacenter, hotpatching) are fair game.</li>
+      </ul>
+    </section>
+
+    <section class="gsec" id="g-map">
+      <div class="eyebrow">02 · Weighting</div>
+      <h2>Domain map</h2>
+      <p>Weights are from Microsoft's official AZ-802 study guide. The "if you passed AZ-104" column estimates how much is new for someone coming from Azure administration.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Domain</th><th>Weight</th><th>If you passed AZ-104</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>Deploy and manage AD DS</td><td class="num">20–25%</td><td><span class="risk hi">High</span></td><td>FSMO, RODC, trusts, sites and replication, service accounts, Group Policy processing.</td></tr>
+          <tr><td>Manage storage and file services</td><td class="num">15–20%</td><td><span class="risk md">Medium</span></td><td>Azure File Sync, FSRM, DFS, SMB over QUIC, Storage Spaces / S2D, Storage Replica, BitLocker.</td></tr>
+          <tr><td>Monitor and troubleshoot</td><td class="num">15–20%</td><td><span class="risk hi">High</span></td><td>Perfmon, event forwarding, AD Recycle Bin, DSRM, SYSVOL, replication, Kerberos, secure channel.</td></tr>
+          <tr><td>Manage Windows Server in a hybrid environment</td><td class="num">10–15%</td><td><span class="risk md">Medium</span></td><td>Windows Admin Center, PowerShell double-hop and JEA, Azure Arc, Update Manager, runbooks.</td></tr>
+          <tr><td>Manage VMs</td><td class="num">10–15%</td><td><span class="risk md">Medium</span></td><td>Hyper-V features (nested, PowerShell Direct, GPU, checkpoints, Replica, SET) and Azure VM basics.</td></tr>
+          <tr><td>On-prem and hybrid networking</td><td class="num">10–15%</td><td><span class="risk md">Medium</span></td><td>DNS zones, forwarding, policies, DNSSEC, hybrid name resolution, DHCP scopes and failover.</td></tr>
+          <tr><td>Secure Windows Server</td><td class="num">10–15%</td><td><span class="risk hi">High</span></td><td>Credential Guard, App Control, LAPS, OSConfig, fine-grained passwords, Protected Users, DC hardening.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-plan">
+      <div class="eyebrow">03 · Schedule</div>
+      <h2>A two-week study plan</h2>
+      <div class="plan">
+        <div class="card"><div class="when">Day 1</div><h3>Baseline</h3><p>Take the full practice exam timed, before studying. Use the domain bars on the results page to rank your weak areas.</p></div>
+        <div class="card"><div class="when">Days 2–5</div><h3>AD DS and troubleshooting</h3><p>Together these are about 40% of the exam, and many troubleshooting questions are about AD. Read both cheat sheets, then practice both domains to 80%.</p></div>
+        <div class="card"><div class="when">Days 6–9</div><h3>Storage, VMs, networking</h3><p>Work through the remaining cheat sheets. If you have a lab, build a two-node Hyper-V setup and try Replica, checkpoints, and a file server with FSRM.</p></div>
+        <div class="card"><div class="when">Days 10–13</div><h3>Full exams</h3><p>A full timed exam every other day, with review of every miss. Drill flashcards daily, especially the commands.</p></div>
+        <div class="card"><div class="when">Day 14</div><h3>Light review</h3><p>Commands, numbers, and traps only. Then rest.</p></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-ad">
+      <div class="eyebrow">04 · AD DS · 20–25%</div>
+      <h2>Active Directory cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>FSMO role</th><th>Scope</th><th>What breaks when it's down</th></tr></thead>
+        <tbody>
+          <tr><td><b>Schema master</b></td><td>Forest</td><td>Schema extensions (for example, installing Exchange or a new DC version)</td></tr>
+          <tr><td><b>Domain naming master</b></td><td>Forest</td><td>Adding or removing domains</td></tr>
+          <tr><td><b>RID master</b></td><td>Domain</td><td>DCs eventually can't create new users, groups, or computers once their RID pool runs out</td></tr>
+          <tr><td><b>PDC emulator</b></td><td>Domain</td><td>Time sync source, password change priority, account lockout processing, GPO editing default</td></tr>
+          <tr><td><b>Infrastructure master</b></td><td>Domain</td><td>Cross-domain object references (irrelevant if every DC is a global catalog)</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Domain controllers</h3><ul>
+          <li><b>Transfer</b> a FSMO role when the holder is online. <b>Seize</b> only when it's permanently gone (<code>Move-ADDirectoryServerOperationMasterRole -Force</code> or ntdsutil). A server whose role was seized must never come back online.</li>
+          <li><b>DCs in Azure:</b> static private IP, NTDS database and SYSVOL on a <b>data disk with host caching set to None</b>, an AD site and subnet for the VNet, and VNet DNS servers pointed at the DCs.</li>
+          <li>Install from media (<b>IFM</b>, <code>ntdsutil ifm</code>) to avoid replicating a large database over a slow link.</li>
+        </ul></div>
+        <div class="card"><h3>Read-only DCs</h3><ul>
+          <li>For branch sites with weak physical security. No writable copy of AD, and by default <b>no cached passwords</b>.</li>
+          <li><b>Password Replication Policy:</b> add users and computers to <b>Allowed RODC Password Replication Group</b> (or the RODC's allow list). The Denied group always wins.</li>
+          <li><b>Staged install:</b> a Domain Admin pre-creates the RODC account and delegates installation to a local branch admin, who doesn't need Domain Admin rights.</li>
+          <li><b>Administrator role separation:</b> a delegated local admin can manage the RODC without any domain rights.</li>
+          <li>If an RODC is stolen: delete its computer account and choose to <b>reset the passwords of all cached accounts</b>.</li>
+        </ul></div>
+        <div class="card"><h3>Trusts</h3><ul>
+          <li><b>Forest trust</b>: between two forest roots. Transitive across all domains in both forests. Kerberos.</li>
+          <li><b>External trust</b>: domain to domain, <b>non-transitive</b>. Used for old NT-style or single-domain needs.</li>
+          <li><b>Shortcut trust</b>: inside one forest, between two deep child domains, to speed up authentication.</li>
+          <li><b>Realm trust</b>: to a non-Windows Kerberos v5 realm.</li>
+          <li><b>Selective authentication</b>: users from the trusted side need the <b>Allowed to Authenticate</b> permission on each computer they use. <b>SID filtering</b> (quarantine) is on by default for external and forest trusts.</li>
+        </ul></div>
+        <div class="card"><h3>Sites &amp; replication</h3><ul>
+          <li>Sites map to IP subnets so clients find the nearest DC. Site links have a <b>cost</b> (lower is preferred) and a <b>replication interval</b> (default <b>180 min</b>, minimum 15).</li>
+          <li>Intrasite replication uses change notification (about 15 seconds). Intersite follows the site link schedule.</li>
+          <li>The <b>KCC</b> builds the topology automatically. The <b>ISTG</b> picks <b>bridgehead servers</b> for each site.</li>
+          <li>A site without a global catalog: turn on <b>universal group membership caching</b> so logons don't depend on the WAN.</li>
+          <li>Account lockouts and RID changes replicate urgently (immediately), even between sites.</li>
+        </ul></div>
+        <div class="card"><h3>Security principals</h3><ul>
+          <li>Group scopes: <b>global</b> (members from own domain), <b>domain local</b> (permissions in own domain, members from anywhere), <b>universal</b> (forest-wide, stored in the GC). Pattern: <b>AGDLP</b>.</li>
+          <li><b>gMSA</b>: password managed by AD and rotated automatically (every 30 days), usable on <b>many servers</b>. Requires a <b>KDS root key</b> (<code>Add-KdsRootKey</code>, usable after 10 hours).</li>
+          <li><b>sMSA</b>: same idea but for a single server.</li>
+          <li><b>dMSA</b> (Windows Server 2025): migrates an existing legacy service account to a managed account, binding it to specific machines.</li>
+          <li>Install on the server with <code>Install-ADServiceAccount</code>, then test with <code>Test-ADServiceAccount</code>.</li>
+        </ul></div>
+        <div class="card"><h3>Group Policy</h3><ul>
+          <li>Processing order: <b>Local → Site → Domain → OU</b> (LSDOU). The last applied wins.</li>
+          <li><b>Enforced</b> on a link beats <b>Block Inheritance</b> on a child OU.</li>
+          <li><b>Security filtering</b> (default Authenticated Users, which needs Read) and <b>WMI filtering</b> narrow which users or computers apply a GPO.</li>
+          <li><b>Loopback processing</b>: user settings come from the GPOs linked to the <b>computer's</b> OU (Merge or Replace mode). Used for kiosks and RDS hosts.</li>
+          <li><b>Preferences</b> (drive maps, printers, registry, local groups) aren't enforced: users can change them. <b>Item-level targeting</b> filters each item.</li>
+          <li><b>Central store</b>: copy ADMX files to <code>SYSVOL\…\Policies\PolicyDefinitions</code> so all admins use the same templates.</li>
+          <li>Refresh: every <b>90 minutes ± 30</b> on members, <b>5 minutes</b> on DCs. <code>gpupdate /force</code>, <code>gpresult /r</code>.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-hyb">
+      <div class="eyebrow">05 · Hybrid management · 10–15%</div>
+      <h2>Hybrid management cheat sheet</h2>
+      <div class="sheet">
+        <div class="card"><h3>Remote management</h3><ul>
+          <li><b>Windows Admin Center</b>: browser-based server management. Install it as a gateway on-prem, or use it <b>in the Azure portal</b> for Azure VMs and Arc-enabled servers.</li>
+          <li>PowerShell remoting uses WinRM (HTTP 5985 / HTTPS 5986).</li>
+          <li><b>Double-hop problem</b>: a remote session can't pass your credentials to a third server. Fix it with <b>resource-based Kerberos constrained delegation</b> (preferred). CredSSP works but exposes credentials. JEA endpoints with a gMSA are another option.</li>
+          <li><b>OpenSSH Server</b> is included in Windows Server 2025 but not enabled by default. Enable the <code>sshd</code> service.</li>
+          <li>RDP: restrict with Network Level Authentication, and prefer <b>Remote Credential Guard</b> or Restricted Admin mode for admin sessions.</li>
+        </ul></div>
+        <div class="card"><h3>Just Enough Administration</h3><ul>
+          <li>Lets users run <b>only specific cmdlets and parameters</b> as an admin, without being an admin.</li>
+          <li><b>Role capability file</b> (<code>.psrc</code>): which cmdlets, functions, and parameters are visible.</li>
+          <li><b>Session configuration file</b> (<code>.pssc</code>): maps groups to roles and sets <code>RunAsVirtualAccount</code> or a gMSA.</li>
+          <li>Register with <code>Register-PSSessionConfiguration</code>. Users connect with <code>Enter-PSSession -ConfigurationName</code>.</li>
+          <li>Transcripts record everything users do.</li>
+        </ul></div>
+        <div class="card"><h3>Azure Arc</h3><ul>
+          <li>Install the <b>Connected Machine agent</b> (<code>azcmagent</code>). It needs <b>outbound HTTPS 443 only</b>, with no inbound ports, optionally through a proxy or Private Link scope.</li>
+          <li>Onboard at scale with a <b>service principal</b> and a generated script, or through Group Policy or Configuration Manager.</li>
+          <li>Once onboarded, the server is an Azure resource: RBAC, tags, Azure Policy, <b>machine configuration</b> (guest configuration), and Defender for Servers.</li>
+          <li><b>VM extensions</b> on Arc servers: Azure Monitor Agent, Custom Script, Defender, Key Vault, Hybrid Runbook Worker.</li>
+          <li><code>azcmagent show</code> and <code>azcmagent check</code> troubleshoot connectivity.</li>
+        </ul></div>
+        <div class="card"><h3>Updates &amp; automation</h3><ul>
+          <li><b>Azure Update Manager</b>: assess and patch Azure VMs and Arc servers. <b>Periodic assessment</b> checks every 24 hours. <b>Maintenance configurations</b> schedule installs.</li>
+          <li><b>Hotpatching</b> installs security updates without a reboot (Azure Edition, or Arc-enabled Windows Server 2025 with a subscription).</li>
+          <li><b>Azure Automation runbooks</b> (PowerShell or Python), authenticated with a managed identity. To run against on-prem resources, use a <b>Hybrid Runbook Worker</b> (extension-based).</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-vm">
+      <div class="eyebrow">06 · Virtual machines · 10–15%</div>
+      <h2>Hyper-V and Azure VM cheat sheet</h2>
+      <div class="sheet">
+        <div class="card"><h3>Guest access</h3><ul>
+          <li><b>Enhanced Session Mode</b>: VMConnect over RDP internally, giving clipboard, drive, and USB redirection. Enable it on the host and in VMConnect.</li>
+          <li><b>PowerShell Direct</b>: <code>Enter-PSSession -VMName</code> from the host to a Windows guest over the VMBus. <b>No network needed</b>. You need guest credentials.</li>
+          <li><b>SSH Direct</b> (hvc): the same idea for Linux guests.</li>
+          <li><b>Integration services</b>: heartbeat, shutdown, time sync, KVP exchange, VSS (backup), and <b>Guest services</b> (<code>Copy-VMFile</code>, off by default).</li>
+        </ul></div>
+        <div class="card"><h3>Memory, CPU &amp; devices</h3><ul>
+          <li><b>Dynamic Memory</b>: startup, minimum, maximum, buffer, and weight. <b>Runtime memory resize</b> changes static memory while the VM runs.</li>
+          <li><b>Nested virtualization</b>: VM off, <code>Set-VMProcessor -ExposeVirtualizationExtensions $true</code>, turn off Dynamic Memory, and enable <b>MAC address spoofing</b> (or use NAT) so nested VMs get network access.</li>
+          <li><b>Discrete Device Assignment</b>: passes a whole PCIe device (GPU, NVMe) to one VM.</li>
+          <li><b>GPU partitioning (GPU-P)</b>: shares one physical GPU among several VMs. Windows Server 2025 supports live migration with GPU-P.</li>
+        </ul></div>
+        <div class="card"><h3>Disks &amp; checkpoints</h3><ul>
+          <li><b>VHDX</b>: up to <b>64 TB</b>, 4K sectors, resilient to power loss. VHD: 2 TB. Types: fixed, dynamically expanding, differencing.</li>
+          <li><b>Shared VHDX / VHD Set (.vhds)</b> gives shared storage for guest failover clusters.</li>
+          <li><b>Production checkpoints</b> (default) use VSS inside the guest, so they're application-consistent. <b>Standard checkpoints</b> also save memory state.</li>
+          <li>Checkpoints aren't backups. Delete them so the AVHDX merges back into the parent disk.</li>
+          <li><b>Generation 2</b>: UEFI, Secure Boot, boot from SCSI, virtual TPM. Generation can't be changed after creation.</li>
+        </ul></div>
+        <div class="card"><h3>Networking</h3><ul>
+          <li>Virtual switch types: <b>External</b> (physical network), <b>Internal</b> (host and VMs), <b>Private</b> (VMs only).</li>
+          <li><b>Switch Embedded Teaming (SET)</b> is the host teaming method for Hyper-V switches and works with RDMA. LBFO teaming isn't supported on new Hyper-V switches.</li>
+          <li><b>Guest NIC teaming</b>: two vNICs, each with "Allow this network adapter to be part of a team in the guest OS" enabled.</li>
+          <li>NAT network: Internal switch plus <code>New-NetNat</code>.</li>
+        </ul></div>
+        <div class="card"><h3>High availability</h3><ul>
+          <li><b>Failover cluster</b> with <b>Cluster Shared Volumes</b>: live migration with no downtime, automatic restart on another node after a host failure.</li>
+          <li><b>Shared-nothing live migration</b> moves a running VM and its storage between non-clustered hosts.</li>
+          <li><b>Hyper-V Replica</b>: asynchronous replication to another host every <b>30 seconds, 5 minutes, or 15 minutes</b>. Up to 24 additional recovery points. <b>Extended replication</b> adds a third site. Use the <b>Hyper-V Replica Broker</b> role on clusters.</li>
+          <li>Replica failover types: <b>test</b> (isolated copy), <b>planned</b> (no data loss, source shut down first), <b>unplanned</b> (source down).</li>
+          <li><b>Cluster-Aware Updating</b> patches nodes one at a time, draining roles first.</li>
+        </ul></div>
+        <div class="card"><h3>Windows Server VMs in Azure</h3><ul>
+          <li>Resizing may need the VM <b>deallocated</b> if the new size isn't available on the current hardware cluster.</li>
+          <li>Availability sets (99.95%) vs zones (99.99%). <b>VM Scale Sets</b> to scale out.</li>
+          <li><b>Just-in-time VM access</b> (Defender for Servers Plan 2) opens RDP/SSH in the NSG only on request, for a limited time.</li>
+          <li><b>Azure Bastion</b>: RDP/SSH in the browser with no public IP on the VM.</li>
+          <li>Static private IPs are set on the <b>NIC in Azure</b>, never inside the guest OS.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-net">
+      <div class="eyebrow">07 · Networking · 10–15%</div>
+      <h2>DNS &amp; DHCP cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>DNS zone or setting</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td><b>AD-integrated primary</b></td><td>Stored in AD, multi-master, secure dynamic updates. Replication scope: all DNS servers in the forest, the domain, or a custom partition.</td></tr>
+          <tr><td><b>Secondary</b></td><td>Read-only copy using zone transfers. Works with non-AD DNS servers.</td></tr>
+          <tr><td><b>Stub zone</b></td><td>Holds only NS, SOA, and glue records, so it <b>updates automatically</b> when the other zone's name servers change.</td></tr>
+          <tr><td><b>Conditional forwarder</b></td><td>Sends queries for one specific domain to specific servers. Static, so you update it by hand.</td></tr>
+          <tr><td><b>Forwarders</b></td><td>Send all queries the server can't answer to upstream servers.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>DNS features</h3><ul>
+          <li><b>DNS policies</b>: answer differently by client subnet, time of day, or interface. Uses client subnets and <b>zone scopes</b>. Used for geo-location routing and <b>split-brain DNS</b>.</li>
+          <li><b>DNSSEC</b>: sign the zone (KSK and ZSK). Resolvers validate with <b>trust anchors</b>. Clients require validation through the <b>NRPT</b> (via Group Policy).</li>
+          <li><b>Scavenging</b> removes stale dynamic records: no-refresh 7 days plus refresh 7 days by default. Enable it on the zone <b>and</b> on at least one server.</li>
+          <li>Record types: A/AAAA, CNAME, MX, <b>SRV</b> (how clients find DCs), PTR (reverse), NS, SOA, TXT.</li>
+        </ul></div>
+        <div class="card"><h3>Hybrid name resolution</h3><ul>
+          <li>Azure VMs joined to AD: set the <b>VNet's custom DNS servers</b> to the DCs.</li>
+          <li>DCs in Azure that need Azure private DNS zones: forward to <b>168.63.129.16</b> (Azure's resolver).</li>
+          <li>On-prem servers resolving Azure private zones (private endpoints): conditional forwarder to an <b>Azure DNS Private Resolver inbound endpoint</b>.</li>
+          <li>Azure resources resolving on-prem names without custom DNS on VMs: Private Resolver <b>outbound endpoint</b> plus a <b>forwarding ruleset</b>.</li>
+        </ul></div>
+        <div class="card"><h3>DHCP</h3><ul>
+          <li>A domain-joined DHCP server must be <b>authorized in AD</b> before it hands out leases.</li>
+          <li>Options precedence (most specific wins): <b>reservation → scope → server</b>. Common options: 003 router, 006 DNS servers, 015 DNS domain name.</li>
+          <li><b>Exclusions</b> keep addresses inside a scope from being leased. <b>Reservations</b> tie an IP to a MAC address.</li>
+          <li><b>Superscope</b>: groups scopes for multiple logical subnets on one physical segment.</li>
+          <li><b>DHCP relay agent</b> (or the router's IP helper) forwards broadcasts to a DHCP server in another subnet.</li>
+          <li>A client with a <b>169.254.x.x</b> address (APIPA) didn't reach any DHCP server.</li>
+          <li>You can't run your own DHCP server for VMs inside an <b>Azure VNet</b>. Azure assigns IPs.</li>
+        </ul></div>
+        <div class="card"><h3>DHCP failover</h3><ul>
+          <li>Two servers share lease information for a scope (IPv4 only).</li>
+          <li><b>Load balance</b> mode: both servers answer, 50/50 by default.</li>
+          <li><b>Hot standby</b> mode: the partner only answers when the primary is down. It keeps <b>5%</b> of addresses by default. Good for a branch backed up by a central server.</li>
+          <li><b>MCLT</b> (maximum client lead time, default 1 hour) controls how long a partner waits before taking over the whole scope.</li>
+          <li>Older split-scope (80/20) designs are replaced by failover.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-sto">
+      <div class="eyebrow">08 · Storage &amp; file services · 15–20%</div>
+      <h2>Storage &amp; file services cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Storage Spaces resiliency</th><th>Minimum disks</th><th>Survives</th></tr></thead>
+        <tbody>
+          <tr><td>Simple</td><td class="num">1</td><td>No failures</td></tr>
+          <tr><td>Two-way mirror</td><td class="num">2</td><td>1 disk</td></tr>
+          <tr><td>Three-way mirror</td><td class="num">5</td><td>2 disks</td></tr>
+          <tr><td>Single parity</td><td class="num">3</td><td>1 disk</td></tr>
+          <tr><td>Dual parity</td><td class="num">7</td><td>2 disks</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Azure Files &amp; File Sync</h3><ul>
+          <li><b>Storage Sync Service</b> → <b>sync group</b> → <b>one cloud endpoint</b> (an Azure file share) plus server endpoints. A server registers with only one Storage Sync Service.</li>
+          <li><b>Cloud tiering</b>: keeps hot files local and leaves cold files as pointers. Set by <b>volume free space</b> and an optional <b>date policy</b>. Can't be used on the system volume.</li>
+          <li>Permissions: share-level <b>RBAC</b> (SMB Share Reader, Contributor, Elevated Contributor) plus <b>NTFS ACLs</b>. Identity source: on-prem AD DS (join the account with AzFilesHybrid), Entra Kerberos, or Entra Domain Services.</li>
+          <li><b>Replacing DFS-R</b>: sync each DFS-R member to one sync group, then retire DFS-R. File Sync handles multi-site sync through the cloud.</li>
+          <li>Migrating a file server to a new Windows Server or Azure: <b>Storage Migration Service</b> (inventory, transfer, cut over the identity).</li>
+          <li>Monitor File Sync with Azure Monitor metrics, the sync group health in the portal, and the server's <b>Telemetry event log</b>.</li>
+        </ul></div>
+        <div class="card"><h3>File server features</h3><ul>
+          <li><b>FSRM quotas</b>: <b>hard</b> (blocks writes) or <b>soft</b> (alerts only). Quota templates and auto-apply quotas for new subfolders.</li>
+          <li><b>File screens</b>: <b>active</b> (block file types, such as .mp3) or <b>passive</b> (monitor only). File screen exceptions allow a subfolder.</li>
+          <li><b>Classification</b> and <b>file management tasks</b> (for example, expire old files).</li>
+          <li><b>DFS Namespaces</b>: one path (<code>\\contoso.com\files</code>) over many servers. Domain-based namespaces are highly available. <b>Access-based enumeration</b> hides folders users can't open.</li>
+          <li><b>DFS Replication</b>: multi-master, block-level (RDC). Read-only replicated folders for branches. Choose a <b>primary member</b> for initial sync.</li>
+        </ul></div>
+        <div class="card"><h3>SMB</h3><ul>
+          <li><b>SMB over QUIC</b>: SMB inside TLS 1.3 over <b>UDP 443</b>, for remote users without a VPN. Needs a certificate on the server. Available in Windows Server 2025 Standard and Datacenter. Client access control limits which clients can connect.</li>
+          <li>Windows Server 2025 requires <b>SMB signing</b> by default. <b>SMB encryption</b> can be required per share or per server. SMB1 is off and should stay off.</li>
+          <li><b>SMB Direct</b>: SMB over <b>RDMA</b> NICs (iWARP, RoCE, InfiniBand) for low CPU use and high throughput. Works with SET, not LBFO teaming.</li>
+          <li><b>SMB Multichannel</b> uses multiple NICs automatically.</li>
+        </ul></div>
+        <div class="card"><h3>Disks, volumes &amp; file systems</h3><ul>
+          <li><b>ReFS</b>: integrity streams, block cloning, fast VHDX operations. Use for Hyper-V and S2D. Can't boot, and no EFS or disk quotas.</li>
+          <li><b>NTFS</b>: boot volume, EFS, quotas, compression.</li>
+          <li><b>Data Deduplication</b>: NTFS or ReFS data volumes, <b>not the system volume</b>. Usage types: general file server, VDI, backup.</li>
+          <li><b>iSCSI Target Server</b>: targets with IQNs. Use <b>MPIO</b> on initiators for redundant paths.</li>
+          <li><b>Storage QoS</b> policies (in a cluster) set minimum and maximum IOPS per VHDX. <b>Dedicated</b> policies apply per disk, <b>aggregated</b> policies share the limit.</li>
+        </ul></div>
+        <div class="card"><h3>Storage Spaces Direct &amp; Storage Replica</h3><ul>
+          <li><b>S2D</b>: pools <b>local disks</b> across <b>2–16 cluster nodes</b>. Fastest drives become cache. Two-node clusters need a <b>witness</b> (cloud or file share) and can use <b>nested resiliency</b>.</li>
+          <li><b>Storage Replica</b>: block-level volume replication. <b>Synchronous</b> (no data loss, needs low latency, about 5 ms round trip or less) or <b>asynchronous</b> (longer distance, possible data loss).</li>
+          <li>Storage Replica modes: server-to-server, cluster-to-cluster, stretch cluster. Each side needs a <b>log volume</b>, and source and destination volumes must be the same size.</li>
+          <li>Standard edition limits Storage Replica to <b>one partnership with one volume up to 2 TB</b>. Datacenter is unlimited.</li>
+          <li>Test the configuration first with <code>Test-SRTopology</code>.</li>
+        </ul></div>
+        <div class="card"><h3>BitLocker</h3><ul>
+          <li>Protectors: TPM, TPM + PIN, startup key, recovery password, <b>Network Unlock</b> (auto-unlock on the corporate network using WDS).</li>
+          <li>Back up recovery passwords to <b>AD DS</b> with Group Policy (or Entra for Entra-joined devices). Find them in AD Users and Computers on the computer object's BitLocker Recovery tab.</li>
+          <li>Recovery: enter the 48-digit recovery password, or use <code>manage-bde -unlock</code> or <code>repair-bde</code> for damaged volumes.</li>
+          <li>Clusters can encrypt Cluster Shared Volumes. The cluster name object (CNO) is added as a protector.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-sec">
+      <div class="eyebrow">09 · Security · 10–15%</div>
+      <h2>Security cheat sheet</h2>
+      <div class="sheet">
+        <div class="card"><h3>Server hardening</h3><ul>
+          <li><b>Credential Guard</b>: isolates LSA secrets (NTLM hashes, Kerberos TGTs) with virtualization-based security. Blocks pass-the-hash. On by default on qualifying domain-joined Windows Server 2025 machines. <b>Not supported on domain controllers.</b></li>
+          <li><b>App Control for Business</b> (formerly WDAC): allow lists for code that can run. Start in <b>audit mode</b>. AppLocker is the older, per-user option.</li>
+          <li><b>Exploit protection</b>: system and per-app mitigations (DEP, ASLR, CFG). Export and deploy as XML.</li>
+          <li><b>OSConfig</b> (Windows Server 2025): apply Microsoft security baselines with PowerShell, with <b>drift control</b> that reapplies settings that change.</li>
+          <li><b>Windows LAPS</b>: unique, rotating local admin passwords, backed up to AD DS or Entra ID, optionally encrypted. On DCs, it can manage the <b>DSRM</b> password.</li>
+          <li><b>Defender for Servers</b>: Plan 1 includes Defender for Endpoint. Plan 2 adds JIT VM access, file integrity monitoring, and vulnerability assessment.</li>
+        </ul></div>
+        <div class="card"><h3>Windows Firewall</h3><ul>
+          <li>Profiles: <b>Domain</b>, <b>Private</b>, <b>Public</b>. The domain profile applies when the server can authenticate to a DC.</li>
+          <li>Rules filter by program, port, protocol, and scope (remote IPs).</li>
+          <li><b>Connection security rules</b> use IPsec to require authentication or encryption between hosts (for example, server isolation).</li>
+          <li>Manage centrally with Group Policy or <code>New-NetFirewallRule</code>.</li>
+        </ul></div>
+        <div class="card"><h3>Passwords &amp; accounts</h3><ul>
+          <li>The domain password policy comes from a GPO <b>linked at the domain</b>. Only one per domain.</li>
+          <li><b>Fine-grained password policies</b> (PSOs): different policies for users or <b>global security groups</b> (not OUs). The lowest <b>precedence</b> number wins. Create them in ADAC or with <code>New-ADFineGrainedPasswordPolicy</code>.</li>
+          <li><b>Entra Password Protection for AD DS</b>: a proxy service plus a DC agent on every DC. Blocks the global banned list and your custom banned words. Start in <b>audit mode</b>.</li>
+          <li><b>Protected Users</b> group: no NTLM, no DES/RC4 Kerberos, no delegation, no cached credentials, <b>4-hour TGT</b>. Don't add service or computer accounts.</li>
+          <li>Mark admin accounts <b>"Account is sensitive and cannot be delegated"</b>.</li>
+        </ul></div>
+        <div class="card"><h3>Securing AD DS</h3><ul>
+          <li><b>Tiered admin model</b>: Tier 0 (DCs, AD) admins never sign in to lower tiers. Use <b>privileged access workstations</b>.</li>
+          <li><b>Authentication policies and silos</b> restrict where privileged accounts can sign in.</li>
+          <li><b>AdminSDHolder</b>: SDProp resets permissions on protected admin groups and their members every <b>60 minutes</b>. Edit AdminSDHolder, not the accounts, to change them.</li>
+          <li><b>Delegation of Control Wizard</b>: give help desk staff specific rights on an OU (for example, reset passwords) without adding them to admin groups.</li>
+          <li>Harden DCs: Server Core, no internet browsing, restrict logon rights, keep DCs patched, and limit physical and console access.</li>
+          <li>Kerberos: enforce <b>AES</b> and disable RC4. Audit then restrict <b>NTLM</b>. <b>Kerberos armoring (FAST)</b> protects pre-authentication.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-mon">
+      <div class="eyebrow">10 · Monitor &amp; troubleshoot · 15–20%</div>
+      <h2>Monitor &amp; troubleshoot cheat sheet</h2>
+      <div class="sheet">
+        <div class="card"><h3>Monitoring tools</h3><ul>
+          <li><b>Performance Monitor</b>: live counters. <b>Data collector sets</b> record counters, traces, and configuration on a schedule, and can trigger <b>alerts</b>.</li>
+          <li><b>System Insights</b>: local predictive analytics that forecast CPU, network, and storage capacity use.</li>
+          <li><b>Event subscriptions</b>: a collector gathers events from sources into <b>Forwarded Events</b>. <b>Collector-initiated</b> (collector pulls, small fixed set) or <b>source-initiated</b> (sources push, configured by GPO, scales better). Needs WinRM.</li>
+          <li>Azure: <b>Azure Monitor Agent</b> plus <b>data collection rules</b> for event logs and counters (works on Arc servers too). <b>VM Insights</b> for performance maps. Alert rules with action groups.</li>
+        </ul></div>
+        <div class="card"><h3>Active Directory recovery</h3><ul>
+          <li><b>AD Recycle Bin</b>: needs forest functional level 2008 R2 or higher and <b>can't be turned off</b>. Restore with <code>Get-ADObject -IncludeDeletedObjects | Restore-ADObject</code> or AD Administrative Center. Keeps attributes and group memberships.</li>
+          <li>Without the Recycle Bin: restore from backup in <b>DSRM</b>, then an <b>authoritative restore</b> of the object with <code>ntdsutil</code> so it isn't overwritten by replication.</li>
+          <li><b>Non-authoritative restore</b>: rebuild a failed DC from backup and let replication bring it up to date.</li>
+          <li>Reset the DSRM password: <code>ntdsutil "set dsrm password"</code>.</li>
+          <li><b>SYSVOL</b> (DFS-R) recovery: non-authoritative (sync from a partner) or authoritative (set <code>msDFSR-Options=1</code> on the good DC and disable the others, then re-enable).</li>
+          <li>Deleted objects stay recoverable for the <b>deleted object lifetime</b> (default 180 days).</li>
+        </ul></div>
+        <div class="card"><h3>AD and authentication problems</h3><ul>
+          <li>Replication: <code>repadmin /replsummary</code>, <code>/showrepl</code>, <code>/syncall</code>. Health: <code>dcdiag</code>.</li>
+          <li>A DC that's been offline longer than the <b>tombstone lifetime</b> (180 days) must not be reconnected. Lingering objects follow. Demote it and rebuild.</li>
+          <li><b>Kerberos fails with more than 5 minutes of clock skew</b>. Check time with <code>w32tm /query /status</code>. Members sync from DCs, and DCs from the forest root PDC emulator, which syncs from an external NTP source.</li>
+          <li>Duplicate SPNs break Kerberos: <code>setspn -X</code>. Clear tickets with <code>klist purge</code>.</li>
+          <li><b>"The trust relationship between this workstation and the primary domain failed"</b>: repair the secure channel with <code>Test-ComputerSecureChannel -Repair</code> or <code>Reset-ComputerMachinePassword</code>. No rejoin needed.</li>
+        </ul></div>
+        <div class="card"><h3>Server problems</h3><ul>
+          <li>Connectivity: <code>Test-NetConnection -Port</code>, <code>tracert</code>, <code>pathping</code>. Name resolution: <code>Resolve-DnsName</code>, <code>nslookup</code>, <code>ipconfig /flushdns</code>, <code>Clear-DnsServerCache</code>.</li>
+          <li>Windows Update: <code>Get-WindowsUpdateLog</code>, then check the Windows Update service, disk space, and the SoftwareDistribution folder.</li>
+          <li>Disk encryption: check the recovery key escrow and TPM state (<code>manage-bde -status</code>).</li>
+          <li><b>Azure VM won't boot</b>: boot diagnostics screenshot, <b>serial console</b>, or attach the OS disk to a repair VM. Use <b>Run Command</b> to run scripts without network access.</li>
+          <li>Extensions: check the extension status in the portal and the logs under <code>C:\WindowsAzure\Logs</code> (Azure VMs) or <code>azcmagent logs</code> (Arc).</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-cmd">
+      <div class="eyebrow">11 · Recognition</div>
+      <h2>Commands to recognize</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Task</th><th>Command</th></tr></thead>
+        <tbody>
+          <tr><td>Transfer or seize a FSMO role</td><td><code>Move-ADDirectoryServerOperationMasterRole</code> (<code>-Force</code> to seize)</td></tr>
+          <tr><td>Find FSMO holders</td><td><code>netdom query fsmo</code></td></tr>
+          <tr><td>Create the KDS root key for gMSAs</td><td><code>Add-KdsRootKey</code></td></tr>
+          <tr><td>Create / install a gMSA</td><td><code>New-ADServiceAccount</code> / <code>Install-ADServiceAccount</code></td></tr>
+          <tr><td>Restore a deleted AD object</td><td><code>Restore-ADObject</code></td></tr>
+          <tr><td>Authoritative restore, IFM, DSRM password</td><td><code>ntdsutil</code></td></tr>
+          <tr><td>Replication status</td><td><code>repadmin /replsummary</code></td></tr>
+          <tr><td>DC health</td><td><code>dcdiag</code></td></tr>
+          <tr><td>Repair a broken computer trust</td><td><code>Test-ComputerSecureChannel -Repair</code></td></tr>
+          <tr><td>Applied GPOs</td><td><code>gpresult /r</code> (<code>/h</code> for HTML)</td></tr>
+          <tr><td>Enable nested virtualization</td><td><code>Set-VMProcessor -ExposeVirtualizationExtensions $true</code></td></tr>
+          <tr><td>PowerShell Direct into a VM</td><td><code>Enter-PSSession -VMName</code></td></tr>
+          <tr><td>Register a JEA endpoint</td><td><code>Register-PSSessionConfiguration</code></td></tr>
+          <tr><td>Validate a Storage Replica setup</td><td><code>Test-SRTopology</code></td></tr>
+          <tr><td>Time sync status</td><td><code>w32tm /query /status</code></td></tr>
+          <tr><td>Arc agent status</td><td><code>azcmagent show</code></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-num">
+      <div class="eyebrow">12 · Recall</div>
+      <h2>Numbers to memorize</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Item</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Default site link replication interval / minimum</td><td class="num">180 / 15 min</td></tr>
+          <tr><td>Kerberos maximum clock skew</td><td class="num">5 min</td></tr>
+          <tr><td>Tombstone and deleted object lifetime (default)</td><td class="num">180 days</td></tr>
+          <tr><td>Group Policy refresh: members / DCs</td><td class="num">90 ± 30 min / 5 min</td></tr>
+          <tr><td>gMSA password change / KDS key usable after</td><td class="num">30 days / 10 hours</td></tr>
+          <tr><td>AdminSDHolder (SDProp) interval</td><td class="num">60 min</td></tr>
+          <tr><td>Protected Users TGT lifetime</td><td class="num">4 hours</td></tr>
+          <tr><td>Hyper-V Replica frequency</td><td class="num">30 s / 5 min / 15 min</td></tr>
+          <tr><td>Hyper-V Replica additional recovery points</td><td class="num">up to 24</td></tr>
+          <tr><td>VHDX / VHD max size</td><td class="num">64 TB / 2 TB</td></tr>
+          <tr><td>S2D cluster size</td><td class="num">2–16 nodes</td></tr>
+          <tr><td>Storage Replica in Standard edition</td><td class="num">1 volume, up to 2 TB</td></tr>
+          <tr><td>DHCP failover hot-standby reserve / MCLT</td><td class="num">5% / 1 hour</td></tr>
+          <tr><td>DNS scavenging no-refresh + refresh</td><td class="num">7 + 7 days</td></tr>
+          <tr><td>SMB over QUIC port</td><td class="num">UDP 443</td></tr>
+          <tr><td>WinRM HTTP / HTTPS</td><td class="num">5985 / 5986</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-traps">
+      <div class="eyebrow">13 · Traps</div>
+      <h2>Classic traps</h2>
+      <div class="traps">
+        <div class="trap"><b>Fine-grained password policies apply to users and global groups, not OUs.</b> Linking a password GPO to an OU does nothing for domain accounts.</div>
+        <div class="trap"><b>Seizing a FSMO role is permanent.</b> Transfer if the holder is reachable. Never bring a seized-from DC back online.</div>
+        <div class="trap"><b>Enforced beats Block Inheritance.</b> And the last GPO applied (OU) wins over domain and site.</div>
+        <div class="trap"><b>Security filtering needs Read too.</b> If you remove Authenticated Users, the computer accounts still need Read on the GPO.</div>
+        <div class="trap"><b>The double-hop fix is resource-based Kerberos constrained delegation</b>, not CredSSP, when the question mentions security.</div>
+        <div class="trap"><b>PowerShell Direct works with no network</b>, but only from the Hyper-V host and only with guest credentials.</div>
+        <div class="trap"><b>Nested virtualization needs the VM off</b>, Dynamic Memory off, and MAC spoofing (or NAT) for guest networking.</div>
+        <div class="trap"><b>Checkpoints aren't backups.</b> And production checkpoints don't save memory state.</div>
+        <div class="trap"><b>Stub zones update themselves; conditional forwarders don't.</b></div>
+        <div class="trap"><b>DHCP servers must be authorized in AD</b>, and you can't run one for VMs inside an Azure VNet.</div>
+        <div class="trap"><b>Deduplication isn't supported on the system volume</b>, and cloud tiering can't run on it either.</div>
+        <div class="trap"><b>Storage Replica synchronous mode needs low latency.</b> Long distances mean asynchronous and possible data loss.</div>
+        <div class="trap"><b>Credential Guard isn't supported on domain controllers.</b></div>
+        <div class="trap"><b>A broken trust relationship doesn't need a domain rejoin.</b> Repair the secure channel.</div>
+        <div class="trap"><b>The AD Recycle Bin can't be disabled</b> and doesn't recover objects deleted before it was enabled.</div>
+      </div>
+      <div class="cta-row"><button class="btn primary" data-start="full">Start the full practice exam</button></div>
+    </section>
+  </div>
+</div>
+</section>
+
+<section id="view-exam" hidden></section>
+<section id="view-flash" hidden></section>
+</main>
+
+<script>
+const DOM = {
+  ad:{name:"AD DS", short:"AD DS"},
+  hyb:{name:"Hybrid management", short:"Hybrid"},
+  vm:{name:"Virtual machines", short:"VMs"},
+  net:{name:"DNS & DHCP", short:"Networking"},
+  sto:{name:"Storage & file services", short:"Storage"},
+  sec:{name:"Security", short:"Security"},
+  mon:{name:"Monitor & troubleshoot", short:"Troubleshoot"}
+};
+const CASE_NAME = "Proseware, Inc.";
+
+const CASE = `<p><b>Proseware, Inc.</b> has a head office in Denver and a branch office in Boise. It has one AD DS forest, proseware.com, with one domain. All servers run Windows Server 2025.</p>
+<p><b>Existing environment</b></p>
+<ul>
+<li>Denver has two writable DCs, a file server (FS1), and two Hyper-V hosts (HV1, HV2) that use local storage only.</li>
+<li>Boise has 60 users, no DC, and a slow WAN link to Denver. The Boise server room is a shared closet that isn't locked.</li>
+<li>An inventory app runs as a service on three servers (APP1–APP3) under a regular domain user account whose password hasn't changed in years.</li>
+<li>Remote employees use a VPN to reach FS1. The company wants to retire the VPN.</li>
+<li>Boise has one Hyper-V host, HV3.</li>
+</ul>
+<p><b>Requirements</b></p>
+<ul>
+<li>Boise users must be able to sign in if the WAN link fails. A server stolen from Boise must expose as few credentials as possible.</li>
+<li>Remote employees must reach file shares on FS1 securely from the internet <b>without a VPN</b>.</li>
+<li>Help desk staff must be able to restart the Print Spooler service on file servers by using PowerShell, without being local administrators.</li>
+<li>The inventory app's service account password must change automatically, with no administrator effort.</li>
+<li>Critical VMs on HV1 must have a copy on HV3 in Boise that's no more than 5 minutes behind.</li>
+</ul>`;
+
+const Q = [
+// ---------- AD DS ----------
+{id:"a1",d:"ad",q:`<p>DC1 holds all five FSMO roles. Its motherboard failed, and DC1 will be rebuilt as a new server with a new name. Users in the domain can't create new accounts because DC2 has run out of RIDs.</p><p>What should you do on DC2?</p>`,
+ o:["Transfer the roles from DC1 by using Active Directory Users and Computers","Seize the roles by using Move-ADDirectoryServerOperationMasterRole with -Force","Run dcpromo on DC2 to promote it as the PDC emulator","Restore DC1 from backup and then transfer the roles"],a:[1],
+ x:`DC1 is permanently gone, so the roles can't be transferred. Seizing them with <code>-Force</code> (or ntdsutil) makes DC2 the holder. Never bring the old DC1 back online after seizing.`},
+{id:"a2",d:"ad",q:`<p>Users in the domain report that their clocks are drifting and some get Kerberos errors. You need to configure the authoritative time source for the whole forest.</p><p>Which DC should you configure to sync with an external NTP server?</p>`,
+ o:["The infrastructure master in each domain","Every global catalog server","The PDC emulator in the forest root domain","The schema master"],a:[2],
+ x:`Domain members sync time from DCs, DCs sync from their domain's PDC emulator, and child domain PDCs sync up the hierarchy to the <b>forest root PDC emulator</b>. That's the one to point at a reliable external NTP source.`},
+{id:"a3",d:"ad",q:`<p>You're deploying an RODC in a branch office. The branch manager isn't a domain administrator but must complete the RODC installation. You must not give the manager any domain-level privileges.</p><p>What should you do?</p>`,
+ o:["Add the manager to Domain Admins temporarily","Add the manager to the Allowed RODC Password Replication Group","Give the manager the Enterprise Read-only Domain Controllers role","Pre-create the RODC computer account and delegate the installation to the manager"],a:[3],
+ x:`A staged RODC installation lets a Domain Admin pre-create the RODC account and name a user or group who can attach the server to it. That user also becomes the RODC's delegated local administrator, without domain rights.`},
+{id:"a4",d:"ad",q:`<p>An RODC in a branch office must cache passwords for branch users so they can sign in during a WAN outage. It must never cache passwords for members of Domain Admins.</p><p>What should you configure?</p>`,
+ o:["Add branch users to the Allowed RODC Password Replication Group. Domain Admins are denied by default.","Make the RODC a global catalog","Add branch users to the Denied RODC Password Replication Group","Enable universal group membership caching"],a:[0],
+ x:`The Password Replication Policy controls caching. Add branch users (or a group of them) to the allowed list. Domain Admins, Enterprise Admins, and other privileged groups are in the <b>Denied</b> group by default, and deny always wins.`},
+{id:"a5",d:"ad",q:`<p>Contoso acquires Fabrikam. Both have their own single-domain forests. Users in each forest must access resources in the other, and you want Kerberos authentication between them. Both companies might add child domains later that also need access.</p><p>What trust should you create?</p>`,
+ o:["A shortcut trust","An external trust","A realm trust","A forest trust"],a:[3],
+ x:`A forest trust is transitive across all domains in both forests (including future child domains) and uses Kerberos. External trusts are non-transitive and link only two domains. Shortcut trusts are within one forest. Realm trusts are for non-Windows Kerberos realms.`},
+{id:"a6",d:"ad",q:`<p>You have a forest trust with a partner. Only members of PartnerSupport may access one specific server, FS9. Partner users must not be able to authenticate to any other computer in your forest.</p><p>What should you do?</p>`,
+ o:["Disable SID filtering on the trust","Add PartnerSupport to the Domain Users group","Configure selective authentication and grant PartnerSupport the Allowed to Authenticate permission on FS9","Convert the trust to an external trust"],a:[2],
+ x:`With selective authentication, trusted users can't authenticate anywhere until you grant Allowed to Authenticate on specific computer objects. SID filtering is a security feature and should stay on.`},
+{id:"a7",d:"ad",q:`<p>You have three AD sites: Seattle, Chicago, and Miami. Chicago and Miami connect to Seattle over WAN links. Changes made in Chicago take up to 3 hours to reach Seattle. You need changes to reach Seattle within about 15 minutes.</p><p>What should you modify?</p>`,
+ o:["The replication interval on the Seattle–Chicago site link","The KCC on each domain controller","The cost on the Seattle–Chicago site link","The bridgehead server in Miami"],a:[0],
+ x:`The site link replication interval defaults to 180 minutes. Lower it (minimum 15) to speed intersite replication. Cost decides which path is preferred, not how often replication runs.`},
+{id:"a8",d:"ad",q:`<p>A small branch site has one DC that isn't a global catalog. When the WAN link is down, users can't sign in because the DC can't contact a GC to check their universal group memberships. You don't want GC replication traffic on the slow link.</p><p>What should you configure?</p>`,
+ o:["Configure an external trust","Enable universal group membership caching on the branch site","Make the branch DC a global catalog","Create a shortcut trust"],a:[1],
+ x:`Universal group membership caching is enabled per site. The DC caches each user's universal groups after their first successful logon, so later logons don't need a GC. It avoids replicating the full partial-attribute set over the WAN.`},
+{id:"a9",d:"ad",q:`<p>A web app runs on four IIS servers in a farm. Its service account password must be managed by AD and rotated automatically, and all four servers must use the same account.</p><p>What should you create first?</p>`,
+ o:["A standalone managed service account (sMSA)","A user account with Password never expires","A virtual account on each server","A KDS root key, then a group managed service account (gMSA)"],a:[3],
+ x:`gMSAs work across multiple servers and require a KDS root key in the domain (<code>Add-KdsRootKey</code>). sMSAs only work on a single server. Virtual accounts are local to one machine.`},
+{id:"a10",d:"ad",q:`<p>A GPO named G-Desktop is linked to the Sales OU. The Sales OU has Block Inheritance enabled. A GPO named G-Security is linked at the domain with the <b>Enforced</b> option.</p><p>Which GPOs apply to computers in the Sales OU?</p>`,
+ o:["Both G-Desktop and G-Security","Neither","G-Security only","G-Desktop only"],a:[0],
+ x:`Block Inheritance stops non-enforced GPOs from parent containers, but Enforced links always apply. G-Desktop is linked directly to the OU, so it also applies.`},
+{id:"a11",d:"ad",q:`<p>Kiosk computers are in the Kiosks OU. Any user who signs in to a kiosk must receive the restrictive user settings in the GPO linked to the Kiosks OU, and none of their normal user settings.</p><p>What should you configure?</p>`,
+ o:["Security filtering on the Kiosks GPO","WMI filtering on the user GPOs","Loopback processing in Replace mode on a GPO that applies to the kiosk computers","Block Inheritance on the users' OU"],a:[2],
+ x:`Loopback processing makes user settings come from GPOs that apply to the computer's location. Replace mode ignores the user's normal GPOs. Merge mode would combine them, with the computer's GPOs winning conflicts.`},
+{id:"a12",d:"ad",q:`<p>You remove Authenticated Users from the security filtering of a computer-policy GPO and add a group that contains the target computers. The GPO stops applying to every computer, including those in the group.</p><p>What is the most likely cause?</p>`,
+ o:["WMI filters are required for computer policies","Domain Computers no longer have Read permission on the GPO","Loopback processing is enabled","The GPO link is disabled"],a:[1],
+ x:`Since the MS16-072 update, computers read every GPO in their own context. If you remove Authenticated Users entirely, add it (or Domain Computers) back with <b>Read</b> only (not Apply) on the Delegation tab.`},
+{id:"a13",d:"ad",q:`<p>You add new ADMX templates for a browser. Some administrators see the new settings in the Group Policy Management Editor and others don't.</p><p>What should you do so every administrator sees the same templates?</p>`,
+ o:["Import the templates into each GPO","Install the templates on every DC's C:\\Windows\\PolicyDefinitions","Run gpupdate /force on each admin workstation","Copy the ADMX and ADML files into the PolicyDefinitions folder of the central store in SYSVOL"],a:[3],
+ x:`The central store (<code>\\\\domain\\SYSVOL\\domain\\Policies\\PolicyDefinitions</code>) is used by every editor in the domain once it exists. Local PolicyDefinitions folders differ per machine.`},
+{id:"a14",d:"ad",m:true,pick:2,q:`<p>You're deploying a writable DC as a VM in Azure for a hybrid environment.</p><p>Which <b>two</b> configurations should you use?</p>`,
+ o:["Store the NTDS database on the temporary disk for performance","Store the NTDS database and SYSVOL on a data disk with host caching set to None","Assign a static private IP address on the VM's NIC in Azure","Configure a static IP address in the guest OS network settings"],a:[1,2],
+ x:`Write caching can corrupt the AD database, so use a data disk with caching set to None. Set static IPs on the Azure NIC, not inside the guest. The temporary disk can be wiped at any time.`},
+
+{id:"a15",d:"ad",series:true,q:`<p class="hint">Yes/No series. You can't return to this question on the real exam.</p><p><b>Goal:</b> a GPO must apply only to <b>laptops</b> in the Sales OU. Desktops are in the same OU.</p><p><b>Solution:</b> Link the GPO to the Sales OU and attach a WMI filter that checks for a battery (for example, <code>SELECT * FROM Win32_Battery</code>).</p><p>Does this meet the goal?</p>`,
+ o:["Yes","No"],a:[0],
+ x:`WMI filters evaluate on each computer, so only machines that report a battery apply the GPO.`},
+{id:"a16",d:"ad",series:true,q:`<p class="hint">Yes/No series. You can't return to this question on the real exam.</p><p><b>Goal:</b> a GPO must apply only to <b>laptops</b> in the Sales OU. Desktops are in the same OU.</p><p><b>Solution:</b> Link the GPO to the Sales OU and enable Block Inheritance on the Sales OU.</p><p>Does this meet the goal?</p>`,
+ o:["Yes","No"],a:[1],
+ x:`Block Inheritance only stops GPOs from parent containers. A GPO linked directly to Sales still applies to every computer in it, desktops included.`},
+
+// ---------- HYBRID MANAGEMENT ----------
+{id:"h1",d:"hyb",q:`<p>From your workstation, you use <code>Enter-PSSession</code> to connect to SRV1. On SRV1, you run a command that copies a file from a share on FS1. You get access denied, although your account has rights on FS1.</p><p>What's the most secure way to fix this?</p>`,
+ o:["Use Invoke-Command with -AsJob","Configure resource-based Kerberos constrained delegation on FS1 to trust SRV1","Add your account to the local Administrators group on FS1","Enable CredSSP on your workstation and SRV1"],a:[1],
+ x:`This is the double-hop problem: SRV1 can't pass your credentials to FS1. Resource-based Kerberos constrained delegation (set on FS1's computer object, <code>PrincipalsAllowedToDelegateToAccount</code>) fixes it without exposing credentials. CredSSP works but caches reusable credentials on SRV1.`},
+{id:"h2",d:"hyb",q:`<p>Help desk staff must be able to run <code>Restart-Service</code> only for the DNS service on DNS servers. They must not have administrator rights or access to any other cmdlets.</p><p>What should you implement?</p>`,
+ o:["Add help desk to the DnsAdmins group","A custom RBAC role","Just Enough Administration (JEA)","Restricted Admin mode for RDP"],a:[2],
+ x:`JEA endpoints expose only specified cmdlets and parameter values (for example, <code>Restart-Service -Name DNS</code>) and run them under a virtual account or gMSA with admin rights. Users stay non-admins. DnsAdmins gives far more rights.`},
+{id:"h3",d:"hyb",q:`<p>You're building a JEA endpoint. Which file defines <b>which cmdlets and parameters</b> are visible to a role?</p>`,
+ o:["The role capability file (.psrc)","The transcript file","The session configuration file (.pssc)","The module manifest (.psd1)"],a:[0],
+ x:`The role capability file (.psrc) lists visible cmdlets, functions, and allowed parameters. The session configuration file (.pssc) maps users or groups to role capabilities and sets the run-as account.`},
+{id:"h4",d:"hyb",q:`<p>You need to manage 200 on-prem Windows servers from Azure with Azure Policy, RBAC, and Defender for Servers. The servers can reach the internet only through a proxy, and the firewall team won't allow any inbound connections.</p><p>What should you do?</p>`,
+ o:["Open TCP 5986 inbound from Azure","Install Windows Admin Center on each server","Install the Azure Connected Machine agent configured to use the proxy","Deploy a site-to-site VPN and register the servers as Azure VMs"],a:[2],
+ x:`Azure Arc's Connected Machine agent only needs outbound HTTPS 443 (proxies are supported). Once connected, servers are Azure resources you can govern with Policy, RBAC, and Defender.`},
+{id:"h5",d:"hyb",q:`<p>You need to onboard 500 servers to Azure Arc in one automated pass, without an interactive sign-in on each server.</p><p>What should you use to authenticate the onboarding script?</p>`,
+ o:["The servers' computer accounts","A service principal with the Azure Connected Machine Onboarding role","A storage account key","A personal account with MFA"],a:[1],
+ x:`At-scale onboarding uses a service principal that has only the Azure Connected Machine Onboarding role. The generated script passes its credentials, and you can deploy it through Group Policy, Configuration Manager, or another tool.`},
+{id:"h6",d:"hyb",q:`<p>Azure VMs and Arc-enabled on-prem servers must be checked for missing updates daily and patched every second Saturday at 02:00 in a defined window.</p><p>What should you configure?</p>`,
+ o:["WSUS on each site","Azure Automation State Configuration","A Windows Task Scheduler job on each server","Azure Update Manager with periodic assessment and a maintenance configuration"],a:[3],
+ x:`Azure Update Manager works for Azure VMs and Arc servers. Periodic assessment checks for updates every 24 hours, and maintenance configurations define recurring install windows.`},
+{id:"h7",d:"hyb",q:`<p>An Azure Automation runbook must restart a service on an on-prem server that has no inbound connectivity from Azure.</p><p>What should you configure?</p>`,
+ o:["A Hybrid Runbook Worker on an on-prem server (extension-based through Azure Arc)","A webhook from the on-prem server","Run the runbook in the Azure sandbox","An Azure Function with VNet integration"],a:[0],
+ x:`Hybrid Runbook Workers run runbooks locally. They poll Azure Automation outbound, so no inbound connectivity is required. The extension-based worker installs through the Arc agent.`},
+{id:"h8",d:"hyb",q:`<p>You want to manage Windows Server Azure VMs and Arc-enabled servers from a browser, using the same tool you use on-prem, without deploying your own gateway server.</p><p>What should you use?</p>`,
+ o:["Azure Cloud Shell","Server Manager","Remote Desktop Services","Windows Admin Center in the Azure portal"],a:[3],
+ x:`Windows Admin Center is available as an extension in the Azure portal for Azure VMs and Arc-enabled servers, so no on-prem gateway is needed.`},
+
+// ---------- VIRTUAL MACHINES ----------
+{id:"v1",d:"vm",q:`<p>A Windows Server VM on HV1 has lost network connectivity because of a misconfigured firewall. You need to run PowerShell commands inside the VM from HV1.</p><p>What should you use?</p>`,
+ o:["Remote Desktop to VM1","Enter-PSSession -VMName VM1","Enter-PSSession -ComputerName VM1","Windows Admin Center"],a:[1],
+ x:`PowerShell Direct (<code>-VMName</code>) connects over the Hyper-V VMBus from the host, so it doesn't need network connectivity. You still need credentials for the guest OS.`},
+{id:"v2",d:"vm",m:true,pick:2,q:`<p>You need to run Hyper-V inside VM1 for a lab, and the nested VMs need network access through VM1's network adapter.</p><p>Which <b>two</b> actions should you perform? (VM1 is already stopped.)</p>`,
+ o:["Run Set-VMProcessor -VMName VM1 -ExposeVirtualizationExtensions $true","Convert VM1 to a Generation 1 VM","Enable MAC address spoofing on VM1's network adapter","Enable Enhanced Session Mode"],a:[0,2],
+ x:`Exposing virtualization extensions lets VM1 run Hyper-V. Nested VMs use their own MAC addresses, so the outer vNIC needs MAC spoofing (or you can use NAT instead). Dynamic Memory should also be off.`},
+{id:"v3",d:"vm",q:`<p>Developers want to copy and paste text and redirect a local drive when they connect to VMs with Hyper-V Manager's VMConnect. The VMs don't have network access to developers' machines.</p><p>What should you enable?</p>`,
+ o:["Enhanced Session Mode on the host","Guest services integration","RemoteFX","Shielded VMs"],a:[0],
+ x:`Enhanced Session Mode uses RDP over the VMBus inside VMConnect, giving clipboard, drive, and device redirection without a network path to the VM.`},
+{id:"v4",d:"vm",q:`<p>You need to copy a file from the Hyper-V host into a running VM without network access or a shared folder.</p><p>What should you do first?</p>`,
+ o:["Enable the Data Exchange (KVP) integration service","Attach a virtual DVD","Enable the Guest services integration service, then use Copy-VMFile","Create a production checkpoint"],a:[2],
+ x:`<code>Copy-VMFile</code> requires the Guest services integration service, which is off by default.`},
+{id:"v5",d:"vm",q:`<p>Several VDI VMs need GPU acceleration. You have one physical GPU per host, and you want to share it among several VMs.</p><p>What should you configure?</p>`,
+ o:["Discrete Device Assignment","GPU partitioning (GPU-P)","RemoteFX vGPU","Nested virtualization"],a:[1],
+ x:`GPU partitioning shares one physical GPU among several VMs. Discrete Device Assignment dedicates a whole device to one VM. RemoteFX vGPU was removed years ago.`},
+{id:"v6",d:"vm",q:`<p>You take a checkpoint of a SQL Server VM before patching. The checkpoint must be application-consistent and must not capture memory state, so restoring it looks like a clean shutdown to SQL Server.</p><p>Which checkpoint type should you use?</p>`,
+ o:["Standard","Saved state","Production","Differencing disk"],a:[2],
+ x:`Production checkpoints (the default) use VSS inside the guest to create an application-consistent snapshot without memory state. Standard checkpoints include memory and app state, which can confuse apps such as SQL Server or AD.`},
+{id:"v7",d:"vm",q:`<p>You need to replicate VMs from HV1 in Denver to HV3 in another city. There's no shared storage and no cluster. The copy must be no more than 5 minutes behind, and you must be able to run test failovers.</p><p>What should you configure?</p>`,
+ o:["Live migration","A guest failover cluster","Storage Replica synchronous","Hyper-V Replica with a 5-minute frequency"],a:[3],
+ x:`Hyper-V Replica asynchronously replicates VMs between standalone hosts (or clusters) at 30-second, 5-minute, or 15-minute frequency, and supports test, planned, and unplanned failover.`},
+{id:"v8",d:"vm",q:`<p>You're configuring a new Hyper-V host with two 25 GbE RDMA-capable NICs. VMs and SMB Direct storage traffic must share both NICs with failover.</p><p>What should you use?</p>`,
+ o:["Switch Embedded Teaming (SET)","Two separate external switches","A private virtual switch","LBFO NIC teaming with a Hyper-V switch"],a:[0],
+ x:`SET builds teaming into the Hyper-V switch and supports RDMA, so host vNICs can use SMB Direct. LBFO teams aren't supported for new Hyper-V switches and don't support RDMA.`},
+{id:"v9",d:"vm",q:`<p>You must resize an Azure VM to a larger size. The size doesn't appear in the list of sizes available while the VM is running.</p><p>What should you do?</p>`,
+ o:["Delete the VM and keep the disks","Stop (deallocate) the VM, then resize it","Create a new availability set","Redeploy the VM to a new region"],a:[1],
+ x:`Sizes listed while running are those available on the current hardware cluster. Deallocating releases the host, so you can choose from all sizes available in the region.`},
+{id:"v10",d:"vm",q:`<p>Admins must RDP to Windows Server Azure VMs only when needed. Port 3389 must be closed in the NSG by default and opened only for the requesting admin's IP for up to 3 hours.</p><p>What should you use?</p>`,
+ o:["Azure Bastion","A Point-to-site VPN","Just-in-time VM access in Defender for Servers","An Application Security Group"],a:[2],
+ x:`JIT VM access (Defender for Servers Plan 2) adds a temporary NSG allow rule for the requester's IP and a time limit, then removes it. Bastion avoids public RDP entirely but doesn't open ports on request.`},
+
+// ---------- NETWORKING ----------
+{id:"n1",d:"net",q:`<p>Your domain contoso.com must resolve names in a partner's zone, fabrikam.com. The partner occasionally changes its DNS server IP addresses, and you want resolution to keep working without manual updates.</p><p>What should you create?</p>`,
+ o:["A stub zone for fabrikam.com","A forwarder to the partner's DNS servers","A secondary zone for fabrikam.com","A conditional forwarder for fabrikam.com"],a:[0],
+ x:`A stub zone holds the partner zone's NS and SOA records and refreshes them automatically, so it follows changes to their name servers. Conditional forwarders are static. A secondary zone needs zone transfers and copies the whole zone.`},
+{id:"n2",d:"net",q:`<p>Internal users must resolve app.contoso.com to 10.0.0.20, while internet users must get the public IP 203.0.113.20. You want to use a single DNS server and zone.</p><p>What should you implement?</p>`,
+ o:["DNSSEC","Round-robin DNS","Two separate zones on two servers","DNS policies with zone scopes (split-brain)"],a:[3],
+ x:`DNS policies can answer from different zone scopes based on the client subnet or interface. That provides split-brain DNS on one server and zone.`},
+{id:"n3",d:"net",q:`<p>After signing the contoso.com zone with DNSSEC, you need domain-joined clients to require validated responses for that zone.</p><p>What should you configure?</p>`,
+ o:["The Name Resolution Policy Table (NRPT) by using Group Policy","Zone transfers to secondary servers","A trust anchor on each client","Secure dynamic updates"],a:[0],
+ x:`Windows clients are non-validating stub resolvers. The NRPT, deployed with Group Policy, tells them to require DNSSEC validation for a namespace, which the DNS server performs using trust anchors.`},
+{id:"n4",d:"net",q:`<p>On-prem servers must resolve Azure private endpoint names (for example, <code>sa1.privatelink.blob.core.windows.net</code>) to private IPs over a site-to-site VPN. On-prem DNS runs on Windows Server.</p><p>What should you do?</p>`,
+ o:["Create a conditional forwarder that points to 168.63.129.16","Create a conditional forwarder on-prem that points to an Azure DNS Private Resolver inbound endpoint","Create a public DNS zone in Azure","Add the private IPs to each server's hosts file"],a:[1],
+ x:`168.63.129.16 is only reachable from inside Azure. An Azure DNS Private Resolver inbound endpoint gives on-prem DNS servers a private IP in the VNet to forward to, and it resolves the linked private DNS zones.`},
+{id:"n5",d:"net",q:`<p>Scope 10.1.0.0/24 has the DNS server option set to 10.1.0.10. A server option sets DNS to 10.0.0.5. A reservation for PRN1 sets DNS to 10.2.0.9.</p><p>Which DNS server does PRN1 receive?</p>`,
+ o:["10.1.0.10","10.0.0.5","All three, in that order","10.2.0.9"],a:[3],
+ x:`DHCP options apply from most specific to least: reservation, then scope, then server. The reservation option wins.`},
+{id:"n6",d:"net",q:`<p>A branch has its own DHCP server. A central server in the head office must take over the branch scope only if the branch server fails.</p><p>Which DHCP failover mode should you configure?</p>`,
+ o:["Superscope","Split scope 80/20","Hot standby","Load balance"],a:[2],
+ x:`In hot standby mode, the standby server answers only when the primary is unavailable. It keeps 5% of the scope by default and takes over the rest after the MCLT expires. It's designed for branch-and-hub designs.`},
+{id:"n7",d:"net",q:`<p>You install the DHCP role on a new domain-joined server and create an active scope. Clients don't receive leases, and the event log says the server isn't serving clients.</p><p>What should you do?</p>`,
+ o:["Authorize the DHCP server in AD DS","Enable conflict detection","Configure a superscope","Add the server to the DnsAdmins group"],a:[0],
+ x:`Domain-joined DHCP servers check AD for authorization and won't lease addresses until they're authorized (for example, <code>Add-DhcpServerInDC</code>). This prevents rogue DHCP servers.`},
+{id:"n8",d:"net",q:`<p>Stale DNS records from decommissioned computers remain in the AD-integrated zone. You enabled aging and scavenging on the zone, but records never get removed.</p><p>What's missing?</p>`,
+ o:["Zone transfers must be allowed","Secure dynamic updates must be disabled","Scavenging must also be enabled on at least one DNS server","The zone must be converted to a standard primary zone"],a:[2],
+ x:`Scavenging needs aging enabled on the zone and scavenging enabled on at least one server (Server properties → Advanced, or <code>Set-DnsServerScavenging</code>). Records also have to age through the no-refresh and refresh intervals (7 + 7 days by default).`},
+
+// ---------- STORAGE ----------
+{id:"s1",d:"sto",q:`<p>Branch file servers must keep only recently used files locally and free up space for the rest, while all files remain visible to users. Data must be centralized in Azure.</p><p>What should you configure?</p>`,
+ o:["Storage Replica asynchronous","Data Deduplication","DFS Replication with read-only folders","Azure File Sync with cloud tiering"],a:[3],
+ x:`Azure File Sync cloud tiering keeps hot files local and replaces cold files with pointers that recall on access, based on a volume free space policy and an optional date policy.`},
+{id:"s2",d:"sto",q:`<p>You're adding a server endpoint to an Azure File Sync sync group. You want to use cloud tiering on <code>C:\\Shares</code>.</p><p>Why might this fail?</p>`,
+ o:["The server isn't domain-joined","Cloud tiering isn't supported on the system volume","The sync group already has a cloud endpoint","SMB 3.0 isn't enabled"],a:[1],
+ x:`Cloud tiering can't be enabled on server endpoints on the system volume. Put the share on a data volume such as D:.`},
+{id:"s3",d:"sto",q:`<p>Users must not be able to save .mp4 or .iso files to <code>D:\\Shares\\Projects</code>. The marketing subfolder must still allow .mp4 files.</p><p>What should you configure?</p>`,
+ o:["An active file screen on Projects with a file screen exception on the marketing subfolder","A passive file screen on Projects","NTFS deny permissions","A hard quota on D:\\Shares\\Projects"],a:[0],
+ x:`FSRM active file screens block saving matching file groups. A file screen exception overrides the parent screen for a subfolder. Passive screens only log and notify.`},
+{id:"s4",d:"sto",q:`<p>Each new user folder under <code>D:\\Home</code> must automatically get a 10 GB limit that blocks writes once it's reached.</p><p>What should you configure?</p>`,
+ o:["A file screen on D:\\Home","NTFS disk quotas on drive D","An auto-apply hard quota template on D:\\Home","A soft quota on D:\\Home"],a:[2],
+ x:`FSRM auto-apply quotas apply the template to every existing and new subfolder. Hard quotas block writes once the limit is reached. Soft quotas only send notifications.`},
+{id:"s5",d:"sto",q:`<p>Remote employees must access file shares on FS1 from the internet without a VPN. The traffic must be encrypted, and the firewall team will open only UDP 443.</p><p>What should you configure on FS1?</p>`,
+ o:["SMB 3 encryption over TCP 445","DFS Namespaces","WebDAV","SMB over QUIC with a TLS certificate"],a:[3],
+ x:`SMB over QUIC carries SMB inside TLS 1.3 over UDP 443, so it's internet-safe without a VPN. The server needs a certificate trusted by clients. Windows Server 2025 Standard and Datacenter support it.`},
+{id:"s6",d:"sto",q:`<p>You need a single path, <code>\\\\contoso.com\\Data</code>, that points users to shares on several file servers. The path must remain available if one namespace server fails, and users should only see folders they have access to.</p><p>What should you configure?</p>`,
+ o:["DFS Replication only","A domain-based DFS namespace with access-based enumeration","A stand-alone DFS namespace","A failover cluster file server"],a:[1],
+ x:`Domain-based namespaces are stored in AD and can be hosted on multiple namespace servers for availability. Access-based enumeration hides folders the user can't open.`},
+{id:"s7",d:"sto",q:`<p>You have a Storage Spaces pool with five disks on a standalone server. A volume must survive <b>two</b> simultaneous disk failures with the best write performance.</p><p>Which resiliency type should you choose?</p>`,
+ o:["Two-way mirror","Simple","Three-way mirror","Single parity"],a:[2],
+ x:`A three-way mirror tolerates two disk failures and needs at least five disks. Dual parity also tolerates two failures but needs seven disks and has slower writes. A two-way mirror and single parity survive only one failure.`},
+{id:"s8",d:"sto",q:`<p>Two datacenters are 300 km apart with 18 ms round-trip latency. Volume D: on FS1 must be replicated block by block to FS2 in the other datacenter. Some data loss is acceptable.</p><p>What should you configure?</p>`,
+ o:["Storage Replica asynchronous","Hyper-V Replica","DFS Replication","Storage Replica synchronous"],a:[0],
+ x:`Synchronous Storage Replica needs very low latency (around 5 ms round trip or less). At 18 ms, asynchronous mode avoids slowing writes, at the cost of possible data loss.`},
+{id:"s9",d:"sto",q:`<p>FS1 and FS2 run Windows Server 2025 <b>Standard</b> edition. You want to use Storage Replica for three 1 TB volumes.</p><p>What's the issue?</p>`,
+ o:["Storage Replica requires a cluster","Standard edition supports only one partnership with a single volume up to 2 TB","Storage Replica requires ReFS","Standard edition doesn't support Storage Replica"],a:[1],
+ x:`Standard edition limits Storage Replica to one partnership with one volume up to 2 TB. Datacenter edition has no such limits.`},
+{id:"s10",d:"sto",q:`<p>A file server stores hundreds of copies of the same installation ISOs and VHDs. You want to reduce disk use on data volume E: without changing how users access files.</p><p>What should you enable?</p>`,
+ o:["BitLocker","NTFS compression","Storage QoS","Data Deduplication with the General purpose file server usage type"],a:[3],
+ x:`Data Deduplication stores identical chunks once on NTFS or ReFS data volumes, transparently to users. It isn't supported on the system volume.`},
+{id:"s11",d:"sto",q:`<p>You're designing a hyperconverged two-node Hyper-V cluster that uses only the servers' internal NVMe and SSD drives for VM storage.</p><p>What should you deploy?</p>`,
+ o:["iSCSI Target Server","A SAN with MPIO","Storage Replica stretch cluster","Storage Spaces Direct with a cloud or file share witness"],a:[3],
+ x:`Storage Spaces Direct pools local drives across 2–16 cluster nodes. A two-node cluster needs a witness to keep quorum if one node fails. Nested resiliency can add extra protection.`},
+{id:"s12",d:"sto",q:`<p>BitLocker-protected servers in the datacenter must unlock automatically at startup when they're on the corporate network, but must require a PIN if a server is stolen.</p><p>What should you configure?</p>`,
+ o:["Store the recovery password in AD DS","BitLocker Network Unlock with a TPM + PIN protector","A startup key on USB","TPM-only protector"],a:[1],
+ x:`Network Unlock (using WDS and a Network Unlock certificate) unlocks TPM + PIN systems automatically when they're on the trusted wired network. Off the network, the PIN is required.`},
+
+// ---------- SECURITY ----------
+{id:"c1",d:"sec",q:`<p>Members of the IT-Admins global group must have 15-character minimum passwords. All other users must keep the 8-character domain policy.</p><p>What should you do?</p>`,
+ o:["Add IT-Admins to Protected Users","Edit the Default Domain Policy","Create a fine-grained password policy (PSO) and apply it to the IT-Admins group","Create a GPO with the password policy and link it to the IT-Admins OU"],a:[2],
+ x:`Fine-grained password policies apply to users or global security groups. Password policy in a GPO linked to an OU doesn't affect domain accounts. Only the domain-level policy does.`},
+{id:"c2",d:"sec",q:`<p>Users keep choosing passwords like "Contoso2026!". You want to block passwords that contain your company name and common weak words in on-prem AD DS, using Microsoft's global banned list too.</p><p>What should you deploy?</p>`,
+ o:["Microsoft Entra Password Protection proxy and DC agents","Fine-grained password policies","Windows LAPS","Account lockout policy"],a:[0],
+ x:`Entra Password Protection for AD DS checks password changes on DCs against the global banned list and your custom banned words. Install the proxy service and the DC agent on every DC, and start in audit mode.`},
+{id:"c3",d:"sec",q:`<p>Every server has the same local Administrator password. You need unique passwords that rotate automatically and are stored securely in AD DS, readable only by authorized admins.</p><p>What should you implement?</p>`,
+ o:["Windows LAPS","Credential Guard","Group Policy Preferences local users","gMSA"],a:[0],
+ x:`Windows LAPS (built into Windows Server) generates, rotates, and backs up a unique local admin password per device to AD DS or Entra ID, with optional encryption and access control.`},
+{id:"c4",d:"sec",q:`<p>Attackers used pass-the-hash to move between member servers. You need to protect NTLM hashes and Kerberos TGTs in memory on member servers.</p><p>What should you enable?</p>`,
+ o:["Exploit protection","Credential Guard","SmartScreen","BitLocker"],a:[1],
+ x:`Credential Guard uses virtualization-based security to isolate LSA secrets, so malware with admin rights can't read them. It isn't supported on domain controllers.`},
+{id:"c5",d:"sec",q:`<p>Only signed, approved applications may run on a group of hardened servers. You want to see what would be blocked before enforcing.</p><p>What should you deploy?</p>`,
+ o:["Exploit protection","Defender SmartScreen","App Control for Business policies in audit mode","Windows Firewall outbound rules"],a:[2],
+ x:`App Control for Business (formerly WDAC) allow-lists code by signer, hash, or path. Audit mode logs what would be blocked so you can refine the policy before enforcing it.`},
+{id:"c6",d:"sec",q:`<p>Domain administrator accounts must never use NTLM, must not have credentials cached on computers, and must not be delegated.</p><p>What should you do with the least effort?</p>`,
+ o:["Enable Credential Guard on DCs","Create a fine-grained password policy","Disable NTLM across the domain","Add the admin accounts to the Protected Users group"],a:[3],
+ x:`Protected Users membership blocks NTLM, DES, and RC4 for those accounts, prevents credential caching and delegation, and limits TGTs to 4 hours. Test first, and don't add service accounts.`},
+{id:"c7",d:"sec",q:`<p>You changed permissions on a member of Domain Admins, but your change keeps reverting about every hour.</p><p>Why?</p>`,
+ o:["Group Policy refresh","AdminSDHolder and the SDProp process","The KCC","DFS Replication of SYSVOL"],a:[1],
+ x:`SDProp runs every 60 minutes and resets the ACLs of protected accounts and groups to match AdminSDHolder. To change them permanently, edit the AdminSDHolder object.`},
+{id:"c8",d:"sec",q:`<p>Help desk staff must reset passwords and unlock accounts for users in the Sales OU only, without other administrative rights.</p><p>What should you do?</p>`,
+ o:["Add them to Account Operators","Create a JEA endpoint","Use the Delegation of Control Wizard on the Sales OU","Add them to Domain Admins"],a:[2],
+ x:`Delegation of Control grants specific permissions (reset password, read/write lockoutTime) on an OU. Account Operators has domain-wide rights and is a protected group.`},
+{id:"c9",d:"sec",q:`<p>You need to apply Microsoft's recommended security baseline to Windows Server 2025 member servers and automatically correct any setting that's changed later.</p><p>What should you use?</p>`,
+ o:["Security Configuration Wizard","Windows Update for Business","Local Security Policy","OSConfig with drift control"],a:[3],
+ x:`OSConfig (the Microsoft.OSConfig PowerShell module) applies security baselines on Windows Server 2025, and its drift control periodically reapplies the desired settings.`},
+
+// ---------- MONITOR & TROUBLESHOOT ----------
+{id:"m1",d:"mon",q:`<p>An administrator accidentally deleted an OU with 40 users. The AD Recycle Bin was enabled last year.</p><p>How should you restore the users with their group memberships?</p>`,
+ o:["Use Get-ADObject -IncludeDeletedObjects and Restore-ADObject (or AD Administrative Center), restoring the OU first","Perform an authoritative restore in DSRM","Recreate the accounts with the same names","Restore the system state on one DC non-authoritatively"],a:[0],
+ x:`With the Recycle Bin, deleted objects keep all attributes, including group memberships. Restore the parent OU first, then the users, with Restore-ADObject or ADAC. No downtime or DSRM needed.`},
+{id:"m2",d:"mon",q:`<p>The AD Recycle Bin isn't enabled. A critical security group was deleted yesterday. You have a system state backup from last night.</p><p>What must you do so the restored group isn't deleted again by replication?</p>`,
+ o:["Enable the Recycle Bin now and restore the group","Boot into DSRM, restore the backup, and mark the group authoritative with ntdsutil","Restore SYSVOL authoritatively","A non-authoritative restore"],a:[1],
+ x:`A normal restore brings back an older version that replication would overwrite with the deletion. An authoritative restore of the object (ntdsutil → authoritative restore → restore object) raises its version numbers so it replicates out.`},
+{id:"m3",d:"mon",q:`<p>A workstation shows "The trust relationship between this workstation and the primary domain failed." You can sign in with a local admin account.</p><p>What's the quickest fix?</p>`,
+ o:["Run Test-ComputerSecureChannel -Repair with domain credentials","Run gpupdate /force","Remove the computer from the domain and rejoin it","Reset the user's password"],a:[0],
+ x:`The computer account password is out of sync. <code>Test-ComputerSecureChannel -Repair</code> (or <code>Reset-ComputerMachinePassword</code>) resets it without a rejoin, which keeps the computer's SID and group memberships.`},
+{id:"m4",d:"mon",q:`<p>Users on one server get intermittent Kerberos errors. You find the server's clock is 9 minutes ahead of the DCs.</p><p>What's the most likely cause of the authentication failures?</p>`,
+ o:["The SPN is missing","The secure channel is broken","Clock skew exceeds the 5-minute Kerberos tolerance","The user is in Protected Users"],a:[2],
+ x:`Kerberos rejects tickets when the clock skew exceeds 5 minutes by default. Check the time source with <code>w32tm /query /status</code> and resync with <code>w32tm /resync</code>.`},
+{id:"m5",d:"mon",q:`<p>You need to see which DCs are failing to replicate, along with error counts and the largest replication delay, across the whole forest in one command.</p><p>What should you run?</p>`,
+ o:["gpresult /r","nltest /dsgetdc","dcdiag /test:dns","repadmin /replsummary"],a:[3],
+ x:`<code>repadmin /replsummary</code> summarizes replication status for every DC, including failures and largest deltas. <code>repadmin /showrepl</code> gives per-partner detail.`},
+{id:"m6",d:"mon",q:`<p>A DC was offline for 8 months and then reconnected. You now see lingering objects and replication errors.</p><p>What's the recommended action?</p>`,
+ o:["Increase the tombstone lifetime","Restore it from a backup taken before it went offline","Demote (forcibly remove) the DC, clean up its metadata, and rebuild it","Force replication with repadmin /syncall"],a:[2],
+ x:`A DC offline longer than the tombstone lifetime (180 days by default) can reintroduce deleted objects. The safe fix is to remove it, clean up metadata, and promote a fresh DC.`},
+{id:"m7",d:"mon",q:`<p>You need to collect Security events from 300 servers into one server. Servers are added often, and you want the configuration done by Group Policy.</p><p>What should you configure?</p>`,
+ o:["Collector-initiated event subscriptions","Source-initiated event subscriptions","Windows Admin Center alerts","Performance Monitor data collector sets"],a:[1],
+ x:`In source-initiated subscriptions, sources are configured by GPO to push events to the collector, so new servers are included automatically. Collector-initiated subscriptions list each source on the collector.`},
+{id:"m8",d:"mon",q:`<p>You need to forecast when a file server's volumes will run out of space, based on the server's own historical data, without sending data to the cloud.</p><p>What should you use?</p>`,
+ o:["System Insights","Azure Monitor metrics","Resource Monitor","VM Insights"],a:[0],
+ x:`System Insights runs local machine learning models on Windows Server to predict capacity for storage, CPU, and network.`},
+{id:"m9",d:"mon",q:`<p>An Azure VM doesn't respond to RDP after an update. Boot diagnostics show the VM is stuck at a boot error screen.</p><p>What should you use to interact with the VM's boot process?</p>`,
+ o:["Run Command","Network Watcher IP flow verify","Azure Bastion","Serial console"],a:[3],
+ x:`The serial console gives text-based access to the VM even when the OS network stack isn't working, including access to boot menus (with SAC on Windows). Run Command needs a running guest agent.`},
+{id:"m10",d:"mon",q:`<p>Users in one site get authentication failures when accessing a web app that runs under a service account. Event logs show a KRB_AP_ERR_MODIFIED error. You suspect the same SPN is registered on two accounts.</p><p>What should you run?</p>`,
+ o:["nltest /sc_reset","klist purge","setspn -X","w32tm /resync"],a:[2],
+ x:`<code>setspn -X</code> searches the forest for duplicate SPNs. A duplicate SPN causes the KDC to encrypt tickets for the wrong account, which produces KRB_AP_ERR_MODIFIED.`},
+
+// ---------- CASE STUDY ----------
+{id:"cs1",d:"ad",cs:true,q:`<p><b>Case study: Proseware.</b> What should you deploy in Boise to meet the sign-in requirement?</p>`,
+ o:["A global catalog-only server","Universal group membership caching only","A writable DC","An RODC with a Password Replication Policy that allows only Boise users"],a:[3],
+ x:`An RODC lets Boise users sign in during a WAN outage while caching only the passwords you allow. If it's stolen, only those cached credentials are exposed and can be reset. A writable DC in an unlocked closet exposes the whole directory.`},
+{id:"cs2",d:"sto",cs:true,q:`<p><b>Case study: Proseware.</b> How should remote employees reach FS1 after the VPN is retired?</p>`,
+ o:["SMB over QUIC on FS1 with a trusted certificate","Azure Bastion","DFS Namespaces","Publish TCP 445 on the firewall"],a:[0],
+ x:`SMB over QUIC encrypts SMB in TLS 1.3 over UDP 443 and is designed for internet access without a VPN. Exposing TCP 445 to the internet is unsafe and often blocked.`},
+{id:"cs3",d:"hyb",cs:true,q:`<p><b>Case study: Proseware.</b> How should you meet the help desk requirement?</p>`,
+ o:["Add help desk staff to the local Administrators group on file servers","Create a JEA endpoint that exposes Restart-Service limited to the Spooler service","Enable CredSSP","Give help desk staff the Print Operators role"],a:[1],
+ x:`JEA exposes only the specific cmdlet and parameter value, running under a privileged virtual account, while help desk users stay non-admins.`},
+{id:"cs4",d:"ad",cs:true,q:`<p><b>Case study: Proseware.</b> What should you use for the inventory app service account?</p>`,
+ o:["A virtual account","A group managed service account","A standalone managed service account","Fine-grained password policy with a 30-day maximum age"],a:[1],
+ x:`The app runs on three servers. gMSAs work across multiple servers with automatic password rotation. sMSAs and virtual accounts are single-machine.`},
+{id:"cs5",d:"vm",cs:true,q:`<p><b>Case study: Proseware.</b> How should you meet the VM copy requirement for HV1 to HV3?</p>`,
+ o:["Hyper-V Replica with a 5-minute replication frequency","Storage Replica synchronous","A failover cluster spanning Denver and Boise","Nightly Windows Server Backup copied to HV3"],a:[0],
+ x:`HV1 and HV3 are standalone hosts with local storage, connected over a slow WAN. Hyper-V Replica works without shared storage or a cluster, and a 5-minute frequency meets the requirement.`}
+];
+
+/* ---------- state ---------- */
+const KEY="az802-prep-v1", WKEY="az802-missed-v1";
+const FULL_PLAN={ad:10,hyb:5,vm:6,net:5,sto:8,sec:5,mon:6};
+const byId=Object.fromEntries(Q.map(q=>[q.id,q]));
+let S=null, tick=null, confirmOpen=false, resultsFilter="missed";
+function load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const isMulti=q=>!!q.m;
+function same(a,b){if(!a||a.length!==b.length)return false;const s=new Set(a);return b.every(x=>s.has(x))}
+const correct=(q,ans)=>same(ans,q.a);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function buildFull(){
+  let ids=[];
+  for(const d in FULL_PLAN){ids.push(...shuffle(Q.filter(q=>q.d===d&&!q.cs)).slice(0,FULL_PLAN[d]).map(q=>q.id))}
+  ids=shuffle(ids);
+  ids.push(...Q.filter(q=>q.cs).map(q=>q.id));
+  return ids;
+}
+function startFull(){S={mode:"full",ids:buildFull(),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:100*60,done:false};persist();go("exam")}
+function startPractice(domains,onlyIds){
+  let pool=onlyIds?onlyIds.map(id=>byId[id]).filter(Boolean):Q.filter(q=>domains.includes(q.d));
+  if(!pool.length)return;
+  S={mode:"practice",ids:shuffle(pool.map(q=>q.id)),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:0,done:false};persist();go("exam")
+}
+function persist(){if(S)save(KEY,S)}
+
+/* ---------- routing ---------- */
+function go(v){if(location.hash!=="#"+v)location.hash=v;else route()}
+function route(){
+  const h=(location.hash||"#guide").slice(1);
+  const v=["exam","flash"].includes(h)?h:"guide";
+  ["guide","exam","flash"].forEach(k=>{document.getElementById("view-"+k).hidden=v!==k;document.getElementById("tab-"+k).setAttribute("aria-selected",v===k)});
+  if(v==="exam")renderExam();else{updateTimer();if(v==="flash")renderFlash()}
+  window.scrollTo(0,0);
+}
+
+/* ---------- timer ---------- */
+function remaining(){return S&&S.mode==="full"&&!S.done?Math.max(0,S.dur-Math.floor((Date.now()-S.start)/1000)):null}
+function updateTimer(){
+  const t=document.getElementById("timer"), r=remaining();
+  if(r===null){t.hidden=true;return}
+  t.hidden=false;
+  t.textContent=String(Math.floor(r/60)).padStart(2,"0")+":"+String(r%60).padStart(2,"0");
+  t.classList.toggle("low",r<600);
+  if(r===0){finish()}
+}
+function ensureTick(){if(!tick)tick=setInterval(updateTimer,1000)}
+
+/* ---------- exam rendering ---------- */
+const root=()=>document.getElementById("view-exam");
+function renderExam(){
+  updateTimer();
+  if(!S){renderHome();return}
+  if(S.done){renderResults();return}
+  renderQuestion();
+}
+
+function renderHome(){
+  const saved=load(KEY);
+  const missed=load(WKEY)||[];
+  const counts=Object.fromEntries(Object.keys(DOM).map(d=>[d,Q.filter(q=>q.d===d).length]));
+  root().innerHTML=`<div class="ex-home">
+    <div class="hero"><div class="eyebrow">Practice exam</div><h1>Choose how to practice</h1>
+    <p class="lede">${Q.length} original questions written to match the style and difficulty of AZ-802. These aren't real exam questions. They test the same skills in the same formats.</p></div>
+    ${saved&&!saved.done?`<div class="resume"><span>You have an unfinished ${saved.mode==="full"?"full exam":"practice session"} (${Object.keys(saved.ans).length}/${saved.ids.length} answered).</span><button class="btn small primary" id="resume">Resume</button><button class="btn small" id="discard">Discard</button></div>`:""}
+    <div class="modes">
+      <div class="mode"><h3>Full practice exam</h3><p>50 questions weighted by domain, ending with a 5-question case study. 100-minute timer, no feedback until you submit. Questions are drawn at random each time.</p><button class="btn primary" id="go-full">Start full exam</button></div>
+      <div class="mode"><h3>Practice by domain</h3><p>Untimed. You see the answer and explanation after each question.</p>
+        <div class="chips" id="dchips">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="true" data-d="${d}">${DOM[d].short} · ${counts[d]}</button>`).join("")}</div>
+        <button class="btn" id="go-prac">Start practice</button></div>
+      ${missed.length?`<div class="mode"><h3>Retry missed</h3><p>${missed.length} question${missed.length>1?"s":""} you got wrong last time, with instant feedback.</p><button class="btn" id="go-missed">Retry missed questions</button></div>`:""}
+    </div>
+  </div>`;
+  const r=root();
+  r.querySelector("#go-full").onclick=startFull;
+  r.querySelectorAll("#dchips .chip").forEach(c=>c.onclick=()=>c.setAttribute("aria-pressed",c.getAttribute("aria-pressed")!=="true"));
+  r.querySelector("#go-prac").onclick=()=>{const ds=[...r.querySelectorAll('#dchips .chip[aria-pressed="true"]')].map(c=>c.dataset.d);startPractice(ds)};
+  const gm=r.querySelector("#go-missed");if(gm)gm.onclick=()=>startPractice(null,missed);
+  const rs=r.querySelector("#resume");if(rs)rs.onclick=()=>{S=saved;renderExam()};
+  const ds=r.querySelector("#discard");if(ds)ds.onclick=()=>{del(KEY);renderHome()};
+}
+
+function hintFor(q){if(q.series)return"Select Yes or No";if(q.pick)return`Select ${q.pick===2?"two":q.pick}`;if(isMulti(q))return"Select all that apply";return"Select one"}
+
+function renderQuestion(){
+  const q=byId[S.ids[S.cur]], n=S.ids.length, ans=S.ans[q.id]||[], checked=S.mode==="practice"&&S.checked[q.id];
+  const multi=isMulti(q);
+  const opts=q.o.map((t,i)=>{
+    let cls="opt"; if(ans.includes(i))cls+=" sel";
+    if(checked){cls+=" locked";if(q.a.includes(i))cls+=" right";else if(ans.includes(i))cls+=" wrong"}
+    return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${checked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
+  const unanswered=S.ids.filter(id=>!(S.ans[id]&&S.ans[id].length)).length;
+  const markedN=S.ids.filter(id=>S.marked[id]).length;
+  const pal=S.ids.map((id,i)=>{let c="pq";const a=S.ans[id];
+    if(S.mode==="practice"&&S.checked[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(a&&a.length)c+=" ans";
+    if(S.marked[id])c+=" mk";if(i===S.cur)c+=" cur";
+    return `<button class="${c}" data-i="${i}" aria-label="Question ${i+1}">${i+1}</button>`}).join("");
+  root().innerHTML=`<div class="ex">
+    <div class="qcard">
+      <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}
+        <button class="mark" id="mark" aria-pressed="${!!S.marked[q.id]}">${S.marked[q.id]?"Marked for review":"Mark for review"}</button></div>
+      ${q.cs?`<details class="case" open><summary>Case study: ${CASE_NAME}</summary><div class="cbody">${CASE}</div></details>`:""}
+      <div class="qtext">${q.q}</div>
+      <div class="hint">${hintFor(q)}</div>
+      <div class="opts" id="opts">${opts}</div>
+      ${checked?explainHTML(q,ans):""}
+      <div class="qnav">
+        <button class="btn" id="prev" ${S.cur===0?"disabled":""}>Previous</button>
+        <span class="sp"></span>
+        ${S.mode==="practice"&&!checked?`<button class="btn primary" id="check" ${ans.length?"":"disabled"}>Check answer</button>`:""}
+        ${S.cur<n-1?`<button class="btn ${S.mode==="full"||checked?"primary":""}" id="next">Next</button>`:""}
+      </div>
+    </div>
+    <aside class="side">
+      <div class="pal">
+        <div class="hint">${S.mode==="full"?"Full exam":"Practice"} · ${n-unanswered}/${n} answered</div>
+        <div class="grid">${pal}</div>
+        <div class="legend"><span>■ answered</span><span style="color:var(--warn)">▁ marked</span>${S.mode==="practice"?'<span style="color:var(--good)">■ right</span><span style="color:var(--bad)">■ wrong</span>':""}</div>
+        ${confirmOpen?`<div class="confirm"><div><b>${unanswered}</b> unanswered, <b>${markedN}</b> marked for review. Submit now?</div><div class="cta-row"><button class="btn small primary" id="sub-yes">Submit</button><button class="btn small" id="sub-no">Keep working</button></div></div>`
+          :`<button class="btn ${S.cur===n-1?"primary":""}" id="submit">${S.mode==="full"?"Submit exam":"Finish & see results"}</button>`}
+        <button class="btn small" id="quit">Quit to menu</button>
+      </div>
+    </aside>
+  </div>`;
+  const r=root();
+  r.querySelectorAll("#opts input").forEach(inp=>inp.onchange=()=>{
+    const sel=[...r.querySelectorAll("#opts input:checked")].map(x=>+x.value);
+    S.ans[q.id]=sel;persist();
+    r.querySelectorAll("#opts .opt").forEach((l,i)=>l.classList.toggle("sel",sel.includes(i)));
+    const ck=r.querySelector("#check");if(ck)ck.disabled=!sel.length;
+    const b=r.querySelector(`.pq[data-i="${S.cur}"]`);if(b)b.classList.toggle("ans",!!sel.length);
+  });
+  r.querySelector("#mark").onclick=()=>{S.marked[q.id]=!S.marked[q.id];persist();renderQuestion()};
+  r.querySelector("#prev").onclick=()=>{S.cur--;persist();renderQuestion();window.scrollTo(0,0)};
+  const nx=r.querySelector("#next");if(nx)nx.onclick=()=>{S.cur++;persist();renderQuestion();window.scrollTo(0,0)};
+  const ck=r.querySelector("#check");if(ck)ck.onclick=()=>{S.checked[q.id]=true;persist();renderQuestion()};
+  r.querySelectorAll(".pq").forEach(b=>b.onclick=()=>{S.cur=+b.dataset.i;persist();renderQuestion()});
+  const sb=r.querySelector("#submit");if(sb)sb.onclick=()=>{confirmOpen=true;renderQuestion()};
+  const sy=r.querySelector("#sub-yes");if(sy)sy.onclick=()=>{confirmOpen=false;finish()};
+  const sn=r.querySelector("#sub-no");if(sn)sn.onclick=()=>{confirmOpen=false;renderQuestion()};
+  r.querySelector("#quit").onclick=()=>{S=null;confirmOpen=false;updateTimer();renderHome()};
+}
+
+function letters(arr){return (arr&&arr.length)?arr.slice().sort().map(i=>String.fromCharCode(65+i)).join(", "):"No answer"}
+function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="explain"><div class="verdict ${ok?"ok":"no"}">${ok?"Correct":"Incorrect"}. The answer is ${letters(q.a)}.</div><div>${q.x}</div></div>`}
+
+function finish(){
+  if(!S||S.done)return;
+  S.done=true;S.end=Date.now();
+  const missed=S.ids.filter(id=>!correct(byId[id],S.ans[id]||[]));
+  save(WKEY,missed);persist();updateTimer();resultsFilter="missed";
+  renderExam();window.scrollTo(0,0);
+}
+
+function renderResults(){
+  const items=S.ids.map(id=>({q:byId[id],ans:S.ans[id]||[]})).map(o=>({...o,ok:correct(o.q,o.ans)}));
+  const total=items.length, right=items.filter(i=>i.ok).length, pct=Math.round(right/total*100);
+  const mins=Math.round(((S.end||Date.now())-S.start)/60000);
+  const per=Object.keys(DOM).map(d=>{const its=items.filter(i=>i.q.d===d);const r=its.filter(i=>i.ok).length;return{d,n:its.length,r,p:its.length?Math.round(r/its.length*100):null}}).filter(x=>x.n);
+  const band=p=>p>=80?"hi":p>=65?"mid":"low";
+  const verdict=pct>=80?["Ready","var(--good)"]:pct>=70?["Borderline: review weak domains","var(--warn)"]:["Not yet: study the guide sections for your weakest domains","var(--bad)"];
+  const weakest=per.slice().sort((a,b)=>a.p-b.p)[0];
+  const shown=items.filter(i=>resultsFilter==="all"||!i.ok);
+  root().innerHTML=`<div class="res">
+    <div class="hero"><div class="eyebrow">${S.mode==="full"?"Full exam":"Practice"} results</div><h1>${right} of ${total} correct</h1></div>
+    <div class="score">
+      <div><div class="big">${pct}%</div><div class="hint" style="margin-top:6px">${mins} min</div></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span class="verdict-pill" style="color:${verdict[1]};border-color:${verdict[1]}">${verdict[0]}</span>
+        <p style="color:var(--muted);font-size:.92rem">The real exam uses a scaled 700/1000 passing score, and a scaled score isn't a simple percentage. On a practice set like this, aim for <b>80% or higher</b> so you have a margin.${weakest&&weakest.p<80?` Your weakest domain is <b>${DOM[weakest.d].name}</b>. Re-read <a href="#guide" data-sec="g-${weakest.d}">its cheat sheet</a>.`:""} Multi-select questions are scored all-or-nothing here.</p>
+      </div>
+    </div>
+    <div class="card"><h3>By domain</h3><div class="dbars">
+      ${per.map(x=>`<div class="dbar"><span>${DOM[x.d].name} <span class="hint">${x.r}/${x.n}</span></span><div class="track"><div class="fill ${band(x.p)}" style="width:${x.p}%"></div><div class="tick" title="80% target"></div></div><span class="pct">${x.p}%</span></div>`).join("")}
+      <div class="hint">The line on each bar marks the 80% target</div>
+    </div></div>
+    <div class="cta-row">
+      ${right<total?`<button class="btn primary" id="retry">Retry the ${total-right} missed</button>`:""}
+      <button class="btn" id="newfull">New full exam</button>
+      <button class="btn" id="menu">Practice menu</button>
+    </div>
+    <div class="filter"><h2 style="margin-right:auto">Review</h2>
+      <button class="chip" aria-pressed="${resultsFilter==="missed"}" data-f="missed">Missed (${total-right})</button>
+      <button class="chip" aria-pressed="${resultsFilter==="all"}" data-f="all">All (${total})</button></div>
+    <div class="rlist">${shown.length?shown.map(i=>`<div class="ritem ${i.ok?"ok":"bad"}">
+      <div class="qmeta"><span class="qnum">Q${S.ids.indexOf(i.q.id)+1}</span><span class="dtag">${DOM[i.q.d].short}</span>${i.q.cs?'<span class="dtag">Case study</span>':""}<span style="margin-left:auto;font-weight:600;color:${i.ok?"var(--good)":"var(--bad)"}">${i.ok?"Correct":"Incorrect"}</span></div>
+      <div class="qtext" style="font-size:.95rem">${i.q.q}</div>
+      <div class="row">Your answer: <b>${letters(i.ans)}</b> · Correct: <b>${letters(i.q.a)}</b></div>
+      <ol type="A" style="margin:0;padding-left:22px;font-size:.9rem">${i.q.o.map((t,k)=>`<li style="${i.q.a.includes(k)?"color:var(--good);font-weight:600":i.ans.includes(k)?"color:var(--bad)":""}">${t}</li>`).join("")}</ol>
+      <div class="explain">${i.q.x}</div></div>`).join(""):'<p class="lede">No missed questions.</p>'}</div>
+  </div>`;
+  const r=root();
+  const rt=r.querySelector("#retry");if(rt)rt.onclick=()=>startPractice(null,items.filter(i=>!i.ok).map(i=>i.q.id));
+  r.querySelector("#newfull").onclick=startFull;
+  r.querySelector("#menu").onclick=()=>{S=null;renderHome()};
+  r.querySelectorAll(".filter .chip").forEach(c=>c.onclick=()=>{resultsFilter=c.dataset.f;renderResults()});
+  r.querySelectorAll("a[data-sec]").forEach(a=>a.onclick=e=>{e.preventDefault();go("guide");setTimeout(()=>{const el=document.getElementById(a.dataset.sec);if(el)el.scrollIntoView()},30)});
+}
+
+/* ---------- flashcards ---------- */
+const FC=[
+["ad","Forest-wide FSMO roles","<b>Schema master</b> and <b>domain naming master</b>"],
+["ad","Domain-wide FSMO roles","<b>RID master</b>, <b>PDC emulator</b>, <b>infrastructure master</b>"],
+["ad","FSMO role that's the domain time source and handles lockouts","<b>PDC emulator</b>"],
+["ad","Symptom when the RID master is down for a long time","DCs can't create new security principals once their <b>RID pool</b> is used up"],
+["ad","When does the infrastructure master placement not matter?","When <b>every DC is a global catalog</b>"],
+["ad","Transfer vs seize a FSMO role","<b>Transfer</b> when the holder is online. <b>Seize</b> (<code>-Force</code>) only when it's gone for good."],
+["ad","Find all FSMO role holders","<code>netdom query fsmo</code>"],
+["ad","Forest's authoritative time source","<b>PDC emulator of the forest root domain</b>, synced to external NTP"],
+["ad","Install a DC without replicating the database over the WAN","<b>Install from media (IFM)</b> with <code>ntdsutil ifm</code>"],
+["ad","DC VM in Azure: where to put NTDS and SYSVOL","A <b>data disk</b> with host caching set to <b>None</b>"],
+["ad","Group that lets an RODC cache passwords","<b>Allowed RODC Password Replication Group</b> (or the RODC's allow list)"],
+["ad","Allowed vs Denied RODC password replication","<b>Denied always wins.</b> Privileged groups are denied by default."],
+["ad","Install an RODC without giving the branch admin domain rights","<b>Staged install</b>: pre-create the account and delegate installation"],
+["ad","An RODC is stolen. What do you do?","Delete its account and <b>reset passwords of all cached accounts</b>"],
+["ad","Transitive trust between two forests","<b>Forest trust</b>"],
+["ad","Non-transitive domain-to-domain trust","<b>External trust</b>"],
+["ad","Speed up authentication between two deep child domains in one forest","<b>Shortcut trust</b>"],
+["ad","Trust to a non-Windows Kerberos realm","<b>Realm trust</b>"],
+["ad","Limit trusted users to specific computers","<b>Selective authentication</b> + <b>Allowed to Authenticate</b> on those computers"],
+["ad","Default site link replication interval / minimum","<b>180 minutes</b> / <b>15 minutes</b>"],
+["ad","Site link cost: higher or lower is preferred?","<b>Lower</b> cost is preferred"],
+["ad","Component that builds the replication topology","<b>KCC</b>. The <b>ISTG</b> picks bridgehead servers between sites."],
+["ad","Branch site with no GC; logons fail when WAN is down","<b>Universal group membership caching</b> for the site"],
+["ad","Group scopes","<b>Global</b> (own-domain members), <b>domain local</b> (own-domain permissions), <b>universal</b> (forest-wide)"],
+["ad","Recommended group nesting","<b>AGDLP</b>: Accounts → Global → Domain Local → Permissions"],
+["ad","Managed service account for many servers","<b>gMSA</b>"],
+["ad","Prerequisite for gMSAs","A <b>KDS root key</b> (<code>Add-KdsRootKey</code>), usable after 10 hours"],
+["ad","Managed service account for one server","<b>sMSA</b>"],
+["ad","Windows Server 2025 account that replaces a legacy service account","<b>Delegated managed service account (dMSA)</b>"],
+["ad","Install a gMSA on a server","<code>Install-ADServiceAccount</code>, then <code>Test-ADServiceAccount</code>"],
+["ad","Group Policy processing order","<b>Local → Site → Domain → OU</b>. Last applied wins."],
+["ad","Enforced vs Block Inheritance","<b>Enforced wins</b>"],
+["ad","User settings from the computer's OU (kiosks, RDS)","<b>Loopback processing</b> (Merge or Replace)"],
+["ad","Apply a GPO based on hardware or OS query","<b>WMI filter</b>"],
+["ad","GPO stops applying after removing Authenticated Users","Computers need <b>Read</b> on the GPO. Add Domain Computers (Read)."],
+["ad","Shared location for ADMX templates","<b>Central store</b>: SYSVOL\\Policies\\PolicyDefinitions"],
+["ad","Settings users can change, with item-level targeting","<b>Group Policy Preferences</b>"],
+["ad","Group Policy refresh interval: members / DCs","<b>90 ± 30 min</b> / <b>5 min</b>"],
+["hyb","Fix for the PowerShell double-hop problem (secure)","<b>Resource-based Kerberos constrained delegation</b>"],
+["hyb","Insecure double-hop fix","<b>CredSSP</b> (caches reusable credentials)"],
+["hyb","WinRM ports","<b>5985</b> HTTP / <b>5986</b> HTTPS"],
+["hyb","Let non-admins run only specific cmdlets as admin","<b>Just Enough Administration (JEA)</b>"],
+["hyb","JEA file listing visible cmdlets and parameters","<b>Role capability file (.psrc)</b>"],
+["hyb","JEA file mapping groups to roles and run-as account","<b>Session configuration file (.pssc)</b>"],
+["hyb","Register a JEA endpoint","<code>Register-PSSessionConfiguration</code>"],
+["hyb","Connect to a JEA endpoint","<code>Enter-PSSession -ConfigurationName</code>"],
+["hyb","SSH server on Windows Server 2025","<b>OpenSSH</b> is installed. Start and enable the <b>sshd</b> service."],
+["hyb","Admin RDP that doesn't send reusable credentials to the server","<b>Remote Credential Guard</b> or <b>Restricted Admin mode</b>"],
+["hyb","Browser-based server management without your own gateway","<b>Windows Admin Center in the Azure portal</b>"],
+["hyb","Agent that connects an on-prem server to Azure","<b>Azure Connected Machine agent</b> (<code>azcmagent</code>)"],
+["hyb","Network requirement for Azure Arc","<b>Outbound HTTPS 443</b> only (proxy or Private Link supported)"],
+["hyb","Role for an Arc at-scale onboarding service principal","<b>Azure Connected Machine Onboarding</b>"],
+["hyb","Apply OS settings to Arc servers from Azure Policy","<b>Machine configuration</b> (guest configuration)"],
+["hyb","Patch Azure VMs and Arc servers on a schedule","<b>Azure Update Manager</b> + <b>maintenance configurations</b>"],
+["hyb","Update Manager periodic assessment frequency","Every <b>24 hours</b>"],
+["hyb","Security updates without rebooting","<b>Hotpatching</b> (Azure Edition, or Arc-enabled WS2025 with subscription)"],
+["hyb","Run Azure Automation runbooks on-prem","<b>Hybrid Runbook Worker</b> (extension-based)"],
+["vm","Run PowerShell in a VM from the host with no network","<b>PowerShell Direct</b>: <code>Enter-PSSession -VMName</code>"],
+["vm","Same as PowerShell Direct, for Linux guests","<b>SSH Direct</b> (hvc)"],
+["vm","Clipboard and drive redirection in VMConnect","<b>Enhanced Session Mode</b>"],
+["vm","Copy a file from host to VM with no network","<code>Copy-VMFile</code> (needs <b>Guest services</b> enabled)"],
+["vm","Enable nested virtualization","VM off, <code>Set-VMProcessor -ExposeVirtualizationExtensions $true</code>"],
+["vm","Networking for nested VMs","<b>MAC address spoofing</b> on the outer vNIC, or NAT"],
+["vm","Change static VM memory while running","<b>Runtime memory resize</b>"],
+["vm","Dynamic Memory settings","Startup, minimum, maximum, buffer, weight"],
+["vm","Dedicate a whole GPU or NVMe device to one VM","<b>Discrete Device Assignment (DDA)</b>"],
+["vm","Share one GPU among several VMs","<b>GPU partitioning (GPU-P)</b>"],
+["vm","Production vs standard checkpoint","<b>Production</b>: VSS, app-consistent, no memory. <b>Standard</b>: includes memory state."],
+["vm","Are checkpoints backups?","<b>No.</b> Delete them so AVHDX files merge."],
+["vm","VHDX vs VHD max size","<b>64 TB</b> vs <b>2 TB</b>"],
+["vm","Shared disk for guest clusters","<b>Shared VHDX</b> / <b>VHD Set (.vhds)</b>"],
+["vm","Generation 2 VM features","UEFI, Secure Boot, SCSI boot, virtual TPM"],
+["vm","Virtual switch types","<b>External</b>, <b>Internal</b> (host + VMs), <b>Private</b> (VMs only)"],
+["vm","Host NIC teaming for Hyper-V with RDMA","<b>Switch Embedded Teaming (SET)</b>"],
+["vm","Guest NIC teaming requirement","Two vNICs with <b>teaming allowed in the guest</b> enabled"],
+["vm","Replicate VMs between standalone hosts","<b>Hyper-V Replica</b>"],
+["vm","Hyper-V Replica frequencies","<b>30 seconds</b>, <b>5 minutes</b>, <b>15 minutes</b>"],
+["vm","Hyper-V Replica to a third site","<b>Extended replication</b>"],
+["vm","Hyper-V Replica on a failover cluster needs","<b>Hyper-V Replica Broker</b> role"],
+["vm","Move a running VM and its storage without a cluster","<b>Shared-nothing live migration</b>"],
+["vm","Patch cluster nodes one at a time automatically","<b>Cluster-Aware Updating</b>"],
+["vm","Azure VM size not listed while running","<b>Deallocate</b>, then resize"],
+["vm","Open RDP only on request for a limited time in Azure","<b>Just-in-time VM access</b> (Defender for Servers P2)"],
+["vm","Where to set a static IP for an Azure VM","On the <b>NIC in Azure</b>, not in the guest"],
+["net","DNS zone that updates its name servers automatically","<b>Stub zone</b>"],
+["net","Forward one domain's queries to specific servers (static)","<b>Conditional forwarder</b>"],
+["net","Different DNS answers per client subnet","<b>DNS policies</b> with zone scopes"],
+["net","Make clients require DNSSEC validation","<b>NRPT</b> via Group Policy"],
+["net","DNSSEC keys","<b>KSK</b> (signs keys) and <b>ZSK</b> (signs zone records)"],
+["net","Record type clients use to find DCs","<b>SRV</b>"],
+["net","Scavenging requirements","Aging on the <b>zone</b> + scavenging on <b>a server</b>. Default 7 + 7 days."],
+["net","Azure's internal DNS resolver IP","<b>168.63.129.16</b> (reachable only from Azure)"],
+["net","On-prem resolving Azure private DNS zones","Conditional forwarder to <b>DNS Private Resolver inbound endpoint</b>"],
+["net","Azure resolving on-prem names via Private Resolver","<b>Outbound endpoint</b> + <b>forwarding ruleset</b>"],
+["net","DHCP option precedence","<b>Reservation → scope → server</b> (most specific wins)"],
+["net","DHCP options: router / DNS servers / domain name","<b>003</b> / <b>006</b> / <b>015</b>"],
+["net","DHCP server won't lease in a domain","<b>Authorize</b> it in AD DS"],
+["net","Multiple logical subnets on one physical segment","<b>Superscope</b>"],
+["net","Forward DHCP broadcasts to another subnet","<b>DHCP relay agent</b> / IP helper"],
+["net","Client has a 169.254.x.x address","<b>APIPA</b>: no DHCP server responded"],
+["net","DHCP failover modes","<b>Load balance</b> (50/50) and <b>hot standby</b> (5% reserve)"],
+["net","DHCP failover MCLT default","<b>1 hour</b>"],
+["net","Can you run DHCP for VMs inside an Azure VNet?","<b>No.</b> Azure assigns addresses."],
+["sto","Azure File Sync hierarchy","Storage Sync Service → sync group → <b>1 cloud endpoint</b> + server endpoints"],
+["sto","Keep hot files local, tier cold files to Azure","<b>Cloud tiering</b> (free space + date policies)"],
+["sto","Where can't you use cloud tiering?","The <b>system volume</b>"],
+["sto","Azure Files share-level roles","SMB Share <b>Reader</b>, <b>Contributor</b>, <b>Elevated Contributor</b>"],
+["sto","Migrate a file server to a new server or Azure with identity cutover","<b>Storage Migration Service</b>"],
+["sto","FSRM hard vs soft quota","<b>Hard</b> blocks writes. <b>Soft</b> only notifies."],
+["sto","Apply a quota to every new subfolder","<b>Auto-apply quota</b> template"],
+["sto","FSRM active vs passive file screen","<b>Active</b> blocks. <b>Passive</b> only monitors."],
+["sto","Allow a blocked file type in one subfolder","<b>File screen exception</b>"],
+["sto","Highly available DFS namespace","<b>Domain-based</b> namespace with multiple namespace servers"],
+["sto","Hide folders users can't access","<b>Access-based enumeration</b>"],
+["sto","Internet file access without VPN over UDP 443","<b>SMB over QUIC</b>"],
+["sto","SMB over RDMA NICs","<b>SMB Direct</b>"],
+["sto","Storage Spaces: survive 2 disk failures, fast writes","<b>Three-way mirror</b> (5 disks minimum)"],
+["sto","Storage Spaces minimum disks: two-way mirror / parity / dual parity","<b>2</b> / <b>3</b> / <b>7</b>"],
+["sto","Pool local disks across 2–16 cluster nodes","<b>Storage Spaces Direct</b>"],
+["sto","Two-node S2D cluster needs","A <b>witness</b> (cloud or file share)"],
+["sto","Block-level volume replication between servers","<b>Storage Replica</b>"],
+["sto","Storage Replica sync vs async","<b>Sync</b>: no data loss, low latency (~5 ms). <b>Async</b>: distance, possible loss."],
+["sto","Storage Replica limit in Standard edition","<b>1 partnership</b>, <b>1 volume up to 2 TB</b>"],
+["sto","Validate Storage Replica before deploying","<code>Test-SRTopology</code>"],
+["sto","File system for Hyper-V VMs and S2D","<b>ReFS</b>"],
+["sto","Features NTFS has that ReFS lacks","Boot volume, <b>EFS</b>, disk quotas, compression"],
+["sto","Data Deduplication restrictions","Not on the <b>system/boot volume</b>"],
+["sto","Redundant paths to iSCSI targets","<b>MPIO</b>"],
+["sto","Min/max IOPS per VHDX in a cluster","<b>Storage QoS</b> policies"],
+["sto","Auto-unlock BitLocker on the corporate network","<b>Network Unlock</b>"],
+["sto","Where to back up BitLocker recovery passwords on-prem","<b>AD DS</b> (via Group Policy)"],
+["sec","Protect NTLM hashes and TGTs in memory","<b>Credential Guard</b>"],
+["sec","Where Credential Guard isn't supported","<b>Domain controllers</b>"],
+["sec","Allow only approved code to run","<b>App Control for Business</b> (formerly WDAC)"],
+["sec","Apply and enforce security baselines on Windows Server 2025","<b>OSConfig</b> with drift control"],
+["sec","Unique rotating local admin passwords","<b>Windows LAPS</b>"],
+["sec","LAPS on a DC manages which password?","The <b>DSRM</b> password"],
+["sec","Defender for Servers plan with JIT and FIM","<b>Plan 2</b>"],
+["sec","Firewall profiles","<b>Domain</b>, <b>Private</b>, <b>Public</b>"],
+["sec","Require IPsec between servers","<b>Connection security rules</b>"],
+["sec","Different password policy for a group","<b>Fine-grained password policy (PSO)</b>"],
+["sec","PSOs apply to","<b>Users</b> and <b>global security groups</b> (not OUs)"],
+["sec","Two PSOs apply. Which wins?","The <b>lowest precedence</b> number"],
+["sec","Block weak and company-specific passwords in AD DS","<b>Entra Password Protection</b> (proxy + DC agent)"],
+["sec","Protected Users restrictions","No NTLM, no DES/RC4, no delegation, no caching, <b>4-hour TGT</b>"],
+["sec","Permission changes on admin accounts revert hourly","<b>AdminSDHolder / SDProp</b> (every 60 min)"],
+["sec","Give help desk password reset on one OU","<b>Delegation of Control Wizard</b>"],
+["sec","Restrict where privileged accounts can sign in","<b>Authentication policies and silos</b>"],
+["sec","Prevent an admin account from being delegated","<b>Account is sensitive and cannot be delegated</b>"],
+["mon","Record performance counters on a schedule","<b>Data collector set</b>"],
+["mon","Local capacity forecasting on Windows Server","<b>System Insights</b>"],
+["mon","Event subscription that scales via GPO","<b>Source-initiated</b>"],
+["mon","Where forwarded events land","<b>Forwarded Events</b> log"],
+["mon","Collect Windows events into Azure Monitor","<b>Azure Monitor Agent</b> + <b>data collection rule</b>"],
+["mon","AD Recycle Bin requirement","Forest functional level <b>2008 R2+</b>. Can't be disabled."],
+["mon","Restore a deleted AD object with Recycle Bin","<code>Restore-ADObject</code> (restore parent OU first)"],
+["mon","Restore a deleted object without Recycle Bin","<b>DSRM</b> + backup + <b>authoritative restore</b> (ntdsutil)"],
+["mon","Rebuild a failed DC from backup","<b>Non-authoritative restore</b>"],
+["mon","Reset the DSRM password","<code>ntdsutil \"set dsrm password\"</code>"],
+["mon","Authoritative SYSVOL (DFS-R) restore attribute","<code>msDFSR-Options = 1</code>"],
+["mon","Default tombstone / deleted object lifetime","<b>180 days</b>"],
+["mon","DC offline longer than tombstone lifetime","<b>Don't reconnect.</b> Remove, clean metadata, rebuild."],
+["mon","Replication summary for all DCs","<code>repadmin /replsummary</code>"],
+["mon","DC health tests","<code>dcdiag</code>"],
+["mon","Maximum Kerberos clock skew","<b>5 minutes</b>"],
+["mon","Check time sync status","<code>w32tm /query /status</code>"],
+["mon","Find duplicate SPNs","<code>setspn -X</code>"],
+["mon","Clear cached Kerberos tickets","<code>klist purge</code>"],
+["mon","Fix \"trust relationship failed\" without rejoining","<code>Test-ComputerSecureChannel -Repair</code>"],
+["mon","Generate the Windows Update log","<code>Get-WindowsUpdateLog</code>"],
+["mon","Test a TCP port","<code>Test-NetConnection -Port</code>"],
+["mon","Azure VM stuck at boot","<b>Serial console</b> (and boot diagnostics)"],
+["mon","Run a script in an Azure VM without network access","<b>Run Command</b>"],
+["mon","Arc agent logs and health","<code>azcmagent logs</code> / <code>azcmagent check</code>"]
+];
+
+const FKEY="az802-flash-known-v1";
+const F={doms:new Set(Object.keys(DOM)),known:new Set(load(FKEY)||[]),queue:null,flipped:false,includeKnown:false};
+function buildQueue(){F.queue=shuffle(FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0])&&(F.includeKnown||!F.known.has(i))));F.flipped=false}
+function saveKnown(){save(FKEY,[...F.known])}
+function renderFlash(){
+  if(!F.queue)buildQueue();
+  const el=document.getElementById("view-flash");
+  const inDoms=FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0]));
+  const knownN=inDoms.filter(i=>F.known.has(i)).length;
+  const pct=inDoms.length?Math.round(knownN/inDoms.length*100):0;
+  const idx=F.queue[0], c=idx===undefined?null:FC[idx];
+  el.innerHTML=`<div class="fl">
+    <div class="hero"><div class="eyebrow">Flashcards · ${FC.length} cards</div><h1>Flashcards</h1>
+    <p class="lede">Flip a card, then choose <b>Got it</b> to take it out of the deck or <b>Again</b> to see it again in a few cards. Cards you mark as known are saved in this browser.</p></div>
+    <div class="fl-opts" id="fdoms">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="${F.doms.has(d)}" data-d="${d}">${DOM[d].short} · ${FC.filter(x=>x[0]===d).length}</button>`).join("")}</div>
+    <div class="fl-opts">
+      <button class="chip" id="fknown" aria-pressed="${F.includeKnown}">Include known cards</button>
+      <button class="btn small" id="fshuffle">Shuffle &amp; restart</button>
+      <button class="btn small" id="freset">Reset progress</button>
+    </div>
+    <div class="fl-top"><span>${F.queue.length} left this round</span><span>${knownN} of ${inDoms.length} known · ${pct}%</span></div>
+    <div class="prog"><div style="width:${pct}%"></div></div>
+    ${c?`<div class="fc ${F.flipped?"flipped":""}" id="fc" tabindex="0" role="button" aria-label="Flip card">
+      <div class="fc-in">
+        <div class="fc-face fc-front"><span class="dtag" style="align-self:flex-start">${DOM[c[0]].short}</span><div class="fc-text">${c[1]}</div><span class="hint">Click or press Space to flip</span></div>
+        <div class="fc-face fc-back"><div class="fc-q">${c[1]}</div><div class="fc-text">${c[2]}</div><span class="hint">${DOM[c[0]].name}</span></div>
+      </div></div>
+    <div class="fc-ctrl">
+      <button class="btn again" id="fagain">Again<span class="kbd">←</span></button>
+      <button class="btn" id="fflip">Flip<span class="kbd">Space</span></button>
+      <button class="btn got" id="fgot">Got it<span class="kbd">→</span></button>
+    </div>`
+    :`<div class="fl-done"><h2>${inDoms.length?"Round complete":"No domains selected"}</h2><p class="lede">${inDoms.length?`You know ${knownN} of ${inDoms.length} cards in the selected domains.`:"Turn on at least one domain above."}</p>
+      <div class="cta-row">${inDoms.length?`<button class="btn primary" id="fall">Review all cards again</button>`:""}<button class="btn" id="fexam">Go to practice exam</button></div></div>`}
+  </div>`;
+  el.querySelectorAll("#fdoms .chip").forEach(b=>b.onclick=()=>{const d=b.dataset.d;F.doms.has(d)?F.doms.delete(d):F.doms.add(d);buildQueue();renderFlash()});
+  el.querySelector("#fknown").onclick=()=>{F.includeKnown=!F.includeKnown;buildQueue();renderFlash()};
+  el.querySelector("#fshuffle").onclick=()=>{buildQueue();renderFlash()};
+  el.querySelector("#freset").onclick=()=>{F.known.clear();saveKnown();buildQueue();renderFlash()};
+  const card=el.querySelector("#fc");if(card)card.onclick=flipCard;
+  const a=el.querySelector("#fagain");if(a)a.onclick=again;
+  const g=el.querySelector("#fgot");if(g)g.onclick=gotIt;
+  const fl=el.querySelector("#fflip");if(fl)fl.onclick=flipCard;
+  const fa=el.querySelector("#fall");if(fa)fa.onclick=()=>{F.includeKnown=true;buildQueue();renderFlash()};
+  const fe=el.querySelector("#fexam");if(fe)fe.onclick=()=>go("exam");
+}
+function flipCard(){F.flipped=!F.flipped;const c=document.getElementById("fc");if(c)c.classList.toggle("flipped",F.flipped)}
+function again(){if(!F.queue.length)return;const x=F.queue.shift();F.queue.splice(Math.min(3,F.queue.length),0,x);F.flipped=false;renderFlash();focusCard()}
+function gotIt(){if(!F.queue.length)return;F.known.add(F.queue.shift());saveKnown();F.flipped=false;renderFlash();focusCard()}
+function focusCard(){const c=document.getElementById("fc");if(c)c.focus({preventScroll:true})}
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("view-flash").hidden)return;
+  if(e.target.closest&&e.target.closest("input,textarea,select"))return;
+  if(e.key===" "||e.key==="Enter"){if(e.target.tagName==="BUTTON"&&e.target.id!=="fc")return;e.preventDefault();flipCard()}
+  else if(e.key==="ArrowRight"){e.preventDefault();gotIt()}
+  else if(e.key==="ArrowLeft"){e.preventDefault();again()}
+});
+
+/* ---------- wiring ---------- */
+document.querySelectorAll("[data-flash]").forEach(b=>b.onclick=()=>go("flash"));
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>go(t.dataset.view));
+document.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>{startFull()});
+document.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>{S=null;go("exam")});
+document.querySelectorAll(".toc a").forEach(a=>a.onclick=e=>{e.preventDefault();const el=document.querySelector(a.getAttribute("href"));if(el)el.scrollIntoView({behavior:"smooth"})});
+window.addEventListener("hashchange",route);
+const saved=load(KEY); if(saved&&!saved.done&&saved.mode==="full"){S=saved}
+ensureTick(); route();
+</script>
+
+</body>
+</html>
