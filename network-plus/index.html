@@ -1,0 +1,1294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Network+ CompTIA Network+ N10-009 study guide, timed practice exam, and flashcards.">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}a.brand{color:inherit;text-decoration:none}</style>
+<title>Network+ Prep</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: an exam-console shell — sticky tab bar, a reading column for the guide, a two-pane question view with a numbered palette. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --sunk:#eceff4; --ink:#151b27; --muted:#5a6476; --line:#d9dee7;
+  --accent:#2c56c9; --accent-ink:#ffffff; --soft:#e5ecfb;
+  --good:#18805a; --good-soft:#e2f3ec; --bad:#b93a3a; --bad-soft:#f8e6e6; --warn:#9a6a12; --warn-soft:#f8efdc;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:2rem;font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:600}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+code{background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:0 .3em}
+pre{font-family:var(--f-mono);font-size:.85rem;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:10px 12px;overflow-x:auto;margin:0}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:16px;padding-block:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.1rem;display:flex;gap:8px;align-items:baseline}
+.brand .code{font-family:var(--f-mono);font-size:.8rem;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:1px 6px}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tab{background:none;border:1px solid transparent;color:var(--muted);padding:6px 12px;border-radius:6px;font-weight:500}
+.tab[aria-selected="true"]{background:var(--soft);color:var(--ink);border-color:var(--line)}
+.timer{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.95rem;padding:4px 10px;border-radius:6px;background:var(--sunk);border:1px solid var(--line)}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Guide */
+.guide{display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);align-self:start;display:flex;flex-direction:column;gap:2px;font-size:.88rem}
+.toc a{color:var(--muted);text-decoration:none;padding:4px 8px;border-left:2px solid var(--line)}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+.toc .lbl{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 8px 6px}
+.gmain{display:flex;flex-direction:column;gap:44px;min-width:0}
+.gsec{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.gsec > p,.gsec li{max-width:70ch}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.06rem;color:var(--muted);max-width:66ch}
+.hero{display:flex;flex-direction:column;gap:14px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:7px;font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.small{padding:5px 10px;font-size:.88rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.fact{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.fact b{font-family:var(--f-display);font-size:1.35rem;font-weight:600}
+.fact span{font-size:.82rem;color:var(--muted)}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--sunk);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.risk{display:inline-block;font-family:var(--f-mono);font-size:.72rem;padding:1px 7px;border-radius:999px;border:1px solid}
+.risk.hi{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.risk.md{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.risk.lo{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+
+.sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{font-size:1rem}
+.card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.9rem}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.8rem;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--accent);border:1px solid var(--line)}
+.trap{border-left:3px solid var(--warn);padding:6px 12px;background:var(--surface);border-radius:0 6px 6px 0}
+.traps{display:flex;flex-direction:column;gap:8px}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.plan .when{font-family:var(--f-mono);font-size:.78rem;color:var(--accent)}
+
+/* Exam */
+.ex-home{display:flex;flex-direction:column;gap:22px;max-width:780px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.mode{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.mode p{color:var(--muted);font-size:.92rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:4px 10px;font-size:.84rem}
+.chip[aria-pressed="true"]{background:var(--soft);color:var(--ink);border-color:var(--accent)}
+.resume{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+.ex{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:24px;align-items:start}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.qmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.86rem;color:var(--muted)}
+.qnum{font-family:var(--f-mono);color:var(--ink)}
+.dtag{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--sunk);border:1px solid var(--line)}
+.mark{margin-left:auto;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:3px 10px;font-size:.84rem}
+.mark[aria-pressed="true"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.qtext{font-size:1.02rem;display:flex;flex-direction:column;gap:10px}
+.qtext table{font-size:.86rem}
+.hint{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:22px 26px minmax(0,1fr);gap:8px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--surface)}
+.opt:hover{border-color:var(--accent)}
+.opt input{margin:3px 0 0;accent-color:var(--accent)}
+.opt .ltr{font-family:var(--f-mono);color:var(--muted);font-size:.86rem;padding-top:1px}
+.opt.sel{border-color:var(--accent);background:var(--soft)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.locked{cursor:default}
+.explain{border-radius:8px;padding:12px 14px;border:1px solid var(--line);background:var(--sunk);display:flex;flex-direction:column;gap:6px;font-size:.93rem}
+.explain .verdict{font-weight:600}
+.explain .verdict.ok{color:var(--good)} .explain .verdict.no{color:var(--bad)}
+.qnav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qnav .sp{flex:1}
+.case{border:1px solid var(--line);border-radius:8px;background:var(--sunk)}
+.case summary{cursor:pointer;padding:10px 14px;font-weight:600;font-family:var(--f-display)}
+.case .cbody{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+.case ul{margin:0;padding-left:18px}
+
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);display:flex;flex-direction:column;gap:12px}
+.pal{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.pq{font-family:var(--f-mono);font-size:.76rem;padding:5px 0;border-radius:5px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-variant-numeric:tabular-nums}
+.pq.ans{background:var(--soft);color:var(--ink)}
+.pq.mk{border-color:var(--warn);box-shadow:inset 0 -3px 0 var(--warn)}
+.pq.cur{border-color:var(--accent);outline:1px solid var(--accent);color:var(--ink)}
+.pq.ok{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.pq.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:.76rem;color:var(--muted)}
+.confirm{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+
+/* Results */
+.res{display:flex;flex-direction:column;gap:24px}
+.score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.big{font-family:var(--f-display);font-size:3.2rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.verdict-pill{display:inline-block;font-family:var(--f-mono);font-size:.78rem;padding:3px 10px;border-radius:999px;border:1px solid}
+.dbars{display:flex;flex-direction:column;gap:10px}
+.dbar{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) 64px;gap:12px;align-items:center;font-size:.9rem}
+.track{height:10px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden;position:relative}
+.fill{height:100%;background:var(--accent)}
+.fill.low{background:var(--bad)} .fill.mid{background:var(--warn)} .fill.hi{background:var(--good)}
+.track .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.35;left:80%}
+.dbar .pct{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.rlist{display:flex;flex-direction:column;gap:12px}
+.ritem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--line)}
+.ritem.ok{border-left-color:var(--good)} .ritem.bad{border-left-color:var(--bad)}
+.ritem .row{font-size:.88rem;color:var(--muted)}
+.ritem .row b{color:var(--ink);font-weight:600}
+.filter{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* Flashcards */
+.fl{display:flex;flex-direction:column;gap:18px;max-width:760px;margin:0 auto}
+.fl-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.88rem;color:var(--muted)}
+.prog{height:6px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.prog>div{height:100%;background:var(--good)}
+.fc{perspective:1400px;cursor:pointer;outline:none}
+.fc-in{display:grid;transition:transform .45s ease;transform-style:preserve-3d}
+.fc.flipped .fc-in{transform:rotateY(180deg)}
+.fc-face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;min-height:280px;display:flex;flex-direction:column;gap:14px;justify-content:space-between;min-width:0}
+.fc-back{transform:rotateY(180deg);background:var(--soft);border-color:var(--accent)}
+.fc-text{font-family:var(--f-display);font-size:1.5rem;font-weight:600;line-height:1.3;text-wrap:balance}
+.fc-back .fc-text{font-family:var(--f-body);font-size:1.08rem;font-weight:400;line-height:1.6;text-wrap:pretty}
+.fc-q{font-size:.85rem;color:var(--muted)}
+.fc:focus-visible .fc-face{outline:2px solid var(--accent);outline-offset:2px}
+.fc-ctrl{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn.again{border-color:var(--bad);color:var(--bad)}
+.btn.got{border-color:var(--good);color:var(--good)}
+.kbd{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:6px}
+.fl-opts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fl-done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:12px}
+
+@media (max-width:860px){
+  .guide{grid-template-columns:1fr}
+  .toc{position:static;flex-direction:row;flex-wrap:wrap;gap:4px}
+  .toc .lbl{width:100%}
+  .toc a{border-left:0;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .ex{grid-template-columns:1fr}
+  .side{position:static}
+  .grid{grid-template-columns:repeat(10,1fr)}
+  .score{grid-template-columns:1fr}
+  .dbar{grid-template-columns:1fr 56px}
+  .dbar .track{grid-column:1 / -1;grid-row:2}
+}
+@media (max-width:480px){.grid{grid-template-columns:repeat(7,1fr)} h1{font-size:1.6rem} .qcard{padding:16px} .fc-face{padding:20px;min-height:240px} .fc-text{font-size:1.25rem} .kbd{display:none} .tab{padding:6px 9px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="/" title="All exams"><span class="code">Network+</span> Prep</a>
+    <span class="timer" id="timer" hidden>100:00</span>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-guide" data-view="guide">Study guide</button>
+      <button class="tab" role="tab" id="tab-exam" data-view="exam">Practice exam</button>
+      <button class="tab" role="tab" id="tab-flash" data-view="flash">Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<section id="view-guide">
+<div class="guide">
+  <nav class="toc" aria-label="Guide sections">
+    <div class="lbl">On this page</div>
+    <a href="#g-format">Exam format</a>
+    <a href="#g-map">Domain map</a>
+    <a href="#g-plan">Study plan</a>
+    <a href="#g-con">Networking concepts</a>
+    <a href="#g-sub">Subnetting</a>
+    <a href="#g-imp">Implementation</a>
+    <a href="#g-ops">Operations</a>
+    <a href="#g-sec">Security</a>
+    <a href="#g-ts">Troubleshooting</a>
+    <a href="#g-num">Ports &amp; numbers</a>
+    <a href="#g-traps">Classic traps</a>
+  </nav>
+  <div class="gmain">
+    <div class="hero">
+      <div class="eyebrow">CompTIA Network+</div>
+      <h1>The Network+ N10-009 guide</h1>
+      <p class="lede">Network+ covers how networks are built, run, secured, and fixed: OSI layers, addressing and subnetting, routing and switching, wireless, network services, monitoring, security attacks and defenses, and a large troubleshooting domain. Expect lots of "which layer," "which tool," and "what's the most likely cause" questions, plus subnetting math.</p>
+      <div class="cta-row">
+        <button class="btn primary" data-start="full">Start full practice exam (60 Q, 60 min)</button>
+        <button class="btn" data-goto="exam">Practice by domain</button>
+        <button class="btn" data-flash>Flashcards</button>
+      </div>
+    </div>
+
+    <section class="gsec" id="g-format">
+      <div class="eyebrow">01 · Format</div>
+      <h2>What you're walking into</h2>
+      <div class="facts">
+        <div class="fact"><b>720</b><span>passing score on a 100–900 scale</span></div>
+        <div class="fact"><b>≤ 90</b><span>questions, multiple choice and performance-based</span></div>
+        <div class="fact"><b>90 min</b><span>exam time</span></div>
+        <div class="fact"><b>N10-009</b><span>current exam version</span></div>
+      </div>
+      <ul>
+        <li><b>Performance-based questions</b> usually appear first: configure a subnet, match cables to connectors, place devices in a topology, or read device output. Flag them and come back if they eat time.</li>
+        <li>N10-009 added more on <b>cloud networking, SD-WAN, zero trust, SASE, infrastructure as code, and VXLAN</b>.</li>
+        <li>Practice subnetting until a /26 or /29 takes you seconds.</li>
+        <li>This practice exam is 60 questions in 60 minutes, ending with a 5-question scenario set.</li>
+      </ul>
+    </section>
+
+    <section class="gsec" id="g-map">
+      <div class="eyebrow">02 · Weighting</div>
+      <h2>Domain map</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Domain</th><th>Weight</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>1.0 Networking concepts</td><td class="num">23%</td><td>OSI, appliances, cloud, ports, media, topologies, IPv4/IPv6, SDN/SD-WAN, zero trust.</td></tr>
+          <tr><td>2.0 Network implementation</td><td class="num">20%</td><td>Routing, switching, VLANs, STP, wireless, physical installation.</td></tr>
+          <tr><td>3.0 Network operations</td><td class="num">19%</td><td>Documentation, lifecycle, monitoring, DR, DHCP/DNS/NTP, remote access.</td></tr>
+          <tr><td>4.0 Network security</td><td class="num">14%</td><td>Authentication, segmentation, attacks, hardening, NAC.</td></tr>
+          <tr><td>5.0 Network troubleshooting</td><td class="num">24%</td><td>Methodology, cabling, services, performance, wireless, tools and commands.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-plan">
+      <div class="eyebrow">03 · Schedule</div>
+      <h2>A two-week study plan</h2>
+      <div class="plan">
+        <div class="card"><div class="when">Day 1</div><h3>Baseline</h3><p>Take the full practice exam timed. Note weak domains.</p></div>
+        <div class="card"><div class="when">Days 2–5</div><h3>Concepts &amp; subnetting</h3><p>OSI, ports, and subnetting first. Do 10 subnetting problems a day until they're automatic.</p></div>
+        <div class="card"><div class="when">Days 6–9</div><h3>Implementation &amp; troubleshooting</h3><p>Routing, VLANs, STP, wireless, then troubleshooting symptoms and tools.</p></div>
+        <div class="card"><div class="when">Days 10–13</div><h3>Full exams</h3><p>Full timed exams every other day with review. Flashcards daily.</p></div>
+        <div class="card"><div class="when">Day 14</div><h3>Light review</h3><p>Ports, numbers, and traps only.</p></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-con">
+      <div class="eyebrow">04 · Networking concepts · 23%</div>
+      <h2>Networking concepts cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Layer</th><th>Name</th><th>Data unit</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td class="num">7</td><td>Application</td><td>Data</td><td>HTTP, DNS, SMTP, FTP</td></tr>
+          <tr><td class="num">6</td><td>Presentation</td><td>Data</td><td>Encryption, encoding, compression (TLS is often placed here)</td></tr>
+          <tr><td class="num">5</td><td>Session</td><td>Data</td><td>Session setup and teardown</td></tr>
+          <tr><td class="num">4</td><td>Transport</td><td>Segment / datagram</td><td>TCP, UDP, ports</td></tr>
+          <tr><td class="num">3</td><td>Network</td><td>Packet</td><td>IP, routers, ICMP, layer 3 switches</td></tr>
+          <tr><td class="num">2</td><td>Data link</td><td>Frame</td><td>MAC addresses, switches, VLANs, ARP</td></tr>
+          <tr><td class="num">1</td><td>Physical</td><td>Bit</td><td>Cables, hubs, repeaters, transceivers</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Appliances</h3><ul>
+          <li><b>Router</b> (layer 3, between networks), <b>switch</b> (layer 2, within a network), <b>layer 3 switch</b> (routes between VLANs).</li>
+          <li><b>Firewall</b> (filters by rules; next-gen firewalls inspect applications), <b>IDS</b> (detects and alerts), <b>IPS</b> (inline, blocks).</li>
+          <li><b>Load balancer</b>, <b>proxy</b> (forward for clients, reverse for servers), <b>wireless controller</b> for lightweight APs.</li>
+          <li><b>NFV</b>: network functions (firewalls, routers) running as software on standard hardware or VMs.</li>
+        </ul></div>
+        <div class="card"><h3>Cloud networking</h3><ul>
+          <li><b>VPC/VNet</b>: your private network in the cloud. <b>Security groups</b> (stateful, per instance) vs <b>network ACLs</b> (stateless, per subnet).</li>
+          <li><b>Internet gateway</b> gives public subnets internet access. <b>NAT gateway</b> lets private subnets reach out without inbound access.</li>
+          <li>Connectivity: <b>VPN</b> over the internet or a <b>dedicated private link</b> (Direct Connect, ExpressRoute).</li>
+          <li>Service models: <b>IaaS</b> (you manage OS and up), <b>PaaS</b> (you manage apps and data), <b>SaaS</b> (you just use it). Deployment: public, private, hybrid.</li>
+          <li><b>Scalability</b> (can grow) vs <b>elasticity</b> (grows and shrinks automatically). <b>Multitenancy</b>: shared infrastructure.</li>
+        </ul></div>
+        <div class="card"><h3>Traffic &amp; topologies</h3><ul>
+          <li><b>Unicast</b> (one to one), <b>multicast</b> (one to a group), <b>broadcast</b> (one to all, IPv4 only), <b>anycast</b> (to the nearest of many, used by DNS and CDNs).</li>
+          <li>Topologies: star/hub-and-spoke, mesh (full or partial), point-to-point, hybrid.</li>
+          <li><b>Three-tier</b>: core, distribution, access. <b>Collapsed core</b> merges core and distribution.</li>
+          <li><b>Spine-leaf</b>: every leaf connects to every spine. Predictable latency for <b>east-west</b> traffic (server to server) in datacenters. <b>North-south</b> traffic enters or leaves the datacenter.</li>
+        </ul></div>
+        <div class="card"><h3>Media &amp; connectors</h3><ul>
+          <li>Copper: Cat 5e (1G, 100 m), Cat 6 (10G to 55 m), Cat 6a (10G, 100 m), Cat 8 (25/40G, 30 m). <b>STP</b> resists interference better than UTP.</li>
+          <li>Fiber: <b>single-mode</b> (long distance), <b>multimode</b> (short). Connectors: <b>LC</b>, <b>SC</b>, <b>ST</b>, <b>MPO</b> (many fibers). <b>DAC/twinax</b> for short runs.</li>
+          <li>Other connectors: <b>RJ45</b> (Ethernet), RJ11 (phone), <b>F-type</b> (coax, cable modem), <b>BNC</b> (older coax).</li>
+          <li>Wireless WAN: cellular (4G/5G), satellite (high latency for GEO, lower for LEO).</li>
+        </ul></div>
+        <div class="card"><h3>IPv4 &amp; IPv6</h3><ul>
+          <li>Private: <b>10.0.0.0/8</b>, <b>172.16.0.0/12</b>, <b>192.168.0.0/16</b>. Loopback <b>127.0.0.1</b>. APIPA <b>169.254.0.0/16</b>.</li>
+          <li>IPv6 types: <b>global unicast</b> (2000::/3), <b>link-local</b> (<b>fe80::/10</b>), <b>unique local</b> (fc00::/7), <b>multicast</b> (ff00::/8). Loopback <b>::1</b>. No broadcast.</li>
+          <li><b>SLAAC</b>: hosts build their own IPv6 address from the router's prefix. <b>DHCPv6</b> can also assign.</li>
+          <li>Transition: <b>dual stack</b> (both at once), <b>tunneling</b> (IPv6 over IPv4), <b>NAT64</b> (IPv6-only clients reach IPv4).</li>
+        </ul></div>
+        <div class="card"><h3>Modern architectures</h3><ul>
+          <li><b>SDN</b>: separates the control plane (central controller) from the data plane (forwarding devices).</li>
+          <li><b>SD-WAN</b>: application-aware routing over any transport (MPLS, broadband, LTE), central policy, <b>zero-touch provisioning</b>.</li>
+          <li><b>VXLAN</b>: layer 2 over layer 3 (UDP 4789), for datacenter interconnect and large multi-tenant networks.</li>
+          <li><b>Zero trust</b>: never trust by network location. Verify every request (identity, device, policy), least privilege, microsegmentation.</li>
+          <li><b>SASE</b>: networking (SD-WAN) and security (<b>SSE</b>: secure web gateway, CASB, ZTNA, FWaaS) delivered from the cloud.</li>
+          <li><b>Infrastructure as code</b>: playbooks and templates in version control. Detects <b>configuration drift</b> and makes changes repeatable.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-sub">
+      <div class="eyebrow">05 · Math</div>
+      <h2>Subnetting</h2>
+      <p>Usable hosts = 2<sup>(32 − prefix)</sup> − 2. Block size = 256 − the interesting octet of the mask. Subnets start at multiples of the block size.</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Prefix</th><th>Mask</th><th>Block</th><th>Usable hosts</th></tr></thead>
+        <tbody>
+          <tr><td>/24</td><td>255.255.255.0</td><td class="num">256</td><td class="num">254</td></tr>
+          <tr><td>/25</td><td>255.255.255.128</td><td class="num">128</td><td class="num">126</td></tr>
+          <tr><td>/26</td><td>255.255.255.192</td><td class="num">64</td><td class="num">62</td></tr>
+          <tr><td>/27</td><td>255.255.255.224</td><td class="num">32</td><td class="num">30</td></tr>
+          <tr><td>/28</td><td>255.255.255.240</td><td class="num">16</td><td class="num">14</td></tr>
+          <tr><td>/29</td><td>255.255.255.248</td><td class="num">8</td><td class="num">6</td></tr>
+          <tr><td>/30</td><td>255.255.255.252</td><td class="num">4</td><td class="num">2 (point-to-point links)</td></tr>
+          <tr><td>/31</td><td>255.255.255.254</td><td class="num">2</td><td class="num">2 (point-to-point, RFC 3021)</td></tr>
+          <tr><td>/23</td><td>255.255.254.0</td><td class="num">512</td><td class="num">510</td></tr>
+          <tr><td>/22</td><td>255.255.252.0</td><td class="num">1024</td><td class="num">1022</td></tr>
+        </tbody>
+      </table></div>
+      <div class="card"><h3>Worked example: 192.168.10.77/27</h3><ul>
+        <li>Block size 32 → subnets at .0, .32, <b>.64</b>, .96…</li>
+        <li>.77 is in the <b>.64</b> subnet. Network <b>192.168.10.64</b>, broadcast <b>192.168.10.95</b>.</li>
+        <li>Usable range <b>.65 – .94</b> (30 hosts).</li>
+      </ul></div>
+    </section>
+
+    <section class="gsec" id="g-imp">
+      <div class="eyebrow">06 · Implementation · 20%</div>
+      <h2>Implementation cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Route source</th><th>Administrative distance</th></tr></thead>
+        <tbody>
+          <tr><td>Directly connected</td><td class="num">0</td></tr>
+          <tr><td>Static route</td><td class="num">1</td></tr>
+          <tr><td>eBGP</td><td class="num">20</td></tr>
+          <tr><td>EIGRP (internal)</td><td class="num">90</td></tr>
+          <tr><td>OSPF</td><td class="num">110</td></tr>
+          <tr><td>RIP</td><td class="num">120</td></tr>
+          <tr><td>iBGP</td><td class="num">200</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Routing</h3><ul>
+          <li>Route selection order: <b>longest prefix match</b> first, then lowest <b>administrative distance</b>, then lowest <b>metric</b>.</li>
+          <li><b>OSPF</b>: link-state, areas (area 0 backbone), cost metric. <b>BGP</b>: path-vector, the internet's routing protocol between autonomous systems. <b>EIGRP</b>: advanced distance-vector (Cisco).</li>
+          <li><b>NAT</b> maps private to public addresses. <b>PAT</b> (NAT overload) shares one public IP using ports.</li>
+          <li><b>FHRP</b> (<b>VRRP</b>, <b>HSRP</b>): two routers share a <b>virtual IP</b> as the default gateway for redundancy.</li>
+          <li><b>Subinterfaces</b> (router on a stick) route between VLANs over one trunk.</li>
+        </ul></div>
+        <div class="card"><h3>Switching</h3><ul>
+          <li><b>VLANs</b> split broadcast domains. <b>Access ports</b> carry one VLAN. <b>Trunk ports</b> carry many, tagged with <b>802.1Q</b>. The <b>native VLAN</b> is untagged on a trunk and must match on both ends.</li>
+          <li><b>Voice VLAN</b>: phones tag voice traffic on the same port as a PC.</li>
+          <li><b>SVI</b>: a VLAN interface on a layer 3 switch, used as the VLAN's gateway.</li>
+          <li><b>STP</b> (802.1D) and <b>RSTP</b> (802.1w) block redundant links to prevent loops. The lowest bridge ID becomes <b>root bridge</b>. Port states: blocking, listening, learning, forwarding.</li>
+          <li><b>Link aggregation (LACP)</b> bundles links. <b>Jumbo frames</b> (MTU about 9000) for storage networks, configured end to end.</li>
+        </ul></div>
+        <div class="card"><h3>Wireless</h3><ul>
+          <li>Standards: 802.11a (5 GHz), b/g (2.4 GHz), <b>n / Wi-Fi 4</b> (2.4 and 5), <b>ac / Wi-Fi 5</b> (5), <b>ax / Wi-Fi 6/6E</b> (2.4, 5, and 6 GHz), be / Wi-Fi 7.</li>
+          <li>2.4 GHz non-overlapping channels: <b>1, 6, 11</b>. 2.4 GHz goes farther, 5 and 6 GHz are faster with more channels.</li>
+          <li>Wider channels (40/80/160 MHz) are faster but leave fewer non-overlapping channels.</li>
+          <li>Security: <b>WPA3</b> (SAE replaces PSK), WPA2-AES. <b>Enterprise</b> mode uses <b>802.1X with RADIUS</b>. Guest networks often use a <b>captive portal</b>.</li>
+          <li><b>SSID</b> = network name, <b>BSSID</b> = AP radio's MAC, <b>ESSID</b> = one SSID across many APs for roaming.</li>
+          <li>Antennas: <b>omnidirectional</b> (all around) vs <b>directional</b> (Yagi, parabolic for point-to-point).</li>
+          <li><b>Autonomous APs</b> are configured individually. <b>Lightweight APs</b> are managed by a wireless controller.</li>
+        </ul></div>
+        <div class="card"><h3>Physical installation</h3><ul>
+          <li><b>MDF</b> (main distribution frame) connects to the outside. <b>IDFs</b> serve floors or areas.</li>
+          <li>Patch panels terminate horizontal cabling. Fiber distribution panels handle fiber.</li>
+          <li>Racks: match port-side intake and exhaust to the hot/cold aisle. Lockable racks for security.</li>
+          <li>Power: UPS, PDUs, track power load. Environment: temperature, humidity, fire suppression.</li>
+          <li><b>PoE</b>: 802.3af (15.4 W), <b>802.3at / PoE+</b> (30 W), <b>802.3bt</b> (60–100 W). Check the switch's total power budget.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-ops">
+      <div class="eyebrow">07 · Operations · 19%</div>
+      <h2>Operations cheat sheet</h2>
+      <div class="sheet">
+        <div class="card"><h3>Documentation &amp; lifecycle</h3><ul>
+          <li><b>Physical diagrams</b> (cables, racks) vs <b>logical diagrams</b> (subnets, VLANs, routing). Layer 1, 2, and 3 diagrams.</li>
+          <li><b>IPAM</b> tracks IP address assignments. <b>Asset inventory</b> tracks hardware and software.</li>
+          <li><b>Wireless site survey / heat map</b>: plan AP placement and find dead spots.</li>
+          <li><b>EOL</b> (end of life: no longer sold) and <b>EOS</b> (end of support: no more patches). Replace before EOS.</li>
+          <li><b>Change management</b>: request, approval, testing, scheduled window, rollback plan.</li>
+          <li><b>Configuration management</b>: production config, backup config, and a <b>baseline / golden config</b>.</li>
+        </ul></div>
+        <div class="card"><h3>Monitoring</h3><ul>
+          <li><b>SNMP</b>: managers poll agents (UDP 161), agents send traps (UDP 162). Data is defined in the <b>MIB</b>. <b>SNMPv3</b> adds authentication and encryption. v1 and v2c use plaintext community strings.</li>
+          <li><b>Flow data</b> (NetFlow, sFlow, IPFIX): who talked to whom, how much. Not full packets.</li>
+          <li><b>Packet capture</b> with a protocol analyzer: full packet detail. Use <b>port mirroring (SPAN)</b> or a TAP to see traffic.</li>
+          <li><b>Syslog</b> (UDP 514) to a collector. <b>SIEM</b> correlates logs and alerts.</li>
+          <li><b>Baselines</b> and anomaly alerts. API integration with ticketing and automation.</li>
+        </ul></div>
+        <div class="card"><h3>Network services</h3><ul>
+          <li><b>DHCP</b>: scope, <b>exclusions</b>, <b>reservations</b>, lease time, options (gateway, DNS). Process: <b>DORA</b> (Discover, Offer, Request, Acknowledge). <b>DHCP relay / IP helper</b> forwards requests across subnets.</li>
+          <li><b>DNS records</b>: A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail), TXT (SPF, verification), NS, SOA, PTR (reverse), SRV (services).</li>
+          <li>Secure DNS: <b>DNSSEC</b> (signed records), <b>DoH</b> (DNS over HTTPS, 443), <b>DoT</b> (DNS over TLS, 853).</li>
+          <li><b>NTP</b> (UDP 123) syncs clocks. <b>PTP</b> gives sub-microsecond precision. <b>NTS</b> secures NTP.</li>
+        </ul></div>
+        <div class="card"><h3>Remote access &amp; DR</h3><ul>
+          <li><b>Site-to-site VPN</b> links networks. <b>Client-to-site VPN</b> for users. <b>Split tunnel</b>: only corporate traffic goes through the VPN. <b>Full tunnel</b>: everything does.</li>
+          <li>Management: SSH, GUI, API, console. A <b>jump box</b> is a hardened host admins connect through. <b>Out-of-band</b> management uses a separate path (console server, cellular).</li>
+          <li>DR: <b>RPO</b> (data loss), <b>RTO</b> (downtime), <b>MTTR</b>, <b>MTBF</b>. Sites: <b>hot, warm, cold</b>. Active-active vs active-passive.</li>
+          <li>Test DR with <b>tabletop exercises</b> (discussion) and validation tests (actual failover).</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-sec">
+      <div class="eyebrow">08 · Security · 14%</div>
+      <h2>Security cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Attack</th><th>What it does</th><th>Defense</th></tr></thead>
+        <tbody>
+          <tr><td><b>VLAN hopping</b></td><td>Switch spoofing or double tagging to reach other VLANs</td><td>Disable auto-trunking (DTP), change the native VLAN, tag the native VLAN</td></tr>
+          <tr><td><b>MAC flooding</b></td><td>Fills the CAM table so the switch floods frames</td><td><b>Port security</b> (limit MACs per port)</td></tr>
+          <tr><td><b>ARP poisoning / spoofing</b></td><td>Fake ARP replies for an on-path attack</td><td><b>Dynamic ARP inspection</b></td></tr>
+          <tr><td><b>Rogue DHCP</b></td><td>Hands out a malicious gateway or DNS</td><td><b>DHCP snooping</b></td></tr>
+          <tr><td><b>DNS poisoning / spoofing</b></td><td>Fake DNS answers redirect users</td><td>DNSSEC, secure resolvers</td></tr>
+          <tr><td><b>Evil twin / rogue AP</b></td><td>Fake AP with a legitimate SSID</td><td>WIDS/WIPS, 802.1X, user training</td></tr>
+          <tr><td><b>DoS / DDoS</b></td><td>Overwhelms a service</td><td>Rate limiting, upstream scrubbing, CDN</td></tr>
+          <tr><td><b>On-path (MITM)</b></td><td>Intercepts or alters traffic</td><td>Encryption (TLS, VPN), DAI</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Authentication &amp; access</h3><ul>
+          <li><b>RADIUS</b>: UDP, encrypts only the password, common for network access and Wi-Fi. <b>TACACS+</b>: TCP 49, encrypts the whole payload, separates authentication, authorization, and accounting. Good for device administration.</li>
+          <li><b>LDAP</b> (389) / <b>LDAPS</b> (636) directories. <b>SAML</b> for web SSO. <b>MFA</b>: something you know, have, are.</li>
+          <li>Authorization: <b>least privilege</b>, <b>RBAC</b>. <b>Geofencing</b> restricts by location.</li>
+          <li><b>NAC</b>: <b>802.1X</b> port-based authentication (supplicant, authenticator, authentication server), posture checks, MAC filtering, port security.</li>
+        </ul></div>
+        <div class="card"><h3>Segmentation &amp; hardening</h3><ul>
+          <li>Separate <b>guest</b>, <b>BYOD</b>, <b>IoT</b>, and <b>OT/ICS/SCADA</b> networks from corporate systems.</li>
+          <li><b>Screened subnet (DMZ)</b> for public-facing servers, between trusted and untrusted zones.</li>
+          <li>Hardening: disable unused ports and services, change default passwords, use SSH instead of Telnet, SNMPv3, patch firmware.</li>
+          <li><b>ACLs</b>, <b>URL filtering</b>, <b>content filtering</b>. <b>Honeypots</b> and <b>honeynets</b> are decoys that detect attackers.</li>
+          <li>Compliance: <b>PCI DSS</b> (card data), <b>GDPR</b> (EU personal data, data locality).</li>
+        </ul></div>
+        <div class="card"><h3>Terms</h3><ul>
+          <li><b>CIA triad</b>: confidentiality, integrity, availability.</li>
+          <li><b>Vulnerability</b> (weakness), <b>threat</b> (something that could exploit it), <b>exploit</b> (the method), <b>risk</b> (likelihood × impact).</li>
+          <li>Social engineering: phishing, tailgating, shoulder surfing, dumpster diving.</li>
+          <li><b>PKI</b>: certificates signed by a CA. Self-signed certificates aren't trusted by default.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-ts">
+      <div class="eyebrow">09 · Troubleshooting · 24%</div>
+      <h2>Troubleshooting cheat sheet</h2>
+      <ol class="steps">
+        <li><div><b>Identify the problem</b>: gather information, question users, identify symptoms, find recent changes, duplicate the problem, approach multiple problems one at a time.</div></li>
+        <li><div><b>Establish a theory of probable cause</b>: question the obvious. Work top-to-bottom or bottom-to-top through the OSI model, or divide and conquer.</div></li>
+        <li><div><b>Test the theory</b>. If it's wrong, try a new theory or escalate.</div></li>
+        <li><div><b>Establish a plan of action</b> and identify potential effects.</div></li>
+        <li><div><b>Implement the solution</b> or escalate.</div></li>
+        <li><div><b>Verify full system functionality</b> and implement preventive measures.</div></li>
+        <li><div><b>Document</b> findings, actions, outcomes, and lessons learned.</div></li>
+      </ol>
+      <div class="sheet">
+        <div class="card"><h3>Cabling &amp; interfaces</h3><ul>
+          <li><b>Attenuation</b>: signal loss over distance (too long a run). <b>Crosstalk</b>: interference between pairs (bad termination, untwisted). <b>EMI</b>: from motors and lights (use STP or fiber).</li>
+          <li>Wrong fiber type or mismatched transceivers (single-mode vs multimode, wavelength) → no link.</li>
+          <li>TX/RX reversed on fiber → no link. Swap the pair.</li>
+          <li>Counters: <b>CRC errors</b> (bad cable, interference, duplex mismatch), <b>runts</b> (too small, often collisions), <b>giants</b> (too big, MTU mismatch), <b>drops</b> (congestion).</li>
+          <li>Port status: <b>err-disabled</b> (port security or loop guard tripped), <b>administratively down</b> (shut down by config).</li>
+          <li>PoE device won't power up → power budget exceeded or wrong PoE standard.</li>
+        </ul></div>
+        <div class="card"><h3>Services &amp; addressing</h3><ul>
+          <li>Broadcast storm, high CPU on switches, MAC flapping → <b>switching loop</b> (STP disabled or misconfigured).</li>
+          <li>Users on the wrong subnet or can't reach resources after a move → <b>wrong VLAN</b> on the access port.</li>
+          <li>New clients get no address but existing ones work → <b>DHCP pool exhaustion</b>.</li>
+          <li>Can reach local hosts but nothing remote → <b>wrong default gateway</b>. Some local hosts unreachable → <b>wrong subnet mask</b>.</li>
+          <li>Traffic blocked one way → <b>ACL</b> order (first match wins, implicit deny at the end).</li>
+        </ul></div>
+        <div class="card"><h3>Performance &amp; wireless</h3><ul>
+          <li><b>Latency</b> (delay), <b>jitter</b> (variation in delay, hurts voice and video), <b>packet loss</b>, <b>bottleneck</b> (slowest link), congestion.</li>
+          <li>Wireless: <b>channel overlap</b> or co-channel interference, <b>interference</b> (microwaves, Bluetooth on 2.4 GHz), weak signal, insufficient coverage, roaming issues, client disassociation.</li>
+          <li>Use a <b>Wi-Fi analyzer</b> to see channels and signal strength (RSSI). Move APs to non-overlapping channels and adjust power.</li>
+          <li>QoS prioritizes voice and video (DSCP markings).</li>
+        </ul></div>
+        <div class="card"><h3>Tools</h3><ul>
+          <li><b>Cable tester</b> (continuity, wiremap), <b>TDR</b> / <b>OTDR</b> (distance to a break, copper / fiber), <b>toner and probe</b> (trace a cable), <b>visual fault locator</b> (find fiber breaks with light), <b>loopback plug</b>.</li>
+          <li>Commands: <code>ping</code>, <code>tracert</code>/<code>traceroute</code>, <code>nslookup</code>/<code>dig</code>, <code>ipconfig</code>/<code>ip</code>, <code>arp -a</code>, <code>netstat</code>, <code>tcpdump</code>, <code>nmap</code>.</li>
+          <li>Device commands: <code>show interface</code>, <code>show vlan</code>, <code>show mac-address-table</code>, <code>show ip route</code>, <code>show arp</code>, <code>show running-config</code>, <code>show power inline</code>.</li>
+          <li><b>LLDP / CDP</b>: discover neighboring devices and the port you're connected to.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-num">
+      <div class="eyebrow">10 · Recall</div>
+      <h2>Ports &amp; numbers</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Port</th><th>Protocol</th><th>Port</th><th>Protocol</th></tr></thead>
+        <tbody>
+          <tr><td class="num">20/21</td><td>FTP</td><td class="num">389 / 636</td><td>LDAP / LDAPS</td></tr>
+          <tr><td class="num">22</td><td>SSH, SFTP</td><td class="num">443</td><td>HTTPS</td></tr>
+          <tr><td class="num">23</td><td>Telnet</td><td class="num">445</td><td>SMB</td></tr>
+          <tr><td class="num">25 / 587</td><td>SMTP / SMTP submission (TLS)</td><td class="num">514</td><td>Syslog</td></tr>
+          <tr><td class="num">53</td><td>DNS</td><td class="num">853</td><td>DNS over TLS</td></tr>
+          <tr><td class="num">67/68</td><td>DHCP</td><td class="num">993 / 995</td><td>IMAPS / POP3S</td></tr>
+          <tr><td class="num">69</td><td>TFTP</td><td class="num">1433</td><td>SQL Server</td></tr>
+          <tr><td class="num">80</td><td>HTTP</td><td class="num">3389</td><td>RDP</td></tr>
+          <tr><td class="num">110 / 143</td><td>POP3 / IMAP</td><td class="num">5060 / 5061</td><td>SIP / SIP over TLS</td></tr>
+          <tr><td class="num">123</td><td>NTP</td><td class="num">4789</td><td>VXLAN (UDP)</td></tr>
+          <tr><td class="num">161 / 162</td><td>SNMP / traps</td><td class="num">49</td><td>TACACS+</td></tr>
+          <tr><td class="num">1812 / 1813</td><td>RADIUS auth / accounting</td><td class="num">88</td><td>Kerberos</td></tr>
+        </tbody>
+      </table></div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Item</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>PoE / PoE+ / PoE++ (802.3af / at / bt)</td><td class="num">15.4 / 30 / 60–100 W</td></tr>
+          <tr><td>2.4 GHz non-overlapping channels</td><td class="num">1, 6, 11</td></tr>
+          <tr><td>Copper Ethernet max run</td><td class="num">100 m</td></tr>
+          <tr><td>Jumbo frame MTU</td><td class="num">~9000 bytes</td></tr>
+          <tr><td>Standard Ethernet MTU</td><td class="num">1500 bytes</td></tr>
+          <tr><td>IPv6 link-local prefix</td><td class="num">fe80::/10</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-traps">
+      <div class="eyebrow">11 · Traps</div>
+      <h2>Classic traps</h2>
+      <div class="traps">
+        <div class="trap"><b>Longest prefix match beats administrative distance.</b> A /28 static route and a /24 OSPF route: the /28 wins for addresses in it.</div>
+        <div class="trap"><b>Switches are layer 2, routers layer 3.</b> A layer 3 switch routes between VLANs.</div>
+        <div class="trap"><b>IDS detects, IPS blocks.</b> An IPS sits inline.</div>
+        <div class="trap"><b>RADIUS encrypts only the password; TACACS+ encrypts everything</b> and is preferred for device admin.</div>
+        <div class="trap"><b>SNMPv3 is the only secure SNMP.</b></div>
+        <div class="trap"><b>Jitter matters for VoIP</b> more than raw bandwidth.</div>
+        <div class="trap"><b>Native VLAN mismatch</b> causes traffic to land in the wrong VLAN and STP issues.</div>
+        <div class="trap"><b>Giants → MTU mismatch. CRC errors → physical layer.</b></div>
+        <div class="trap"><b>Security groups are stateful; network ACLs are stateless</b> (return traffic needs its own rule).</div>
+        <div class="trap"><b>/30 gives 2 usable hosts</b>, which is why it's used for point-to-point links.</div>
+        <div class="trap"><b>IPv6 has no broadcast.</b> It uses multicast instead.</div>
+      </div>
+      <div class="cta-row"><button class="btn primary" data-start="full">Start the full practice exam</button></div>
+    </section>
+  </div>
+</div>
+</section>
+
+<section id="view-exam" hidden></section>
+<section id="view-flash" hidden></section>
+</main>
+
+<script>
+const DOM = {
+  con:{name:"Networking concepts", short:"Concepts"},
+  imp:{name:"Network implementation", short:"Implementation"},
+  ops:{name:"Network operations", short:"Operations"},
+  sec:{name:"Network security", short:"Security"},
+  ts:{name:"Network troubleshooting", short:"Troubleshoot"}
+};
+const CASE_NAME = "Contoso branch office";
+
+const CASE = `<p><b>Contoso</b> is opening a two-floor branch office.</p>
+<p><b>Design</b></p>
+<ul>
+<li>The ISP hands off at the MDF on floor 1. Floor 2 has an IDF. The MDF and IDF are 160 m apart in the building riser.</li>
+<li>VLAN 10 (staff), VLAN 20 (voice), and VLAN 30 (guest). Staff use 192.168.10.0/26.</li>
+<li>Access switches connect to a layer 3 core switch with 802.1Q trunks. The core switch routes between VLANs.</li>
+<li>VoIP phones need power from the access switches and must keep good call quality.</li>
+<li>Guest Wi-Fi must not reach any internal resources.</li>
+</ul>
+<p><b>Issues after go-live</b></p>
+<ul>
+<li>Staff PCs on floor 2 get addresses from the voice VLAN's scope.</li>
+<li>Three new phones on a 24-port switch won't power on, but the other phones work.</li>
+</ul>`;
+
+const Q = [
+// ---------- CONCEPTS ----------
+{id:"c1",d:"con",q:`<p>At which OSI layer do switches forward traffic using MAC addresses?</p>`,
+ o:["Layer 4","Layer 1","Layer 3","Layer 2"],a:[3],
+ x:`Switches operate at the data link layer (layer 2) and forward frames based on MAC addresses. Routers work at layer 3 with IP addresses.`},
+{id:"c2",d:"con",q:`<p>TCP and UDP port numbers are part of which OSI layer?</p>`,
+ o:["Session","Application","Transport","Network"],a:[2],
+ x:`The transport layer (layer 4) provides end-to-end delivery with TCP or UDP and uses ports to identify services.`},
+{id:"c3",d:"con",q:`<p>A device sits inline and automatically blocks traffic that matches attack signatures.</p><p>What is it?</p>`,
+ o:["IDS","IPS","Load balancer","Proxy"],a:[1],
+ x:`An intrusion prevention system is inline and can block traffic. An IDS only monitors (often from a mirrored port) and alerts.`},
+{id:"c4",d:"con",q:`<p>Instances in a private cloud subnet must download updates from the internet, but nothing on the internet may initiate connections to them.</p><p>What should you add?</p>`,
+ o:["A NAT gateway","A VPN gateway","An internet gateway with public IPs on each instance","A network load balancer"],a:[0],
+ x:`A NAT gateway allows outbound connections from private subnets and blocks unsolicited inbound connections. An internet gateway with public IPs would expose the instances.`},
+{id:"c5",d:"con",q:`<p>Which cloud filter is <b>stateless</b>, so return traffic must be explicitly allowed?</p>`,
+ o:["Security group","Web application firewall","Network ACL","Next-generation firewall"],a:[2],
+ x:`Network ACLs are stateless and evaluated per subnet. Security groups are stateful, so return traffic is allowed automatically.`},
+{id:"c6",d:"con",q:`<p>A company uses a vendor-hosted email system. It manages only users and settings, not servers or software.</p><p>Which service model is this?</p>`,
+ o:["On-premises","PaaS","IaaS","SaaS"],a:[3],
+ x:`Software as a service delivers a complete application. The customer manages only its data and configuration.`},
+{id:"c7",d:"con",q:`<p>DNS root servers use the same IP address in many locations, and clients reach the nearest one.</p><p>What type of addressing is this?</p>`,
+ o:["Anycast","Unicast","Multicast","Broadcast"],a:[0],
+ x:`Anycast advertises one address from many places, and routing delivers traffic to the nearest instance.`},
+{id:"c8",d:"con",q:`<p>A datacenter has heavy server-to-server (east-west) traffic and needs predictable latency between any two servers.</p><p>Which topology should it use?</p>`,
+ o:["Bus","Spine-leaf","Ring","Three-tier"],a:[1],
+ x:`In spine-leaf, every leaf switch connects to every spine, so any two servers are the same number of hops apart.`},
+{id:"c9",d:"con",q:`<p>Which IPv6 address is a link-local address?</p>`,
+ o:["ff02::1","fe80::1a2b:3cff:fe4d:5e6f","::1","2001:db8::10"],a:[1],
+ x:`Link-local addresses use fe80::/10 and are valid only on the local link. ff02::1 is multicast (all nodes), ::1 is loopback, and 2001:db8:: is documentation global unicast.`},
+{id:"c10",d:"con",q:`<p>Hosts on an IPv6 network should create their own addresses from the router's advertised prefix, without a DHCP server.</p><p>What feature does this use?</p>`,
+ o:["SLAAC","APIPA","NAT64","DHCP relay"],a:[0],
+ x:`Stateless address autoconfiguration (SLAAC) lets hosts build addresses from router advertisements.`},
+{id:"c11",d:"con",q:`<p>A company has MPLS, broadband, and LTE links at each branch. It wants central policy, application-aware path selection across all links, and zero-touch deployment of new branch devices.</p><p>What should it deploy?</p>`,
+ o:["Spanning tree","VXLAN","SD-WAN","A site-to-site VPN per link"],a:[2],
+ x:`SD-WAN is transport-agnostic, steers applications over the best available link based on central policy, and supports zero-touch provisioning.`},
+{id:"c12",d:"con",q:`<p>A network architecture must verify every access request based on user identity, device posture, and policy, regardless of whether the user is on the corporate LAN.</p><p>What model is this?</p>`,
+ o:["Defense in depth only","Perimeter security","Screened subnet","Zero trust"],a:[3],
+ x:`Zero trust doesn't grant trust based on network location. Every request is authenticated, authorized, and continuously evaluated.`},
+{id:"c13",d:"con",q:`<p>Which technology extends layer 2 segments over a layer 3 network by encapsulating frames in UDP?</p>`,
+ o:["STP","VXLAN","GRE over IPsec","802.1Q"],a:[1],
+ x:`VXLAN encapsulates Ethernet frames in UDP (port 4789), supports about 16 million segment IDs, and is used for datacenter interconnect.`},
+{id:"c14",d:"con",q:`<p>Network device configurations are stored as templates in a Git repository and applied by automation. The team wants to detect when a device's running config no longer matches the repository.</p><p>What is this mismatch called?</p>`,
+ o:["Route flapping","Split horizon","Configuration drift","Jitter"],a:[2],
+ x:`Configuration drift is when actual configuration diverges from the defined (desired) state. Infrastructure as code with version control makes it detectable and fixable.`},
+{id:"c15",d:"con",q:`<p>Which connector is used for multi-fiber trunk cables in high-density datacenters?</p>`,
+ o:["RJ11","BNC","F-type","MPO"],a:[3],
+ x:`MPO (multi-fiber push-on) connectors carry 8, 12, or more fibers in one connector for high-density trunks and 40/100G optics.`},
+{id:"c16",d:"con",q:`<p>A cable modem connects to the provider's coaxial cable.</p><p>Which connector does the coax use?</p>`,
+ o:["F-type","LC","ST","RJ45"],a:[0],
+ x:`F-type connectors are threaded coax connectors used for cable modems and TV.`},
+{id:"c17",d:"con",q:`<p>Which statement describes SASE?</p>`,
+ o:["A cloud-delivered combination of SD-WAN and security services such as secure web gateway, CASB, and ZTNA","An on-prem firewall cluster","A type of fiber connector","A wireless security protocol"],a:[0],
+ x:`Secure Access Service Edge converges networking (SD-WAN) and security (security service edge: SWG, CASB, ZTNA, FWaaS), delivered from the cloud close to users.`},
+
+// ---------- IMPLEMENTATION ----------
+{id:"m1",d:"imp",q:`<p>A router has these routes to 10.1.1.50: a static route to 10.1.1.0/24, an OSPF route to 10.1.1.0/28, and a default route.</p><p>Which route is used?</p>`,
+ o:["The default route","The OSPF /28, because it's the longest prefix match","Traffic is load-balanced across all three","The static /24, because static routes have lower administrative distance"],a:[1],
+ x:`Routers choose the most specific (longest prefix) match first. Administrative distance only breaks ties between routes to the same prefix.`},
+{id:"m2",d:"imp",q:`<p>A router learns a route to the same prefix from OSPF and from EIGRP.</p><p>Which route goes in the routing table?</p>`,
+ o:["Whichever arrived first","Both, load-balanced","OSPF (AD 110)","EIGRP (AD 90)"],a:[3],
+ x:`For the same prefix, the lower administrative distance wins. EIGRP internal is 90, and OSPF is 110.`},
+{id:"m3",d:"imp",q:`<p>Hosts must keep a working default gateway if one of two routers fails, without reconfiguring hosts.</p><p>What should you configure?</p>`,
+ o:["STP","Two default gateways on each host","A first hop redundancy protocol such as VRRP or HSRP with a virtual IP","Port aggregation"],a:[2],
+ x:`FHRPs let routers share a virtual IP and MAC that hosts use as the gateway. If the active router fails, the standby takes over the virtual IP.`},
+{id:"m4",d:"imp",q:`<p>A small office has one public IP and 40 internal hosts that need internet access.</p><p>What should the router use?</p>`,
+ o:["PAT (NAT overload)","Proxy ARP","NAT64","Static NAT"],a:[0],
+ x:`Port address translation maps many private addresses to one public IP using different source ports.`},
+{id:"m5",d:"imp",q:`<p>A switch port connects to an IP phone, and a PC connects to the phone's passthrough port. Voice and data must be on different VLANs.</p><p>How should you configure the switch port?</p>`,
+ o:["As two access ports","As a routed port","As a trunk with all VLANs","As an access port in the data VLAN with a voice VLAN configured"],a:[3],
+ x:`An access port with a voice VLAN carries untagged data for the PC and tagged voice traffic for the phone.`},
+{id:"m6",d:"imp",q:`<p>Two switches are connected with an 802.1Q trunk. Switch A uses native VLAN 1, and switch B uses native VLAN 99.</p><p>What happens?</p>`,
+ o:["The trunk becomes an access port","All tagged traffic is dropped","Untagged traffic leaks between VLAN 1 and VLAN 99, and switches log native VLAN mismatch errors","Nothing. Native VLANs don't need to match."],a:[2],
+ x:`Untagged frames on a trunk belong to the native VLAN. If the two ends disagree, untagged traffic ends up in a different VLAN on each side. Native VLANs must match.`},
+{id:"m7",d:"imp",q:`<p>You add a second link between two switches for redundancy. What prevents a broadcast storm?</p>`,
+ o:["DHCP snooping","Spanning Tree Protocol","VRRP","PoE"],a:[1],
+ x:`STP (or RSTP) detects the loop and blocks one of the redundant links, unblocking it if the active link fails.`},
+{id:"m8",d:"imp",q:`<p>Which switch becomes the STP root bridge?</p>`,
+ o:["The newest switch","The switch with the most ports","The switch with the highest IP","The switch with the lowest bridge ID (priority, then MAC address)"],a:[3],
+ x:`The bridge ID is the priority plus MAC address. The lowest wins. Set the priority manually so the core switch becomes root.`},
+{id:"m9",d:"imp",q:`<p>In a dense office, 2.4 GHz APs interfere with each other. Which channels should you use?</p>`,
+ o:["Any channel, as long as the APs have different SSIDs","1, 2, and 3","1, 6, and 11","3, 7, and 13"],a:[2],
+ x:`In the 2.4 GHz band, channels 1, 6, and 11 don't overlap (in North America).`},
+{id:"m10",d:"imp",q:`<p>A corporate Wi-Fi network must authenticate each user with their directory credentials, and access must be revoked when an account is disabled.</p><p>What should you configure?</p>`,
+ o:["WPA2/WPA3-Enterprise with 802.1X and RADIUS","An open network with a captive portal","WPA3-Personal with a shared password","MAC filtering"],a:[0],
+ x:`Enterprise mode uses 802.1X with a RADIUS server, so each user authenticates with their own credentials. Disabling the account blocks access.`},
+{id:"m11",d:"imp",q:`<p>Which Wi-Fi standard can operate in the 6 GHz band?</p>`,
+ o:["802.11ac","802.11ax (Wi-Fi 6E)","802.11n","802.11g"],a:[1],
+ x:`Wi-Fi 6E (802.11ax) added 6 GHz. Wi-Fi 7 (802.11be) also uses it. 802.11ac is 5 GHz only, and n uses 2.4 and 5 GHz.`},
+{id:"m12",d:"imp",q:`<p>You need to link two buildings 2 km apart with a wireless bridge.</p><p>Which antenna type should you use?</p>`,
+ o:["Internal laptop antenna","Directional (for example, parabolic or Yagi)","Dipole","Omnidirectional"],a:[1],
+ x:`Directional antennas focus energy in one direction, which gives the range needed for point-to-point links.`},
+{id:"m13",d:"imp",q:`<p>PTZ security cameras each need 25 W.</p><p>Which PoE standard is the minimum that supports them?</p>`,
+ o:["802.3bt (PoE++)","802.3af (PoE)","802.3at (PoE+)","Passive 12 V PoE"],a:[2],
+ x:`802.3af provides up to 15.4 W per port. 802.3at (PoE+) provides up to 30 W, which covers 25 W devices.`},
+{id:"m14",d:"imp",q:`<p>Where does the telecom provider's connection usually terminate in a building?</p>`,
+ o:["The MDF","The IDF","A wireless AP","The DMZ"],a:[0],
+ x:`The main distribution frame is the central point where outside lines enter and connect to the building's network. IDFs serve individual floors or areas.`},
+
+// ---------- OPERATIONS ----------
+{id:"o1",d:"ops",q:`<p>Which diagram shows VLANs, subnets, and routing between them, rather than cable runs?</p>`,
+ o:["Rack diagram","Physical diagram","Floor plan","Logical diagram"],a:[3],
+ x:`Logical diagrams show how traffic flows: IP subnets, VLANs, and routing. Physical diagrams show devices, cables, and locations.`},
+{id:"o2",d:"ops",q:`<p>A switch model is still supported, but the vendor no longer sells it. Security patches will stop next year.</p><p>Which two milestones are these?</p>`,
+ o:["End of life now, end of support next year","Both are end of warranty","Neither affects operations","End of support now, end of life next year"],a:[0],
+ x:`End of life (EOL) means the product is no longer sold. End of support (EOS) means no more updates or patches. Plan replacement before EOS.`},
+{id:"o3",d:"ops",q:`<p>You must monitor switches with SNMP, and the data must be authenticated and encrypted.</p><p>Which version should you use?</p>`,
+ o:["SNMPv2c","SNMPv1","SNMPv3","Any version with a long community string"],a:[2],
+ x:`Only SNMPv3 supports authentication and encryption. v1 and v2c send community strings in plaintext.`},
+{id:"o4",d:"ops",q:`<p>You need to see which hosts talk to each other and how much bandwidth each conversation uses, without capturing full packets.</p><p>What should you collect?</p>`,
+ o:["Syslog","NetFlow (flow data)","SNMP traps","A full packet capture"],a:[1],
+ x:`Flow data (NetFlow, sFlow, IPFIX) records source, destination, ports, and byte counts per conversation, which is lighter than full packet capture.`},
+{id:"o5",d:"ops",q:`<p>A protocol analyzer must see all traffic going through switch port 12.</p><p>What should you configure?</p>`,
+ o:["Port security","A trunk","PoE on port 12","Port mirroring (SPAN) to the analyzer's port"],a:[3],
+ x:`Port mirroring copies traffic from one or more ports to the monitoring port. A network TAP is a hardware alternative.`},
+{id:"o6",d:"ops",q:`<p>What's the correct order of the DHCP lease process?</p>`,
+ o:["Discover, Request, Offer, Acknowledge","Request, Offer, Discover, Acknowledge","Discover, Offer, Request, Acknowledge","Offer, Discover, Acknowledge, Request"],a:[2],
+ x:`DORA: the client broadcasts a Discover, the server sends an Offer, the client sends a Request, and the server Acknowledges.`},
+{id:"o7",d:"ops",q:`<p>Clients in VLAN 20 can't get addresses from a DHCP server in VLAN 10. The router routes between the VLANs.</p><p>What should you configure?</p>`,
+ o:["A DHCP relay (IP helper) on the VLAN 20 interface","SLAAC","A second DHCP server in every VLAN","Static IPs"],a:[0],
+ x:`DHCP Discover messages are broadcasts that don't cross routers. A relay agent forwards them as unicast to the DHCP server.`},
+{id:"o8",d:"ops",q:`<p>Which DNS record maps a hostname to an IPv6 address?</p>`,
+ o:["PTR","AAAA","A","MX"],a:[1],
+ x:`AAAA records hold IPv6 addresses. A records hold IPv4, PTR records do reverse lookups, and MX records point to mail servers.`},
+{id:"o9",d:"ops",q:`<p>Which DNS record type is used for SPF email-sender policies and domain verification?</p>`,
+ o:["CNAME","SOA","NS","TXT"],a:[3],
+ x:`TXT records hold free-form text such as SPF policies, DKIM keys, and domain ownership verification tokens.`},
+{id:"o10",d:"ops",q:`<p>Remote users must reach internal apps through a VPN, but their internet browsing must not go through the corporate network.</p><p>What should you configure?</p>`,
+ o:["Split tunnel","Site-to-site VPN","Clientless VPN only","Full tunnel"],a:[0],
+ x:`Split tunneling sends only corporate-bound traffic through the VPN. Full tunnel sends everything, including internet traffic.`},
+{id:"o11",d:"ops",q:`<p>Admins must manage network devices even when the production network is down.</p><p>What should you provide?</p>`,
+ o:["In-band management over SSH","Out-of-band management (for example, a console server on a separate network or cellular link)","SNMP traps","A jump box on the production VLAN"],a:[1],
+ x:`Out-of-band management uses a separate path, so you can still reach device consoles when the production network fails.`},
+{id:"o12",d:"ops",q:`<p>Before a network change, the team walks through the DR plan in a meeting, discussing what each person would do, without touching systems.</p><p>What kind of test is this?</p>`,
+ o:["Penetration test","Full failover test","Parallel test","Tabletop exercise"],a:[3],
+ x:`A tabletop exercise is a discussion-based walkthrough of the plan. Validation and failover tests actually exercise systems.`},
+{id:"o13",d:"ops",q:`<p>Which service provides time synchronization with sub-microsecond accuracy for financial trading and industrial systems?</p>`,
+ o:["NTP","DNS","PTP","SNTP"],a:[2],
+ x:`Precision Time Protocol (IEEE 1588) gives sub-microsecond accuracy, usually with hardware timestamping. NTP is typically accurate to milliseconds.`},
+
+// ---------- SECURITY ----------
+{id:"s1",d:"sec",q:`<p>An attacker floods a switch with frames from thousands of fake MAC addresses so the switch starts flooding all traffic to every port.</p><p>What mitigates this?</p>`,
+ o:["Port security limiting MAC addresses per port","DNSSEC","STP","DHCP snooping"],a:[0],
+ x:`MAC flooding fills the switch's MAC (CAM) table. Port security limits the number of MACs learned per port and can shut down the port on violation.`},
+{id:"s2",d:"sec",q:`<p>Users receive a wrong default gateway from a DHCP server that someone plugged into a conference room port.</p><p>What switch feature prevents this?</p>`,
+ o:["Port mirroring","LACP","DHCP snooping","VTP"],a:[2],
+ x:`DHCP snooping allows DHCP server responses only on trusted ports (uplinks to real DHCP servers) and drops them elsewhere.`},
+{id:"s3",d:"sec",q:`<p>An attacker sends forged ARP replies so that traffic for the gateway goes to their laptop.</p><p>Which feature mitigates this?</p>`,
+ o:["Port mirroring","NAT","802.11w","Dynamic ARP inspection"],a:[3],
+ x:`Dynamic ARP inspection validates ARP packets against the DHCP snooping binding table and drops forged replies.`},
+{id:"s4",d:"sec",q:`<p>An attacker sends double-tagged frames to reach a VLAN they aren't assigned to.</p><p>Which configuration helps prevent this?</p>`,
+ o:["Use a /30 subnet","Change the native VLAN to an unused VLAN and disable auto-trunking on access ports","Enable PoE","Enable SNMPv3"],a:[1],
+ x:`Double tagging relies on the attacker's access VLAN being the trunk's native VLAN. Using an unused native VLAN (or tagging it) and disabling DTP on access ports prevents VLAN hopping.`},
+{id:"s5",d:"sec",q:`<p>A fake access point in the parking lot broadcasts the company's SSID to capture credentials.</p><p>What is this attack?</p>`,
+ o:["Evil twin","War driving","Bluejacking","Deauthentication"],a:[0],
+ x:`An evil twin impersonates a legitimate AP. 802.1X with server certificate validation and wireless intrusion prevention help detect and block it.`},
+{id:"s6",d:"sec",q:`<p>Network admins need centralized authentication for switch logins, with each command authorized separately and full encryption of the session payload.</p><p>Which protocol should you use?</p>`,
+ o:["RADIUS","TACACS+","LDAP","Kerberos"],a:[1],
+ x:`TACACS+ (TCP 49) separates authentication, authorization, and accounting, supports per-command authorization, and encrypts the whole body.`},
+{id:"s7",d:"sec",q:`<p>In 802.1X, which component is the switch or wireless AP?</p>`,
+ o:["Supplicant","Authentication server","Certificate authority","Authenticator"],a:[3],
+ x:`The supplicant is the client, the authenticator is the switch or AP that controls the port, and the authentication server is usually RADIUS.`},
+{id:"s8",d:"sec",q:`<p>Public web servers must be reachable from the internet but isolated from the internal network.</p><p>Where should they be placed?</p>`,
+ o:["The management network","The guest Wi-Fi network","A screened subnet (DMZ)","The internal server VLAN"],a:[2],
+ x:`A screened subnet sits between the internet and the internal network, with firewall rules limiting what it can reach internally.`},
+{id:"s9",d:"sec",q:`<p>Building HVAC controllers and other IoT devices must not be able to reach corporate servers.</p><p>What should you do?</p>`,
+ o:["Use WPA3-Personal for them","Put them on a separate segment (VLAN) with ACLs that block access to corporate subnets","Enable SNMPv1 on them","Give them static IPs on the corporate VLAN"],a:[1],
+ x:`Segmentation isolates IoT and OT devices, limiting the damage if one is compromised.`},
+{id:"s10",d:"sec",q:`<p>A system is deployed to attract attackers and log their activity, with no real data on it.</p><p>What is it?</p>`,
+ o:["Proxy","Bastion host","Honeypot","Jump box"],a:[2],
+ x:`A honeypot is a decoy. A group of them forms a honeynet. Any interaction with it is suspicious.`},
+{id:"s11",d:"sec",q:`<p>A weakness in unpatched firmware could let an attacker take over a router.</p><p>What is the weakness itself called?</p>`,
+ o:["Exploit","Risk","Threat","Vulnerability"],a:[3],
+ x:`A vulnerability is a weakness. A threat is something that could exploit it, an exploit is the method, and risk combines likelihood and impact.`},
+
+// ---------- TROUBLESHOOTING ----------
+{id:"t1",d:"ts",q:`<p>After reproducing a user's problem and identifying recent changes, what's the next step in CompTIA's troubleshooting methodology?</p>`,
+ o:["Establish a theory of probable cause","Document findings","Implement the solution","Verify full functionality"],a:[0],
+ x:`After identifying the problem comes establishing a theory of probable cause (question the obvious), then testing it.`},
+{id:"t2",d:"ts",q:`<p>A switch interface shows rapidly increasing CRC errors.</p><p>What's the most likely cause?</p>`,
+ o:["A physical layer problem such as a damaged cable, interference, or a duplex mismatch","An expired DHCP lease","An incorrect VLAN","A DNS problem"],a:[0],
+ x:`CRC errors mean frames arrived corrupted. Check cables, connectors, EMI sources, and duplex settings.`},
+{id:"t3",d:"ts",q:`<p>A switch port connected to a storage server logs many giants after the server enabled jumbo frames.</p><p>What's wrong?</p>`,
+ o:["STP loop","Wrong VLAN","Bad cable","MTU mismatch. The switch port doesn't allow jumbo frames."],a:[3],
+ x:`Giants are frames larger than the port's MTU. Jumbo frames must be enabled end to end: servers, switches, and storage.`},
+{id:"t4",d:"ts",q:`<p>Suddenly, switch CPUs spike to 100%, the network slows to a crawl, and MAC addresses flap between ports.</p><p>What's the most likely cause?</p>`,
+ o:["A wrong DNS server","DHCP pool exhaustion","A switching loop (broadcast storm)","An expired certificate"],a:[2],
+ x:`A loop without STP blocking makes broadcasts circulate endlessly, overwhelming switches and causing MAC flapping. Check whether someone connected a cable creating a loop or disabled STP.`},
+{id:"t5",d:"ts",q:`<p>A switch port connected to a user's desk shows <b>err-disabled</b> after the user plugged in a small unmanaged switch.</p><p>What most likely caused this?</p>`,
+ o:["The port is administratively down","Port security or BPDU guard shut the port down","PoE budget exceeded","The cable is too long"],a:[1],
+ x:`Err-disabled means the switch shut the port because of a violation, such as too many MAC addresses (port security) or a BPDU received on a BPDU guard port.`},
+{id:"t6",d:"ts",q:`<p>New laptops in a VLAN get no IP address, but devices that were already connected keep working.</p><p>What's the most likely cause?</p>`,
+ o:["Bad cable on the uplink","DHCP scope exhaustion","Wrong DNS server","Incorrect default gateway"],a:[1],
+ x:`When the scope runs out of addresses, new clients get none while existing leases keep working. Expand the scope, shorten lease time, or clean up stale leases.`},
+{id:"t7",d:"ts",q:`<p>A host is configured as 192.168.1.50/24 with gateway 192.168.2.1.</p><p>What can it do?</p>`,
+ o:["Reach everything","Reach nothing, not even local hosts","Reach only the internet","Reach local hosts on 192.168.1.0/24 but nothing on other networks"],a:[3],
+ x:`The gateway must be on the host's subnet. With an unreachable gateway, local traffic works, but nothing beyond the subnet does.`},
+{id:"t8",d:"ts",q:`<p>Users report choppy VoIP calls, though bandwidth tests show plenty of capacity.</p><p>Which metric should you check?</p>`,
+ o:["Attenuation","Throughput","Jitter","MTU"],a:[2],
+ x:`Jitter (variation in delay) breaks up voice and video even when bandwidth is fine. QoS prioritization of voice traffic helps.`},
+{id:"t9",d:"ts",q:`<p>Wi-Fi in a new office is slow near the break room microwave, but only for clients on 2.4 GHz.</p><p>What's the best fix?</p>`,
+ o:["Steer clients to 5 or 6 GHz","Enable WPA3","Change the SSID","Increase the DHCP lease time"],a:[0],
+ x:`Microwave ovens interfere with the 2.4 GHz band. Moving clients to 5 or 6 GHz avoids it.`},
+{id:"t10",d:"ts",q:`<p>You need to find which wall jack connects to which patch panel port. The cable isn't labeled.</p><p>Which tool should you use?</p>`,
+ o:["Wi-Fi analyzer","OTDR","Protocol analyzer","Toner and probe"],a:[3],
+ x:`A toner injects a signal on the cable at one end. The probe finds it at the patch panel.`},
+{id:"t11",d:"ts",q:`<p>A long fiber run between buildings has no link. You need to find the distance to the break.</p><p>Which tool should you use?</p>`,
+ o:["OTDR","Toner and probe","Multimeter","Loopback plug"],a:[0],
+ x:`An optical time-domain reflectometer sends light pulses and measures reflections to locate breaks and bad splices. A TDR does the same for copper.`},
+{id:"t12",d:"ts",q:`<p>A new fiber link between two switches shows no light at either end. Both SFPs are correct and the fiber tests good.</p><p>What should you try?</p>`,
+ o:["Replace it with Cat 6","Swap the TX and RX strands at one end","Change the VLAN","Enable PoE"],a:[1],
+ x:`If transmit is connected to transmit, neither side receives light. Swap the pair at one end.`},
+{id:"t13",d:"ts",q:`<p>Which command shows the MAC addresses a switch has learned on each port?</p>`,
+ o:["show running-config","show ip route","show mac address-table","show vlan brief"],a:[2],
+ x:`<code>show mac address-table</code> lists learned MAC addresses with their VLAN and port.`},
+{id:"t14",d:"ts",q:`<p>You need to find out which switch and port a wall jack is connected to, from a laptop plugged into that jack.</p><p>What protocol can tell you?</p>`,
+ o:["LLDP (or CDP)","ARP","NTP","ICMP"],a:[0],
+ x:`LLDP and CDP advertise the device name and port ID to directly connected neighbors. A laptop with an LLDP tool can read them.`},
+{id:"t15",d:"ts",q:`<p>A copper cable run is 140 m long, and the link is unstable with many errors.</p><p>What's the cause?</p>`,
+ o:["DNS misconfiguration","Attenuation from exceeding the 100 m limit","Duplex auto-negotiation","Crosstalk from the wrong VLAN"],a:[1],
+ x:`Twisted-pair Ethernet supports 100 m. Longer runs lose too much signal. Use fiber or add a switch in between.`},
+{id:"t16",d:"ts",q:`<p>A user can browse websites by IP address but not by name.</p><p>Which command helps diagnose the problem?</p>`,
+ o:["netstat","tracert","arp -a","nslookup"],a:[3],
+ x:`The problem is name resolution. <code>nslookup</code> (or <code>dig</code>) tests DNS queries against a server.`},
+{id:"t17",d:"ts",q:`<p>An ACL on a router interface has these rules in order:</p><pre>1 permit tcp any host 10.0.0.5 eq 443
+2 deny ip 192.168.5.0 0.0.0.255 any
+3 permit ip any any</pre><p>A host at 192.168.5.20 tries to reach 10.0.0.5 on port 443.</p><p>What happens?</p>`,
+ o:["Denied by the implicit deny","Allowed by rule 3","Allowed by rule 1","Denied by rule 2"],a:[2],
+ x:`ACLs are processed top-down, and the first match wins. Rule 1 matches HTTPS to 10.0.0.5 from any source, so the traffic is allowed before rule 2 is checked.`},
+
+// ---------- SCENARIO ----------
+{id:"cs1",d:"imp",cs:true,q:`<p><b>Scenario: Contoso branch.</b> What cabling should connect the MDF and IDF?</p>`,
+ o:["Cat 5e","Coax","Cat 6a","Fiber (multimode or single-mode)"],a:[3],
+ x:`The run is 160 m, beyond copper Ethernet's 100 m limit. Fiber supports the distance.`},
+{id:"cs2",d:"con",cs:true,q:`<p><b>Scenario: Contoso branch.</b> How many usable host addresses does the staff subnet have, and what's its broadcast address?</p>`,
+ o:["126 hosts, 192.168.10.127","30 hosts, 192.168.10.31","62 hosts, 192.168.10.63","254 hosts, 192.168.10.255"],a:[2],
+ x:`A /26 has 64 addresses per block: 2⁶ − 2 = 62 usable hosts. The subnet 192.168.10.0/26 runs .0 to .63, so .63 is the broadcast.`},
+{id:"cs3",d:"ts",cs:true,q:`<p><b>Scenario: Contoso branch.</b> What's the most likely cause of floor 2 staff PCs getting voice VLAN addresses?</p>`,
+ o:["DHCP is exhausted","The access ports are assigned to VLAN 20 instead of VLAN 10","The trunk native VLAN is 30","DNS is misconfigured"],a:[1],
+ x:`PCs get an address from whichever VLAN their access port is in. Check <code>show vlan</code> and correct the access VLAN assignment.`},
+{id:"cs4",d:"ts",cs:true,q:`<p><b>Scenario: Contoso branch.</b> Why won't the three new phones power on?</p>`,
+ o:["The switch's total PoE power budget is exhausted","The trunk is down","The phones are on the wrong VLAN","The DHCP scope is full"],a:[0],
+ x:`Each PoE switch has a total power budget. When it's used up, new devices don't get power even though the ports support PoE. Check <code>show power inline</code>.`},
+{id:"cs5",d:"sec",cs:true,q:`<p><b>Scenario: Contoso branch.</b> How should you make sure guest Wi-Fi can't reach internal resources?</p>`,
+ o:["Put guests in VLAN 30 with an ACL on the core switch that permits only internet-bound traffic","Use a hidden SSID","Give guests WPA3","Put guests in VLAN 10"],a:[0],
+ x:`Segmentation plus an ACL (or firewall policy) that denies internal subnets and allows the internet isolates guests. A hidden SSID isn't a security control.`}
+];
+
+/* ---------- state ---------- */
+const KEY="networkplus-prep-v1", WKEY="networkplus-missed-v1";
+const FULL_PLAN={con:13,imp:11,ops:10,sec:8,ts:13};
+const byId=Object.fromEntries(Q.map(q=>[q.id,q]));
+let S=null, tick=null, confirmOpen=false, resultsFilter="missed";
+function load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const isMulti=q=>!!q.m;
+function same(a,b){if(!a||a.length!==b.length)return false;const s=new Set(a);return b.every(x=>s.has(x))}
+const correct=(q,ans)=>same(ans,q.a);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function buildFull(){
+  let ids=[];
+  for(const d in FULL_PLAN){ids.push(...shuffle(Q.filter(q=>q.d===d&&!q.cs)).slice(0,FULL_PLAN[d]).map(q=>q.id))}
+  ids=shuffle(ids);
+  ids.push(...Q.filter(q=>q.cs).map(q=>q.id));
+  return ids;
+}
+function startFull(){S={mode:"full",ids:buildFull(),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:60*60,done:false};persist();go("exam")}
+function startPractice(domains,onlyIds){
+  let pool=onlyIds?onlyIds.map(id=>byId[id]).filter(Boolean):Q.filter(q=>domains.includes(q.d));
+  if(!pool.length)return;
+  S={mode:"practice",ids:shuffle(pool.map(q=>q.id)),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:0,done:false};persist();go("exam")
+}
+function persist(){if(S)save(KEY,S)}
+
+/* ---------- routing ---------- */
+function go(v){if(location.hash!=="#"+v)location.hash=v;else route()}
+function route(){
+  const h=(location.hash||"#guide").slice(1);
+  const v=["exam","flash"].includes(h)?h:"guide";
+  ["guide","exam","flash"].forEach(k=>{document.getElementById("view-"+k).hidden=v!==k;document.getElementById("tab-"+k).setAttribute("aria-selected",v===k)});
+  if(v==="exam")renderExam();else{updateTimer();if(v==="flash")renderFlash()}
+  window.scrollTo(0,0);
+}
+
+/* ---------- timer ---------- */
+function remaining(){return S&&S.mode==="full"&&!S.done?Math.max(0,S.dur-Math.floor((Date.now()-S.start)/1000)):null}
+function updateTimer(){
+  const t=document.getElementById("timer"), r=remaining();
+  if(r===null){t.hidden=true;return}
+  t.hidden=false;
+  t.textContent=String(Math.floor(r/60)).padStart(2,"0")+":"+String(r%60).padStart(2,"0");
+  t.classList.toggle("low",r<600);
+  if(r===0){finish()}
+}
+function ensureTick(){if(!tick)tick=setInterval(updateTimer,1000)}
+
+/* ---------- exam rendering ---------- */
+const root=()=>document.getElementById("view-exam");
+function renderExam(){
+  updateTimer();
+  if(!S){renderHome();return}
+  if(S.done){renderResults();return}
+  renderQuestion();
+}
+
+function renderHome(){
+  const saved=load(KEY);
+  const missed=load(WKEY)||[];
+  const counts=Object.fromEntries(Object.keys(DOM).map(d=>[d,Q.filter(q=>q.d===d).length]));
+  root().innerHTML=`<div class="ex-home">
+    <div class="hero"><div class="eyebrow">Practice exam</div><h1>Choose how to practice</h1>
+    <p class="lede">${Q.length} original questions written to match the style and difficulty of Network+. These aren't real exam questions. They test the same skills in the same formats.</p></div>
+    ${saved&&!saved.done?`<div class="resume"><span>You have an unfinished ${saved.mode==="full"?"full exam":"practice session"} (${Object.keys(saved.ans).length}/${saved.ids.length} answered).</span><button class="btn small primary" id="resume">Resume</button><button class="btn small" id="discard">Discard</button></div>`:""}
+    <div class="modes">
+      <div class="mode"><h3>Full practice exam</h3><p>60 questions weighted by domain, ending with a 5-question case study. 60-minute timer, no feedback until you submit. Questions are drawn at random each time.</p><button class="btn primary" id="go-full">Start full exam</button></div>
+      <div class="mode"><h3>Practice by domain</h3><p>Untimed. You see the answer and explanation after each question.</p>
+        <div class="chips" id="dchips">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="true" data-d="${d}">${DOM[d].short} · ${counts[d]}</button>`).join("")}</div>
+        <button class="btn" id="go-prac">Start practice</button></div>
+      ${missed.length?`<div class="mode"><h3>Retry missed</h3><p>${missed.length} question${missed.length>1?"s":""} you got wrong last time, with instant feedback.</p><button class="btn" id="go-missed">Retry missed questions</button></div>`:""}
+    </div>
+  </div>`;
+  const r=root();
+  r.querySelector("#go-full").onclick=startFull;
+  r.querySelectorAll("#dchips .chip").forEach(c=>c.onclick=()=>c.setAttribute("aria-pressed",c.getAttribute("aria-pressed")!=="true"));
+  r.querySelector("#go-prac").onclick=()=>{const ds=[...r.querySelectorAll('#dchips .chip[aria-pressed="true"]')].map(c=>c.dataset.d);startPractice(ds)};
+  const gm=r.querySelector("#go-missed");if(gm)gm.onclick=()=>startPractice(null,missed);
+  const rs=r.querySelector("#resume");if(rs)rs.onclick=()=>{S=saved;renderExam()};
+  const ds=r.querySelector("#discard");if(ds)ds.onclick=()=>{del(KEY);renderHome()};
+}
+
+function hintFor(q){if(q.series)return"Select Yes or No";if(q.pick)return`Select ${q.pick===2?"two":q.pick}`;if(isMulti(q))return"Select all that apply";return"Select one"}
+
+function renderQuestion(){
+  const q=byId[S.ids[S.cur]], n=S.ids.length, ans=S.ans[q.id]||[], checked=S.mode==="practice"&&S.checked[q.id];
+  const multi=isMulti(q);
+  const opts=q.o.map((t,i)=>{
+    let cls="opt"; if(ans.includes(i))cls+=" sel";
+    if(checked){cls+=" locked";if(q.a.includes(i))cls+=" right";else if(ans.includes(i))cls+=" wrong"}
+    return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${checked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
+  const unanswered=S.ids.filter(id=>!(S.ans[id]&&S.ans[id].length)).length;
+  const markedN=S.ids.filter(id=>S.marked[id]).length;
+  const pal=S.ids.map((id,i)=>{let c="pq";const a=S.ans[id];
+    if(S.mode==="practice"&&S.checked[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(a&&a.length)c+=" ans";
+    if(S.marked[id])c+=" mk";if(i===S.cur)c+=" cur";
+    return `<button class="${c}" data-i="${i}" aria-label="Question ${i+1}">${i+1}</button>`}).join("");
+  root().innerHTML=`<div class="ex">
+    <div class="qcard">
+      <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}
+        <button class="mark" id="mark" aria-pressed="${!!S.marked[q.id]}">${S.marked[q.id]?"Marked for review":"Mark for review"}</button></div>
+      ${q.cs?`<details class="case" open><summary>Case study: ${CASE_NAME}</summary><div class="cbody">${CASE}</div></details>`:""}
+      <div class="qtext">${q.q}</div>
+      <div class="hint">${hintFor(q)}</div>
+      <div class="opts" id="opts">${opts}</div>
+      ${checked?explainHTML(q,ans):""}
+      <div class="qnav">
+        <button class="btn" id="prev" ${S.cur===0?"disabled":""}>Previous</button>
+        <span class="sp"></span>
+        ${S.mode==="practice"&&!checked?`<button class="btn primary" id="check" ${ans.length?"":"disabled"}>Check answer</button>`:""}
+        ${S.cur<n-1?`<button class="btn ${S.mode==="full"||checked?"primary":""}" id="next">Next</button>`:""}
+      </div>
+    </div>
+    <aside class="side">
+      <div class="pal">
+        <div class="hint">${S.mode==="full"?"Full exam":"Practice"} · ${n-unanswered}/${n} answered</div>
+        <div class="grid">${pal}</div>
+        <div class="legend"><span>■ answered</span><span style="color:var(--warn)">▁ marked</span>${S.mode==="practice"?'<span style="color:var(--good)">■ right</span><span style="color:var(--bad)">■ wrong</span>':""}</div>
+        ${confirmOpen?`<div class="confirm"><div><b>${unanswered}</b> unanswered, <b>${markedN}</b> marked for review. Submit now?</div><div class="cta-row"><button class="btn small primary" id="sub-yes">Submit</button><button class="btn small" id="sub-no">Keep working</button></div></div>`
+          :`<button class="btn ${S.cur===n-1?"primary":""}" id="submit">${S.mode==="full"?"Submit exam":"Finish & see results"}</button>`}
+        <button class="btn small" id="quit">Quit to menu</button>
+      </div>
+    </aside>
+  </div>`;
+  const r=root();
+  r.querySelectorAll("#opts input").forEach(inp=>inp.onchange=()=>{
+    const sel=[...r.querySelectorAll("#opts input:checked")].map(x=>+x.value);
+    S.ans[q.id]=sel;persist();
+    r.querySelectorAll("#opts .opt").forEach((l,i)=>l.classList.toggle("sel",sel.includes(i)));
+    const ck=r.querySelector("#check");if(ck)ck.disabled=!sel.length;
+    const b=r.querySelector(`.pq[data-i="${S.cur}"]`);if(b)b.classList.toggle("ans",!!sel.length);
+  });
+  r.querySelector("#mark").onclick=()=>{S.marked[q.id]=!S.marked[q.id];persist();renderQuestion()};
+  r.querySelector("#prev").onclick=()=>{S.cur--;persist();renderQuestion();window.scrollTo(0,0)};
+  const nx=r.querySelector("#next");if(nx)nx.onclick=()=>{S.cur++;persist();renderQuestion();window.scrollTo(0,0)};
+  const ck=r.querySelector("#check");if(ck)ck.onclick=()=>{S.checked[q.id]=true;persist();renderQuestion()};
+  r.querySelectorAll(".pq").forEach(b=>b.onclick=()=>{S.cur=+b.dataset.i;persist();renderQuestion()});
+  const sb=r.querySelector("#submit");if(sb)sb.onclick=()=>{confirmOpen=true;renderQuestion()};
+  const sy=r.querySelector("#sub-yes");if(sy)sy.onclick=()=>{confirmOpen=false;finish()};
+  const sn=r.querySelector("#sub-no");if(sn)sn.onclick=()=>{confirmOpen=false;renderQuestion()};
+  r.querySelector("#quit").onclick=()=>{S=null;confirmOpen=false;updateTimer();renderHome()};
+}
+
+function letters(arr){return (arr&&arr.length)?arr.slice().sort().map(i=>String.fromCharCode(65+i)).join(", "):"No answer"}
+function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="explain"><div class="verdict ${ok?"ok":"no"}">${ok?"Correct":"Incorrect"}. The answer is ${letters(q.a)}.</div><div>${q.x}</div></div>`}
+
+function finish(){
+  if(!S||S.done)return;
+  S.done=true;S.end=Date.now();
+  const missed=S.ids.filter(id=>!correct(byId[id],S.ans[id]||[]));
+  save(WKEY,missed);persist();updateTimer();resultsFilter="missed";
+  renderExam();window.scrollTo(0,0);
+}
+
+function renderResults(){
+  const items=S.ids.map(id=>({q:byId[id],ans:S.ans[id]||[]})).map(o=>({...o,ok:correct(o.q,o.ans)}));
+  const total=items.length, right=items.filter(i=>i.ok).length, pct=Math.round(right/total*100);
+  const mins=Math.round(((S.end||Date.now())-S.start)/60000);
+  const per=Object.keys(DOM).map(d=>{const its=items.filter(i=>i.q.d===d);const r=its.filter(i=>i.ok).length;return{d,n:its.length,r,p:its.length?Math.round(r/its.length*100):null}}).filter(x=>x.n);
+  const band=p=>p>=80?"hi":p>=65?"mid":"low";
+  const verdict=pct>=80?["Ready","var(--good)"]:pct>=70?["Borderline: review weak domains","var(--warn)"]:["Not yet: study the guide sections for your weakest domains","var(--bad)"];
+  const weakest=per.slice().sort((a,b)=>a.p-b.p)[0];
+  const shown=items.filter(i=>resultsFilter==="all"||!i.ok);
+  root().innerHTML=`<div class="res">
+    <div class="hero"><div class="eyebrow">${S.mode==="full"?"Full exam":"Practice"} results</div><h1>${right} of ${total} correct</h1></div>
+    <div class="score">
+      <div><div class="big">${pct}%</div><div class="hint" style="margin-top:6px">${mins} min</div></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span class="verdict-pill" style="color:${verdict[1]};border-color:${verdict[1]}">${verdict[0]}</span>
+        <p style="color:var(--muted);font-size:.92rem">The real exam uses a scaled 720 (on a 100–900 scale) passing score, and a scaled score isn't a simple percentage. On a practice set like this, aim for <b>80% or higher</b> so you have a margin.${weakest&&weakest.p<80?` Your weakest domain is <b>${DOM[weakest.d].name}</b>. Re-read <a href="#guide" data-sec="g-${weakest.d}">its cheat sheet</a>.`:""} Multi-select questions are scored all-or-nothing here.</p>
+      </div>
+    </div>
+    <div class="card"><h3>By domain</h3><div class="dbars">
+      ${per.map(x=>`<div class="dbar"><span>${DOM[x.d].name} <span class="hint">${x.r}/${x.n}</span></span><div class="track"><div class="fill ${band(x.p)}" style="width:${x.p}%"></div><div class="tick" title="80% target"></div></div><span class="pct">${x.p}%</span></div>`).join("")}
+      <div class="hint">The line on each bar marks the 80% target</div>
+    </div></div>
+    <div class="cta-row">
+      ${right<total?`<button class="btn primary" id="retry">Retry the ${total-right} missed</button>`:""}
+      <button class="btn" id="newfull">New full exam</button>
+      <button class="btn" id="menu">Practice menu</button>
+    </div>
+    <div class="filter"><h2 style="margin-right:auto">Review</h2>
+      <button class="chip" aria-pressed="${resultsFilter==="missed"}" data-f="missed">Missed (${total-right})</button>
+      <button class="chip" aria-pressed="${resultsFilter==="all"}" data-f="all">All (${total})</button></div>
+    <div class="rlist">${shown.length?shown.map(i=>`<div class="ritem ${i.ok?"ok":"bad"}">
+      <div class="qmeta"><span class="qnum">Q${S.ids.indexOf(i.q.id)+1}</span><span class="dtag">${DOM[i.q.d].short}</span>${i.q.cs?'<span class="dtag">Case study</span>':""}<span style="margin-left:auto;font-weight:600;color:${i.ok?"var(--good)":"var(--bad)"}">${i.ok?"Correct":"Incorrect"}</span></div>
+      <div class="qtext" style="font-size:.95rem">${i.q.q}</div>
+      <div class="row">Your answer: <b>${letters(i.ans)}</b> · Correct: <b>${letters(i.q.a)}</b></div>
+      <ol type="A" style="margin:0;padding-left:22px;font-size:.9rem">${i.q.o.map((t,k)=>`<li style="${i.q.a.includes(k)?"color:var(--good);font-weight:600":i.ans.includes(k)?"color:var(--bad)":""}">${t}</li>`).join("")}</ol>
+      <div class="explain">${i.q.x}</div></div>`).join(""):'<p class="lede">No missed questions.</p>'}</div>
+  </div>`;
+  const r=root();
+  const rt=r.querySelector("#retry");if(rt)rt.onclick=()=>startPractice(null,items.filter(i=>!i.ok).map(i=>i.q.id));
+  r.querySelector("#newfull").onclick=startFull;
+  r.querySelector("#menu").onclick=()=>{S=null;renderHome()};
+  r.querySelectorAll(".filter .chip").forEach(c=>c.onclick=()=>{resultsFilter=c.dataset.f;renderResults()});
+  r.querySelectorAll("a[data-sec]").forEach(a=>a.onclick=e=>{e.preventDefault();go("guide");setTimeout(()=>{const el=document.getElementById(a.dataset.sec);if(el)el.scrollIntoView()},30)});
+}
+
+/* ---------- flashcards ---------- */
+const FC=[
+["con","OSI layers 1–7","Physical, Data link, Network, Transport, Session, Presentation, Application"],
+["con","Data unit at layers 1 / 2 / 3 / 4","<b>Bit</b> / <b>frame</b> / <b>packet</b> / <b>segment</b> (TCP) or datagram (UDP)"],
+["con","Layer of switches / routers","<b>Layer 2</b> / <b>layer 3</b>"],
+["con","Layer where encryption and encoding are placed","<b>Presentation (6)</b>"],
+["con","IDS vs IPS","<b>IDS</b> detects and alerts. <b>IPS</b> is inline and blocks."],
+["con","Forward vs reverse proxy","<b>Forward</b> acts for clients. <b>Reverse</b> sits in front of servers."],
+["con","Network functions as software on standard hardware","<b>NFV</b>"],
+["con","Cloud filter that's stateful, per instance","<b>Security group</b>"],
+["con","Cloud filter that's stateless, per subnet","<b>Network ACL</b>"],
+["con","Private subnet outbound internet access","<b>NAT gateway</b>"],
+["con","IaaS / PaaS / SaaS","You manage OS+ / apps and data / just use the app"],
+["con","Scalability vs elasticity","<b>Scalability</b>: can grow. <b>Elasticity</b>: grows and shrinks automatically."],
+["con","One to nearest of many","<b>Anycast</b>"],
+["con","One to a group","<b>Multicast</b>"],
+["con","Datacenter topology for east-west traffic","<b>Spine-leaf</b>"],
+["con","Three-tier model layers","<b>Core</b>, <b>distribution</b>, <b>access</b>"],
+["con","Core and distribution merged","<b>Collapsed core</b>"],
+["con","Traffic between servers / in and out of the datacenter","<b>East-west</b> / <b>north-south</b>"],
+["con","Cat 5e / Cat 6 / Cat 6a at max speed","<b>1G 100 m</b> / <b>10G 55 m</b> / <b>10G 100 m</b>"],
+["con","Cat 8","<b>25/40G</b> up to <b>30 m</b>"],
+["con","Multi-fiber connector","<b>MPO</b>"],
+["con","Coax connector for cable modems","<b>F-type</b>"],
+["con","RFC 1918 private ranges","<b>10/8</b>, <b>172.16/12</b>, <b>192.168/16</b>"],
+["con","IPv4 loopback / IPv6 loopback","<b>127.0.0.1</b> / <b>::1</b>"],
+["con","APIPA range","<b>169.254.0.0/16</b>"],
+["con","IPv6 link-local prefix","<b>fe80::/10</b>"],
+["con","IPv6 global unicast prefix","<b>2000::/3</b>"],
+["con","IPv6 unique local prefix","<b>fc00::/7</b>"],
+["con","IPv6 multicast prefix","<b>ff00::/8</b>"],
+["con","IPv6 self-addressing from router prefix","<b>SLAAC</b>"],
+["con","IPv6-only clients reaching IPv4 servers","<b>NAT64</b>"],
+["con","Run IPv4 and IPv6 at the same time","<b>Dual stack</b>"],
+["con","Control plane separated from data plane","<b>SDN</b>"],
+["con","Application-aware WAN over any transport","<b>SD-WAN</b>"],
+["con","Layer 2 over layer 3 in UDP 4789","<b>VXLAN</b>"],
+["con","Never trust by location; verify every request","<b>Zero trust</b>"],
+["con","Cloud-delivered SD-WAN plus security","<b>SASE</b> (security part = <b>SSE</b>)"],
+["con","Running config differs from desired state","<b>Configuration drift</b>"],
+["con","Hosts per /26 / /27 / /28 / /29 / /30","<b>62</b> / <b>30</b> / <b>14</b> / <b>6</b> / <b>2</b>"],
+["con","Mask for /27","<b>255.255.255.224</b>"],
+["con","Mask for /29","<b>255.255.255.248</b>"],
+["con","Network and broadcast of 10.1.1.77/27","<b>10.1.1.64</b> / <b>10.1.1.95</b>"],
+["con","Hosts formula","<b>2^(32 − prefix) − 2</b>"],
+["imp","Route selection order","<b>Longest prefix</b> → lowest <b>AD</b> → lowest <b>metric</b>"],
+["imp","AD: connected / static","<b>0</b> / <b>1</b>"],
+["imp","AD: eBGP / EIGRP / OSPF / RIP / iBGP","<b>20</b> / <b>90</b> / <b>110</b> / <b>120</b> / <b>200</b>"],
+["imp","Link-state routing protocol with areas","<b>OSPF</b>"],
+["imp","Internet routing between autonomous systems","<b>BGP</b>"],
+["imp","Many private hosts share one public IP","<b>PAT</b> (NAT overload)"],
+["imp","Redundant default gateway with a virtual IP","<b>FHRP</b>: <b>VRRP</b>, <b>HSRP</b>"],
+["imp","Route between VLANs over one router trunk","<b>Router on a stick</b> (subinterfaces)"],
+["imp","VLAN gateway on a layer 3 switch","<b>SVI</b>"],
+["imp","VLAN tagging standard","<b>802.1Q</b>"],
+["imp","Untagged VLAN on a trunk","<b>Native VLAN</b> (must match both ends)"],
+["imp","Phone and PC on one port, different VLANs","<b>Voice VLAN</b>"],
+["imp","Loop prevention protocol","<b>STP</b> (802.1D) / <b>RSTP</b> (802.1w)"],
+["imp","How the STP root bridge is chosen","<b>Lowest bridge ID</b> (priority + MAC)"],
+["imp","STP port states","Blocking, listening, learning, forwarding"],
+["imp","Bundle links between switches","<b>LACP</b> (802.3ad)"],
+["imp","Jumbo frame MTU","<b>~9000</b> bytes"],
+["imp","2.4 GHz non-overlapping channels","<b>1</b>, <b>6</b>, <b>11</b>"],
+["imp","Wi-Fi 4 / 5 / 6","<b>802.11n</b> / <b>802.11ac</b> / <b>802.11ax</b>"],
+["imp","Wi-Fi standard with 6 GHz","<b>Wi-Fi 6E</b> (802.11ax), also Wi-Fi 7"],
+["imp","WPA3 replacement for PSK","<b>SAE</b>"],
+["imp","Per-user Wi-Fi authentication","<b>Enterprise</b> mode: <b>802.1X + RADIUS</b>"],
+["imp","SSID / BSSID / ESSID","Name / <b>AP radio MAC</b> / one SSID across many APs"],
+["imp","Point-to-point wireless antenna","<b>Directional</b> (Yagi, parabolic)"],
+["imp","APs managed by a controller","<b>Lightweight</b> APs"],
+["imp","Where outside lines enter the building","<b>MDF</b>"],
+["imp","Floor wiring closets","<b>IDF</b>"],
+["imp","802.3af / at / bt power","<b>15.4 W</b> / <b>30 W</b> / <b>60–100 W</b>"],
+["ops","Physical vs logical diagram","<b>Physical</b>: cables and devices. <b>Logical</b>: subnets, VLANs, routing."],
+["ops","Tool that tracks IP assignments","<b>IPAM</b>"],
+["ops","Plan AP placement and find dead spots","<b>Site survey / heat map</b>"],
+["ops","EOL vs EOS","<b>EOL</b>: no longer sold. <b>EOS</b>: no more patches."],
+["ops","Known-good standard configuration","<b>Baseline / golden config</b>"],
+["ops","SNMP poll / trap ports","<b>UDP 161</b> / <b>UDP 162</b>"],
+["ops","Database of SNMP objects","<b>MIB</b>"],
+["ops","Secure SNMP version","<b>SNMPv3</b>"],
+["ops","Conversation-level traffic data","<b>NetFlow</b> / sFlow / IPFIX"],
+["ops","Copy port traffic to an analyzer","<b>Port mirroring (SPAN)</b> or a TAP"],
+["ops","Correlates logs and alerts","<b>SIEM</b>"],
+["ops","DHCP process","<b>DORA</b>: Discover, Offer, Request, Acknowledge"],
+["ops","Forward DHCP across subnets","<b>DHCP relay / IP helper</b>"],
+["ops","Reserve an IP for a MAC","<b>DHCP reservation</b>"],
+["ops","Keep addresses out of a DHCP scope","<b>Exclusion</b>"],
+["ops","DNS records: IPv4 / IPv6 / alias / mail / reverse","<b>A</b> / <b>AAAA</b> / <b>CNAME</b> / <b>MX</b> / <b>PTR</b>"],
+["ops","DNS record for SPF and verification","<b>TXT</b>"],
+["ops","DNS over HTTPS / over TLS ports","<b>443</b> / <b>853</b>"],
+["ops","Sub-microsecond time sync","<b>PTP</b>"],
+["ops","Secured NTP","<b>NTS</b>"],
+["ops","Only corporate traffic through VPN","<b>Split tunnel</b>"],
+["ops","All traffic through VPN","<b>Full tunnel</b>"],
+["ops","Hardened host admins connect through","<b>Jump box</b>"],
+["ops","Management over a separate path","<b>Out-of-band</b>"],
+["ops","Discussion-only DR test","<b>Tabletop exercise</b>"],
+["sec","Limit MACs per switch port","<b>Port security</b>"],
+["sec","Block rogue DHCP servers","<b>DHCP snooping</b>"],
+["sec","Stop ARP poisoning","<b>Dynamic ARP inspection</b>"],
+["sec","Prevent VLAN hopping","Unused/tagged <b>native VLAN</b>, disable <b>DTP</b> on access ports"],
+["sec","Fake AP with a real SSID","<b>Evil twin</b>"],
+["sec","Intercepting traffic between two parties","<b>On-path</b> (MITM) attack"],
+["sec","RADIUS ports","<b>UDP 1812</b> auth / <b>1813</b> accounting"],
+["sec","TACACS+ port and benefit","<b>TCP 49</b>, encrypts full payload, per-command authorization"],
+["sec","802.1X roles","<b>Supplicant</b> (client), <b>authenticator</b> (switch/AP), <b>authentication server</b> (RADIUS)"],
+["sec","Web SSO standard","<b>SAML</b>"],
+["sec","Public servers isolated from the LAN","<b>Screened subnet (DMZ)</b>"],
+["sec","Decoy system to detect attackers","<b>Honeypot</b> (group = honeynet)"],
+["sec","CIA triad","<b>Confidentiality</b>, <b>integrity</b>, <b>availability</b>"],
+["sec","Weakness / something that could exploit it","<b>Vulnerability</b> / <b>threat</b>"],
+["sec","Card data standard","<b>PCI DSS</b>"],
+["sec","EU personal data regulation","<b>GDPR</b>"],
+["sec","Restrict access by location","<b>Geofencing</b>"],
+["ts","Troubleshooting steps","Identify → theory → test → plan → implement → verify + prevent → document"],
+["ts","CRC errors mean","<b>Physical layer</b>: cable, EMI, duplex"],
+["ts","Giants mean","<b>MTU mismatch</b>"],
+["ts","Runts mean","<b>Collisions</b> or duplex problems"],
+["ts","Port shut by a violation","<b>err-disabled</b>"],
+["ts","Port shut by config","<b>Administratively down</b>"],
+["ts","Broadcast storm and MAC flapping","<b>Switching loop</b>"],
+["ts","New clients get no IP, old ones work","<b>DHCP pool exhaustion</b>"],
+["ts","Local works, remote doesn't","<b>Default gateway</b>"],
+["ts","Signal loss over distance","<b>Attenuation</b>"],
+["ts","Signal bleed between pairs","<b>Crosstalk</b>"],
+["ts","Variation in delay","<b>Jitter</b>"],
+["ts","Fiber link has no light either side","<b>TX/RX reversed</b>"],
+["ts","PoE ports dead on a busy switch","<b>Power budget</b> exceeded"],
+["ts","Find a cable at the patch panel","<b>Toner and probe</b>"],
+["ts","Distance to a fiber / copper break","<b>OTDR</b> / <b>TDR</b>"],
+["ts","Find fiber breaks with visible light","<b>Visual fault locator</b>"],
+["ts","Discover neighboring switch and port","<b>LLDP</b> / <b>CDP</b>"],
+["ts","Switch MAC table command","<code>show mac address-table</code>"],
+["ts","Router table command","<code>show ip route</code>"],
+["ts","ACL processing","<b>Top-down, first match wins</b>, implicit deny at end"],
+["ts","Wi-Fi channel and signal tool","<b>Wi-Fi analyzer</b>"]
+];
+
+const FKEY="networkplus-flash-known-v1";
+const F={doms:new Set(Object.keys(DOM)),known:new Set(load(FKEY)||[]),queue:null,flipped:false,includeKnown:false};
+function buildQueue(){F.queue=shuffle(FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0])&&(F.includeKnown||!F.known.has(i))));F.flipped=false}
+function saveKnown(){save(FKEY,[...F.known])}
+function renderFlash(){
+  if(!F.queue)buildQueue();
+  const el=document.getElementById("view-flash");
+  const inDoms=FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0]));
+  const knownN=inDoms.filter(i=>F.known.has(i)).length;
+  const pct=inDoms.length?Math.round(knownN/inDoms.length*100):0;
+  const idx=F.queue[0], c=idx===undefined?null:FC[idx];
+  el.innerHTML=`<div class="fl">
+    <div class="hero"><div class="eyebrow">Flashcards · ${FC.length} cards</div><h1>Flashcards</h1>
+    <p class="lede">Flip a card, then choose <b>Got it</b> to take it out of the deck or <b>Again</b> to see it again in a few cards. Cards you mark as known are saved in this browser.</p></div>
+    <div class="fl-opts" id="fdoms">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="${F.doms.has(d)}" data-d="${d}">${DOM[d].short} · ${FC.filter(x=>x[0]===d).length}</button>`).join("")}</div>
+    <div class="fl-opts">
+      <button class="chip" id="fknown" aria-pressed="${F.includeKnown}">Include known cards</button>
+      <button class="btn small" id="fshuffle">Shuffle &amp; restart</button>
+      <button class="btn small" id="freset">Reset progress</button>
+    </div>
+    <div class="fl-top"><span>${F.queue.length} left this round</span><span>${knownN} of ${inDoms.length} known · ${pct}%</span></div>
+    <div class="prog"><div style="width:${pct}%"></div></div>
+    ${c?`<div class="fc ${F.flipped?"flipped":""}" id="fc" tabindex="0" role="button" aria-label="Flip card">
+      <div class="fc-in">
+        <div class="fc-face fc-front"><span class="dtag" style="align-self:flex-start">${DOM[c[0]].short}</span><div class="fc-text">${c[1]}</div><span class="hint">Click or press Space to flip</span></div>
+        <div class="fc-face fc-back"><div class="fc-q">${c[1]}</div><div class="fc-text">${c[2]}</div><span class="hint">${DOM[c[0]].name}</span></div>
+      </div></div>
+    <div class="fc-ctrl">
+      <button class="btn again" id="fagain">Again<span class="kbd">←</span></button>
+      <button class="btn" id="fflip">Flip<span class="kbd">Space</span></button>
+      <button class="btn got" id="fgot">Got it<span class="kbd">→</span></button>
+    </div>`
+    :`<div class="fl-done"><h2>${inDoms.length?"Round complete":"No domains selected"}</h2><p class="lede">${inDoms.length?`You know ${knownN} of ${inDoms.length} cards in the selected domains.`:"Turn on at least one domain above."}</p>
+      <div class="cta-row">${inDoms.length?`<button class="btn primary" id="fall">Review all cards again</button>`:""}<button class="btn" id="fexam">Go to practice exam</button></div></div>`}
+  </div>`;
+  el.querySelectorAll("#fdoms .chip").forEach(b=>b.onclick=()=>{const d=b.dataset.d;F.doms.has(d)?F.doms.delete(d):F.doms.add(d);buildQueue();renderFlash()});
+  el.querySelector("#fknown").onclick=()=>{F.includeKnown=!F.includeKnown;buildQueue();renderFlash()};
+  el.querySelector("#fshuffle").onclick=()=>{buildQueue();renderFlash()};
+  el.querySelector("#freset").onclick=()=>{F.known.clear();saveKnown();buildQueue();renderFlash()};
+  const card=el.querySelector("#fc");if(card)card.onclick=flipCard;
+  const a=el.querySelector("#fagain");if(a)a.onclick=again;
+  const g=el.querySelector("#fgot");if(g)g.onclick=gotIt;
+  const fl=el.querySelector("#fflip");if(fl)fl.onclick=flipCard;
+  const fa=el.querySelector("#fall");if(fa)fa.onclick=()=>{F.includeKnown=true;buildQueue();renderFlash()};
+  const fe=el.querySelector("#fexam");if(fe)fe.onclick=()=>go("exam");
+}
+function flipCard(){F.flipped=!F.flipped;const c=document.getElementById("fc");if(c)c.classList.toggle("flipped",F.flipped)}
+function again(){if(!F.queue.length)return;const x=F.queue.shift();F.queue.splice(Math.min(3,F.queue.length),0,x);F.flipped=false;renderFlash();focusCard()}
+function gotIt(){if(!F.queue.length)return;F.known.add(F.queue.shift());saveKnown();F.flipped=false;renderFlash();focusCard()}
+function focusCard(){const c=document.getElementById("fc");if(c)c.focus({preventScroll:true})}
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("view-flash").hidden)return;
+  if(e.target.closest&&e.target.closest("input,textarea,select"))return;
+  if(e.key===" "||e.key==="Enter"){if(e.target.tagName==="BUTTON"&&e.target.id!=="fc")return;e.preventDefault();flipCard()}
+  else if(e.key==="ArrowRight"){e.preventDefault();gotIt()}
+  else if(e.key==="ArrowLeft"){e.preventDefault();again()}
+});
+
+/* ---------- wiring ---------- */
+document.querySelectorAll("[data-flash]").forEach(b=>b.onclick=()=>go("flash"));
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>go(t.dataset.view));
+document.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>{startFull()});
+document.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>{S=null;go("exam")});
+document.querySelectorAll(".toc a").forEach(a=>a.onclick=e=>{e.preventDefault();const el=document.querySelector(a.getAttribute("href"));if(el)el.scrollIntoView({behavior:"smooth"})});
+window.addEventListener("hashchange",route);
+const saved=load(KEY); if(saved&&!saved.done&&saved.mode==="full"){S=saved}
+ensureTick(); route();
+</script>
+
+</body>
+</html>
