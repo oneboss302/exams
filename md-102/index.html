@@ -1,0 +1,1218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="MD-102 Microsoft 365 Endpoint Administrator study guide, timed practice exam, and flashcards.">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}a.brand{color:inherit;text-decoration:none}</style>
+<title>MD-102 Endpoint Prep</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Layout: an exam-console shell — sticky tab bar, a reading column for the guide, a two-pane question view with a numbered palette. */
+:root{
+  --bg:#f3f5f8; --surface:#ffffff; --sunk:#eceff4; --ink:#151b27; --muted:#5a6476; --line:#d9dee7;
+  --accent:#2c56c9; --accent-ink:#ffffff; --soft:#e5ecfb;
+  --good:#18805a; --good-soft:#e2f3ec; --bad:#b93a3a; --bad-soft:#f8e6e6; --warn:#9a6a12; --warn-soft:#f8efdc;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e121a; --surface:#161c27; --sunk:#111621; --ink:#e5e9f0; --muted:#98a2b3; --line:#283041;
+  --accent:#7f9dff; --accent-ink:#0e121a; --soft:#1b2440;
+  --good:#4cc08b; --good-soft:#12291f; --bad:#f07474; --bad-soft:#2e1717; --warn:#e2b45a; --warn-soft:#2b2312; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:2rem;font-weight:700;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:600}
+h3{font-size:1.1rem;font-weight:600}
+p{margin:0}
+code,.mono{font-family:var(--f-mono);font-size:.9em}
+code{background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:0 .3em}
+pre{font-family:var(--f-mono);font-size:.85rem;background:var(--sunk);border:1px solid var(--line);border-radius:6px;padding:10px 12px;overflow-x:auto;margin:0}
+a{color:var(--accent)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:16px;padding-block:10px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:700;font-size:1.1rem;display:flex;gap:8px;align-items:baseline}
+.brand .code{font-family:var(--f-mono);font-size:.8rem;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:1px 6px}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tab{background:none;border:1px solid transparent;color:var(--muted);padding:6px 12px;border-radius:6px;font-weight:500}
+.tab[aria-selected="true"]{background:var(--soft);color:var(--ink);border-color:var(--line)}
+.timer{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:.95rem;padding:4px 10px;border-radius:6px;background:var(--sunk);border:1px solid var(--line)}
+.timer.low{color:var(--bad);border-color:var(--bad)}
+
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 64px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* Guide */
+.guide{display:grid;grid-template-columns:200px minmax(0,1fr);gap:40px}
+.toc{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);align-self:start;display:flex;flex-direction:column;gap:2px;font-size:.88rem}
+.toc a{color:var(--muted);text-decoration:none;padding:4px 8px;border-left:2px solid var(--line)}
+.toc a:hover{color:var(--ink);border-left-color:var(--accent)}
+.toc .lbl{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:0 8px 6px}
+.gmain{display:flex;flex-direction:column;gap:44px;min-width:0}
+.gsec{display:flex;flex-direction:column;gap:14px;scroll-margin-top:80px}
+.gsec > p,.gsec li{max-width:70ch}
+.eyebrow{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.lede{font-size:1.06rem;color:var(--muted);max-width:66ch}
+.hero{display:flex;flex-direction:column;gap:14px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:9px 16px;border-radius:7px;font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.small{padding:5px 10px;font-size:.88rem}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.fact{background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px}
+.fact b{font-family:var(--f-display);font-size:1.35rem;font-weight:600}
+.fact span{font-size:.82rem;color:var(--muted)}
+
+.tbl-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--sunk);font-weight:500}
+tr:last-child td{border-bottom:0}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.risk{display:inline-block;font-family:var(--f-mono);font-size:.72rem;padding:1px 7px;border-radius:999px;border:1px solid}
+.risk.hi{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.risk.md{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.risk.lo{color:var(--good);border-color:var(--good);background:var(--good-soft)}
+
+.sheet{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.card h3{font-size:1rem}
+.card ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.9rem}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);font-family:var(--f-mono);font-size:.8rem;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--accent);border:1px solid var(--line)}
+.trap{border-left:3px solid var(--warn);padding:6px 12px;background:var(--surface);border-radius:0 6px 6px 0}
+.traps{display:flex;flex-direction:column;gap:8px}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.plan .when{font-family:var(--f-mono);font-size:.78rem;color:var(--accent)}
+
+/* Exam */
+.ex-home{display:flex;flex-direction:column;gap:22px;max-width:780px}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.mode{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.mode p{color:var(--muted);font-size:.92rem}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;padding:4px 10px;font-size:.84rem}
+.chip[aria-pressed="true"]{background:var(--soft);color:var(--ink);border-color:var(--accent)}
+.resume{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px 14px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+.ex{display:grid;grid-template-columns:minmax(0,1fr) 230px;gap:24px;align-items:start}
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.qmeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.86rem;color:var(--muted)}
+.qnum{font-family:var(--f-mono);color:var(--ink)}
+.dtag{font-family:var(--f-mono);font-size:.72rem;padding:2px 8px;border-radius:999px;background:var(--sunk);border:1px solid var(--line)}
+.mark{margin-left:auto;background:none;border:1px solid var(--line);color:var(--muted);border-radius:6px;padding:3px 10px;font-size:.84rem}
+.mark[aria-pressed="true"]{color:var(--warn);border-color:var(--warn);background:var(--warn-soft)}
+.qtext{font-size:1.02rem;display:flex;flex-direction:column;gap:10px}
+.qtext table{font-size:.86rem}
+.hint{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:grid;grid-template-columns:22px 26px minmax(0,1fr);gap:8px;align-items:start;padding:10px 12px;border:1px solid var(--line);border-radius:8px;cursor:pointer;background:var(--surface)}
+.opt:hover{border-color:var(--accent)}
+.opt input{margin:3px 0 0;accent-color:var(--accent)}
+.opt .ltr{font-family:var(--f-mono);color:var(--muted);font-size:.86rem;padding-top:1px}
+.opt.sel{border-color:var(--accent);background:var(--soft)}
+.opt.right{border-color:var(--good);background:var(--good-soft)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.locked{cursor:default}
+.explain{border-radius:8px;padding:12px 14px;border:1px solid var(--line);background:var(--sunk);display:flex;flex-direction:column;gap:6px;font-size:.93rem}
+.explain .verdict{font-weight:600}
+.explain .verdict.ok{color:var(--good)} .explain .verdict.no{color:var(--bad)}
+.qnav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qnav .sp{flex:1}
+.case{border:1px solid var(--line);border-radius:8px;background:var(--sunk)}
+.case summary{cursor:pointer;padding:10px 14px;font-weight:600;font-family:var(--f-display)}
+.case .cbody{padding:0 14px 14px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+.case ul{margin:0;padding-left:18px}
+
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 72px);display:flex;flex-direction:column;gap:12px}
+.pal{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.pq{font-family:var(--f-mono);font-size:.76rem;padding:5px 0;border-radius:5px;border:1px solid var(--line);background:var(--surface);color:var(--muted);font-variant-numeric:tabular-nums}
+.pq.ans{background:var(--soft);color:var(--ink)}
+.pq.mk{border-color:var(--warn);box-shadow:inset 0 -3px 0 var(--warn)}
+.pq.cur{border-color:var(--accent);outline:1px solid var(--accent);color:var(--ink)}
+.pq.ok{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.pq.bad{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;font-size:.76rem;color:var(--muted)}
+.confirm{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;font-size:.9rem}
+
+/* Results */
+.res{display:flex;flex-direction:column;gap:24px}
+.score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px}
+.big{font-family:var(--f-display);font-size:3.2rem;font-weight:700;line-height:1;font-variant-numeric:tabular-nums}
+.verdict-pill{display:inline-block;font-family:var(--f-mono);font-size:.78rem;padding:3px 10px;border-radius:999px;border:1px solid}
+.dbars{display:flex;flex-direction:column;gap:10px}
+.dbar{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr) 64px;gap:12px;align-items:center;font-size:.9rem}
+.track{height:10px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden;position:relative}
+.fill{height:100%;background:var(--accent)}
+.fill.low{background:var(--bad)} .fill.mid{background:var(--warn)} .fill.hi{background:var(--good)}
+.track .tick{position:absolute;top:-2px;bottom:-2px;width:2px;background:var(--ink);opacity:.35;left:80%}
+.dbar .pct{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right}
+.rlist{display:flex;flex-direction:column;gap:12px}
+.ritem{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;border-left:4px solid var(--line)}
+.ritem.ok{border-left-color:var(--good)} .ritem.bad{border-left-color:var(--bad)}
+.ritem .row{font-size:.88rem;color:var(--muted)}
+.ritem .row b{color:var(--ink);font-weight:600}
+.filter{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* Flashcards */
+.fl{display:flex;flex-direction:column;gap:18px;max-width:760px;margin:0 auto}
+.fl-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.88rem;color:var(--muted)}
+.prog{height:6px;background:var(--sunk);border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.prog>div{height:100%;background:var(--good)}
+.fc{perspective:1400px;cursor:pointer;outline:none}
+.fc-in{display:grid;transition:transform .45s ease;transform-style:preserve-3d}
+.fc.flipped .fc-in{transform:rotateY(180deg)}
+.fc-face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;min-height:280px;display:flex;flex-direction:column;gap:14px;justify-content:space-between;min-width:0}
+.fc-back{transform:rotateY(180deg);background:var(--soft);border-color:var(--accent)}
+.fc-text{font-family:var(--f-display);font-size:1.5rem;font-weight:600;line-height:1.3;text-wrap:balance}
+.fc-back .fc-text{font-family:var(--f-body);font-size:1.08rem;font-weight:400;line-height:1.6;text-wrap:pretty}
+.fc-q{font-size:.85rem;color:var(--muted)}
+.fc:focus-visible .fc-face{outline:2px solid var(--accent);outline-offset:2px}
+.fc-ctrl{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.btn.again{border-color:var(--bad);color:var(--bad)}
+.btn.got{border-color:var(--good);color:var(--good)}
+.kbd{font-family:var(--f-mono);font-size:.72rem;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;margin-left:6px}
+.fl-opts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.fl-done{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:12px}
+
+@media (max-width:860px){
+  .guide{grid-template-columns:1fr}
+  .toc{position:static;flex-direction:row;flex-wrap:wrap;gap:4px}
+  .toc .lbl{width:100%}
+  .toc a{border-left:0;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  .ex{grid-template-columns:1fr}
+  .side{position:static}
+  .grid{grid-template-columns:repeat(10,1fr)}
+  .score{grid-template-columns:1fr}
+  .dbar{grid-template-columns:1fr 56px}
+  .dbar .track{grid-column:1 / -1;grid-row:2}
+}
+@media (max-width:480px){.grid{grid-template-columns:repeat(7,1fr)} h1{font-size:1.6rem} .qcard{padding:16px} .fc-face{padding:20px;min-height:240px} .fc-text{font-size:1.25rem} .kbd{display:none} .tab{padding:6px 9px}}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<header class="bar">
+  <div class="bar-in">
+    <a class="brand" href="/" title="All exams"><span class="code">MD-102</span> Endpoint Prep</a>
+    <span class="timer" id="timer" hidden>100:00</span>
+    <nav class="tabs" role="tablist">
+      <button class="tab" role="tab" id="tab-guide" data-view="guide">Study guide</button>
+      <button class="tab" role="tab" id="tab-exam" data-view="exam">Practice exam</button>
+      <button class="tab" role="tab" id="tab-flash" data-view="flash">Flashcards</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+<section id="view-guide">
+<div class="guide">
+  <nav class="toc" aria-label="Guide sections">
+    <div class="lbl">On this page</div>
+    <a href="#g-format">Exam format</a>
+    <a href="#g-map">Domain map</a>
+    <a href="#g-plan">Study plan</a>
+    <a href="#g-inf">Device infrastructure</a>
+    <a href="#g-mm">Manage &amp; maintain</a>
+    <a href="#g-prot">Protect devices</a>
+    <a href="#g-app">Apps</a>
+    <a href="#g-ops">Automation &amp; monitoring</a>
+    <a href="#g-num">Numbers to memorize</a>
+    <a href="#g-traps">Classic traps</a>
+  </nav>
+  <div class="gmain">
+    <div class="hero">
+      <div class="eyebrow">Microsoft 365 Certified: Endpoint Administrator Associate</div>
+      <h1>The MD-102 Intune guide</h1>
+      <p class="lede">MD-102 is an Intune exam. Almost every question is "which Intune feature, policy type, or enrollment method meets this requirement." The hard part is the many similar-sounding options: join types, Autopilot modes, Android enrollment profiles, remote actions, and app protection vs app configuration. This guide puts each set side by side.</p>
+      <div class="cta-row">
+        <button class="btn primary" data-start="full">Start full practice exam (50 Q, 100 min)</button>
+        <button class="btn" data-goto="exam">Practice by domain</button>
+        <button class="btn" data-flash>Flashcards</button>
+      </div>
+    </div>
+
+    <section class="gsec" id="g-format">
+      <div class="eyebrow">01 · Format</div>
+      <h2>What you're walking into</h2>
+      <div class="facts">
+        <div class="fact"><b>700</b><span>passing score out of 1000 (scaled, not a %)</span></div>
+        <div class="fact"><b>40–60</b><span>questions, typically about 50</span></div>
+        <div class="fact"><b>~100 min</b><span>for questions; plan on ~2 hours total</span></div>
+        <div class="fact"><b>Oct 27, 2026</b><span>current skills outline, with 5 domains</span></div>
+      </div>
+      <ul>
+        <li><b>Question types:</b> single choice, multi-select, drag-and-drop ordering (for example, Autopilot setup steps), hot-area, Yes/No series, and a case study.</li>
+        <li><b>Expect "minimize administrative effort"</b> on most questions. The answer is usually the built-in Intune feature, not a script.</li>
+        <li><b>Platform details matter.</b> iOS, Android, macOS, and Windows each have their own enrollment methods and profile types.</li>
+        <li><b>Microsoft Learn is available during the exam</b> (open book). Use it sparingly.</li>
+        <li>The October 2026 update renamed "Manage applications" to "Manage and secure applications" and kept the automation domain (Graph, Security Copilot agents, Endpoint analytics).</li>
+      </ul>
+    </section>
+
+    <section class="gsec" id="g-map">
+      <div class="eyebrow">02 · Weighting</div>
+      <h2>Domain map</h2>
+      <p>Weights are from Microsoft's official MD-102 study guide (skills measured as of October 27, 2026).</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Domain</th><th>Weight</th><th>Focus</th></tr></thead>
+        <tbody>
+          <tr><td>Prepare infrastructure for devices</td><td class="num">20–25%</td><td>Join types, dynamic groups, enrollment per platform, RBAC and scope tags, compliance and Conditional Access, Windows Hello, LAPS.</td></tr>
+          <tr><td>Manage and maintain devices</td><td class="num">25–30%</td><td>Autopilot, ESP, Windows 11 upgrades, Windows 365, configuration profiles, filters, Intune Suite, remote actions.</td></tr>
+          <tr><td>Protect devices</td><td class="num">15–20%</td><td>Endpoint security policies, BitLocker, Defender for Endpoint, App Control, update rings, Autopatch, Delivery Optimization.</td></tr>
+          <tr><td>Manage and secure applications</td><td class="num">15–20%</td><td>Win32 and other app types, Microsoft 365 Apps, store apps, app protection and app configuration policies.</td></tr>
+          <tr><td>Optimize endpoint operations</td><td class="num">10–15%</td><td>Graph and PowerShell, Security Copilot agents, Endpoint analytics, Remediations, reports, service health.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-plan">
+      <div class="eyebrow">03 · Schedule</div>
+      <h2>A two-week study plan</h2>
+      <div class="plan">
+        <div class="card"><div class="when">Day 1</div><h3>Baseline</h3><p>Full practice exam, timed, before studying. Note your weakest domains.</p></div>
+        <div class="card"><div class="when">Days 2–5</div><h3>Enrollment and Autopilot</h3><p>The first two domains are about half the exam. A free Intune trial tenant and one VM are enough to try Autopilot, profiles, and remote actions.</p></div>
+        <div class="card"><div class="when">Days 6–9</div><h3>Security, updates, apps</h3><p>Endpoint security, update rings, Win32 apps, and app protection policies. Practice those domains to 80%.</p></div>
+        <div class="card"><div class="when">Days 10–13</div><h3>Full exams</h3><p>A full exam every other day with review of every miss. Flashcards daily.</p></div>
+        <div class="card"><div class="when">Day 14</div><h3>Light review</h3><p>Numbers and traps only.</p></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-inf">
+      <div class="eyebrow">04 · Prepare infrastructure · 20–25%</div>
+      <h2>Device infrastructure cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Join type</th><th>Device owner</th><th>Sign in with</th><th>Use when</th></tr></thead>
+        <tbody>
+          <tr><td><b>Entra registered</b></td><td>User (BYOD)</td><td>Local or personal account, work account added</td><td>Personal devices that need access to work apps</td></tr>
+          <tr><td><b>Entra joined</b></td><td>Organization</td><td>Entra account</td><td>Cloud-first corporate Windows devices. Default for Autopilot.</td></tr>
+          <tr><td><b>Hybrid Entra joined</b></td><td>Organization</td><td>On-prem AD account</td><td>Devices still need on-prem AD (GPOs, legacy apps). Needs Entra Connect and line of sight to a DC.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Groups</h3><ul>
+          <li><b>Dynamic device groups</b> use rules such as <code>device.deviceOSType -eq "Windows"</code>. Need Entra ID P1.</li>
+          <li>All Autopilot devices: <code>device.devicePhysicalIDs -any (_ -contains "[ZTDId]")</code>.</li>
+          <li>Autopilot devices with a <b>group tag</b>: <code>device.devicePhysicalIds -any (_ -eq "[OrderID]:Sales")</code>.</li>
+          <li>Dynamic membership updates take time. <b>Assignment filters</b> are evaluated at check-in and are faster for targeting.</li>
+        </ul></div>
+        <div class="card"><h3>Windows enrollment</h3><ul>
+          <li><b>Automatic enrollment</b>: Entra ID → Mobility (MDM and WIP) → Intune → <b>MDM user scope</b> = Some or All. Entra join then enrolls automatically.</li>
+          <li><b>Enrollment restrictions</b>: <b>platform</b> (allow or block platforms, block personally owned) and <b>device limit</b> (default 5 per user, up to 15).</li>
+          <li><b>Device enrollment managers</b> can enroll up to 1,000 devices (shared or bulk scenarios).</li>
+          <li>Hybrid-joined devices can auto-enroll through a GPO, or co-management with Configuration Manager.</li>
+        </ul></div>
+        <div class="card"><h3>Apple enrollment</h3><ul>
+          <li>An <b>Apple MDM push certificate</b> (APNs) is required for any Apple management. Renew it <b>yearly with the same Apple ID</b> or every Apple device must re-enroll.</li>
+          <li><b>Corporate</b>: <b>Automated Device Enrollment</b> through <b>Apple Business Manager</b>. Supervised, zero-touch, and users can't remove management.</li>
+          <li><b>Personal (BYOD)</b>: <b>account-driven user enrollment</b> (separate managed APFS volume, privacy-preserving) or device enrollment through Company Portal.</li>
+          <li><b>Apps and Books (VPP)</b> location token from Apple Business Manager for licensed app deployment.</li>
+        </ul></div>
+        <div class="card"><h3>Android Enterprise</h3><ul>
+          <li><b>Personally owned work profile</b>: BYOD. Work apps in a separate profile, and IT can't see personal data.</li>
+          <li><b>Corporate-owned work profile</b> (COPE): corporate device with personal use allowed.</li>
+          <li><b>Fully managed</b> (COBO): corporate device, one user, work only.</li>
+          <li><b>Dedicated</b> (COSU): kiosks, scanners, single-app or multi-app lockdown, no user affinity.</li>
+          <li>Bulk corporate enrollment: <b>Google zero-touch</b> or <b>Samsung Knox Mobile Enrollment</b>, or QR code and token. Requires a <b>Managed Google Play</b> binding.</li>
+          <li>Android device administrator is legacy. Don't pick it.</li>
+        </ul></div>
+        <div class="card"><h3>Intune RBAC</h3><ul>
+          <li>Built-in roles: Policy and Profile Manager, Application Manager, <b>Help Desk Operator</b> (remote tasks), Read Only Operator, Endpoint Security Manager, Intune Role Administrator. <b>Intune Administrator</b> is an Entra role with full access.</li>
+          <li>A role assignment has <b>members</b> (admins), <b>scope groups</b> (which users and devices they manage), and <b>scope tags</b> (which objects they see).</li>
+          <li><b>Scope tags</b> limit admins to objects with matching tags, for example devices and policies for Europe only.</li>
+          <li><b>Multi-admin approval</b> (access policies) requires a second admin to approve app deployments, scripts, or device wipes.</li>
+        </ul></div>
+        <div class="card"><h3>Compliance &amp; access</h3><ul>
+          <li><b>Compliance policies</b> set requirements (BitLocker, OS version, password, Defender risk level). <b>Actions for noncompliance</b>: mark noncompliant (immediately by default), email, remote lock, retire, after a grace period.</li>
+          <li>Tenant setting: <b>"Mark devices with no compliance policy assigned as"</b> Compliant (default) or Not compliant. <b>Compliance status validity period</b> default 30 days.</li>
+          <li><b>Conditional Access</b> grant <b>"Require device to be marked as compliant"</b> blocks access from noncompliant or unmanaged devices.</li>
+          <li><b>Windows Hello for Business</b>: tenant-wide during enrollment, or a policy for targeted groups. Hybrid environments: <b>cloud Kerberos trust</b> is the recommended deployment model.</li>
+          <li><b>Windows LAPS</b> with Intune: Account protection policy, backup to Entra ID (enable LAPS in Entra device settings) or AD. View the password in Intune or Entra. Remote action to rotate.</li>
+          <li><b>Local user group membership</b> (Account protection) adds or replaces members of local groups such as Administrators.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-mm">
+      <div class="eyebrow">05 · Manage &amp; maintain · 25–30%</div>
+      <h2>Manage &amp; maintain cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Autopilot mode</th><th>Who's at the device</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><b>User-driven</b></td><td>The end user</td><td>Most common. Entra join, or hybrid join with the Intune Connector for Active Directory.</td></tr>
+          <tr><td><b>Pre-provisioning</b></td><td>Technician first, then user</td><td>Formerly "white glove." Press the Windows key 5 times at OOBE. Device apps and policies install before shipping. Needs TPM 2.0 and a physical device.</td></tr>
+          <tr><td><b>Self-deploying</b></td><td>Nobody</td><td>Kiosks and shared devices. No user affinity. Needs TPM 2.0 attestation and Entra join.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Autopilot details</h3><ul>
+          <li>Register devices by <b>hardware hash</b> (CSV import or <code>Get-WindowsAutopilotInfo</code>), or have the <b>OEM/reseller</b> register them.</li>
+          <li><b>Autopilot device preparation</b> (newer): no hardware hash pre-registration, uses a device security group and <b>enrollment time grouping</b>, simpler setup. <b>Deployment profiles</b> (classic) are needed for pre-provisioning, self-deploying, and hybrid join.</li>
+          <li><b>Device name template</b>: <code>%SERIAL%</code> or <code>%RAND:x%</code>, 15 characters max. Not supported for hybrid join (use the domain join profile prefix instead).</li>
+          <li><b>Enrollment Status Page</b>: shows progress and can <b>block device use</b> until required apps and policies install. Can block only on selected apps. Default timeout 60 minutes.</li>
+          <li><b>Autopilot Reset</b> (remote or local): returns a device to a business-ready state, keeps Entra join and enrollment, and removes personal files and apps.</li>
+        </ul></div>
+        <div class="card"><h3>Windows upgrades &amp; Windows 365</h3><ul>
+          <li>Windows 11 needs <b>TPM 2.0, UEFI with Secure Boot</b>, and a supported CPU. Check readiness in the Endpoint analytics <b>Work from anywhere</b> report.</li>
+          <li>Upgrade with a <b>feature update policy</b> (target a specific version, such as Windows 11 24H2).</li>
+          <li>Pro to Enterprise: <b>Windows subscription activation</b> with an E3/E5 license, no reinstall or reboot.</li>
+          <li><b>Windows 365 Cloud PCs</b>: provisioning policies define join type (Entra or hybrid), network (<b>Microsoft-hosted</b> or an <b>Azure network connection</b>), and image (gallery or custom).</li>
+          <li><b>Windows Backup for Organizations</b>: back up settings and Store apps through Intune, then restore them during OOBE on a new device.</li>
+        </ul></div>
+        <div class="card"><h3>Configuration profiles</h3><ul>
+          <li><b>Settings catalog</b> is the main profile type, with thousands of settings for Windows, macOS, and iOS.</li>
+          <li><b>Group Policy analytics</b>: import GPO XML backups to see which settings have MDM equivalents, then migrate them to a settings catalog profile.</li>
+          <li><b>Imported ADMX</b> templates for third-party apps. <b>Custom OMA-URI</b> for settings not in the catalog.</li>
+          <li>Two profiles that set the same setting to different values cause a <b>conflict</b>, and neither value applies until you fix it.</li>
+          <li><b>Assignment filters</b> include or exclude devices in an assigned group by properties (model, OS SKU, ownership, enrollment profile). Evaluated at check-in.</li>
+          <li>Specialty devices: <b>Teams Rooms</b>, <b>HoloLens 2</b>, and <b>Zebra</b> (MX profiles) have their own profile types.</li>
+        </ul></div>
+        <div class="card"><h3>Intune Suite add-ons</h3><ul>
+          <li><b>Endpoint Privilege Management</b>: standard users elevate specific apps. Elevation types: <b>automatic</b>, <b>user confirmed</b> (with justification or auth), or <b>support approved</b>. Uses an elevation settings policy plus elevation rules.</li>
+          <li><b>Enterprise App Catalog</b>: prepackaged Win32 apps from Microsoft with automatic detection and install info.</li>
+          <li><b>Remote Help</b>: helpdesk screen sharing and control with RBAC and audit logs.</li>
+          <li><b>Cloud PKI</b>: cloud root and issuing CAs that issue certificates through SCEP profiles, with no NDES server or connector.</li>
+          <li><b>Microsoft Tunnel for MAM</b>: VPN for unenrolled iOS and Android devices running protected apps.</li>
+          <li><b>Advanced Analytics</b>: device query (KQL), anomaly detection, battery health, enhanced inventory.</li>
+        </ul></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Remote action</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td><b>Retire</b></td><td>Removes company data, apps, and profiles. <b>Personal data stays</b>. The device is unenrolled. For BYOD.</td></tr>
+          <tr><td><b>Wipe</b></td><td><b>Factory reset.</b> Windows options: keep enrollment state and user account, or wipe even if the device loses power.</td></tr>
+          <tr><td><b>Autopilot Reset</b></td><td>Back to business-ready state. Keeps Entra join and Intune enrollment.</td></tr>
+          <tr><td><b>Delete</b></td><td>Removes the record from Intune only. Nothing happens on the device.</td></tr>
+          <tr><td><b>Sync / Restart / Remote lock</b></td><td>Force a check-in, reboot, or lock.</td></tr>
+          <tr><td><b>Rotate BitLocker keys / Rotate local admin password</b></td><td>Generate a new recovery key or LAPS password after one was used or exposed.</td></tr>
+          <tr><td><b>Collect diagnostics</b></td><td>Gather logs and event data from a Windows device without user involvement.</td></tr>
+          <tr><td><b>Bulk device actions</b></td><td>Run restart, retire, wipe, and others on up to 100 devices at once.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-prot">
+      <div class="eyebrow">06 · Protect devices · 15–20%</div>
+      <h2>Protect devices cheat sheet</h2>
+      <div class="sheet">
+        <div class="card"><h3>Endpoint security policies</h3><ul>
+          <li><b>Antivirus</b>: Defender settings, exclusions, tamper protection.</li>
+          <li><b>Disk encryption</b>: BitLocker (Windows) and FileVault (macOS). <b>Silent encryption</b> needs a TPM and "Allow standard users to enable encryption during Autopilot". Recovery keys back up to <b>Entra ID</b>, and users can self-serve them from the Company Portal or My Account.</li>
+          <li><b>Firewall</b>: Defender Firewall profiles and rules.</li>
+          <li><b>Attack surface reduction</b> rules: start in <b>audit</b> mode, then block or warn.</li>
+          <li><b>Security baselines</b>: Microsoft's recommended configurations (Windows, Defender for Endpoint, Edge, Microsoft 365 Apps).</li>
+          <li><b>App Control for Business</b>: allow-list code. Use the Intune Management Extension as a <b>managed installer</b> so Intune-deployed apps are trusted.</li>
+        </ul></div>
+        <div class="card"><h3>Defender for Endpoint</h3><ul>
+          <li>Turn on the <b>Intune connector</b> in the Defender portal and the MDE connector in Intune.</li>
+          <li>Onboard devices with an <b>EDR policy</b> that uses the onboarding package from the connector.</li>
+          <li>Compliance setting <b>"Require the device to be at or under the machine risk score"</b> (Clear, Low, Medium, High). Combined with Conditional Access, a compromised device loses access.</li>
+          <li>Investigate and triage incidents in the Defender portal.</li>
+        </ul></div>
+        <div class="card"><h3>Windows updates</h3><ul>
+          <li><b>Update rings</b>: deferral for quality (0–30 days) and feature (0–365 days) updates, <b>deadlines</b>, grace period, and <b>pause</b> (up to 35 days).</li>
+          <li><b>Feature update policy</b>: keep devices on, or move them to, a specific Windows version.</li>
+          <li><b>Quality update policy</b>: <b>expedite</b> a security update to devices that are behind, bypassing ring deferrals.</li>
+          <li><b>Driver update policy</b>: approve drivers and firmware manually or automatically.</li>
+          <li><b>Windows Autopatch</b>: Microsoft-managed update service using rings (Test, First, Fast, Broad). Needs Windows Enterprise E3 or higher.</li>
+          <li><b>Hotpatch</b> (Windows 11 Enterprise 24H2+): security updates without restarts in most months. Enable in a Windows quality update policy, with VBS on.</li>
+        </ul></div>
+        <div class="card"><h3>Apple, Android &amp; delivery</h3><ul>
+          <li>iOS/iPadOS and macOS updates: <b>Settings catalog declarative software update</b> settings (enforce a version by a date).</li>
+          <li>Android: <b>system update</b> configuration for fully managed and dedicated devices (automatic, postponed, windowed), and <b>FOTA</b> (Samsung E-FOTA, Zebra LifeGuard) for firmware.</li>
+          <li><b>Delivery Optimization</b> download modes: <b>HTTP only (0)</b>, <b>LAN (1, default)</b>, <b>Group (2)</b> by group ID across subnets, <b>Internet (3)</b>, Simple (99), Bypass (100). <b>Connected Cache</b> caches content locally.</li>
+          <li>Monitor with Windows Update reports in Intune (requires Windows diagnostic data enabled).</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-app">
+      <div class="eyebrow">07 · Apps · 15–20%</div>
+      <h2>Apps cheat sheet</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>App type</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td><b>Win32 (.intunewin)</b></td><td>Any installer (EXE, MSI with dependencies). Wrap with the <b>Win32 Content Prep Tool</b>. Supports <b>detection rules</b>, requirements, <b>dependencies</b>, and <b>supersedence</b>. Installed by the Intune Management Extension.</td></tr>
+          <tr><td><b>Line-of-business</b></td><td>Single-file .msi, .msix/.appx, .ipa, .apk. No dependencies or custom detection.</td></tr>
+          <tr><td><b>Microsoft Store app (new)</b></td><td>Store apps installed and updated through <b>winget</b>.</td></tr>
+          <tr><td><b>Microsoft 365 Apps</b></td><td>Built-in app type. Choose apps, architecture, <b>update channel</b>, or upload an <b>Office Deployment Tool</b> XML.</td></tr>
+          <tr><td><b>iOS store / Managed Google Play</b></td><td>Public store apps. Use <b>Apps and Books (VPP)</b> licenses for iOS. Approve apps in Managed Google Play for Android Enterprise.</td></tr>
+          <tr><td><b>Enterprise App Catalog</b></td><td>Microsoft-packaged Win32 apps (Intune Suite).</td></tr>
+        </tbody>
+      </table></div>
+      <div class="sheet">
+        <div class="card"><h3>Assignment</h3><ul>
+          <li><b>Required</b>: installs automatically. <b>Available for enrolled devices</b>: offered in the Company Portal. <b>Uninstall</b>: removes it. <b>Available with or without enrollment</b>: for app protection scenarios.</li>
+          <li>Monitor per-device and per-user install status. Win32 logs live in <code>C:\ProgramData\Microsoft\IntuneManagementExtension\Logs</code>.</li>
+          <li><b>Quiet time</b> policies mute Outlook and Teams notifications on mobile during set hours.</li>
+        </ul></div>
+        <div class="card"><h3>Microsoft 365 Apps</h3><ul>
+          <li>Update channels: <b>Current</b>, <b>Monthly Enterprise</b>, <b>Semi-Annual Enterprise</b> (most validation time).</li>
+          <li>During Autopilot, deploy M365 Apps as a <b>required</b> app that the ESP blocks on.</li>
+          <li><b>Microsoft 365 Apps admin center</b> (config.office.com): <b>Cloud Policy service</b> applies Office policies to users on any device, including unmanaged ones. Also inventory, servicing profiles, and security update status.</li>
+        </ul></div>
+        <div class="card"><h3>App protection policies (MAM)</h3><ul>
+          <li>Protect <b>work data inside apps</b> (Outlook, Teams, Edge, OneDrive) on <b>enrolled or unenrolled</b> devices.</li>
+          <li><b>Data protection</b>: block copy/paste and "Save as" to unmanaged apps, require encryption, restrict backups.</li>
+          <li><b>Access requirements</b>: app PIN or biometrics, work account sign-in.</li>
+          <li><b>Conditional launch</b>: block or wipe on jailbroken/rooted devices, minimum OS or app version, max offline time.</li>
+          <li><b>Selective wipe</b> removes only app data.</li>
+          <li>Conditional Access grant <b>"Require app protection policy"</b> ensures only protected apps can access data.</li>
+        </ul></div>
+        <div class="card"><h3>App configuration policies</h3><ul>
+          <li>Push <b>settings</b> to an app, such as an Outlook account setup or a default URL.</li>
+          <li><b>Managed devices</b> channel: delivered through MDM (enrolled iOS/Android devices).</li>
+          <li><b>Managed apps</b> channel: delivered through the Intune App SDK, so it works on unenrolled devices.</li>
+          <li>App <b>protection</b> = protect data. App <b>configuration</b> = preconfigure settings.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-ops">
+      <div class="eyebrow">08 · Automation, monitoring &amp; reporting · 10–15%</div>
+      <h2>Operations cheat sheet</h2>
+      <div class="sheet">
+        <div class="card"><h3>Automation</h3><ul>
+          <li><b>Microsoft Graph PowerShell SDK</b>: <code>Connect-MgGraph -Scopes DeviceManagementManagedDevices.ReadWrite.All</code>, then cmdlets such as <code>Get-MgDeviceManagementManagedDevice</code>.</li>
+          <li>Use <b>app registrations with application permissions</b> for unattended scripts. Grant least-privilege Graph scopes.</li>
+          <li><b>Custom compliance</b> (Windows): a PowerShell <b>discovery script</b> plus a <b>JSON</b> file that defines the rules and remediation messages.</li>
+          <li><b>Security Copilot agents in Intune</b> analyze vulnerabilities, policies, and device performance, and make recommendations an admin reviews before acting.</li>
+        </ul></div>
+        <div class="card"><h3>Endpoint analytics</h3><ul>
+          <li><b>Startup performance</b>: boot and sign-in times, slow startup processes.</li>
+          <li><b>App reliability</b>: crash counts and app health scores.</li>
+          <li><b>Work from anywhere</b>: cloud readiness and Windows 11 readiness.</li>
+          <li><b>Remediations</b>: <b>detection + remediation script</b> pairs on a schedule (requires Windows Enterprise E3/E5 or equivalent licensing).</li>
+          <li><b>Device scope</b> and baselines let you compare groups to org baselines.</li>
+        </ul></div>
+        <div class="card"><h3>Reports &amp; health</h3><ul>
+          <li><b>Reports</b> blade: device compliance, configuration, app install, update reports, and exports through the UI or Graph.</li>
+          <li>Send Intune audit and operational logs to <b>Log Analytics</b> through diagnostic settings for <b>workbooks</b> and longer retention.</li>
+          <li><b>Tenant admin → Tenant status</b>: service health, connector status, and message center posts.</li>
+          <li><b>Audit logs</b> show who changed which policy and when.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section class="gsec" id="g-num">
+      <div class="eyebrow">09 · Recall</div>
+      <h2>Numbers to memorize</h2>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Item</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Default device limit per user / max</td><td class="num">5 / 15</td></tr>
+          <tr><td>Device enrollment manager limit</td><td class="num">1,000 devices</td></tr>
+          <tr><td>Compliance status validity period (default)</td><td class="num">30 days</td></tr>
+          <tr><td>Autopilot device name max length</td><td class="num">15 characters</td></tr>
+          <tr><td>ESP default timeout</td><td class="num">60 minutes</td></tr>
+          <tr><td>Pre-provisioning trigger</td><td class="num">Windows key × 5</td></tr>
+          <tr><td>Quality / feature update deferral max</td><td class="num">30 / 365 days</td></tr>
+          <tr><td>Update ring pause max</td><td class="num">35 days</td></tr>
+          <tr><td>APNs certificate validity</td><td class="num">1 year</td></tr>
+          <tr><td>Bulk device actions per batch</td><td class="num">100 devices</td></tr>
+          <tr><td>Windows device check-in (normal)</td><td class="num">about every 8 hours</td></tr>
+          <tr><td>Delivery Optimization default mode</td><td class="num">LAN (1)</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="gsec" id="g-traps">
+      <div class="eyebrow">10 · Traps</div>
+      <h2>Classic traps</h2>
+      <div class="traps">
+        <div class="trap"><b>Retire keeps personal data. Wipe doesn't.</b> BYOD questions almost always want Retire or a selective app wipe.</div>
+        <div class="trap"><b>Delete does nothing on the device.</b> It only removes the record from Intune.</div>
+        <div class="trap"><b>App protection works without enrollment.</b> If users won't enroll personal phones, the answer is MAM, not compliance policies.</div>
+        <div class="trap"><b>Self-deploying and pre-provisioning need TPM 2.0</b>, and they don't work in VMs without vTPM attestation support.</div>
+        <div class="trap"><b>Device name templates don't apply to hybrid join.</b> Use the domain join profile prefix.</div>
+        <div class="trap"><b>The APNs certificate must be renewed with the same Apple ID.</b> A new certificate forces every Apple device to re-enroll.</div>
+        <div class="trap"><b>Scope tags limit what admins see; scope groups limit what they can manage.</b> Questions about "only see European devices" want scope tags.</div>
+        <div class="trap"><b>Two profiles setting the same value differently → conflict</b>, and neither applies.</div>
+        <div class="trap"><b>LOB apps can't have dependencies or supersedence.</b> Use Win32.</div>
+        <div class="trap"><b>Remediations need Windows Enterprise E3/E5 (or equivalent) licensing</b>, not just Intune.</div>
+        <div class="trap"><b>Devices with no compliance policy are Compliant by default.</b> Change the tenant setting to treat them as noncompliant.</div>
+        <div class="trap"><b>Android device administrator is legacy.</b> Choose an Android Enterprise profile.</div>
+      </div>
+      <div class="cta-row"><button class="btn primary" data-start="full">Start the full practice exam</button></div>
+    </section>
+  </div>
+</div>
+</section>
+
+<section id="view-exam" hidden></section>
+<section id="view-flash" hidden></section>
+</main>
+
+<script>
+const DOM = {
+  inf:{name:"Prepare infrastructure for devices", short:"Infrastructure"},
+  mm:{name:"Manage & maintain devices", short:"Manage"},
+  prot:{name:"Protect devices", short:"Protect"},
+  app:{name:"Manage & secure apps", short:"Apps"},
+  ops:{name:"Automation, monitoring & reporting", short:"Operations"}
+};
+const CASE_NAME = "Litware, Inc.";
+
+const CASE = `<p><b>Litware, Inc.</b> is a distributor with offices in North America and Europe. It uses Microsoft 365 E5, which includes Intune Plan 1 and Entra ID P2. It also licenses the Intune Suite.</p>
+<p><b>Existing environment</b></p>
+<ul>
+<li>All users are cloud-only Entra ID users. There is no on-prem AD DS.</li>
+<li>Laptops run Windows 11 Enterprise and are enrolled in Intune.</li>
+<li>Sales staff use personal iPhones to read corporate email in Outlook. The phones aren't enrolled.</li>
+<li>The warehouse uses 200 Android barcode scanners that run one inventory app.</li>
+<li>One Intune help desk team supports both regions.</li>
+</ul>
+<p><b>Requirements</b></p>
+<ul>
+<li>New laptops must ship directly from the OEM to remote employees. IT must not touch them, and users must get their apps and settings at first sign-in.</li>
+<li>Corporate data in Outlook on sales staff's personal iPhones must not be copied to personal apps. Sales staff won't enroll their phones.</li>
+<li>European help desk admins must see and manage only European devices and policies.</li>
+<li>Warehouse scanners must be locked to the inventory app and not be associated with any user.</li>
+<li>Standard users must be able to run one approved driver-update utility that needs admin rights, without becoming local admins.</li>
+<li>Minimize administrative effort.</li>
+</ul>`;
+
+const Q = [
+// ---------- INFRASTRUCTURE ----------
+{id:"i1",d:"inf",q:`<p>Employees use personal Windows laptops to access Microsoft 365. The company wants the laptops known to Entra ID so Conditional Access can evaluate them, but users must keep signing in with their personal accounts.</p><p>Which device identity should you use?</p>`,
+ o:["Microsoft Entra hybrid joined","Microsoft Entra registered","Domain joined only","Microsoft Entra joined"],a:[1],
+ x:`Entra registration is for personal (BYOD) devices: users add a work account but keep their personal sign-in. Entra join makes the organization the owner and requires signing in with an Entra account.`},
+{id:"i2",d:"inf",q:`<p>Your company has on-prem AD DS. New Windows devices must still receive on-prem Group Policy and access legacy apps that use Kerberos to on-prem servers, while also being managed by Intune.</p><p>Which join type meets the Group Policy requirement?</p>`,
+ o:["Microsoft Entra registered","Workplace join","Microsoft Entra hybrid joined","Microsoft Entra joined"],a:[2],
+ x:`Only domain-joined devices (including hybrid-joined) process on-prem GPOs. Entra joined devices can still reach on-prem resources with Kerberos through SSO, but they don't get GPOs.`},
+{id:"i3",d:"inf",q:`<p>Users sign in to new Entra joined Windows devices, but the devices don't appear in Intune.</p><p>What should you check first?</p>`,
+ o:["The Apple MDM push certificate","The Windows Hello for Business policy","The Delivery Optimization mode","The Entra ID MDM user scope in Mobility (MDM and WIP) settings"],a:[3],
+ x:`Automatic enrollment happens during Entra join only if the user is in the MDM user scope (Some or All) and has an Intune license.`},
+{id:"i4",d:"inf",q:`<p>Users must be limited to enrolling 3 devices each, and personally owned Windows devices must be blocked from enrolling.</p><p>What should you configure?</p>`,
+ o:["A device limit restriction and a device platform restriction","A Conditional Access policy","A compliance policy","An assignment filter"],a:[0],
+ x:`Enrollment restrictions come in two kinds: device limit restrictions (default 5, up to 15) and device platform restrictions, which can block personally owned devices per platform.`},
+{id:"i5",d:"inf",q:`<p>Your Apple MDM push certificate expires next week. You must renew it without making iOS devices re-enroll.</p><p>What must you do?</p>`,
+ o:["Renew the Apple Business Manager token instead","Renew it using the same Apple ID that created it","Create a new certificate with any Apple ID","Delete the old certificate first"],a:[1],
+ x:`The APNs certificate must be renewed with the same Apple ID. Creating a new certificate breaks the link, and every Apple device has to re-enroll.`},
+{id:"i6",d:"inf",q:`<p>Corporate iPhones bought through Apple's business program must be supervised, enroll automatically at activation, and users must not be able to remove management.</p><p>What should you use?</p>`,
+ o:["Company Portal device enrollment","Account-driven user enrollment","Automated Device Enrollment through Apple Business Manager","Apple Configurator only"],a:[2],
+ x:`Automated Device Enrollment (ADE) through Apple Business Manager supervises devices and enrolls them during Setup Assistant, with locked management that users can't remove.`},
+{id:"i7",d:"inf",q:`<p>Employees use their own Android phones for work. IT must be able to wipe only work data and must not see personal apps or data.</p><p>Which enrollment type should you use?</p>`,
+ o:["Android Enterprise dedicated","Android device administrator","Android Enterprise fully managed","Android Enterprise personally owned work profile"],a:[3],
+ x:`The personally owned work profile creates a separate work container. IT manages only the work profile and can remove it without touching personal data.`},
+{id:"i8",d:"inf",q:`<p>Help desk admins in Europe must see only devices, apps, and policies for Europe in the Intune admin center.</p><p>What should you configure?</p>`,
+ o:["Scope tags assigned to European objects and to the admins' role assignment","Administrative units in Entra ID","Separate Intune tenants","Assignment filters"],a:[0],
+ x:`Scope tags control which Intune objects an admin can see. Objects tagged "Europe" are visible only to admins whose role assignment includes the Europe tag. Scope groups set which devices and users they can manage.`},
+{id:"i9",d:"inf",q:`<p>A device wipe or a script deployment must require approval from a second Intune administrator before it runs.</p><p>What should you configure?</p>`,
+ o:["Scope tags","Privileged Identity Management","Intune audit logs","Multi-admin approval access policies"],a:[3],
+ x:`Multi-admin approval (access policies) in Intune requires a second administrator to approve protected actions such as app deployments, scripts, and device wipes.`},
+{id:"i10",d:"inf",q:`<p>You must block access to Exchange Online from any Windows device that doesn't have BitLocker enabled.</p><p>Which combination of components do you need?</p>`,
+ o:["A configuration profile that enables BitLocker, and an assignment filter","A security baseline and a Windows update ring","A compliance policy that requires BitLocker, and a Conditional Access policy that requires a compliant device","An app protection policy and an app configuration policy"],a:[2],
+ x:`The compliance policy evaluates BitLocker status. The Conditional Access policy grant "Require device to be marked as compliant" uses that result to allow or block access.`},
+{id:"i11",d:"inf",q:`<p>Devices that have no compliance policy assigned currently show as Compliant and can access corporate data through Conditional Access.</p><p>What should you change?</p>`,
+ o:["Set \"Mark devices with no compliance policy assigned as\" to Not compliant","Lower the compliance status validity period to 1 day","Create an enrollment restriction","Enable Windows Hello for Business"],a:[0],
+ x:`This tenant-wide compliance setting defaults to Compliant. Setting it to Not compliant means devices without any assigned compliance policy fail Conditional Access checks.`},
+{id:"i12",d:"inf",q:`<p>You need unique local Administrator passwords on Entra joined Windows devices, rotated automatically and viewable by authorized admins in the Intune admin center.</p><p>What should you configure?</p>`,
+ o:["A compliance policy with a password requirement","An Account protection (LAPS) policy backed up to Entra ID, with LAPS enabled in Entra device settings","A custom OMA-URI that sets the same password everywhere","Windows Hello for Business"],a:[1],
+ x:`Windows LAPS is configured with an Intune Account protection policy. For Entra backup, enable "Microsoft Entra Local Administrator Password Solution" in Entra device settings.`},
+{id:"i13",d:"inf",q:`<p>You need to add a support group to the local Administrators group on all Entra joined devices, without removing existing members.</p><p>What should you use?</p>`,
+ o:["Restricted groups in a GPO","Account protection local user group membership policy with the Add (Update) action","The Device Administrators role in Entra ID","A Remediations script"],a:[1],
+ x:`The local user group membership policy can add, remove, or replace members of built-in local groups. The Add (Update) action keeps current members.`},
+{id:"i14",d:"inf",q:`<p>All Autopilot devices with the group tag <b>Kiosk</b> must automatically join a device group.</p><p>Which dynamic membership rule should you use?</p>`,
+ o:["(device.deviceOSType -eq \"Kiosk\")","(device.displayName -startsWith \"Kiosk\")","(device.devicePhysicalIds -any (_ -eq \"[OrderID]:Kiosk\"))","(user.department -eq \"Kiosk\")"],a:[2],
+ x:`Autopilot group tags are stored as [OrderID] values in devicePhysicalIds. The rule <code>-any (_ -eq "[OrderID]:Kiosk")</code> matches them.`},
+{id:"i15",d:"inf",q:`<p>Your company has on-prem AD and synchronizes users to Entra ID. You need passwordless Windows Hello for Business sign-in on hybrid-joined devices, with SSO to on-prem resources and the least infrastructure.</p><p>Which deployment model should you use?</p>`,
+ o:["Cloud Kerberos trust","Certificate trust","Key trust with AD FS","Smart card trust"],a:[0],
+ x:`Cloud Kerberos trust uses Entra Kerberos to issue partial TGTs, so it doesn't need a PKI for user certificates or Windows Server 2016 DCs for key trust. It's the recommended model for hybrid environments.`},
+
+// ---------- MANAGE & MAINTAIN ----------
+{id:"m1",d:"mm",q:`<p>New Windows laptops ship from the OEM directly to employees' homes. Users must sign in with their work account and get apps and policies, without IT touching the devices. There's no on-prem AD.</p><p>What should you configure?</p>`,
+ o:["Windows Autopilot self-deploying mode","Provisioning packages created with Windows Configuration Designer","Pre-provisioning by a technician","Windows Autopilot user-driven mode with Entra join"],a:[3],
+ x:`User-driven Autopilot with Entra join is the standard zero-touch scenario: the OEM registers the hardware hash, and the user completes OOBE at home.`},
+{id:"m2",d:"mm",q:`<p>Shared conference room PCs must set up automatically with no user interaction and no user affinity. The PCs have TPM 2.0.</p><p>Which Autopilot mode should you use?</p>`,
+ o:["Autopilot Reset","User-driven","Pre-provisioning","Self-deploying"],a:[3],
+ x:`Self-deploying mode needs no user credentials, uses TPM 2.0 attestation to authenticate, and joins the device to Entra ID without assigning a user.`},
+{id:"m3",d:"mm",q:`<p>A partner technician should install all device-targeted apps and policies before laptops reach users, so users finish setup faster.</p><p>What should the technician do at the first OOBE screen?</p>`,
+ o:["Press the Windows key five times and choose pre-provisioning","Press Ctrl+Alt+Del","Run sysprep /oobe","Press Shift+F10"],a:[0],
+ x:`Pressing the Windows key five times at OOBE opens the pre-provisioning (formerly white glove) workflow. The technician then reseals the device and ships it to the user.`},
+{id:"m4",d:"mm",q:`<p>Autopilot devices must be named <b>LW-</b> followed by the serial number.</p><p>What should you enter in the deployment profile?</p>`,
+ o:["LW-%RAND:5%","LW-%COMPUTERNAME%","LW-%SERIAL%","LW-{serial}"],a:[2],
+ x:`Device name templates support <code>%SERIAL%</code> and <code>%RAND:x%</code>. Names are truncated to 15 characters. Templates aren't supported for hybrid join.`},
+{id:"m5",d:"mm",q:`<p>During Autopilot, users must not reach the desktop until the VPN client and Microsoft 365 Apps are installed. Other apps can finish later.</p><p>What should you configure?</p>`,
+ o:["A feature update policy","An Enrollment Status Page that blocks device use until the selected required apps are installed","An assignment filter","A compliance policy grace period"],a:[1],
+ x:`The ESP shows provisioning progress and can block use of the device until specific required apps (not all apps) install.`},
+{id:"m6",d:"mm",q:`<p>You want to start Autopilot deployments without first uploading hardware hashes. Devices should be added to a device group during enrollment so policies apply immediately.</p><p>What should you use?</p>`,
+ o:["Autopilot deployment profile with a group tag","Self-deploying mode","Hybrid join with the Intune Connector","Autopilot device preparation policy with enrollment time grouping"],a:[3],
+ x:`Autopilot device preparation doesn't need pre-registered hardware hashes. Enrollment time grouping puts devices into a static group as they enroll.`},
+{id:"m7",d:"mm",q:`<p>Users at a school share laptops. Between terms, you need to remove personal files and apps but keep the devices joined to Entra ID and enrolled in Intune.</p><p>What should you do?</p>`,
+ o:["Wipe","Retire","Autopilot Reset","Delete"],a:[2],
+ x:`Autopilot Reset returns the device to a business-ready state while keeping Entra join and Intune enrollment. Wipe factory-resets the device.`},
+{id:"m8",d:"mm",q:`<p>An employee leaves the company. Their personal iPhone is enrolled. You must remove corporate email, apps, and profiles but leave personal photos and apps.</p><p>Which remote action should you use?</p>`,
+ o:["Delete","Retire","Wipe","Autopilot Reset"],a:[1],
+ x:`Retire removes company data, managed apps, and profiles, then unenrolls the device. Personal data stays. Wipe would factory-reset the phone.`},
+{id:"m9",d:"mm",q:`<p>You remove a device record from Intune with the <b>Delete</b> action. What happens on the device?</p>`,
+ o:["Nothing. The device record is removed from Intune only.","It's locked","It's factory reset","Company data is removed"],a:[0],
+ x:`Delete only removes the object from the console. Use Retire or Wipe first if you need to remove data from the device.`},
+{id:"m10",d:"mm",q:`<p>You have 300 GPOs. You need to find which settings can be migrated to Intune and create profiles from them with the least effort.</p><p>What should you use?</p>`,
+ o:["Import every ADMX file as a custom template","Group Policy analytics, then migrate to a settings catalog profile","Recreate each setting with custom OMA-URI","The Microsoft Deployment Toolkit"],a:[1],
+ x:`Group Policy analytics imports GPO backup XML, reports MDM support for each setting, and can migrate supported settings into a settings catalog profile.`},
+{id:"m11",d:"mm",q:`<p>A configuration profile must apply to all devices in the All Corporate Devices group, except Surface Hub models. You don't want to create a new group.</p><p>What should you use?</p>`,
+ o:["A dynamic group","A scope tag","An assignment filter that excludes the Surface Hub model","A compliance policy"],a:[2],
+ x:`Assignment filters include or exclude devices within an assigned group by properties such as model, manufacturer, or OS SKU. They evaluate at check-in.`},
+{id:"m12",d:"mm",q:`<p>Two configuration profiles assigned to the same device set the screen lock timeout to 5 minutes and 15 minutes.</p><p>What happens?</p>`,
+ o:["A conflict is reported, and the setting isn't applied","Both values alternate on each sync","The most restrictive value applies","The newest profile wins"],a:[0],
+ x:`Conflicting values from different profiles produce a conflict status. Fix it by removing the duplicate setting from one profile. (Compliance policies are different: the most restrictive wins.)`},
+{id:"m13",d:"mm",q:`<p>Standard users need to run a specific vendor driver utility that requires admin rights. They must not be local admins, and the elevation must be logged.</p><p>What should you use?</p>`,
+ o:["Windows Hello for Business","Add users to local Administrators with LAPS","A Remediations script","Endpoint Privilege Management elevation rules"],a:[3],
+ x:`Endpoint Privilege Management (an Intune Suite capability) elevates specific files for standard users, with automatic, user-confirmed, or support-approved elevation, and reports each elevation.`},
+{id:"m14",d:"mm",q:`<p>Devices need certificates for Wi-Fi authentication. You don't want to run NDES, an on-prem CA, or a certificate connector.</p><p>What should you use?</p>`,
+ o:["PKCS certificate profiles with an on-prem CA","Trusted certificate profiles only","Microsoft Cloud PKI with SCEP certificate profiles","Windows Hello for Business"],a:[2],
+ x:`Cloud PKI provides cloud-hosted root and issuing CAs. Intune SCEP profiles request certificates from it directly, with no NDES server or connector.`},
+{id:"m15",d:"mm",q:`<p>Help desk staff need to view and control users' screens on Intune-managed Windows devices, with role-based access and session logs.</p><p>What should you deploy?</p>`,
+ o:["Remote Help","Windows Admin Center","Quick Assist","Remote Desktop with a public IP"],a:[0],
+ x:`Remote Help integrates with Intune and Entra ID: RBAC controls who can help whom, both parties are authenticated, and sessions are logged.`},
+{id:"m16",d:"mm",q:`<p>Users on Windows 11 Pro must move to Windows 11 Enterprise without reinstalling or reimaging. The company has Microsoft 365 E3 licenses.</p><p>What should you use?</p>`,
+ o:["In-place upgrade with installation media","Windows subscription activation","Autopilot Reset","A feature update policy"],a:[1],
+ x:`Subscription activation steps Pro up to Enterprise automatically when a licensed user signs in to an Entra joined or hybrid-joined device, with no reinstall or reboot.`},
+{id:"m17",d:"mm",q:`<p>You need Windows 365 Cloud PCs that are Entra joined. You don't need connectivity to on-prem resources and want the least network setup.</p><p>What should you select in the provisioning policy?</p>`,
+ o:["ExpressRoute","An Azure network connection with hybrid join","A site-to-site VPN","Microsoft-hosted network"],a:[3],
+ x:`With Entra join, you can use the Microsoft-hosted network, which needs no Azure subscription or VNet. An Azure network connection is needed for hybrid join or access to your own VNet.`},
+{id:"m18",d:"mm",q:`<p>You must restart 80 devices in the Finance group immediately after an urgent policy change.</p><p>What's the fastest method?</p>`,
+ o:["Create a Remediations script","Bulk device actions (Restart) on the selected devices","Wait for the next check-in","Restart each device from its overview page"],a:[1],
+ x:`Bulk device actions run remote actions such as restart, retire, wipe, or rename on up to 100 devices at once.`},
+
+// ---------- PROTECT ----------
+{id:"p1",d:"prot",q:`<p>Windows devices must encrypt with BitLocker during Autopilot <b>without prompting</b> standard users, and recovery keys must be stored in Entra ID.</p><p>What should you configure?</p>`,
+ o:["A disk encryption policy with silent encryption settings (require encryption, allow standard users to enable encryption during Autopilot) and Entra key backup","A compliance policy that requires BitLocker","A security baseline only","Ask users to enable BitLocker from Control Panel"],a:[0],
+ x:`Silent BitLocker requires a TPM, the require encryption setting, the setting that allows standard users to encrypt during Autopilot, and key escrow to Entra ID. A compliance policy only checks status.`},
+{id:"p2",d:"prot",q:`<p>A user typed their BitLocker recovery key while a technician watched. You must make sure that key can't be used again.</p><p>What should you do?</p>`,
+ o:["Delete the device in Intune","Wipe the device","Disable BitLocker","Rotate BitLocker recovery keys (remote action)"],a:[3],
+ x:`The Rotate BitLocker keys remote action generates a new recovery password and escrows it to Entra ID, so the exposed key is invalidated.`},
+{id:"p3",d:"prot",q:`<p>You need to block Office apps from creating child processes on all Windows devices. You want to review the impact before enforcing.</p><p>What should you configure first?</p>`,
+ o:["Antivirus exclusions","An app protection policy","Attack surface reduction rules in audit mode","Firewall rules"],a:[2],
+ x:`ASR rules such as "Block all Office applications from creating child processes" should start in audit mode so you can review events before switching to block.`},
+{id:"p4",d:"prot",q:`<p>Devices that Microsoft Defender for Endpoint rates as high risk must lose access to Microsoft 365 automatically.</p><p>What should you configure?</p>`,
+ o:["A security baseline for Defender","The Intune–MDE connector, a compliance policy with a machine risk score requirement, and Conditional Access requiring compliance","An update ring","An antivirus policy with real-time protection"],a:[1],
+ x:`MDE shares device risk with Intune through the connector. The compliance setting "at or under machine risk score" marks risky devices noncompliant, and Conditional Access then blocks them.`},
+{id:"p5",d:"prot",q:`<p>You need to onboard 2,000 Intune-managed Windows devices to Defender for Endpoint with the least effort.</p><p>What should you do after enabling the connector?</p>`,
+ o:["Deploy a Win32 app with the MDE installer","Enable tamper protection","Run the onboarding script on each device manually","Create an Endpoint detection and response (EDR) policy that uses the auto-populated onboarding package"],a:[3],
+ x:`With the connector enabled, an EDR policy can use the onboarding blob from the connector automatically, onboarding every targeted device.`},
+{id:"p6",d:"prot",q:`<p>App Control for Business is blocking line-of-business apps that Intune deploys. You want apps deployed by Intune to be trusted automatically.</p><p>What should you configure?</p>`,
+ o:["Use AppLocker instead","Add every app hash to the policy manually","Set the Intune Management Extension as a managed installer","Disable App Control"],a:[2],
+ x:`The managed installer setting tags files installed by the Intune Management Extension as trusted, so App Control allows them without listing each app.`},
+{id:"p7",d:"prot",q:`<p>Pilot devices should get Windows quality updates immediately, and production devices 7 days later with a 2-day deadline after that.</p><p>What should you create?</p>`,
+ o:["Two update rings with different quality update deferrals and deadlines","Two feature update policies","Two app protection policies","One driver update policy"],a:[0],
+ x:`Update rings control quality and feature update deferrals, deadlines, and grace periods. Create one ring per wave and assign them to different groups.`},
+{id:"p8",d:"prot",q:`<p>A critical zero-day security update must install on all devices within 24 hours, even devices in rings with a 14-day quality deferral.</p><p>What should you use?</p>`,
+ o:["A Remediations script","Pause the update ring","A Windows quality update policy with expedited installation","A feature update policy"],a:[2],
+ x:`Expedited quality updates override ring deferrals for a specific security update and install it as quickly as possible, with a restart deadline you set.`},
+{id:"p9",d:"prot",q:`<p>Devices must stay on Windows 11 24H2 while 25H2 is tested, even though update rings allow feature updates.</p><p>What should you configure?</p>`,
+ o:["A driver update policy","Pause feature updates for 365 days","Block the Windows Update service","A feature update policy targeting Windows 11 24H2"],a:[3],
+ x:`A feature update policy keeps devices at the specified version (or moves them to it) until you change the policy.`},
+{id:"p10",d:"prot",q:`<p>You want Microsoft to manage Windows quality, feature, driver, and Microsoft 365 Apps update rings for you, with automatic progressive rollout. Users have Windows Enterprise E3.</p><p>What should you use?</p>`,
+ o:["WSUS","Windows Autopatch","Update rings only","Delivery Optimization"],a:[1],
+ x:`Windows Autopatch is a service that manages update rings (Test, First, Fast, Broad) and rollout for Windows, drivers, M365 Apps, Edge, and Teams. It requires Windows Enterprise E3 or higher.`},
+{id:"p11",d:"prot",q:`<p>Branch offices have slow WAN links. Devices in different subnets at the same branch must share update content peer-to-peer.</p><p>Which Delivery Optimization download mode should you configure?</p>`,
+ o:["Group (2) with a group ID per branch","LAN (1)","HTTP only (0)","Bypass (100)"],a:[0],
+ x:`LAN mode only peers within the same NAT/subnet. Group mode lets devices across subnets share content when they have the same group ID (for example, one per branch, or based on AD site).`},
+{id:"p12",d:"prot",q:`<p>Corporate iPhones must update to the latest iOS version by a specific date and time.</p><p>What should you configure?</p>`,
+ o:["A settings catalog profile with declarative software update settings (enforce latest version by date)","An app configuration policy","An update ring","A compliance policy with a minimum OS version only"],a:[0],
+ x:`Declarative device management software update settings in the settings catalog enforce an OS version by a deadline on supervised Apple devices. A compliance policy only reports or blocks access.`},
+
+// ---------- APPS ----------
+{id:"a1",d:"app",q:`<p>You need to deploy a vendor app that ships as setup.exe, requires a runtime installed first, and must replace an older version of the same app.</p><p>Which app type should you use?</p>`,
+ o:["Microsoft Store app (new)","Windows app (Win32) packaged as .intunewin","Line-of-business app","Web link"],a:[1],
+ x:`Win32 apps support any installer, plus dependencies (the runtime) and supersedence (the old version). Wrap them with the Win32 Content Prep Tool.`},
+{id:"a2",d:"app",q:`<p>A Win32 app shows as Failed after it installs successfully. Logs show the installer exited with 0.</p><p>What's the most likely problem?</p>`,
+ o:["Delivery Optimization is off","The app isn't assigned","The device isn't compliant","The detection rule doesn't match how the app installs"],a:[3],
+ x:`Intune uses the detection rule (file, registry, MSI code, or script) to confirm installation. If it doesn't match, the app reports as failed even though the installer succeeded.`},
+{id:"a3",d:"app",q:`<p>Users must be able to choose and install optional apps themselves from a self-service portal on enrolled devices.</p><p>Which assignment type should you use?</p>`,
+ o:["Required with a deadline","Uninstall","Available for enrolled devices","Required"],a:[2],
+ x:`Available for enrolled devices lists the app in the Company Portal for users to install. Required installs automatically.`},
+{id:"a4",d:"app",q:`<p>You must deploy Microsoft 365 Apps to Windows devices with the slowest, most validated update cadence, which updates feature builds twice a year.</p><p>Which update channel should you choose?</p>`,
+ o:["Current Channel","Beta Channel","Monthly Enterprise Channel","Semi-Annual Enterprise Channel"],a:[3],
+ x:`Semi-Annual Enterprise Channel gets new features twice a year (January and July), giving the most time for validation.`},
+{id:"a5",d:"app",q:`<p>Office security settings (for example, block macros from the internet) must apply to users even when they sign in to Microsoft 365 Apps on personal, unmanaged Windows PCs.</p><p>What should you use?</p>`,
+ o:["Cloud Policy service in the Microsoft 365 Apps admin center","A GPO","A settings catalog profile","An app protection policy for Windows"],a:[0],
+ x:`Cloud Policy service applies Office policies based on the user's sign-in, so it works on any device, including unmanaged ones. Intune profiles need enrolled devices.`},
+{id:"a6",d:"app",q:`<p>Sales staff use Outlook on personal, <b>unenrolled</b> iPhones. Corporate email must not be copied into personal apps, and Outlook must require a PIN.</p><p>What should you create?</p>`,
+ o:["An app configuration policy for managed devices","An iOS device restriction profile","An iOS app protection policy targeted at Outlook, plus Conditional Access requiring an app protection policy","An iOS compliance policy"],a:[2],
+ x:`App protection policies work without enrollment. They block copy/paste and save-as to unmanaged apps and require a PIN. Conditional Access makes sure only protected apps can connect.`},
+{id:"a7",d:"app",q:`<p>Outlook on enrolled iOS devices must be preconfigured with the user's corporate mailbox and with signature and focused inbox settings, without user setup.</p><p>What should you create?</p>`,
+ o:["A compliance policy","An app configuration policy for managed devices","An app protection policy","An enrollment restriction"],a:[1],
+ x:`App configuration policies push settings to apps. On enrolled devices, the managed devices channel delivers them through MDM. App protection policies protect data but don't configure accounts.`},
+{id:"a8",d:"app",q:`<p>A protected app must be wiped of corporate data if a device is jailbroken, and blocked if it's been offline for more than 3 days.</p><p>Which section of an app protection policy should you configure?</p>`,
+ o:["Assignments","Conditional launch","Data protection","Access requirements"],a:[1],
+ x:`Conditional launch checks device and app conditions (jailbreak, OS version, offline grace period) and blocks access or wipes data when they fail.`},
+{id:"a9",d:"app",q:`<p>Teams and Outlook on corporate phones must not send notifications between 7 PM and 7 AM on weekdays.</p><p>What should you configure?</p>`,
+ o:["Quiet time policies","Remediations","A device restriction profile","Update rings"],a:[0],
+ x:`Quiet time policies (an app protection setting for iOS and Android) mute notifications from supported Microsoft apps during defined hours.`},
+{id:"a10",d:"app",q:`<p>You must deploy 500 licensed copies of a paid iOS app to supervised iPhones without users needing an Apple ID.</p><p>What should you use?</p>`,
+ o:["An .ipa LOB app","An iOS store app without licenses","Apps and Books (VPP) tokens with device licensing","A web clip"],a:[2],
+ x:`Apps and Books (VPP) purchases licenses in Apple Business Manager. Device-based licensing assigns apps to devices, so users don't need an Apple ID.`},
+{id:"a11",d:"app",q:`<p>Android Enterprise devices must get a public store app silently, as a required install.</p><p>What must you do first?</p>`,
+ o:["Create an app protection policy","Upload the .apk as LOB","Enable Delivery Optimization","Approve the app in Managed Google Play"],a:[3],
+ x:`Android Enterprise apps come from Managed Google Play. Approve the app there (after binding your tenant), and Intune can then assign it as required.`},
+{id:"a12",d:"app",q:`<p>You want to deploy popular third-party Windows apps such as 7-Zip with Intune, without packaging them or writing detection rules. Your tenant has the Intune Suite.</p><p>What should you use?</p>`,
+ o:["Enterprise App Catalog","LOB apps","Win32 Content Prep Tool","Web links"],a:[0],
+ x:`The Enterprise App Catalog provides Microsoft-prepackaged Win32 apps with install commands and detection rules already set.`},
+
+// ---------- OPERATIONS ----------
+{id:"o1",d:"ops",q:`<p>Every night, a script must export all noncompliant devices from Intune to a CSV with no human sign-in.</p><p>How should the script authenticate?</p>`,
+ o:["A shared mailbox","The Intune Administrator role assigned to a computer","An Entra app registration with a certificate and the DeviceManagementManagedDevices.Read.All application permission","Your personal admin account with MFA"],a:[2],
+ x:`Unattended scripts use an app registration with application permissions (admin-consented) and certificate authentication, through the Microsoft Graph PowerShell SDK or the Graph API.`},
+{id:"o2",d:"ops",q:`<p>A compliance check must verify that a third-party antivirus service is running on Windows devices. No built-in compliance setting exists for it.</p><p>What should you use?</p>`,
+ o:["A Remediations script","An ASR rule","An app configuration policy","Custom compliance with a PowerShell discovery script and a JSON rules file"],a:[3],
+ x:`Custom compliance runs a discovery script that returns values, and a JSON file defines the rules and remediation text. Results feed into compliance and Conditional Access.`},
+{id:"o3",d:"ops",q:`<p>A service sometimes stops on Windows devices. You want to detect it every hour and restart it automatically.</p><p>What should you use?</p>`,
+ o:["An update ring","Remediations (detection and remediation scripts)","A platform script that runs once","A compliance policy"],a:[1],
+ x:`Remediations run a detection script on a schedule, and if it reports an issue, run the remediation script. Platform scripts run once. Remediations require Windows Enterprise E3/E5 or equivalent licensing.`},
+{id:"o4",d:"ops",q:`<p>Users complain that their laptops take a long time to reach a usable desktop. You need to see boot and sign-in times by model and identify slow startup processes.</p><p>What should you use?</p>`,
+ o:["Intune audit logs","Windows Update reports","Endpoint analytics startup performance","The device compliance report"],a:[2],
+ x:`Startup performance in Endpoint analytics shows core boot and sign-in times, compares models and devices to baselines, and lists processes that slow startup.`},
+{id:"o5",d:"ops",q:`<p>You need to know which Windows 10 devices meet Windows 11 hardware requirements before upgrading.</p><p>What should you use?</p>`,
+ o:["Delivery Optimization reports","The device configuration report","The app install status report","The Work from anywhere report in Endpoint analytics (Windows 11 readiness)"],a:[3],
+ x:`The Work from anywhere report includes Windows 11 readiness, checking TPM, Secure Boot, CPU, RAM, and storage for each device.`},
+{id:"o6",d:"ops",q:`<p>An admin changed a compliance policy last week, and many devices became noncompliant. You need to see who made the change.</p><p>Where should you look?</p>`,
+ o:["Intune audit logs","The device diagnostics","Windows Update reports","Endpoint analytics"],a:[0],
+ x:`Audit logs (Tenant administration → Audit logs) record who changed which Intune object, what changed, and when.`},
+{id:"o7",d:"ops",q:`<p>You need to keep Intune operational logs for 2 years and build custom dashboards that combine compliance and enrollment data.</p><p>What should you do?</p>`,
+ o:["Export reports to CSV weekly","Send Intune logs to a Log Analytics workspace with diagnostic settings, then use workbooks","Use Endpoint analytics baselines","Increase the retention in Intune audit logs"],a:[1],
+ x:`Diagnostic settings send Intune audit and operational logs to Log Analytics. Workbooks build dashboards, and you control retention there.`},
+{id:"o8",d:"ops",q:`<p>Users report that Intune policies aren't applying. You need to check whether Microsoft has an active incident affecting Intune in your tenant.</p><p>Where should you check?</p>`,
+ o:["Audit logs","Tenant administration → Tenant status (service health) in Intune","Device diagnostics","Endpoint analytics"],a:[1],
+ x:`Tenant status shows Intune service health, active incidents and advisories, connector status, and message center posts for your tenant.`},
+
+// ---------- CASE STUDY ----------
+{id:"cs1",d:"mm",cs:true,q:`<p><b>Case study: Litware.</b> What should you use for the new laptop deployment requirement?</p>`,
+ o:["Hybrid join with the Intune Connector","Autopilot self-deploying mode","Provisioning packages emailed to users","Autopilot user-driven mode with Entra join, with devices registered by the OEM"],a:[3],
+ x:`Users are cloud-only and there's no AD DS, so hybrid join isn't possible. The OEM registers hardware hashes, and user-driven Entra join gives each user their apps and settings at first sign-in.`},
+{id:"cs2",d:"app",cs:true,q:`<p><b>Case study: Litware.</b> How should you protect corporate data on sales staff's iPhones?</p>`,
+ o:["An app protection policy for Outlook (block copy to unmanaged apps), plus Conditional Access requiring an app protection policy","An app configuration policy for managed devices","Require enrollment and a compliance policy","An iOS device restriction profile"],a:[0],
+ x:`Sales staff won't enroll, so device-based policies can't apply. App protection policies work without enrollment and control data movement inside Outlook.`},
+{id:"cs3",d:"inf",cs:true,q:`<p><b>Case study: Litware.</b> How should you meet the European help desk requirement?</p>`,
+ o:["Create a second Intune tenant","Use Entra dynamic groups only","Use scope tags for European objects and a role assignment with the Europe scope tag and scope groups","Use assignment filters"],a:[2],
+ x:`Scope tags limit what admins see, and scope groups limit which users and devices they can manage. Together they restrict the help desk to Europe.`},
+{id:"cs4",d:"inf",cs:true,q:`<p><b>Case study: Litware.</b> Which enrollment profile should you use for the warehouse scanners?</p>`,
+ o:["Fully managed","Dedicated devices","Personally owned work profile","Corporate-owned work profile"],a:[1],
+ x:`Dedicated devices (COSU) are corporate, have no user affinity, and can be locked to a single app in kiosk mode.`},
+{id:"cs5",d:"mm",cs:true,q:`<p><b>Case study: Litware.</b> How should you meet the driver-update utility requirement?</p>`,
+ o:["Run the utility with a Remediations script as SYSTEM","Add users to local Administrators with an Account protection policy","Give users the Intune Administrator role","Endpoint Privilege Management with an elevation rule for the utility"],a:[3],
+ x:`Litware licenses the Intune Suite, which includes Endpoint Privilege Management. It lets standard users elevate only the approved utility, and logs each elevation.`}
+];
+
+/* ---------- state ---------- */
+const KEY="md102-prep-v1", WKEY="md102-missed-v1";
+const FULL_PLAN={inf:11,mm:13,prot:8,app:8,ops:5};
+const byId=Object.fromEntries(Q.map(q=>[q.id,q]));
+let S=null, tick=null, confirmOpen=false, resultsFilter="missed";
+function load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function del(k){try{localStorage.removeItem(k)}catch(e){}}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+const isMulti=q=>!!q.m;
+function same(a,b){if(!a||a.length!==b.length)return false;const s=new Set(a);return b.every(x=>s.has(x))}
+const correct=(q,ans)=>same(ans,q.a);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function buildFull(){
+  let ids=[];
+  for(const d in FULL_PLAN){ids.push(...shuffle(Q.filter(q=>q.d===d&&!q.cs)).slice(0,FULL_PLAN[d]).map(q=>q.id))}
+  ids=shuffle(ids);
+  ids.push(...Q.filter(q=>q.cs).map(q=>q.id));
+  return ids;
+}
+function startFull(){S={mode:"full",ids:buildFull(),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:100*60,done:false};persist();go("exam")}
+function startPractice(domains,onlyIds){
+  let pool=onlyIds?onlyIds.map(id=>byId[id]).filter(Boolean):Q.filter(q=>domains.includes(q.d));
+  if(!pool.length)return;
+  S={mode:"practice",ids:shuffle(pool.map(q=>q.id)),ans:{},marked:{},checked:{},cur:0,start:Date.now(),dur:0,done:false};persist();go("exam")
+}
+function persist(){if(S)save(KEY,S)}
+
+/* ---------- routing ---------- */
+function go(v){if(location.hash!=="#"+v)location.hash=v;else route()}
+function route(){
+  const h=(location.hash||"#guide").slice(1);
+  const v=["exam","flash"].includes(h)?h:"guide";
+  ["guide","exam","flash"].forEach(k=>{document.getElementById("view-"+k).hidden=v!==k;document.getElementById("tab-"+k).setAttribute("aria-selected",v===k)});
+  if(v==="exam")renderExam();else{updateTimer();if(v==="flash")renderFlash()}
+  window.scrollTo(0,0);
+}
+
+/* ---------- timer ---------- */
+function remaining(){return S&&S.mode==="full"&&!S.done?Math.max(0,S.dur-Math.floor((Date.now()-S.start)/1000)):null}
+function updateTimer(){
+  const t=document.getElementById("timer"), r=remaining();
+  if(r===null){t.hidden=true;return}
+  t.hidden=false;
+  t.textContent=String(Math.floor(r/60)).padStart(2,"0")+":"+String(r%60).padStart(2,"0");
+  t.classList.toggle("low",r<600);
+  if(r===0){finish()}
+}
+function ensureTick(){if(!tick)tick=setInterval(updateTimer,1000)}
+
+/* ---------- exam rendering ---------- */
+const root=()=>document.getElementById("view-exam");
+function renderExam(){
+  updateTimer();
+  if(!S){renderHome();return}
+  if(S.done){renderResults();return}
+  renderQuestion();
+}
+
+function renderHome(){
+  const saved=load(KEY);
+  const missed=load(WKEY)||[];
+  const counts=Object.fromEntries(Object.keys(DOM).map(d=>[d,Q.filter(q=>q.d===d).length]));
+  root().innerHTML=`<div class="ex-home">
+    <div class="hero"><div class="eyebrow">Practice exam</div><h1>Choose how to practice</h1>
+    <p class="lede">${Q.length} original questions written to match the style and difficulty of MD-102. These aren't real exam questions. They test the same skills in the same formats.</p></div>
+    ${saved&&!saved.done?`<div class="resume"><span>You have an unfinished ${saved.mode==="full"?"full exam":"practice session"} (${Object.keys(saved.ans).length}/${saved.ids.length} answered).</span><button class="btn small primary" id="resume">Resume</button><button class="btn small" id="discard">Discard</button></div>`:""}
+    <div class="modes">
+      <div class="mode"><h3>Full practice exam</h3><p>50 questions weighted by domain, ending with a 5-question case study. 100-minute timer, no feedback until you submit. Questions are drawn at random each time.</p><button class="btn primary" id="go-full">Start full exam</button></div>
+      <div class="mode"><h3>Practice by domain</h3><p>Untimed. You see the answer and explanation after each question.</p>
+        <div class="chips" id="dchips">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="true" data-d="${d}">${DOM[d].short} · ${counts[d]}</button>`).join("")}</div>
+        <button class="btn" id="go-prac">Start practice</button></div>
+      ${missed.length?`<div class="mode"><h3>Retry missed</h3><p>${missed.length} question${missed.length>1?"s":""} you got wrong last time, with instant feedback.</p><button class="btn" id="go-missed">Retry missed questions</button></div>`:""}
+    </div>
+  </div>`;
+  const r=root();
+  r.querySelector("#go-full").onclick=startFull;
+  r.querySelectorAll("#dchips .chip").forEach(c=>c.onclick=()=>c.setAttribute("aria-pressed",c.getAttribute("aria-pressed")!=="true"));
+  r.querySelector("#go-prac").onclick=()=>{const ds=[...r.querySelectorAll('#dchips .chip[aria-pressed="true"]')].map(c=>c.dataset.d);startPractice(ds)};
+  const gm=r.querySelector("#go-missed");if(gm)gm.onclick=()=>startPractice(null,missed);
+  const rs=r.querySelector("#resume");if(rs)rs.onclick=()=>{S=saved;renderExam()};
+  const ds=r.querySelector("#discard");if(ds)ds.onclick=()=>{del(KEY);renderHome()};
+}
+
+function hintFor(q){if(q.series)return"Select Yes or No";if(q.pick)return`Select ${q.pick===2?"two":q.pick}`;if(isMulti(q))return"Select all that apply";return"Select one"}
+
+function renderQuestion(){
+  const q=byId[S.ids[S.cur]], n=S.ids.length, ans=S.ans[q.id]||[], checked=S.mode==="practice"&&S.checked[q.id];
+  const multi=isMulti(q);
+  const opts=q.o.map((t,i)=>{
+    let cls="opt"; if(ans.includes(i))cls+=" sel";
+    if(checked){cls+=" locked";if(q.a.includes(i))cls+=" right";else if(ans.includes(i))cls+=" wrong"}
+    return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${checked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
+  const unanswered=S.ids.filter(id=>!(S.ans[id]&&S.ans[id].length)).length;
+  const markedN=S.ids.filter(id=>S.marked[id]).length;
+  const pal=S.ids.map((id,i)=>{let c="pq";const a=S.ans[id];
+    if(S.mode==="practice"&&S.checked[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(a&&a.length)c+=" ans";
+    if(S.marked[id])c+=" mk";if(i===S.cur)c+=" cur";
+    return `<button class="${c}" data-i="${i}" aria-label="Question ${i+1}">${i+1}</button>`}).join("");
+  root().innerHTML=`<div class="ex">
+    <div class="qcard">
+      <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}
+        <button class="mark" id="mark" aria-pressed="${!!S.marked[q.id]}">${S.marked[q.id]?"Marked for review":"Mark for review"}</button></div>
+      ${q.cs?`<details class="case" open><summary>Case study: ${CASE_NAME}</summary><div class="cbody">${CASE}</div></details>`:""}
+      <div class="qtext">${q.q}</div>
+      <div class="hint">${hintFor(q)}</div>
+      <div class="opts" id="opts">${opts}</div>
+      ${checked?explainHTML(q,ans):""}
+      <div class="qnav">
+        <button class="btn" id="prev" ${S.cur===0?"disabled":""}>Previous</button>
+        <span class="sp"></span>
+        ${S.mode==="practice"&&!checked?`<button class="btn primary" id="check" ${ans.length?"":"disabled"}>Check answer</button>`:""}
+        ${S.cur<n-1?`<button class="btn ${S.mode==="full"||checked?"primary":""}" id="next">Next</button>`:""}
+      </div>
+    </div>
+    <aside class="side">
+      <div class="pal">
+        <div class="hint">${S.mode==="full"?"Full exam":"Practice"} · ${n-unanswered}/${n} answered</div>
+        <div class="grid">${pal}</div>
+        <div class="legend"><span>■ answered</span><span style="color:var(--warn)">▁ marked</span>${S.mode==="practice"?'<span style="color:var(--good)">■ right</span><span style="color:var(--bad)">■ wrong</span>':""}</div>
+        ${confirmOpen?`<div class="confirm"><div><b>${unanswered}</b> unanswered, <b>${markedN}</b> marked for review. Submit now?</div><div class="cta-row"><button class="btn small primary" id="sub-yes">Submit</button><button class="btn small" id="sub-no">Keep working</button></div></div>`
+          :`<button class="btn ${S.cur===n-1?"primary":""}" id="submit">${S.mode==="full"?"Submit exam":"Finish & see results"}</button>`}
+        <button class="btn small" id="quit">Quit to menu</button>
+      </div>
+    </aside>
+  </div>`;
+  const r=root();
+  r.querySelectorAll("#opts input").forEach(inp=>inp.onchange=()=>{
+    const sel=[...r.querySelectorAll("#opts input:checked")].map(x=>+x.value);
+    S.ans[q.id]=sel;persist();
+    r.querySelectorAll("#opts .opt").forEach((l,i)=>l.classList.toggle("sel",sel.includes(i)));
+    const ck=r.querySelector("#check");if(ck)ck.disabled=!sel.length;
+    const b=r.querySelector(`.pq[data-i="${S.cur}"]`);if(b)b.classList.toggle("ans",!!sel.length);
+  });
+  r.querySelector("#mark").onclick=()=>{S.marked[q.id]=!S.marked[q.id];persist();renderQuestion()};
+  r.querySelector("#prev").onclick=()=>{S.cur--;persist();renderQuestion();window.scrollTo(0,0)};
+  const nx=r.querySelector("#next");if(nx)nx.onclick=()=>{S.cur++;persist();renderQuestion();window.scrollTo(0,0)};
+  const ck=r.querySelector("#check");if(ck)ck.onclick=()=>{S.checked[q.id]=true;persist();renderQuestion()};
+  r.querySelectorAll(".pq").forEach(b=>b.onclick=()=>{S.cur=+b.dataset.i;persist();renderQuestion()});
+  const sb=r.querySelector("#submit");if(sb)sb.onclick=()=>{confirmOpen=true;renderQuestion()};
+  const sy=r.querySelector("#sub-yes");if(sy)sy.onclick=()=>{confirmOpen=false;finish()};
+  const sn=r.querySelector("#sub-no");if(sn)sn.onclick=()=>{confirmOpen=false;renderQuestion()};
+  r.querySelector("#quit").onclick=()=>{S=null;confirmOpen=false;updateTimer();renderHome()};
+}
+
+function letters(arr){return (arr&&arr.length)?arr.slice().sort().map(i=>String.fromCharCode(65+i)).join(", "):"No answer"}
+function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="explain"><div class="verdict ${ok?"ok":"no"}">${ok?"Correct":"Incorrect"}. The answer is ${letters(q.a)}.</div><div>${q.x}</div></div>`}
+
+function finish(){
+  if(!S||S.done)return;
+  S.done=true;S.end=Date.now();
+  const missed=S.ids.filter(id=>!correct(byId[id],S.ans[id]||[]));
+  save(WKEY,missed);persist();updateTimer();resultsFilter="missed";
+  renderExam();window.scrollTo(0,0);
+}
+
+function renderResults(){
+  const items=S.ids.map(id=>({q:byId[id],ans:S.ans[id]||[]})).map(o=>({...o,ok:correct(o.q,o.ans)}));
+  const total=items.length, right=items.filter(i=>i.ok).length, pct=Math.round(right/total*100);
+  const mins=Math.round(((S.end||Date.now())-S.start)/60000);
+  const per=Object.keys(DOM).map(d=>{const its=items.filter(i=>i.q.d===d);const r=its.filter(i=>i.ok).length;return{d,n:its.length,r,p:its.length?Math.round(r/its.length*100):null}}).filter(x=>x.n);
+  const band=p=>p>=80?"hi":p>=65?"mid":"low";
+  const verdict=pct>=80?["Ready","var(--good)"]:pct>=70?["Borderline: review weak domains","var(--warn)"]:["Not yet: study the guide sections for your weakest domains","var(--bad)"];
+  const weakest=per.slice().sort((a,b)=>a.p-b.p)[0];
+  const shown=items.filter(i=>resultsFilter==="all"||!i.ok);
+  root().innerHTML=`<div class="res">
+    <div class="hero"><div class="eyebrow">${S.mode==="full"?"Full exam":"Practice"} results</div><h1>${right} of ${total} correct</h1></div>
+    <div class="score">
+      <div><div class="big">${pct}%</div><div class="hint" style="margin-top:6px">${mins} min</div></div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <span class="verdict-pill" style="color:${verdict[1]};border-color:${verdict[1]}">${verdict[0]}</span>
+        <p style="color:var(--muted);font-size:.92rem">The real exam uses a scaled 700/1000 passing score, and a scaled score isn't a simple percentage. On a practice set like this, aim for <b>80% or higher</b> so you have a margin.${weakest&&weakest.p<80?` Your weakest domain is <b>${DOM[weakest.d].name}</b>. Re-read <a href="#guide" data-sec="g-${weakest.d}">its cheat sheet</a>.`:""} Multi-select questions are scored all-or-nothing here.</p>
+      </div>
+    </div>
+    <div class="card"><h3>By domain</h3><div class="dbars">
+      ${per.map(x=>`<div class="dbar"><span>${DOM[x.d].name} <span class="hint">${x.r}/${x.n}</span></span><div class="track"><div class="fill ${band(x.p)}" style="width:${x.p}%"></div><div class="tick" title="80% target"></div></div><span class="pct">${x.p}%</span></div>`).join("")}
+      <div class="hint">The line on each bar marks the 80% target</div>
+    </div></div>
+    <div class="cta-row">
+      ${right<total?`<button class="btn primary" id="retry">Retry the ${total-right} missed</button>`:""}
+      <button class="btn" id="newfull">New full exam</button>
+      <button class="btn" id="menu">Practice menu</button>
+    </div>
+    <div class="filter"><h2 style="margin-right:auto">Review</h2>
+      <button class="chip" aria-pressed="${resultsFilter==="missed"}" data-f="missed">Missed (${total-right})</button>
+      <button class="chip" aria-pressed="${resultsFilter==="all"}" data-f="all">All (${total})</button></div>
+    <div class="rlist">${shown.length?shown.map(i=>`<div class="ritem ${i.ok?"ok":"bad"}">
+      <div class="qmeta"><span class="qnum">Q${S.ids.indexOf(i.q.id)+1}</span><span class="dtag">${DOM[i.q.d].short}</span>${i.q.cs?'<span class="dtag">Case study</span>':""}<span style="margin-left:auto;font-weight:600;color:${i.ok?"var(--good)":"var(--bad)"}">${i.ok?"Correct":"Incorrect"}</span></div>
+      <div class="qtext" style="font-size:.95rem">${i.q.q}</div>
+      <div class="row">Your answer: <b>${letters(i.ans)}</b> · Correct: <b>${letters(i.q.a)}</b></div>
+      <ol type="A" style="margin:0;padding-left:22px;font-size:.9rem">${i.q.o.map((t,k)=>`<li style="${i.q.a.includes(k)?"color:var(--good);font-weight:600":i.ans.includes(k)?"color:var(--bad)":""}">${t}</li>`).join("")}</ol>
+      <div class="explain">${i.q.x}</div></div>`).join(""):'<p class="lede">No missed questions.</p>'}</div>
+  </div>`;
+  const r=root();
+  const rt=r.querySelector("#retry");if(rt)rt.onclick=()=>startPractice(null,items.filter(i=>!i.ok).map(i=>i.q.id));
+  r.querySelector("#newfull").onclick=startFull;
+  r.querySelector("#menu").onclick=()=>{S=null;renderHome()};
+  r.querySelectorAll(".filter .chip").forEach(c=>c.onclick=()=>{resultsFilter=c.dataset.f;renderResults()});
+  r.querySelectorAll("a[data-sec]").forEach(a=>a.onclick=e=>{e.preventDefault();go("guide");setTimeout(()=>{const el=document.getElementById(a.dataset.sec);if(el)el.scrollIntoView()},30)});
+}
+
+/* ---------- flashcards ---------- */
+const FC=[
+["inf","Join type for personal (BYOD) Windows devices","<b>Microsoft Entra registered</b>"],
+["inf","Join type for cloud-only corporate Windows devices","<b>Microsoft Entra joined</b>"],
+["inf","Join type when devices still need on-prem GPOs","<b>Microsoft Entra hybrid joined</b>"],
+["inf","Dynamic rule for all Autopilot devices","<code>device.devicePhysicalIDs -any (_ -contains \"[ZTDId]\")</code>"],
+["inf","Dynamic rule for an Autopilot group tag","<code>device.devicePhysicalIds -any (_ -eq \"[OrderID]:Tag\")</code>"],
+["inf","Setting that controls automatic MDM enrollment on Entra join","<b>MDM user scope</b> (Entra ID → Mobility)"],
+["inf","Two kinds of enrollment restriction","<b>Device platform</b> and <b>device limit</b>"],
+["inf","Default / max device limit per user","<b>5</b> / <b>15</b>"],
+["inf","Account that can enroll up to 1,000 devices","<b>Device enrollment manager</b>"],
+["inf","Required for any Apple device management","<b>Apple MDM push (APNs) certificate</b>"],
+["inf","Renewing the APNs certificate","Every <b>year</b>, with the <b>same Apple ID</b>"],
+["inf","Supervised, zero-touch corporate iOS enrollment","<b>Automated Device Enrollment</b> via <b>Apple Business Manager</b>"],
+["inf","Privacy-preserving BYOD iOS enrollment","<b>Account-driven user enrollment</b>"],
+["inf","Android BYOD enrollment","<b>Personally owned work profile</b>"],
+["inf","Corporate Android with personal use allowed","<b>Corporate-owned work profile</b> (COPE)"],
+["inf","Corporate Android, one user, work only","<b>Fully managed</b> (COBO)"],
+["inf","Android kiosk or scanner with no user affinity","<b>Dedicated device</b> (COSU)"],
+["inf","Bulk Android enrollment methods","<b>Google zero-touch</b>, <b>Samsung Knox Mobile Enrollment</b>, QR code"],
+["inf","Prerequisite for Android Enterprise","<b>Managed Google Play</b> binding"],
+["inf","Limit which Intune objects an admin sees","<b>Scope tags</b>"],
+["inf","Limit which users and devices an admin manages","<b>Scope groups</b> in the role assignment"],
+["inf","Intune role for remote tasks like sync and restart","<b>Help Desk Operator</b>"],
+["inf","Require a second admin to approve a wipe","<b>Multi-admin approval</b> (access policies)"],
+["inf","Block access from noncompliant devices","Compliance policy + Conditional Access <b>\"Require device to be marked as compliant\"</b>"],
+["inf","Default status of devices with no compliance policy","<b>Compliant</b> (change the tenant setting)"],
+["inf","Compliance status validity period default","<b>30 days</b>"],
+["inf","Actions for noncompliance","Mark noncompliant, email, remote lock, <b>retire</b>"],
+["inf","Recommended Windows Hello for Business model for hybrid","<b>Cloud Kerberos trust</b>"],
+["inf","Rotating local admin passwords via Intune","<b>Windows LAPS</b> (Account protection policy)"],
+["inf","Entra setting needed for LAPS backup to Entra","<b>Enable Microsoft Entra LAPS</b> in device settings"],
+["inf","Add members to local Administrators via Intune","<b>Local user group membership</b> policy"],
+["mm","Autopilot mode where the user completes OOBE","<b>User-driven</b>"],
+["mm","Autopilot mode for kiosks with no user","<b>Self-deploying</b> (TPM 2.0, Entra join)"],
+["mm","Autopilot mode where a technician installs apps first","<b>Pre-provisioning</b>"],
+["mm","Start pre-provisioning at OOBE","Press the <b>Windows key 5 times</b>"],
+["mm","Hybrid join with Autopilot needs","<b>Intune Connector for Active Directory</b> + domain join profile"],
+["mm","Register devices for Autopilot","Upload <b>hardware hash</b> CSV or have the <b>OEM/reseller</b> register them"],
+["mm","Autopilot without pre-registering hardware hashes","<b>Autopilot device preparation</b>"],
+["mm","Static group membership at enrollment","<b>Enrollment time grouping</b>"],
+["mm","Device name template variables","<code>%SERIAL%</code>, <code>%RAND:x%</code> (15 chars max)"],
+["mm","Block desktop until required apps install","<b>Enrollment Status Page</b>"],
+["mm","ESP default timeout","<b>60 minutes</b>"],
+["mm","Reset to business-ready, keep Entra join and enrollment","<b>Autopilot Reset</b>"],
+["mm","Windows 11 hardware requirements","<b>TPM 2.0</b>, <b>UEFI + Secure Boot</b>, supported CPU"],
+["mm","Move devices to a specific Windows version","<b>Feature update policy</b>"],
+["mm","Pro to Enterprise without reinstall","<b>Windows subscription activation</b>"],
+["mm","Cloud PC network with no Azure VNet","<b>Microsoft-hosted network</b> (Entra join)"],
+["mm","Cloud PC with hybrid join or VNet access","<b>Azure network connection</b>"],
+["mm","Restore settings and Store apps on a new Windows device","<b>Windows Backup for Organizations</b>"],
+["mm","Main Intune profile type with thousands of settings","<b>Settings catalog</b>"],
+["mm","Check which GPO settings can move to Intune","<b>Group Policy analytics</b>"],
+["mm","Setting not in the catalog","<b>Custom OMA-URI</b> or <b>imported ADMX</b>"],
+["mm","Two profiles set different values for the same setting","<b>Conflict</b>. Neither applies."],
+["mm","Include/exclude devices by model in an assigned group","<b>Assignment filters</b>"],
+["mm","Let standard users elevate one app","<b>Endpoint Privilege Management</b>"],
+["mm","EPM elevation types","<b>Automatic</b>, <b>user confirmed</b>, <b>support approved</b>"],
+["mm","Prepackaged third-party Win32 apps","<b>Enterprise App Catalog</b>"],
+["mm","Helpdesk screen sharing with RBAC and logs","<b>Remote Help</b>"],
+["mm","Certificates without NDES or an on-prem CA","<b>Microsoft Cloud PKI</b>"],
+["mm","VPN for unenrolled mobile devices with protected apps","<b>Microsoft Tunnel for MAM</b>"],
+["mm","KQL device query, anomaly detection, battery health","<b>Advanced Analytics</b> (Intune Suite)"],
+["mm","Remove company data, keep personal data","<b>Retire</b>"],
+["mm","Factory reset","<b>Wipe</b>"],
+["mm","Remove only the Intune record","<b>Delete</b>"],
+["mm","Max devices per bulk device action","<b>100</b>"],
+["mm","Gather logs from a Windows device remotely","<b>Collect diagnostics</b>"],
+["prot","Silent BitLocker requirements","TPM + <b>require encryption</b> + <b>allow standard users during Autopilot</b> + key backup"],
+["prot","Where Intune stores BitLocker recovery keys","<b>Entra ID</b> (users can self-serve them)"],
+["prot","Invalidate an exposed BitLocker recovery key","<b>Rotate BitLocker keys</b> remote action"],
+["prot","macOS disk encryption","<b>FileVault</b>"],
+["prot","Block Office child processes","<b>Attack surface reduction</b> rule (start in audit)"],
+["prot","Microsoft's recommended configuration sets","<b>Security baselines</b>"],
+["prot","Onboard devices to Defender for Endpoint via Intune","Connector + <b>EDR policy</b>"],
+["prot","Block access from devices MDE rates as risky","Compliance <b>machine risk score</b> + Conditional Access"],
+["prot","Trust apps deployed by Intune in App Control","<b>Managed installer</b> (Intune Management Extension)"],
+["prot","Control quality and feature update deferrals and deadlines","<b>Update rings</b>"],
+["prot","Max quality / feature update deferral","<b>30</b> / <b>365</b> days"],
+["prot","Max update ring pause","<b>35 days</b>"],
+["prot","Push one security update past ring deferrals","<b>Expedited quality update</b>"],
+["prot","Approve driver and firmware updates","<b>Driver update policy</b>"],
+["prot","Microsoft-managed update rings service","<b>Windows Autopatch</b> (Enterprise E3+)"],
+["prot","Security updates without restarts on Windows 11","<b>Hotpatch</b> (Enterprise 24H2+, VBS)"],
+["prot","Enforce an iOS version by a deadline","<b>Declarative software update</b> settings in the settings catalog"],
+["prot","Android firmware updates for Samsung / Zebra","<b>FOTA</b> (Knox E-FOTA / LifeGuard)"],
+["prot","Delivery Optimization default mode","<b>LAN (1)</b>"],
+["prot","Peer across subnets in a branch","Delivery Optimization <b>Group (2)</b> with a group ID"],
+["prot","Local cache server for Microsoft content","<b>Microsoft Connected Cache</b>"],
+["app","App type with dependencies and supersedence","<b>Win32</b> (.intunewin)"],
+["app","Tool to package Win32 apps","<b>Microsoft Win32 Content Prep Tool</b>"],
+["app","Win32 app installs but reports Failed","<b>Detection rule</b> doesn't match"],
+["app","Win32 app logs location","<code>C:\\ProgramData\\Microsoft\\IntuneManagementExtension\\Logs</code>"],
+["app","Single-file .msi, .msix, .ipa, .apk","<b>Line-of-business</b> app"],
+["app","Store apps installed through winget","<b>Microsoft Store app (new)</b>"],
+["app","Self-service install from Company Portal","<b>Available for enrolled devices</b>"],
+["app","Microsoft 365 Apps update channels","<b>Current</b>, <b>Monthly Enterprise</b>, <b>Semi-Annual Enterprise</b>"],
+["app","Office policies on unmanaged devices","<b>Cloud Policy service</b> (M365 Apps admin center)"],
+["app","Custom Microsoft 365 Apps install configuration","<b>Office Deployment Tool</b> XML"],
+["app","Licensed iOS apps without user Apple IDs","<b>Apps and Books (VPP)</b> with device licensing"],
+["app","Source of Android Enterprise apps","<b>Managed Google Play</b>"],
+["app","Protect work data in apps on unenrolled devices","<b>App protection policy</b> (MAM)"],
+["app","App protection section for PIN","<b>Access requirements</b>"],
+["app","App protection section for copy/paste and save-as","<b>Data protection</b>"],
+["app","App protection section for jailbreak and offline checks","<b>Conditional launch</b>"],
+["app","Conditional Access grant for protected apps","<b>Require app protection policy</b>"],
+["app","Preconfigure app settings (for example, Outlook account)","<b>App configuration policy</b>"],
+["app","App config on enrolled vs unenrolled devices","<b>Managed devices</b> (MDM) vs <b>managed apps</b> (SDK)"],
+["app","Mute Teams and Outlook notifications after hours","<b>Quiet time</b> policies"],
+["app","Remove only corporate data from an app","<b>Selective wipe</b>"],
+["ops","Connect to Graph for Intune from PowerShell","<code>Connect-MgGraph -Scopes DeviceManagementManagedDevices.ReadWrite.All</code>"],
+["ops","Unattended Graph script authentication","<b>App registration</b> with application permissions + certificate"],
+["ops","Compliance check with no built-in setting","<b>Custom compliance</b>: discovery script + JSON rules"],
+["ops","Detect and fix device issues on a schedule","<b>Remediations</b>"],
+["ops","Licensing for Remediations","<b>Windows Enterprise E3/E5</b> (or equivalent)"],
+["ops","Boot and sign-in time analysis","Endpoint analytics <b>startup performance</b>"],
+["ops","App crash analysis","Endpoint analytics <b>app reliability</b>"],
+["ops","Windows 11 readiness report","<b>Work from anywhere</b> report"],
+["ops","Who changed an Intune policy","<b>Audit logs</b>"],
+["ops","Long-term Intune log retention and dashboards","<b>Diagnostic settings</b> → Log Analytics + <b>workbooks</b>"],
+["ops","Intune service incidents for your tenant","<b>Tenant status</b> (service health)"],
+["ops","AI agents that recommend Intune actions","<b>Security Copilot agents in Intune</b>"]
+];
+
+const FKEY="md102-flash-known-v1";
+const F={doms:new Set(Object.keys(DOM)),known:new Set(load(FKEY)||[]),queue:null,flipped:false,includeKnown:false};
+function buildQueue(){F.queue=shuffle(FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0])&&(F.includeKnown||!F.known.has(i))));F.flipped=false}
+function saveKnown(){save(FKEY,[...F.known])}
+function renderFlash(){
+  if(!F.queue)buildQueue();
+  const el=document.getElementById("view-flash");
+  const inDoms=FC.map((c,i)=>i).filter(i=>F.doms.has(FC[i][0]));
+  const knownN=inDoms.filter(i=>F.known.has(i)).length;
+  const pct=inDoms.length?Math.round(knownN/inDoms.length*100):0;
+  const idx=F.queue[0], c=idx===undefined?null:FC[idx];
+  el.innerHTML=`<div class="fl">
+    <div class="hero"><div class="eyebrow">Flashcards · ${FC.length} cards</div><h1>Flashcards</h1>
+    <p class="lede">Flip a card, then choose <b>Got it</b> to take it out of the deck or <b>Again</b> to see it again in a few cards. Cards you mark as known are saved in this browser.</p></div>
+    <div class="fl-opts" id="fdoms">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="${F.doms.has(d)}" data-d="${d}">${DOM[d].short} · ${FC.filter(x=>x[0]===d).length}</button>`).join("")}</div>
+    <div class="fl-opts">
+      <button class="chip" id="fknown" aria-pressed="${F.includeKnown}">Include known cards</button>
+      <button class="btn small" id="fshuffle">Shuffle &amp; restart</button>
+      <button class="btn small" id="freset">Reset progress</button>
+    </div>
+    <div class="fl-top"><span>${F.queue.length} left this round</span><span>${knownN} of ${inDoms.length} known · ${pct}%</span></div>
+    <div class="prog"><div style="width:${pct}%"></div></div>
+    ${c?`<div class="fc ${F.flipped?"flipped":""}" id="fc" tabindex="0" role="button" aria-label="Flip card">
+      <div class="fc-in">
+        <div class="fc-face fc-front"><span class="dtag" style="align-self:flex-start">${DOM[c[0]].short}</span><div class="fc-text">${c[1]}</div><span class="hint">Click or press Space to flip</span></div>
+        <div class="fc-face fc-back"><div class="fc-q">${c[1]}</div><div class="fc-text">${c[2]}</div><span class="hint">${DOM[c[0]].name}</span></div>
+      </div></div>
+    <div class="fc-ctrl">
+      <button class="btn again" id="fagain">Again<span class="kbd">←</span></button>
+      <button class="btn" id="fflip">Flip<span class="kbd">Space</span></button>
+      <button class="btn got" id="fgot">Got it<span class="kbd">→</span></button>
+    </div>`
+    :`<div class="fl-done"><h2>${inDoms.length?"Round complete":"No domains selected"}</h2><p class="lede">${inDoms.length?`You know ${knownN} of ${inDoms.length} cards in the selected domains.`:"Turn on at least one domain above."}</p>
+      <div class="cta-row">${inDoms.length?`<button class="btn primary" id="fall">Review all cards again</button>`:""}<button class="btn" id="fexam">Go to practice exam</button></div></div>`}
+  </div>`;
+  el.querySelectorAll("#fdoms .chip").forEach(b=>b.onclick=()=>{const d=b.dataset.d;F.doms.has(d)?F.doms.delete(d):F.doms.add(d);buildQueue();renderFlash()});
+  el.querySelector("#fknown").onclick=()=>{F.includeKnown=!F.includeKnown;buildQueue();renderFlash()};
+  el.querySelector("#fshuffle").onclick=()=>{buildQueue();renderFlash()};
+  el.querySelector("#freset").onclick=()=>{F.known.clear();saveKnown();buildQueue();renderFlash()};
+  const card=el.querySelector("#fc");if(card)card.onclick=flipCard;
+  const a=el.querySelector("#fagain");if(a)a.onclick=again;
+  const g=el.querySelector("#fgot");if(g)g.onclick=gotIt;
+  const fl=el.querySelector("#fflip");if(fl)fl.onclick=flipCard;
+  const fa=el.querySelector("#fall");if(fa)fa.onclick=()=>{F.includeKnown=true;buildQueue();renderFlash()};
+  const fe=el.querySelector("#fexam");if(fe)fe.onclick=()=>go("exam");
+}
+function flipCard(){F.flipped=!F.flipped;const c=document.getElementById("fc");if(c)c.classList.toggle("flipped",F.flipped)}
+function again(){if(!F.queue.length)return;const x=F.queue.shift();F.queue.splice(Math.min(3,F.queue.length),0,x);F.flipped=false;renderFlash();focusCard()}
+function gotIt(){if(!F.queue.length)return;F.known.add(F.queue.shift());saveKnown();F.flipped=false;renderFlash();focusCard()}
+function focusCard(){const c=document.getElementById("fc");if(c)c.focus({preventScroll:true})}
+document.addEventListener("keydown",e=>{
+  if(document.getElementById("view-flash").hidden)return;
+  if(e.target.closest&&e.target.closest("input,textarea,select"))return;
+  if(e.key===" "||e.key==="Enter"){if(e.target.tagName==="BUTTON"&&e.target.id!=="fc")return;e.preventDefault();flipCard()}
+  else if(e.key==="ArrowRight"){e.preventDefault();gotIt()}
+  else if(e.key==="ArrowLeft"){e.preventDefault();again()}
+});
+
+/* ---------- wiring ---------- */
+document.querySelectorAll("[data-flash]").forEach(b=>b.onclick=()=>go("flash"));
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>go(t.dataset.view));
+document.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>{startFull()});
+document.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>{S=null;go("exam")});
+document.querySelectorAll(".toc a").forEach(a=>a.onclick=e=>{e.preventDefault();const el=document.querySelector(a.getAttribute("href"));if(el)el.scrollIntoView({behavior:"smooth"})});
+window.addEventListener("hashchange",route);
+const saved=load(KEY); if(saved&&!saved.done&&saved.mode==="full"){S=saved}
+ensureTick(); route();
+</script>
+
+</body>
+</html>
