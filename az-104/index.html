@@ -193,6 +193,21 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .ritem .row b{color:var(--ink);font-weight:600}
 .filter{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
+.hot{display:flex;flex-direction:column;gap:8px}
+.hrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(170px,280px);gap:12px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.hrow.right{border-color:var(--good);background:var(--good-soft)}
+.hrow.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.hrow select{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);min-width:0;width:100%}
+.ord{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.ord li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.ord li.right{border-color:var(--good);background:var(--good-soft)}
+.ord li.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.ord .pos{font-family:var(--f-mono);color:var(--muted)}
+.ord .mv{display:flex;gap:4px}
+.ord .mv button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:6px;padding:2px 10px}
+.ord .mv button:disabled{opacity:.35;cursor:not-allowed}
+@media (max-width:560px){.hrow{grid-template-columns:1fr}}
+
 /* Flashcards */
 .fl{display:flex;flex-direction:column;gap:18px;max-width:760px;margin:0 auto}
 .fl-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;font-size:.88rem;color:var(--muted)}
@@ -260,6 +275,7 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
     <a href="#g-net">Networking</a>
     <a href="#g-s2s">S2S VPN from memory</a>
     <a href="#g-mon">Monitor &amp; backup</a>
+    <a href="#g-cli">CLI, Bicep &amp; CIDR</a>
     <a href="#g-num">Numbers to memorize</a>
     <a href="#g-traps">Classic traps</a>
   </nav>
@@ -603,6 +619,60 @@ Perf
       </div>
     </section>
 
+    <section class='gsec' id='g-cli'>
+      <div class='eyebrow'>Syntax · CLI, PowerShell, Bicep &amp; CIDR</div>
+      <h2>Commands, templates, and subnet math</h2>
+      <p>Candidates report CLI and PowerShell snippets, Bicep, subnetting and CIDR, and Private Link on the real exam. You need to recognize the right command and parameters, not recite every flag.</p>
+      <div class='tbl-wrap'><table>
+        <thead><tr><th>Task</th><th>Azure CLI</th><th>PowerShell</th></tr></thead>
+        <tbody>
+          <tr><td>Resource group</td><td><code>az group create</code></td><td><code>New-AzResourceGroup</code></td></tr>
+          <tr><td>VM</td><td><code>az vm create</code></td><td><code>New-AzVM</code></td></tr>
+          <tr><td>Resize / deallocate a VM</td><td><code>az vm resize</code> / <code>az vm deallocate</code></td><td><code>Update-AzVM</code> after changing the size / <code>Stop-AzVM</code> (deallocates by default)</td></tr>
+          <tr><td>VNet, then subnet</td><td><code>az network vnet create</code>, <code>az network vnet subnet create</code></td><td><code>New-AzVirtualNetwork</code>, <code>Add-AzVirtualNetworkSubnetConfig</code>, then <code>Set-AzVirtualNetwork</code></td></tr>
+          <tr><td>Storage account</td><td><code>az storage account create --sku Standard_ZRS --kind StorageV2</code></td><td><code>New-AzStorageAccount -SkuName Standard_ZRS -Kind StorageV2</code></td></tr>
+          <tr><td>User delegation SAS</td><td><code>az storage blob generate-sas --auth-mode login --as-user</code></td><td><code>New-AzStorageBlobSASToken</code> with a context from <code>-UseConnectedAccount</code></td></tr>
+          <tr><td>Role assignment</td><td><code>az role assignment create --assignee … --role Reader --scope …</code></td><td><code>New-AzRoleAssignment -SignInName … -RoleDefinitionName Reader -ResourceGroupName …</code></td></tr>
+          <tr><td>Custom role</td><td><code>az role definition create --role-definition role.json</code></td><td><code>New-AzRoleDefinition -InputFile role.json</code></td></tr>
+          <tr><td>Lock</td><td><code>az lock create --lock-type CanNotDelete</code></td><td><code>New-AzResourceLock -LockLevel CanNotDelete</code></td></tr>
+          <tr><td>Policy assignment</td><td><code>az policy assignment create</code></td><td><code>New-AzPolicyAssignment</code></td></tr>
+          <tr><td>Deploy a template</td><td><code>az deployment group|sub|mg|tenant create</code></td><td><code>New-AzResourceGroupDeployment</code> (group), <code>New-AzSubscriptionDeployment</code> (subscription)</td></tr>
+        </tbody>
+      </table></div>
+      <div class='sheet'>
+        <div class='card'><h3>Bicep</h3><ul>
+          <li>Building blocks: <code>param</code>, <code>var</code>, <code>resource</code>, <code>module</code>, <code>output</code>. <code>targetScope = 'subscription'</code> lets one file create resource groups.</li>
+          <li><code>existing</code> references a resource you didn't deploy in this file. Add <code>scope: resourceGroup('RG2')</code> if it lives elsewhere.</li>
+          <li>Referencing another resource's symbolic name creates an <b>implicit dependency</b>. Use <code>dependsOn</code> only when there's no reference.</li>
+          <li><code>az bicep build</code>: Bicep → ARM JSON. <code>az bicep decompile</code>: ARM JSON → Bicep (may need manual fixes).</li>
+          <li><code>az deployment group what-if</code> previews what a deployment would change without deploying.</li>
+          <li>Decorators <code>@allowed</code>, <code>@minLength</code>, <code>@secure()</code> are checked at validation.</li>
+        </ul></div>
+        <div class='card'><h3>Private Link names &amp; Arc</h3><ul>
+          <li>Blob: <code>privatelink.blob.core.windows.net</code>. Files: <code>privatelink.file.core.windows.net</code>.</li>
+          <li>Azure SQL: <code>privatelink.database.windows.net</code>. Key Vault: <code>privatelink.vaultcore.azure.net</code>.</li>
+          <li>The private DNS zone must be <b>linked to the VNet</b>, or clients still resolve the public IP.</li>
+          <li>On-prem name resolution for Azure private zones: <b>Azure DNS Private Resolver</b> inbound endpoint plus a forwarder on-prem.</li>
+          <li><b>Azure Arc-enabled servers</b>: install the <b>Connected Machine agent</b> on an on-prem or other-cloud server to manage it with Azure Policy, RBAC, and Monitor.</li>
+        </ul></div>
+      </div>
+      <h3>Subnet math</h3>
+      <div class='tbl-wrap'><table>
+        <thead><tr><th>Prefix</th><th>Addresses</th><th>Usable in Azure (minus 5)</th></tr></thead>
+        <tbody>
+          <tr><td>/29</td><td class='num'>8</td><td class='num'>3</td></tr>
+          <tr><td>/28</td><td class='num'>16</td><td class='num'>11</td></tr>
+          <tr><td>/27</td><td class='num'>32</td><td class='num'>27</td></tr>
+          <tr><td>/26</td><td class='num'>64</td><td class='num'>59</td></tr>
+          <tr><td>/25</td><td class='num'>128</td><td class='num'>123</td></tr>
+          <tr><td>/24</td><td class='num'>256</td><td class='num'>251</td></tr>
+          <tr><td>/23</td><td class='num'>512</td><td class='num'>507</td></tr>
+          <tr><td>/22</td><td class='num'>1,024</td><td class='num'>1,019</td></tr>
+        </tbody>
+      </table></div>
+      <p>A /23 is two /24 blocks: 10.0.0.0/23 spans 10.0.0.0 to 10.0.1.255. A /25 is half a /24, split at .128. Two ranges overlap when one sits inside the other, and VNets with overlapping spaces can't be peered. Subnets in one VNet can't overlap either.</p>
+    </section>
+
     <section class="gsec" id="g-num">
       <div class="eyebrow">10 · Recall</div>
       <h2>Numbers to memorize</h2>
@@ -680,6 +750,24 @@ const CASE = `<p><b>Fabrikam, Inc.</b> has one Azure subscription (Sub1) linked 
 <li>Minimize administrative effort and follow least privilege.</li>
 </ul>`;
 
+const EFF=['Audit','Deny','Modify','DeployIfNotExists'], CAN=['Can be created','Cannot be created'], SCP=['group','sub','mg','tenant'], VLT=['Recovery Services vault','Backup vault'];
+
+const CASE2 = `<p><b>Contoso, Ltd.</b> sells outdoor equipment online. It has one Azure subscription (Sub1) in the Entra tenant contoso.com. All resources are in West Europe.</p>
+<p><b>Existing environment</b></p>
+<ul>
+<li>VNet-Prod (10.20.0.0/16) has three subnets: Web (10.20.1.0/24), App (10.20.2.0/24), and Data (10.20.3.0/24).</li>
+<li>Three web VMs run in the Web subnet and are in resource group RG-Web. Two application VMs run in App. One SQL Server VM, SQL1, runs in Data.</li>
+<li>Storage account stcontosoimg (general-purpose v2, LRS) holds product images in a container named images.</li>
+</ul>
+<p><b>Requirements</b></p>
+<ul>
+<li>Internet traffic to the web tier must be load balanced, use TLS termination and a web application firewall, and send requests for /api/* to the application VMs.</li>
+<li>SQL1 must accept TCP 1433 <b>only</b> from the App subnet.</li>
+<li>The on-call team must be notified when the average CPU of any web VM exceeds 85% for 10 minutes. Notifications must be suppressed every Sunday from 02:00 to 04:00 for patching.</li>
+<li>The Ops group must be able to start, stop, and restart VMs in RG-Web. They must not be able to create or delete VMs or change anything else.</li>
+<li>Images not modified for 60 days must move to a cooler tier and be deleted after 730 days. No custom code.</li>
+</ul>`;
+
 const Q = [
 // ---------- GOVERNANCE ----------
 {id:"g1",d:"gov",q:`<p>Subscription Sub1 contains resource group RG1. User1 must be able to create, modify, and delete any resource in RG1. User1 must <b>not</b> be able to grant other users access to RG1.</p><p>Following the principle of least privilege, which role should you assign to User1 at the RG1 scope?</p>`,
@@ -723,6 +811,34 @@ const Q = [
  o:["Yes","No"],a:[1],
  x:`"All" enables SSPR for every user. To limit it to Group1, set the option to <b>Selected</b> and choose Group1.`},
 
+{id:"g14",d:"gov",q:`<p>You assign an Entra ID P1 license to Group1 by using group-based licensing. Some users in Group1 don't get the license, and the portal shows a licensing error for them.</p><p>What is the most likely cause?</p>`,
+ o:[`The users don't have a usage location set.`,`Group1 uses Assigned membership instead of Dynamic membership.`,`The users are members of more than one group.`,`The users haven't signed in for 30 days.`],a:[0],
+ x:`A license can't be assigned to a user who has no <b>usage location</b>, because some services aren't available in every country. Set the usage location on the affected users and the assignment is retried. Group-based licensing works with assigned and dynamic groups, and sign-in history doesn't matter.`},
+{id:"g15",d:"gov",q:`<p>VM1 and VM2 must both read secrets from Key Vault KV1 by using the <b>same</b> identity. The identity must continue to exist if VM1 is deleted.</p><p>What should you use?</p>`,
+ o:[`A system-assigned managed identity on each VM`,`A user-assigned managed identity assigned to both VMs`,`A service principal with a client secret stored on each VM`,`The Entra account of an administrator`],a:[1],
+ x:`A user-assigned managed identity is a standalone resource that you can attach to several VMs, and it lives on after any one VM is deleted. A system-assigned identity is tied to one resource and is deleted with it.`},
+{id:"g16",d:"gov",q:`<p>Users synchronized from on-premises AD DS use self-service password reset (SSPR). A password reset in Azure must also update the password in AD DS.</p><p>What must you enable?</p>`,
+ o:[`Password writeback in Microsoft Entra Connect (requires Entra ID P1 or higher)`,`Password hash synchronization only`,`Pass-through authentication only`,`Microsoft Entra Domain Services`],a:[0],
+ x:`Password writeback sends password changes from Entra ID back to on-premises AD DS. It's configured in Entra Connect and needs an Entra ID P1 (or higher) license.`},
+{id:"g17",d:"gov",q:`<p>Which PowerShell command assigns the Reader role to user1@contoso.com on resource group RG1?</p>`,
+ o:[`<code>New-AzRoleAssignment -SignInName user1@contoso.com -RoleDefinitionName Reader -ResourceGroupName RG1</code>`,`<code>Set-AzRoleAssignment -SignInName user1@contoso.com -Role Reader -ResourceGroup RG1</code>`,`<code>Add-AzRoleMember -User user1@contoso.com -Role Reader -Scope RG1</code>`,`<code>New-AzRoleDefinition -SignInName user1@contoso.com -Name Reader</code>`],a:[0],
+ x:`<code>New-AzRoleAssignment</code> creates a role assignment. <code>New-AzRoleDefinition</code> creates a custom role definition, and the other two aren't Az cmdlets for assigning roles.`},
+{id:"g18",d:"gov",q:`<p>You wrote a custom role definition in a file named <code>role.json</code>. Which Azure CLI command creates the role?</p>`,
+ o:[`<code>az role definition create --role-definition role.json</code>`,`<code>az role assignment create --role role.json</code>`,`<code>az ad role create --file role.json</code>`,`<code>az policy definition create --rules role.json</code>`],a:[0],
+ x:`A role <i>definition</i> is the role itself. A role <i>assignment</i> attaches an existing role to a user, group, or identity at a scope.`},
+{id:"g19",d:"gov",series:true,q:`<p class="hint">Yes/No series. You can't return to this question on the real exam.</p><p><b>Goal:</b> prevent anyone from deleting storage account stor1. Administrators must still be able to change its settings.</p><p><b>Solution:</b> You apply a CanNotDelete lock to stor1.</p><p>Does this meet the goal?</p>`,
+ o:[`Yes`,`No`],a:[0],
+ x:`CanNotDelete allows reads and changes but blocks deletion, for every user including Owners.`},
+{id:"g20",d:"gov",series:true,q:`<p class="hint">Yes/No series. You can't return to this question on the real exam.</p><p><b>Goal:</b> prevent anyone from deleting storage account stor1. Administrators must still be able to change its settings.</p><p><b>Solution:</b> You apply a ReadOnly lock to stor1.</p><p>Does this meet the goal?</p>`,
+ o:[`Yes`,`No`],a:[1],
+ x:`A ReadOnly lock blocks deletion but also blocks changes, so administrators can't change settings. That breaks the second part of the goal.`},
+{id:"g21",d:"gov",series:true,q:`<p class="hint">Yes/No series. You can't return to this question on the real exam.</p><p><b>Goal:</b> prevent anyone from deleting storage account stor1. Administrators must still be able to change its settings.</p><p><b>Solution:</b> You assign an Azure Policy definition with the Deny effect to the resource group that contains stor1.</p><p>Does this meet the goal?</p>`,
+ o:[`Yes`,`No`],a:[1],
+ x:`Policy Deny is evaluated on create and update requests. It isn't the mechanism for blocking deletion, and a lock is.`},
+{id:"g22",d:"gov",t:"hot",q:`<p>You use Azure Policy. For each requirement, select the effect that meets it.</p>`,
+ h:[{l:`Block the creation of resources outside East US`,o:EFF,a:1},{l:`Add the CostCenter tag from the resource group to resources that lack it`,o:EFF,a:2},{l:`Deploy the Azure Monitor Agent extension to VMs that don't have it`,o:EFF,a:3},{l:`Report resources that have no owner tag, without blocking anything`,o:EFF,a:0}],o:[],a:[],
+ x:`Deny blocks non-compliant creates and updates. Modify adds or changes tags and properties (with remediation for existing resources). DeployIfNotExists deploys a related resource such as an extension when it's missing. Audit only reports.`},
+
 // ---------- STORAGE ----------
 {id:"s1",d:"sto",q:`<p>Storage account stor1 must stay available if one availability zone in the primary region fails. Your application must also be able to <b>read</b> data from the secondary region if the primary region is unavailable, without waiting for a failover.</p><p>Which redundancy option should you use?</p>`,
  o:["ZRS","GRS","GZRS","RA-GZRS"],a:[3],
@@ -760,6 +876,28 @@ const Q = [
 {id:"s12",d:"sto",q:`<p>For compliance, blobs in the <i>audit</i> container must not be modifiable or deletable by anyone, including administrators, for seven years.</p><p>What should you configure?</p>`,
  o:["Blob soft delete with seven-year retention","A locked time-based retention policy (immutable storage)","A CanNotDelete lock on the storage account","A legal hold on the container"],a:[1],
  x:`A time-based retention policy provides WORM protection for a set period, and locking it means nobody can shorten it. A legal hold has no end date. Resource locks don't protect data-plane operations, and soft delete allows at most 365 days.`},
+
+{id:"s13",d:"sto",q:`<p>A storage account uses GRS. You perform a <b>customer-managed account failover</b> to the secondary region.</p><p>What is the account's redundancy after the failover completes?</p>`,
+ o:[`GRS in the new primary region`,`LRS in the new primary region`,`ZRS in the new primary region`,`RA-GRS in the new primary region`],a:[1],
+ x:`After a failover the account becomes LRS in what is now the primary region. To get geo-redundancy again you must reconfigure the account to GRS and wait for replication.`},
+{id:"s14",d:"sto",q:`<p>You create a SAS for a partner. The token must work only from the partner's IP address <b>203.0.113.10</b> and only over HTTPS.</p><p>What should you specify when you generate the SAS?</p>`,
+ o:[`Allowed IP addresses and allowed protocols: HTTPS only`,`A stored access policy`,`The Microsoft.Storage service endpoint`,`A private endpoint`],a:[0],
+ x:`A SAS can carry an allowed IP address (or range) and a protocol restriction. A stored access policy controls start, expiry, and permissions and lets you revoke the SAS. Endpoints are network settings on the account.`},
+{id:"s15",d:"sto",q:`<p>Users sometimes delete individual files from an Azure file share. You must be able to restore a file to its state from the previous day.</p><p>What should you use?</p>`,
+ o:[`Share snapshots (or Azure Backup for the file share)`,`Soft delete for the file share, with no other protection`,`Blob versioning`,`Object replication`],a:[0],
+ x:`Share snapshots are read-only point-in-time copies of the share, and you can restore individual files from them. Soft delete for file shares protects against deleting the whole share, and blob features don't apply to Azure Files.`},
+{id:"s16",d:"sto",q:`<p>You must move 60 TB of data to Azure Blob storage from a datacenter with a 50 Mbps internet link. Time and bandwidth are limited.</p><p>What should you use?</p>`,
+ o:[`Azure Data Box`,`AzCopy over the internet`,`Azure File Sync`,`Storage Explorer`],a:[0],
+ x:`At 50 Mbps, 60 TB takes more than 100 days. Data Box is an offline transfer: you copy data to the device and ship it to Azure.`},
+{id:"s17",d:"sto",q:`<p>You use Azure CLI to generate a SAS for a blob and sign it with your Entra credentials instead of an account key.</p><p>Which parameters should you add to <code>az storage blob generate-sas</code>?</p>`,
+ o:[`<code>--auth-mode login --as-user</code>`,`<code>--auth-mode key --account-key</code>`,`<code>--policy-name --as-user</code>`,`<code>--sas-token --auth-mode login</code>`],a:[0],
+ x:`<code>--auth-mode login --as-user</code> makes the CLI request a user delegation key through Entra ID and sign the SAS with it. A SAS from a stored access policy uses a key, not Entra credentials.`},
+{id:"s18",d:"sto",t:"hot",q:`<p>You must create a general-purpose v2 storage account that survives the failure of an availability zone.</p><pre>New-AzStorageAccount -ResourceGroupName RG1 -Name stor100 -Location eastus -SkuName [SkuName] -Kind [Kind]</pre><p>Select the correct value for each parameter.</p>`,
+ h:[{l:`<code>-SkuName</code>`,o:['Standard_LRS','Standard_ZRS','Standard_GRS','Premium_LRS'],a:1},{l:`<code>-Kind</code>`,o:['BlobStorage','FileStorage','StorageV2','BlockBlobStorage'],a:2}],o:[],a:[],
+ x:`Zone redundancy means ZRS (<code>Standard_ZRS</code>), and a general-purpose v2 account is <code>StorageV2</code>. BlobStorage is a legacy kind, and FileStorage and BlockBlobStorage are premium account kinds.`},
+{id:"s19",d:"sto",t:"order",q:`<p>Arrange the steps to set up Azure File Sync for a file server in the correct order.</p>`,
+ o:[`Add a server endpoint to the sync group`,`Create a sync group and add the Azure file share as the cloud endpoint`,`Deploy a Storage Sync Service`,`Install the Azure File Sync agent and register the server`],a:[2,3,1,0],
+ x:`Deploy the Storage Sync Service, install the agent and register the server with it, create the sync group with the Azure file share as its cloud endpoint, and then add the server endpoint (the local path to sync).`},
 
 // ---------- COMPUTE ----------
 {id:"c1",d:"cmp",q:`<p>You're deploying a stateless web tier on Azure VMs. It must qualify for a <b>99.99%</b> VM connectivity SLA.</p><p>What should you deploy?</p>`,
@@ -811,6 +949,43 @@ param skuName string = 'Standard_LRS'</pre><p>You deploy it with <code>skuName='
 {id:"c15",d:"cmp",q:`<p>You must run a PowerShell script on 20 <b>existing</b> Windows VMs to install IIS. You must not sign in to the VMs interactively.</p><p>What should you use?</p>`,
  o:["The Custom Script Extension","Boot diagnostics","Serial console","Azure Bastion"],a:[0],
  x:`The Custom Script Extension downloads and runs scripts after deployment, and you can target many VMs or a scale set. Run Command also works for ad-hoc jobs. Bastion and the serial console are interactive.`},
+
+{id:"c16",d:"cmp",q:`<p>You must reference an existing storage account named stor100 in resource group RG2 from a Bicep file, without deploying it.</p><pre>resource stor 'Microsoft.Storage/storageAccounts@2023-05-01' [keyword] = {
+  name: 'stor100'
+  scope: resourceGroup('RG2')
+}</pre><p>Which keyword replaces <code>[keyword]</code>?</p>`,
+ o:[`<code>existing</code>`,`<code>reference</code>`,`<code>import</code>`,`<code>targetScope</code>`],a:[0],
+ x:`The <code>existing</code> keyword declares a resource that is already deployed so you can read its properties or use it as a parent or scope. <code>reference()</code> is a function, and <code>targetScope</code> sets the deployment scope of the whole file.`},
+{id:"c17",d:"cmp",q:`<p>You have an ARM template named <code>azuredeploy.json</code>. You must convert it to Bicep.</p><p>Which command should you run?</p>`,
+ o:[`<code>az bicep decompile --file azuredeploy.json</code>`,`<code>az bicep build --file azuredeploy.json</code>`,`<code>az deployment group export --template-file azuredeploy.json</code>`,`<code>az bicep upgrade</code>`],a:[0],
+ x:`<code>decompile</code> turns ARM JSON into Bicep. <code>build</code> goes the other way, from Bicep to JSON. <code>az bicep upgrade</code> updates the Bicep tooling.`},
+{id:"c18",d:"cmp",q:`<p>You must deploy <code>main.bicep</code> to the existing resource group RG1 by using Azure CLI.</p><p>Which command should you run?</p>`,
+ o:[`<code>az deployment group create --resource-group RG1 --template-file main.bicep</code>`,`<code>az deployment sub create --resource-group RG1 --template-file main.bicep</code>`,`<code>az bicep build --file main.bicep</code>`,`<code>az group create --name RG1 --template-file main.bicep</code>`],a:[0],
+ x:`Deployments into a resource group use <code>az deployment group create</code>. <code>build</code> only compiles the file, and subscription-scope deployments don't take a resource group.`},
+{id:"c19",d:"cmp",q:`<p>A web app on a <b>Basic</b> App Service plan is slow on the first request after periods without traffic because the app unloads when idle.</p><p>What should you enable?</p>`,
+ o:[`Always On`,`Autoscale`,`A deployment slot`,`Auto swap`],a:[0],
+ x:`Always On keeps the app loaded. It's available on Basic and higher, not on Free or Shared. Autoscale and slots need Standard or higher and don't address idle unloading.`},
+{id:"c20",d:"cmp",q:`<p>A web app on a Standard plan must call an internal API that has only a private IP address in VNet1. This is outbound traffic from the web app.</p><p>What should you configure?</p>`,
+ o:[`Regional VNet integration`,`A private endpoint for the web app`,`A service endpoint on the web app`,`Azure Bastion`],a:[0],
+ x:`VNet integration handles <b>outbound</b> calls from the app into a VNet. A private endpoint on the web app handles <b>inbound</b> traffic.`},
+{id:"c21",d:"cmp",q:`<p>A containerized job runs once, finishes, and must not restart. You don't want to manage servers and want to pay only while it runs.</p><p>Which service and restart policy should you use?</p>`,
+ o:[`Azure Container Instances with restart policy Never`,`Azure Container Instances with restart policy Always`,`AKS with a DaemonSet`,`App Service on a Premium v3 plan`],a:[0],
+ x:`ACI is serverless and billed per second. Restart policy Never runs the container once. Always restarts it indefinitely, and OnFailure restarts it only if it exits with an error.`},
+{id:"c22",d:"cmp",q:`<p>A container group in ACI must keep its files even after the container group is deleted and recreated.</p><p>Which volume type should you mount?</p>`,
+ o:[`An Azure Files share`,`An emptyDir volume`,`A secret volume`,`A gitRepo volume`],a:[0],
+ x:`Azure Files is the persistent option in ACI, and you can mount the same share in several containers. An emptyDir volume lives only as long as the container group.`},
+{id:"c23",d:"cmp",q:`<p>Container app App1 has revision v1 in production. You deploy revision v2 and must send 20% of traffic to v2 and 80% to v1.</p><p>What must you configure first?</p>`,
+ o:[`Set the revision mode to Multiple`,`Set ingress to internal`,`Enable the Dapr sidecar`,`Create a second Container Apps environment`],a:[0],
+ x:`In Single revision mode only the latest revision is active. Multiple revision mode keeps several revisions active, and you then set traffic weights between them.`},
+{id:"c24",d:"cmp",q:`<p>Container app Orders must be reachable only by other container apps in the same Container Apps environment, and not from the internet.</p><p>What should you configure?</p>`,
+ o:[`Ingress limited to the Container Apps environment`,`Ingress that accepts traffic from anywhere, plus an IP restriction`,`No ingress, plus a public load balancer`,`A NAT gateway on the environment`],a:[0],
+ x:`Ingress visibility has two settings: limited to the environment (internal) or accepting traffic from anywhere (external). Internal ingress keeps the app off the internet.`},
+{id:"c25",d:"cmp",q:`<p>You have Windows servers in an on-premises datacenter. You must manage them with Azure Policy and Azure RBAC without migrating them.</p><p>What should you install on each server?</p>`,
+ o:[`The Azure Connected Machine agent (Azure Arc-enabled servers)`,`The MARS agent`,`The Azure Migrate appliance`,`The Log Analytics (MMA) agent only`],a:[0],
+ x:`Azure Arc-enabled servers project a non-Azure machine into Azure Resource Manager through the Connected Machine agent, so you can apply Policy, RBAC, tags, and Monitor to it.`},
+{id:"c26",d:"cmp",t:"hot",q:`<p>Select the scope keyword that completes <code>az deployment [scope] create</code> for each requirement.</p>`,
+ h:[{l:`Deploy resources into the existing resource group RG1`,o:SCP,a:0},{l:`Deploy a template that creates a new resource group and resources in it`,o:SCP,a:1},{l:`Deploy a template that assigns a policy at a management group`,o:SCP,a:2},{l:`Deploy a template that creates a management group`,o:SCP,a:3}],o:[],a:[],
+ x:`<b>group</b> targets an existing resource group. <b>sub</b> is needed to create resource groups. <b>mg</b> targets a management group, and <b>tenant</b> is needed for tenant-level resources such as creating management groups.`},
 
 // ---------- NETWORKING ----------
 {id:"n1",d:"net",q:`<p>VNet1 is peered with VNet2. VNet2 is peered with VNet3. There are no gateways, NVAs, or UDRs.</p><p>Can a VM in VNet1 communicate with a VM in VNet3?</p>`,
@@ -865,6 +1040,43 @@ param skuName string = 'Standard_LRS'</pre><p>You deploy it with <code>skuName='
  o:["Next hop","IP flow verify","Packet capture","Topology"],a:[1],
  x:`IP flow verify tests a specific 5-tuple against the effective NSG rules and returns the rule that allowed or denied it. Next hop answers routing questions, such as which UDR or appliance the traffic goes to.`},
 
+{id:"n18",d:"net",q:`<p>Subnet1 must host <b>250</b> VM network interfaces. You want the smallest possible subnet.</p><p>Which prefix length should you use?</p>`,
+ o:[`/26`,`/25`,`/24`,`/23`],a:[2],
+ x:`Azure reserves 5 addresses in every subnet. A /24 has 256 addresses, which leaves 251 usable. A /25 leaves only 123.`},
+{id:"n19",d:"net",q:`<p>How many IP addresses can you assign to resources in a <b>/27</b> subnet in Azure?</p>`,
+ o:[`32`,`30`,`27`,`25`],a:[2],
+ x:`A /27 has 32 addresses. Azure reserves the first four and the last one, which leaves 27.`},
+{id:"n20",d:"net",q:`<p>VNet1 uses the address space 10.10.0.0/16.</p><p>Which address space can a peered VNet use?</p>`,
+ o:[`10.10.128.0/17`,`10.11.0.0/16`,`10.10.0.0/24`,`10.0.0.0/8`],a:[1],
+ x:`Peered VNets can't overlap. 10.10.128.0/17 and 10.10.0.0/24 are inside 10.10.0.0/16, and 10.0.0.0/8 contains it. 10.11.0.0/16 doesn't overlap.`},
+{id:"n21",d:"net",t:"hot",q:`<p>VNet1 has the address space <b>10.0.0.0/23</b> and one subnet, <b>Subnet1 (10.0.0.0/25)</b>. For each new subnet, select whether it can be created.</p>`,
+ h:[{l:`10.0.0.128/25`,o:CAN,a:0},{l:`10.0.1.0/24`,o:CAN,a:0},{l:`10.0.2.0/24`,o:CAN,a:1},{l:`10.0.0.64/26`,o:CAN,a:1}],o:[],a:[],
+ x:`10.0.0.0/23 covers 10.0.0.0 to 10.0.1.255. Subnet1 uses 10.0.0.0 to 10.0.0.127. 10.0.0.128/25 and 10.0.1.0/24 are free and inside the VNet. 10.0.2.0/24 is outside the address space, and 10.0.0.64/26 (.64 to .127) overlaps Subnet1.`},
+{id:"n22",d:"net",q:`<p>VMs in Subnet1 must reach the internet from a <b>fixed, predictable outbound public IP address</b>. The VMs have no public IP addresses of their own.</p><p>What should you do?</p>`,
+ o:[`Associate a NAT gateway with Subnet1`,`Create an inbound NAT rule on a load balancer`,`Enable a service endpoint on Subnet1`,`Peer VNet1 with a hub VNet`],a:[0],
+ x:`A NAT gateway gives every VM in the subnet shared outbound connectivity through its static public IP address or prefix. Inbound NAT rules handle inbound traffic.`},
+{id:"n23",d:"net",q:`<p>Outbound traffic from VNet1 must be allowed only to *.contoso.com. All other internet destinations must be blocked.</p><p>What should you deploy?</p>`,
+ o:[`Azure Firewall with application rules, and a UDR that sends 0.0.0.0/0 to it`,`An NSG rule that uses the Internet service tag`,`Application Gateway`,`A NAT gateway`],a:[0],
+ x:`Azure Firewall can filter by FQDN with application rules. NSGs work with IP addresses and service tags, and can't match domain names. A UDR sends the traffic through the firewall.`},
+{id:"n24",d:"net",q:`<p>You create a private endpoint for the blob service of stor1. From VM1 in the same VNet, <code>nslookup stor1.blob.core.windows.net</code> still returns a <b>public</b> IP address.</p><p>What is the most likely cause?</p>`,
+ o:[`The privatelink.blob.core.windows.net private DNS zone isn't linked to VNet1.`,`The storage account uses GRS.`,`The subnet needs a service endpoint as well.`,`VM1 needs a public IP address.`],a:[0],
+ x:`A private endpoint works through DNS: the account name resolves through a privatelink CNAME to the private IP. The private DNS zone must be linked to the VNet, or VM1 keeps getting the public answer.`},
+{id:"n25",d:"net",q:`<p>Which private DNS zone name do you use for a private endpoint to Azure SQL Database?</p>`,
+ o:[`<code>privatelink.database.windows.net</code>`,`<code>privatelink.sql.azure.com</code>`,`<code>privatelink.sqlserver.windows.net</code>`,`<code>privatelink.blob.core.windows.net</code>`],a:[0],
+ x:`Each service has its own zone name. Azure SQL Database uses <code>privatelink.database.windows.net</code>, and blob storage uses <code>privatelink.blob.core.windows.net</code>.`},
+{id:"n26",d:"net",q:`<p>On-premises servers must resolve names in the Azure private DNS zone contoso.internal over the site-to-site VPN.</p><p>What should you deploy?</p>`,
+ o:[`An Azure DNS Private Resolver with an inbound endpoint`,`A public DNS zone named contoso.internal`,`A second private DNS zone with auto-registration`,`An Application Gateway`],a:[0],
+ x:`On-premises DNS servers forward queries for the zone to the private resolver's inbound endpoint IP in the VNet, which resolves them against the linked private zone.`},
+{id:"n27",d:"net",q:`<p>You configure point-to-site VPN with <b>certificate</b> authentication.</p><p>What do you upload to the VPN gateway?</p>`,
+ o:[`The public key data of the root certificate`,`The private key of the root certificate`,`The private key of each client certificate`,`The server's TLS certificate`],a:[0],
+ x:`The gateway trusts the root certificate's public data. Each client installs a client certificate that was issued from that root.`},
+{id:"n28",d:"net",m:true,pick:3,q:`<p>Spoke1 and Spoke2 are each peered with VNet-Hub, which contains a network virtual appliance at 10.0.0.4. Traffic between the spokes must pass through the NVA.</p><p>Which <b>three</b> actions should you take?</p>`,
+ o:[`Create UDRs on both spoke subnets with next hop type Virtual appliance (10.0.0.4)`,`Enable IP forwarding on the NVA's network interface`,`Enable Allow forwarded traffic on the spoke-to-hub peerings`,`Enable Use remote gateways on the hub-to-spoke peerings`,`Create a direct peering between Spoke1 and Spoke2`],a:[0,1,2],
+ x:`The UDRs send spoke traffic to the NVA. IP forwarding lets the NVA's NIC handle packets not addressed to it. Allow forwarded traffic lets each spoke accept traffic that the NVA forwards from the other spoke. A direct peering would bypass the NVA.`},
+{id:"n29",d:"net",t:"order",q:`<p>Arrange the steps to build a site-to-site VPN in the correct order.</p>`,
+ o:[`Create the connection and enter the shared key`,`Create a local network gateway`,`Create the virtual network gateway`,`Create the GatewaySubnet`],a:[3,2,1,0],
+ x:`The gateway needs its subnet first, then the virtual network gateway. The local network gateway describes the on-premises side, and the connection ties the two together with the shared key.`},
+
 // ---------- MONITOR ----------
 {id:"m1",d:"mon",q:`<p>Every Saturday from 01:00 to 05:00, during patching, alert notifications for RG-Prod must be suppressed. The alert rules must stay enabled.</p><p>What should you create?</p>`,
  o:["A schedule that disables each alert rule","An alert processing rule with a suppression action and a recurring schedule","A new action group with no receivers","A diagnostic setting that excludes RG-Prod"],a:[1],
@@ -897,6 +1109,28 @@ param skuName string = 'Standard_LRS'</pre><p>You deploy it with <code>skuName='
  o:["IP flow verify","Connection monitor","NSG flow logs","Effective routes"],a:[1],
  x:`Connection monitor runs ongoing tests between endpoints, including on-prem machines that have the agent, and integrates with Azure Monitor alerts. The other tools are one-off diagnostics or flow logging.`},
 
+{id:"m11",d:"mon",q:`<p>A support engineer must be able to view all Azure Monitor data (metrics, logs, and alerts) in Sub1, but must not be able to change any monitoring configuration.</p><p>Which role should you assign at the subscription scope?</p>`,
+ o:[`Monitoring Reader`,`Monitoring Contributor`,`Log Analytics Contributor`,`Contributor`],a:[0],
+ x:`Monitoring Reader can view monitoring data but can't change settings. Monitoring Contributor can also create and edit alert rules, action groups, and diagnostic settings. The other roles allow changes.`},
+{id:"m12",d:"mon",q:`<p>You must raise an alert when Windows event ID 4625 (failed sign-in) appears more than 10 times in 5 minutes on any server that sends logs to Workspace1.</p><p>Which type of alert rule should you create?</p>`,
+ o:[`Log search alert`,`Metric alert`,`Activity log alert`,`Service Health alert`],a:[0],
+ x:`A log search alert runs a KQL query against the workspace and fires on the result count. Metric alerts evaluate numeric platform metrics, and activity log alerts react to control-plane events.`},
+{id:"m13",d:"mon",q:`<p>Which query returns computers that haven't sent a heartbeat in the last 10 minutes?</p>`,
+ o:[`<code>Heartbeat | summarize LastSeen = max(TimeGenerated) by Computer | where LastSeen &lt; ago(10m)</code>`,`<code>Heartbeat | where TimeGenerated &lt; ago(10m) | distinct Computer</code>`,`<code>Heartbeat | summarize count() by Computer | where count_ &lt; 10</code>`,`<code>Heartbeat | top 10 by TimeGenerated</code>`],a:[0],
+ x:`Take each computer's most recent heartbeat, then keep those older than 10 minutes. The second query also returns healthy computers, because they have old heartbeat rows as well as new ones.`},
+{id:"m14",d:"mon",t:"hot",q:`<p>For each workload, select the vault type that Azure Backup uses.</p>`,
+ h:[{l:`Azure virtual machines`,o:VLT,a:0},{l:`Azure managed disks`,o:VLT,a:1},{l:`Azure Files shares`,o:VLT,a:0},{l:`Azure Blobs (operational backup)`,o:VLT,a:1}],o:[],a:[],
+ x:`Recovery Services vaults protect VMs, Azure Files, SQL and SAP HANA in VMs, and on-prem servers. Backup vaults protect Blobs, Disks, PostgreSQL, and AKS.`},
+{id:"m15",d:"mon",q:`<p>You need to be notified about Azure platform incidents and planned maintenance that affect the services and regions your subscription uses.</p><p>What should you configure?</p>`,
+ o:[`Azure Service Health alerts`,`Azure Advisor recommendations`,`Connection monitor`,`A budget`],a:[0],
+ x:`Service Health reports service issues, planned maintenance, and health advisories for your subscriptions. You attach an action group to receive notifications. Resource Health is the per-resource view.`},
+{id:"m16",d:"mon",q:`<p>You must back up files and folders on an on-premises Windows server directly to Azure. You don't have a backup server on-premises.</p><p>What should you use?</p>`,
+ o:[`The MARS agent with a Recovery Services vault`,`A Backup vault`,`Azure File Sync only`,`Azure Site Recovery`],a:[0],
+ x:`The Microsoft Azure Recovery Services (MARS) agent backs up files, folders, and system state to a Recovery Services vault with no extra on-prem server. Azure Backup Server (MABS) is for workloads such as SQL and Hyper-V.`},
+{id:"m17",d:"mon",t:"order",q:`<p>Arrange the Azure Site Recovery steps in the correct order to fail VMs over to West US and later return them to East US.</p>`,
+ o:[`Commit the failover`,`Re-protect the VMs`,`Fail over the VMs to West US`,`Fail back to East US`],a:[2,0,1,3],
+ x:`Fail over to the secondary region, commit the failover, re-protect (reverse replication back toward the original region), and then fail back.`},
+
 // ---------- CASE STUDY ----------
 {id:"cs1",d:"net",cs:true,q:`<p><b>Case study: Fabrikam.</b> You need to meet the requirement that VMs in Spoke1 communicate with VMs in Spoke2.</p><p>What should you do with the least administrative effort?</p>`,
  o:["Nothing. Both spokes are peered with the hub.","Create a peering between VNet-Spoke1 and VNet-Spoke2.","Enable \"Allow gateway transit\" on both spoke peerings.","Create UDRs in each spoke that point to the hub's VPN gateway."],a:[1],
@@ -909,12 +1143,27 @@ param skuName string = 'Standard_LRS'</pre><p>You deploy it with <code>skuName='
  x:`The local network gateway lists the on-prem prefixes that Azure routes into the tunnel. Add 172.17.0.0/16 there. The on-prem device must also include the new network in its configuration.`},
 {id:"cs4",d:"mon",cs:true,q:`<p><b>Case study: Fabrikam.</b> You need to meet the West US recovery requirement for production VMs.</p><p>What should you use?</p>`,
  o:["Azure Backup to a GRS Recovery Services vault in East US, without Cross Region Restore","Azure Site Recovery with a Recovery Services vault in West US","A Backup vault in West US","Scheduled disk snapshots copied to West US by a runbook"],a:[1],
- x:`Site Recovery replicates VMs continuously and supports failover to the target region. Its vault should be in the target region, not the source. GRS backup without Cross Region Restore can't restore in West US, and Backup vaults don't protect VMs.`}
+ x:`Site Recovery replicates VMs continuously and supports failover to the target region. Its vault should be in the target region, not the source. GRS backup without Cross Region Restore can't restore in West US, and Backup vaults don't protect VMs.`},
+{id:"cs5",d:"net",cs:2,q:`<p><b>Case study: Contoso.</b> You need to meet the requirement for the web tier traffic.</p><p>What should you deploy?</p>`,
+ o:[`Azure Application Gateway WAF v2 in a new dedicated subnet`,`An Azure Standard Load Balancer with a public frontend`,`Azure Traffic Manager`,`A NAT gateway in the Web subnet`],a:[0],
+ x:`Path-based routing (/api/*), TLS termination, and WAF are Application Gateway features, and it needs its own subnet. Standard Load Balancer is layer 4. Traffic Manager is DNS-based, and all resources are in one region.`},
+{id:"cs6",d:"net",cs:2,q:`<p><b>Case study: Contoso.</b> You need to meet the requirement for SQL1.</p><p>What should you configure?</p>`,
+ o:[`On the Data subnet NSG, add an inbound rule that allows TCP 1433 from 10.20.2.0/24 (priority 100) and an inbound rule that denies all other VirtualNetwork traffic (priority 200)`,`On the Data subnet NSG, add only an inbound rule that allows TCP 1433 from 10.20.2.0/24`,`On the App subnet NSG, add an outbound rule that allows TCP 1433 to 10.20.3.0/24`,`Enable a service endpoint on the Data subnet`],a:[0],
+ x:`The default AllowVnetInBound rule (65000) lets every subnet in the VNet reach SQL1, including Web. To restrict access you need an allow rule for App and an explicit deny with a higher priority number than the allow but lower than 65000.`},
+{id:"cs7",d:"mon",cs:2,q:`<p><b>Case study: Contoso.</b> You need to meet the CPU alerting and patching-window requirements.</p><p>What should you create?</p>`,
+ o:[`A metric alert rule on the web VMs with an action group, and an alert processing rule that suppresses notifications on a recurring Sunday schedule`,`A log search alert, and a script that disables it every Sunday`,`An activity log alert and a budget`,`A Service Health alert and a diagnostic setting`],a:[0],
+ x:`CPU percentage is a platform metric, so a metric alert (average over 10 minutes, threshold 85) with an action group fits. An alert processing rule can suppress notifications on a recurring schedule without disabling the alert rule.`},
+{id:"cs8",d:"gov",cs:2,q:`<p><b>Case study: Contoso.</b> You need to meet the requirement for the Ops group.</p><p>What should you do?</p>`,
+ o:[`Create a custom role that allows only the start, powerOff, deallocate, and restart VM actions, and assign it to Ops at RG-Web`,`Assign Virtual Machine Contributor to Ops at RG-Web`,`Assign Contributor to Ops at Sub1`,`Assign Virtual Machine Administrator Login to Ops at RG-Web`],a:[0],
+ x:`Virtual Machine Contributor can create and delete VMs, which breaks least privilege. A custom role with just the needed <code>Microsoft.Compute/virtualMachines/*/action</code> operations, assigned at RG-Web, is the narrowest fit. VM Administrator Login controls sign-in to the OS.`},
+{id:"cs9",d:"sto",cs:2,q:`<p><b>Case study: Contoso.</b> You need to meet the requirement for the product images.</p><p>What should you configure?</p>`,
+ o:[`A lifecycle management policy on stcontosoimg with a rule that tiers to Cool 60 days after last modification and deletes after 730 days`,`Object replication to an archive account`,`A stored access policy on the images container`,`Blob soft delete with a 730-day retention period`],a:[0],
+ x:`Lifecycle management rules tier and delete blobs automatically by age with no code. Blob soft delete tops out at 365 days and is for recovering deleted data.`}
 ];
 
 /* ---------- state ---------- */
 const KEY="az104-prep-v1", WKEY="az104-missed-v1";
-const FULL_PLAN={gov:11,sto:8,cmp:11,net:10,mon:6};
+const FULL_PLAN={gov:9,sto:7,cmp:10,net:9,mon:6};
 const byId=Object.fromEntries(Q.map(q=>[q.id,q]));
 let S=null, tick=null, confirmOpen=false, resultsFilter="missed";
 function load(k){try{const v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
@@ -923,7 +1172,37 @@ function del(k){try{localStorage.removeItem(k)}catch(e){}}
 function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 const isMulti=q=>!!q.m;
 function same(a,b){if(!a||a.length!==b.length)return false;const s=new Set(a);return b.every(x=>s.has(x))}
-const correct=(q,ans)=>same(ans,q.a);
+Q.forEach(q=>{if(q.t==='hot')q.a=q.h.map(r=>r.a)});
+const isMc=q=>!q.t;
+function correct(q,ans){ans=ans||[];
+  if(q.t==='order')return ans.length===q.a.length&&ans.every((v,i)=>v===q.a[i]);
+  if(q.t==='hot')return ans.length===q.h.length&&q.h.every((r,i)=>ans[i]===r.a);
+  return same(ans,q.a)}
+function isAnswered(q,ans){ans=ans||[];
+  if(q.t==='hot')return ans.length===q.h.length&&ans.every(v=>v>=0);
+  if(q.t==='order')return ans.length===q.o.length;
+  return ans.length>0}
+function fmtAns(q,ans){ans=ans||[];
+  if(q.t==='hot')return q.h.map((r,i)=>`${r.l}: ${ans[i]>=0?esc(r.o[ans[i]]):'No answer'}`).join('<br>');
+  if(q.t==='order')return ans.length?ans.map((idx,k)=>`${k+1}. ${q.o[idx]}`).join('<br>'):'No answer';
+  return letters(ans)}
+function optsHTML(q,ans,checked){
+  if(q.t==='hot'){return `<div class='hot'>${q.h.map((r,ri)=>{let cls='hrow';if(checked)cls+=ans[ri]===r.a?' right':' wrong';
+    return `<div class='${cls}'><span>${r.l}</span><select data-r='${ri}' aria-label='Row ${ri+1}' ${checked?'disabled':''}><option value='-1'>Select…</option>${r.o.map((t,k)=>`<option value='${k}' ${ans[ri]===k?'selected':''}>${esc(t)}</option>`).join('')}</select></div>`}).join('')}</div>`}
+  if(q.t==='order'){const ord=ans.length===q.o.length?ans:q.o.map((_,i)=>i);
+    return `<ol class='ord'>${ord.map((idx,pos)=>{let cls='';if(checked)cls=idx===q.a[pos]?'right':'wrong';
+    return `<li class='${cls}'><span class='pos'>${pos+1}</span><span>${q.o[idx]}</span><span class='mv'><button data-pos='${pos}' data-dir='-1' aria-label='Move up' ${checked||pos===0?'disabled':''}>↑</button><button data-pos='${pos}' data-dir='1' aria-label='Move down' ${checked||pos===ord.length-1?'disabled':''}>↓</button></span></li>`}).join('')}</ol>`}
+  return ''}
+function refreshAnswered(r,q){const a=S.ans[q.id]||[];const ok=isAnswered(q,a);const ck=r.querySelector('#check');if(ck)ck.disabled=!ok;const b=r.querySelector(`.pq[data-i='${S.cur}']`);if(b)b.classList.toggle('ans',ok)}
+function wireTyped(r,q){
+  if(q.t==='hot'){r.querySelectorAll('.hot select').forEach(sel=>sel.onchange=()=>{
+    const cur=(S.ans[q.id]&&S.ans[q.id].length===q.h.length?S.ans[q.id]:q.h.map(()=>-1)).slice();
+    cur[+sel.dataset.r]=+sel.value;S.ans[q.id]=cur;persist();refreshAnswered(r,q)})}
+  if(q.t==='order'){r.querySelectorAll('.ord button').forEach(b=>b.onclick=()=>{
+    const cur=(S.ans[q.id]&&S.ans[q.id].length===q.o.length?S.ans[q.id]:q.o.map((_,i)=>i)).slice();
+    const p=+b.dataset.pos,d=+b.dataset.dir;[cur[p],cur[p+d]]=[cur[p+d],cur[p]];S.ans[q.id]=cur;persist();renderQuestion();
+    const nb=document.querySelector(`.ord button[data-pos='${p+d}'][data-dir='${d}']`);
+    if(nb&&!nb.disabled)nb.focus();else{const alt=document.querySelector(`.ord button[data-pos='${p+d}'][data-dir='${-d}']`);if(alt)alt.focus()}})}}
 const fbOn=()=>S&&(S.mode==="practice"||!!S.fb);
 const complete=(q,sel)=>sel.length>0&&(q.pick?sel.length>=q.pick:!isMulti(q));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -985,7 +1264,7 @@ function renderHome(){
     <p class="lede">${Q.length} original questions written to match the style and difficulty of AZ-104. These aren't real exam questions. They test the same skills in the same formats.</p></div>
     ${saved&&!saved.done?`<div class="resume"><span>You have an unfinished ${saved.mode==="full"?"full exam":"practice session"} (${Object.keys(saved.ans).length}/${saved.ids.length} answered).</span><button class="btn small primary" id="resume">Resume</button><button class="btn small" id="discard">Discard</button></div>`:""}
     <div class="modes">
-      <div class="mode"><h3>Full practice exam</h3><p>50 questions weighted by domain, ending with a 4-question case study. 100-minute timer, shows Correct or Incorrect after each answer (switch off below for real exam conditions). Questions are drawn at random each time.</p><label class="fbtog"><input type="checkbox" id="fbtog" ${load(FBKEY)!==false?"checked":""}> Instant Correct / Incorrect</label><button class="btn primary" id="go-full">Start full exam</button></div>
+      <div class="mode"><h3>Full practice exam</h3><p>50 questions weighted by domain, including drag-and-drop ordering, hot-area dropdowns, Yes/No series, and two case studies at the end. 100-minute timer, shows Correct or Incorrect after each answer (switch off below for real exam conditions). Questions are drawn at random each time.</p><label class="fbtog"><input type="checkbox" id="fbtog" ${load(FBKEY)!==false?"checked":""}> Instant Correct / Incorrect</label><button class="btn primary" id="go-full">Start full exam</button></div>
       <div class="mode"><h3>Practice by domain</h3><p>Untimed. Instant Correct or Incorrect after each answer. Reveal the answer and explanation only when you want it.</p>
         <div class="chips" id="dchips">${Object.keys(DOM).map(d=>`<button class="chip" aria-pressed="true" data-d="${d}">${DOM[d].short} · ${counts[d]}</button>`).join("")}</div>
         <button class="btn" id="go-prac">Start practice</button></div>
@@ -1002,30 +1281,30 @@ function renderHome(){
   const ds=r.querySelector("#discard");if(ds)ds.onclick=()=>{del(KEY);renderHome()};
 }
 
-function hintFor(q){if(q.series)return"Select Yes or No";if(q.pick)return`Select ${q.pick===2?"two":q.pick}`;if(isMulti(q))return"Select all that apply";return"Select one"}
+function hintFor(q){if(q.t==='hot')return"Select a value in each row";if(q.t==='order')return"Arrange the steps in the correct order, using the arrows";if(q.series)return"Select Yes or No";if(q.pick)return`Select ${q.pick===2?"two":q.pick}`;if(isMulti(q))return"Select all that apply";return"Select one"}
 
 function renderQuestion(){
   const q=byId[S.ids[S.cur]], n=S.ids.length, ans=S.ans[q.id]||[], locked=fbOn()&&!!S.lock[q.id], revealed=S.mode==="practice"&&!!S.reveal[q.id];
   const multi=isMulti(q);
-  const opts=q.o.map((t,i)=>{
+  const opts=optsHTML(q,ans,checked)||q.o.map((t,i)=>{
     let cls="opt"; if(ans.includes(i))cls+=" sel";
     if(locked){cls+=" locked";if(revealed){if(q.a.includes(i))cls+=" right";else if(ans.includes(i))cls+=" wrong"}else if(ans.includes(i))cls+=correct(q,ans)?" right":" wrong"}
     return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${locked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
-  const unanswered=S.ids.filter(id=>!(S.ans[id]&&S.ans[id].length)).length;
+  const unanswered=S.ids.filter(id=>!isAnswered(byId[id],S.ans[id])).length;
   const markedN=S.ids.filter(id=>S.marked[id]).length;
   const chk=fbOn()?S.ids.filter(id=>S.lock[id]):[];
   const rightN=chk.filter(id=>correct(byId[id],S.ans[id]||[])).length;
   const rpct=chk.length?Math.round(rightN/chk.length*100):0;
   const rband=rpct>=80?"hi":rpct>=65?"mid":"low";
   const pal=S.ids.map((id,i)=>{let c="pq";const a=S.ans[id];
-    if(fbOn()&&S.lock[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(a&&a.length)c+=" ans";
+    if(fbOn()&&S.lock[id])c+=correct(byId[id],a||[])?" ok":" bad";else if(isAnswered(byId[id],a))c+=" ans";
     if(S.marked[id])c+=" mk";if(i===S.cur)c+=" cur";
     return `<button class="${c}" data-i="${i}" aria-label="Question ${i+1}">${i+1}</button>`}).join("");
   root().innerHTML=`<div class="ex">
     <div class="qcard">
       <div class="qmeta"><span class="qnum">Question ${S.cur+1} of ${n}</span><span class="dtag">${DOM[q.d].short}</span>${q.cs?'<span class="dtag">Case study</span>':""}${fbOn()?`<span class="dtag run" title="Correct out of answers checked so far">Score ${rightN}/${chk.length}${chk.length?` · ${rpct}%`:""}</span>`:""}
         <button class="mark" id="mark" aria-pressed="${!!S.marked[q.id]}">${S.marked[q.id]?"Marked for review":"Mark for review"}</button></div>
-      ${q.cs?`<details class="case" open><summary>Case study: Fabrikam, Inc.</summary><div class="cbody">${CASE}</div></details>`:""}
+      ${q.cs?`<details class="case" open><summary>Case study: ${q.cs===2?"Contoso, Ltd.":"Fabrikam, Inc."}</summary><div class="cbody">${q.cs===2?CASE2:CASE}</div></details>`:""}
       <div class="qtext">${q.q}</div>
       <div class="hint">${hintFor(q)}</div>
       <div class="opts" id="opts">${opts}</div>
@@ -1033,7 +1312,7 @@ function renderQuestion(){
       <div class="qnav">
         <button class="btn" id="prev" ${S.cur===0?"disabled":""}>Previous</button>
         <span class="sp"></span>
-        ${fbOn()&&!locked&&isMulti(q)&&!q.pick?`<button class="btn primary" id="check" ${ans.length?"":"disabled"}>Check answer</button>`:""}
+        ${fbOn()&&!locked&&isMulti(q)&&!q.pick?`<button class="btn primary" id="check" ${isAnswered(q,ans)?"":"disabled"}>Check answer</button>`:""}
         ${locked&&S.mode==="practice"&&!revealed?`<button class="btn" id="reveal">Show answer &amp; explanation</button>`:""}
         ${S.cur<n-1?`<button class="btn ${S.mode==="full"||locked?"primary":""}" id="next">Next</button>`:""}
       </div>
@@ -1063,6 +1342,7 @@ function renderQuestion(){
   const showBanner=()=>{const vb=document.querySelector(".verdict-banner");if(vb){const b=vb.getBoundingClientRect();if(b.top<0||b.bottom>window.innerHeight)vb.scrollIntoView({block:"center",behavior:"smooth"})}};
   function lockIn(){S.lock[q.id]=true;persist();renderQuestion();showBanner()}
   r.querySelector("#mark").onclick=()=>{S.marked[q.id]=!S.marked[q.id];persist();renderQuestion()};
+  wireTyped(r,q);
   r.querySelector("#prev").onclick=()=>{S.cur--;persist();renderQuestion();window.scrollTo(0,0)};
   const nx=r.querySelector("#next");if(nx)nx.onclick=()=>{S.cur++;persist();renderQuestion();window.scrollTo(0,0)};
   const ck=r.querySelector("#check");if(ck)ck.onclick=lockIn;
@@ -1076,7 +1356,7 @@ function renderQuestion(){
 
 function letters(arr){return (arr&&arr.length)?arr.slice().sort().map(i=>String.fromCharCode(65+i)).join(", "):"No answer"}
 function verdictHTML(q,ans){const ok=correct(q,ans);return `<div class="verdict-banner ${ok?"ok":"no"}" role="status"><span class="vb-icon" aria-hidden="true">${ok?"✓":"✗"}</span><span class="vb-word">${ok?"CORRECT":"INCORRECT"}</span>${S.mode==="full"?'<span class="vb-note">Explanations appear in your results</span>':""}</div>`}
-function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="verdict-banner ${ok?"ok":"no"}" role="status"><span class="vb-icon" aria-hidden="true">${ok?"✓":"✗"}</span><span class="vb-word">${ok?"CORRECT":"INCORRECT"}</span>${ok?"":`<span class="vb-ans">Correct answer: <b>${letters(q.a)}</b> · You chose: ${letters(ans)}</span>`}</div><div class="explain"><div class="verdict ${ok?"ok":"no"}">Explanation</div><div>${q.x}</div></div>`}
+function explainHTML(q,ans){const ok=correct(q,ans);return `<div class="verdict-banner ${ok?"ok":"no"}" role="status"><span class="vb-icon" aria-hidden="true">${ok?"✓":"✗"}</span><span class="vb-word">${ok?"CORRECT":"INCORRECT"}</span>${ok?"":`<span class="vb-ans">Correct answer: <b>${isMc(q)?letters(q.a):'<br>'+fmtAns(q,q.a)}</b> · You chose: ${isMc(q)?letters(ans):'<br>'+fmtAns(q,ans)}</span>`}</div><div class="explain"><div class="verdict ${ok?"ok":"no"}">Explanation</div><div>${q.x}</div></div>`}
 
 function finish(){
   if(!S||S.done)return;
@@ -1119,8 +1399,8 @@ function renderResults(){
     <div class="rlist">${shown.length?shown.map(i=>`<div class="ritem ${i.ok?"ok":"bad"}">
       <div class="qmeta"><span class="qnum">Q${S.ids.indexOf(i.q.id)+1}</span><span class="dtag">${DOM[i.q.d].short}</span>${i.q.cs?'<span class="dtag">Case study</span>':""}<span style="margin-left:auto;font-weight:600;color:${i.ok?"var(--good)":"var(--bad)"}">${i.ok?"Correct":"Incorrect"}</span></div>
       <div class="qtext" style="font-size:.95rem">${i.q.q}</div>
-      <div class="row">Your answer: <b>${letters(i.ans)}</b> · Correct: <b>${letters(i.q.a)}</b></div>
-      <ol type="A" style="margin:0;padding-left:22px;font-size:.9rem">${i.q.o.map((t,k)=>`<li style="${i.q.a.includes(k)?"color:var(--good);font-weight:600":i.ans.includes(k)?"color:var(--bad)":""}">${t}</li>`).join("")}</ol>
+      <div class="row">Your answer: <b>${fmtAns(i.q,i.ans)}</b> · Correct: <b>${fmtAns(i.q,i.q.a)}</b></div>
+      ${isMc(i.q)?`<ol type="A" style="margin:0;padding-left:22px;font-size:.9rem">${i.q.o.map((t,k)=>`<li style="${i.q.a.includes(k)?"color:var(--good);font-weight:600":i.ans.includes(k)?"color:var(--bad)":""}">${t}</li>`).join("")}</ol>`:""}
       <div class="explain">${i.q.x}</div></div>`).join(""):'<p class="lede">No missed questions.</p>'}</div>
   </div>`;
   const r=root();
@@ -1260,7 +1540,40 @@ const FC=[
 ["mon","Platform metrics retention","<b>93 days</b>"],
 ["mon","Route resource logs to Log Analytics","Create a <b>diagnostic setting</b>."],
 ["mon","Who deleted a resource?","Check the <b>Activity log</b>."],
-["mon","KQL: count records per computer in the last hour","<code>T | where TimeGenerated &gt; ago(1h) | summarize count() by Computer</code>"]
+["mon","KQL: count records per computer in the last hour","<code>T | where TimeGenerated &gt; ago(1h) | summarize count() by Computer</code>"],
+["gov","Assign a role from PowerShell, and create a custom role from the CLI","<code>New-AzRoleAssignment</code>. <code>az role definition create --role-definition role.json</code>."],
+["gov","One identity shared by several VMs, surviving VM deletion","<b>User-assigned managed identity</b>"],
+["gov","Group-based license fails for some users","Check the users' <b>usage location</b>."],
+["gov","Write SSPR password changes back to on-prem AD DS","<b>Password writeback</b> in Entra Connect, which needs <b>Entra ID P1</b>."],
+["sto","Redundancy after a customer-managed failover of a GRS account","<b>LRS</b> in the new primary region. Reconfigure to GRS to replicate again."],
+["sto","Create a SAS from CLI that uses Entra credentials","<code>az storage blob generate-sas --auth-mode login --as-user</code>"],
+["sto","Restore one deleted file in Azure Files","<b>Share snapshots</b> or Azure Backup. File share soft delete only protects deleted <i>shares</i>."],
+["sto","Move tens of TB over a slow link","<b>Azure Data Box</b> (offline transfer)"],
+["sto","Restrict a SAS to a partner's address","Set <b>allowed IP addresses</b> and <b>HTTPS only</b> when you generate it."],
+["cmp","Create a resource group, VM, and template deployment from PowerShell","<code>New-AzResourceGroup</code>, <code>New-AzVM</code>, <code>New-AzResourceGroupDeployment</code>"],
+["cmp","Bicep keyword to reference a resource that already exists","<code>existing</code>, plus <code>scope:</code> if it's in another resource group."],
+["cmp","ARM JSON to Bicep, and Bicep to ARM JSON","<code>az bicep decompile</code> (JSON to Bicep). <code>az bicep build</code> (Bicep to JSON)."],
+["cmp","Scopes for <code>az deployment [scope] create</code>","<b>group</b>, <b>sub</b>, <b>mg</b>, <b>tenant</b>. Creating a resource group needs <b>sub</b>."],
+["cmp","Preview a deployment without changing anything","<code>az deployment group what-if</code>"],
+["cmp","App Service setting that keeps the app loaded when idle","<b>Always On</b> (Basic and higher)"],
+["cmp","Outbound calls from a web app to a private IP in a VNet","<b>Regional VNet integration</b>. A private endpoint handles <i>inbound</i> traffic."],
+["cmp","Container Apps: split traffic between revisions","Set revision mode to <b>Multiple</b>, then set traffic weights."],
+["cmp","ACI volume that survives deleting the container group","An <b>Azure Files</b> share"],
+["cmp","Manage on-prem servers with Azure Policy and RBAC","<b>Azure Arc-enabled servers</b>: install the <b>Connected Machine agent</b>."],
+["net","Usable IPs in an Azure subnet: /29, /28, /27, /26, /25, /24","<b>3, 11, 27, 59, 123, 251</b> (size minus 5)"],
+["net","How many /24 subnets fit in a /22? In a /23?","<b>4</b> in a /22, <b>2</b> in a /23"],
+["net","Private DNS zones: blob, file, SQL, Key Vault","<code>privatelink.blob.core.windows.net</code>, <code>privatelink.file.core.windows.net</code>, <code>privatelink.database.windows.net</code>, <code>privatelink.vaultcore.azure.net</code>"],
+["net","Private endpoint resolves to a public IP","The private DNS zone isn't <b>linked to the VNet</b>."],
+["net","Fixed outbound public IP for a subnet","<b>NAT gateway</b>"],
+["net","Filter outbound traffic by domain name","<b>Azure Firewall</b> application rules. NSGs can't match FQDNs."],
+["net","On-prem must resolve an Azure private DNS zone","<b>Azure DNS Private Resolver</b> inbound endpoint, with an on-prem forwarder pointing at it."],
+["net","P2S certificate authentication: what goes on the gateway","The <b>public</b> root certificate data. Client certificates are issued from that root."],
+["net","Spoke-to-spoke through a hub NVA: three settings","UDRs to the NVA, <b>IP forwarding</b> on its NIC, and <b>Allow forwarded traffic</b> on the spoke peerings."],
+["net","Only the App subnet may reach SQL on 1433","An allow rule for the App subnet plus an explicit <b>deny</b>, because AllowVnetInBound permits the whole VNet."],
+["mon","Read monitoring data only vs edit monitoring settings","<b>Monitoring Reader</b> vs <b>Monitoring Contributor</b>"],
+["mon","Alert when a specific event appears N times","<b>Log search alert</b> (a KQL query against the workspace)"],
+["mon","Back up on-prem files and folders directly to Azure","<b>MARS agent</b> with a Recovery Services vault"],
+["mon","Notifications about Azure platform incidents and planned maintenance","<b>Azure Service Health</b> alerts"]
 ];
 const FKEY="az104-flash-known-v1";
 const F={doms:new Set(Object.keys(DOM)),known:new Set(load(FKEY)||[]),queue:null,flipped:false,includeKnown:false};
