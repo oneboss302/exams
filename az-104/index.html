@@ -1435,7 +1435,7 @@ document.querySelectorAll("[data-start]").forEach(b=>b.onclick=()=>{startFull()}
 document.querySelectorAll("[data-goto]").forEach(b=>b.onclick=()=>{S=null;go("exam")});
 document.querySelectorAll(".toc a").forEach(a=>a.onclick=e=>{e.preventDefault();const el=document.querySelector(a.getAttribute("href"));if(el)el.scrollIntoView({behavior:"smooth"})});
 window.addEventListener("hashchange",route);
-const saved=load(KEY); if(saved&&!saved.done&&saved.mode==="full"){S=saved}
+const saved=load(KEY); if(saved&&!saved.done&&saved.mode==="full"&&saved.ids.every(id=>byId[id])){S=saved}
 ensureTick(); route();
 </script>
 
