@@ -1081,7 +1081,7 @@ function hintFor(q){if(q.t==='hot')return"Select a value in each row";if(q.t==='
 function renderQuestion(){
   const q=byId[S.ids[S.cur]], n=S.ids.length, ans=S.ans[q.id]||[], locked=fbOn()&&!!S.lock[q.id], revealed=S.mode==="practice"&&!!S.reveal[q.id];
   const multi=isMulti(q);
-  const opts=optsHTML(q,ans,checked)||q.o.map((t,i)=>{
+  const opts=optsHTML(q,ans,locked)||q.o.map((t,i)=>{
     let cls="opt"; if(ans.includes(i))cls+=" sel";
     if(locked){cls+=" locked";if(revealed){if(q.a.includes(i))cls+=" right";else if(ans.includes(i))cls+=" wrong"}else if(ans.includes(i))cls+=correct(q,ans)?" right":" wrong"}
     return `<label class="${cls}"><input type="${multi?"checkbox":"radio"}" name="opt" id="opt-${i}" value="${i}" ${ans.includes(i)?"checked":""} ${locked?"disabled":""}><span class="ltr">${String.fromCharCode(65+i)}.</span><span>${t}</span></label>`}).join("");
